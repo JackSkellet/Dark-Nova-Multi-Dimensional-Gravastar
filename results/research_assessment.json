@@ -747,9 +747,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
         "no_functional_coding_evaluation_yet",
+        "not_10m_parameter_model",
         "failed_training_run"
       ],
       "outcome": "training_failed",
@@ -771,9 +771,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
         "no_functional_coding_evaluation_yet",
+        "not_10m_parameter_model",
         "failed_training_run"
       ],
       "outcome": "training_failed",
@@ -795,9 +795,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet"
+        "no_functional_coding_evaluation_yet",
+        "not_10m_parameter_model"
       ],
       "outcome": "training_smoke_positive",
       "primary_reason": "dense_decoder_training_pipeline_completed",
@@ -843,9 +843,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet"
+        "no_functional_coding_evaluation_yet",
+        "not_10m_parameter_model"
       ],
       "outcome": "training_smoke_positive",
       "primary_reason": "dense_decoder_training_pipeline_completed",
@@ -866,9 +866,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
         "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached",
         "failed_training_run"
       ],
       "outcome": "training_failed",
@@ -890,9 +890,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
         "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached",
         "failed_training_run"
       ],
       "outcome": "training_failed",
@@ -914,9 +914,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
         "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached",
         "failed_training_run"
       ],
       "outcome": "training_failed",
@@ -938,9 +938,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
         "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached",
         "failed_training_run"
       ],
       "outcome": "training_failed",
@@ -1002,9 +1002,9 @@
       "hypothesis": "dense_baseline_training",
       "limitations": [
         "training_smoke_only",
-        "not_10m_parameter_model",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet"
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
       ],
       "outcome": "training_smoke_positive",
       "primary_reason": "dense_decoder_training_pipeline_completed",
@@ -1089,6 +1089,103 @@
       "outcome": "dense_step_debug_positive",
       "primary_reason": "dense_step_debug_window_remained_finite",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "document_count": 9043,
+        "file_roles": {
+          "code": 3017,
+          "docs": 2631,
+          "readme": 79,
+          "test": 3316
+        },
+        "languages": {
+          "C": 210,
+          "C++": 29,
+          "C++ Header": 21,
+          "C/C++ Header": 248,
+          "JSON": 29,
+          "JavaScript": 10,
+          "Markdown": 1817,
+          "Python": 4287,
+          "Rust": 1213,
+          "TOML": 90,
+          "Text": 96,
+          "YAML": 59,
+          "reStructuredText": 934
+        },
+        "license_counts": {
+          "Apache-2.0": 1,
+          "BSD": 8,
+          "MIT": 8
+        },
+        "meets_50m_token_requirement": false,
+        "repo_count": 17,
+        "split_counts": {
+          "test": 191,
+          "train": 8730,
+          "validation": 122
+        },
+        "target_min_tokens": 50000000,
+        "total_tokens": 27380075
+      },
+      "experiment_id": "D2_expanded_corpus_preparation",
+      "hypothesis": "real_training_data",
+      "limitations": [
+        "approximate_regex_token_count",
+        "heuristic_license_detection",
+        "heuristic_secret_scanning",
+        "no_model_tokenizer_yet",
+        "below_50m_token_requirement"
+      ],
+      "outcome": "corpus_prepared_insufficient_tokens",
+      "primary_reason": "licensed_corpus_prepared_below_required_token_floor",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "",
+        "parameter_count": 11025505,
+        "status": "completed",
+        "train_steps": 4000,
+        "train_tokens": 1024000,
+        "validation_loss": 5.674013078212738
+      },
+      "experiment_id": "T5_rocm_dense_decoder_11m_sgd_1m_tokens",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accepted_config_count": 7,
+        "pinned_sources": true,
+        "rejected_config_count": 0,
+        "source_count": 2,
+        "token_count_status": "not_materialized_yet",
+        "total_parquet_bytes": 12399825013,
+        "total_rows": 3544000
+      },
+      "experiment_id": "D3_hf_corpus_manifest",
+      "hypothesis": "real_training_data",
+      "limitations": [
+        "metadata_manifest_only",
+        "token_count_pending_streaming_materialization",
+        "not_training_run",
+        "row_level_quality_filters_pending"
+      ],
+      "outcome": "hf_corpus_manifest_positive",
+      "primary_reason": "reviewed_revision_pinned_hf_corpus_metadata_recorded",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -1103,12 +1200,13 @@
   ],
   "outcome_counts": {
     "codegen_proxy_positive": 3,
-    "corpus_prepared_insufficient_tokens": 1,
+    "corpus_prepared_insufficient_tokens": 2,
     "dense_step_debug_failed": 1,
     "dense_step_debug_positive": 5,
     "doc_drift_positive_control": 1,
     "docgen_proxy_positive": 1,
     "exploration_positive": 1,
+    "hf_corpus_manifest_positive": 1,
     "limited_positive": 1,
     "measurement_positive": 1,
     "mixed": 1,
@@ -1121,9 +1219,9 @@
     "smoke_pass": 1,
     "training_failed": 6,
     "training_readiness_positive": 1,
-    "training_smoke_positive": 3,
+    "training_smoke_positive": 4,
     "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 62
+  "record_count": 65
 }
