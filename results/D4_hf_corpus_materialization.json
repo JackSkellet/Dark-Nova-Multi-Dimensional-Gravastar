@@ -1,0 +1,493 @@
+{
+  "command": "uv run python scripts/materialize_hf_corpus.py --manifest results/D3_hf_corpus_manifest.json --output-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --target-train-tokens 50000000 --output results/D4_hf_corpus_materialization.json",
+  "experiment_id": "D4_hf_corpus_materialization",
+  "git_commit": "de86b4508a0972d970ed9115f9f2a3be546deaa4",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "real_training_data",
+  "metrics": {
+    "benchmark_label": "hf_corpus_materialization",
+    "corpus_use": "exploratory-research-only",
+    "dataset_config_counts": {
+      "CodedotAI/code_clippy_github::JavaScript-all": 3415
+    },
+    "document_count": 3415,
+    "excluded_examples": [
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/lib/transports/jsonp-polling.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "voidlock/contacts"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/connect/lib-cov/middleware/session/store.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "vignesh9136/node-google-calendar-sample"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/backstopjs/node_modules/gulp-open/node_modules/gulp-util/node_modules/minimist/test/unknown.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "gregsqueeb/khoilajsdfkjsakldfj"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "todoapp/node_modules/mocha/lib/reporters/json-cov.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "Foxoon/Todooze"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "me/node_modules/sequelize/node_modules/lodash/result.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "hbzhang/me"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/angular.js/1.4.4/angular-route.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "CyrusSUEN/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/angular.js/1.4.14/i18n/angular-locale_ko-kr.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "sajochiu/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/angular-i18n/1.5.9/angular-locale_en-ke.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "honestree/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "bower_components/jquery-ui/ui/minified/i18n/datepicker-ar-DZ.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "HerrR/mobutv-projekt"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "webroot/bower_components/jquery-ui/ui/minified/i18n/datepicker-sr.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "aoliverio/builder"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "docs/shuffle-text.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "conan-equal-newone/yenten"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "dist/visualizer.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "jgarverick/RequirementsIntegrator"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "dist/autocompleteList.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "jamesfer/angular-material-autocomplete-list"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/voxel-engine/node_modules/three/src/extras/helpers/DirectionalLightHelper.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "seacloud9/ds.fracVader"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "build/webpack.base.conf.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "ElixirStudy0730/phoenix_webpack2"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "assets/plugins/jquery-ui/ui/minified/i18n/datepicker-eo.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "GowthamITMARTX/adsports"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "data/docs/tweaks.js",
+        "reason": "secret_or_confidential_pattern",
+        "repo": "meboHQ/mebo"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/angular-google-maps/2.0.18/angular-google-maps_dev_mapped.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "sufuf3/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/jade/1.1.4/jade.min.js",
+        "reason": "too_large",
+        "repo": "froala/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/mojio-js/3.1.2/mojio-js.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "chrillep/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "files/p5.js/0.3.5/p5.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "royswastik/jsdelivr"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/rxjs/2.3.17/rx.coincidence.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "perdona/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/react-icons/lib/md/local-restaurant.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "bairrada97/festival"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/deeplearn/0.5.0/graph/graph.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "cdnjs/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/pdfjs-dist/lib/core/obj.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "AngeliaGong/AngeliaGong.github.io"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/codemirror/5.17.0/mode/slim/slim.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "wout/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/semver/semver.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "thehashrocket/angular2-2waydata-confirmation"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "public/node_modules/alt/node_modules/es-symbol/dist/symbol.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "cloudship/memory"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "src/Sharif/CalendarBundle/Resources/public/js/kendoui/cultures/kendo.culture.ta-IN.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "sahand-mozaffari/SharifCalendar"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "leapstrap/leapstrap/documentation/dist/js/leapstrap.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "gnitemouse/leap2048"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/browser-sync/lib/public/public-utils.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "vvlladimir/project1"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/apexcharts/2.1.7/apexcharts.js",
+        "reason": "too_large",
+        "repo": "cdnjs/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "cdk/node_modules/aws-sdk/lib/protocol/rest_xml.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "iamatypeofwalrus/GlasswavesCo"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "modapi/node_modules/lab/lib/leaks.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "Gambya/mod"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/pnp-config-store/1.3.4/config-store.es5.umd.bundle.js",
+        "reason": "secret_or_confidential_pattern",
+        "repo": "joeyparrish/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/dojo/1.15.5/cldr/nls/pl/generic.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "cdnjs/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "web/bundles/makinmindeditor/js/lib/ace/mode/coffee_highlight_rules.js",
+        "reason": "secret_or_confidential_pattern",
+        "repo": "ragulan77/MakinMind"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "www/js/ion.rangeSlider.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "FirstDateApp/FirstDateApp.github.io"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/bower/node_modules/insight/node_modules/inquirer/node_modules/rx/dist/rx.lite.extras.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "anato-lee/ang-test"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/karma/node_modules/chokidar/node_modules/fsevents/node_modules/cryptiles/lib/index.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "Lshreya/UniversalProject"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/uikit/3.0.0-rc.14/js/components/tooltip.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "jonobr1/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/simple-icons/5.22.0/webauthn.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "cdnjs/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/es-abstract/2017/QuoteJSONString.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "arvenil/resume"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/node-geocoder/lib/geocoder/abstractgeocoder.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "samkho10/claire"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "platforms/ios/www/lib/aerisjs/examples/amd/bower_components/aerisjs/examples/amd/bower_components/aerisjs/examples/amd/bower_components/leaflet.markercluster/example/realworld.10000.js",
+        "reason": "too_large",
+        "repo": "MikeLockz/exit-now-mobile"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/absurd/0.3.135/absurd.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "Pranay92/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/absurd/0.1.17/absurd.min.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "LorenzoBoccaccia/cdnjs"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/karma/node_modules/http-proxy/examples/middleware/jsonp-middleware.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "AceMood/Algorithms-in-JavaScript"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "node_modules/babel-loader/node_modules/babel-core/node_modules/lodash/function/bindAll.js",
+        "reason": "vendor_or_generated_path",
+        "repo": "oneillci/egghead-react-app"
+      },
+      {
+        "config": "JavaScript-all",
+        "dataset": "CodedotAI/code_clippy_github",
+        "path": "ajax/libs/yui/3.8.0pr2/resize-plugin/resize-plugin.js",
+        "reason": "duplicate_text",
+        "repo": "magoni/cdnjs"
+      }
+    ],
+    "excluded_reasons": {
+      "duplicate_text": 181,
+      "evaluation_contamination_path": 5,
+      "generated_marker": 45,
+      "secret_or_confidential_pattern": 58,
+      "too_large": 119,
+      "vendor_or_generated_path": 1985
+    },
+    "filters": {
+      "contamination_path_markers": [
+        "/benchmark/",
+        "/benchmarks/",
+        "/eval/",
+        "/evals/",
+        "/evaluation/",
+        "/evaluations/",
+        "humaneval",
+        "mbpp"
+      ],
+      "generated_markers": [
+        "auto-generated",
+        "autogenerated",
+        "do not edit",
+        "generated by",
+        "this file was generated"
+      ],
+      "malicious_instruction_markers": [
+        "ignore previous instructions",
+        "ignore all previous instructions",
+        "reveal your system prompt",
+        "developer message",
+        "system prompt",
+        "prompt injection"
+      ],
+      "max_row_bytes": 256000,
+      "min_row_bytes": 20,
+      "path_excludes": [
+        ".git/",
+        "__pycache__/",
+        "build/",
+        "dist/",
+        "node_modules/",
+        "site-packages/",
+        "third_party/",
+        "vendor/"
+      ]
+    },
+    "languages": {
+      "JavaScript": 3415
+    },
+    "licenses": {
+      "agpl-3.0": 34,
+      "apache-2.0": 89,
+      "bsd-2-clause": 8,
+      "bsd-3-clause": 42,
+      "cc0-1.0": 3,
+      "epl-1.0": 1,
+      "gpl-2.0": 134,
+      "gpl-3.0": 60,
+      "isc": 1,
+      "lgpl-2.1": 5,
+      "lgpl-3.0": 5,
+      "mit": 3024,
+      "mpl-2.0": 8,
+      "unlicense": 1
+    },
+    "limitations": [
+      "exploratory_research_only_not_production_approved",
+      "mixed_or_unclear_license_metadata_not_blocking_exploratory_training",
+      "near_duplicate_filter_pending",
+      "no_functional_training_run_from_this_mirror_yet"
+    ],
+    "meets_50m_token_requirement": true,
+    "output": {
+      "bytes": 58615129,
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc"
+    },
+    "production_approval": false,
+    "redistribution_approval": false,
+    "rows_accepted": 3415,
+    "rows_excluded": 2393,
+    "rows_seen": 5808,
+    "source_manifest": {
+      "dataset_revisions": {
+        "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+        "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+      },
+      "experiment_id": "D3_hf_corpus_manifest",
+      "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+      "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+    },
+    "split_counts": {
+      "test": 50,
+      "train": 3280,
+      "validation": 85
+    },
+    "status": "completed",
+    "target_train_tokens": 50000000,
+    "tokens": {
+      "test": 735566,
+      "train": 50102528,
+      "validation": 1455924
+    },
+    "total_tokens": 52294018,
+    "transformations": [
+      "extract text/repo/path/language/license columns from Dataset Viewer parquet rows",
+      "reject binary/corrupt/unusable rows",
+      "reject technical secret/confidential patterns",
+      "reject generated/vendor dependency paths",
+      "reject exact duplicate normalized text",
+      "reject known evaluation-contamination path markers",
+      "reject malicious embedded instruction markers",
+      "assign repository-aware train/validation/test split by stable repo hash",
+      "count byte-tokenizer tokens as utf8 bytes plus eos",
+      "write jsonl rows with source dataset/config/revision and row checksums"
+    ]
+  },
+  "notes": "Filtered exploratory Hugging Face parquet corpus mirror materialized through datasets from Dataset Viewer parquet URLs. The corpus is explicitly not approved for production, redistribution, or company deployment.",
+  "recorded_at_unix": 1781957275.3536682,
+  "seed": 123,
+  "status": "completed"
+}

@@ -1186,6 +1186,55 @@
       "outcome": "hf_corpus_manifest_positive",
       "primary_reason": "reviewed_revision_pinned_hf_corpus_metadata_recorded",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "corpus_use": "exploratory-research-only",
+        "dataset_config_counts": {
+          "CodedotAI/code_clippy_github::JavaScript-all": 3415
+        },
+        "meets_50m_token_requirement": true,
+        "output_sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+        "rows_accepted": 3415,
+        "rows_excluded": 2393,
+        "rows_seen": 5808,
+        "target_train_tokens": 50000000,
+        "train_tokens": 50102528
+      },
+      "experiment_id": "D4_hf_corpus_materialization",
+      "hypothesis": "real_training_data",
+      "limitations": [
+        "exploratory_research_only_not_production_approved",
+        "not_training_run",
+        "near_duplicate_filter_pending",
+        "mixed_license_metadata_not_blocking_exploratory_use"
+      ],
+      "outcome": "hf_corpus_materialized",
+      "primary_reason": "filtered_hf_corpus_mirror_reached_required_train_tokens",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "",
+        "parameter_count": 11025505,
+        "status": "completed",
+        "train_steps": 10000,
+        "train_tokens": 2560000,
+        "validation_loss": 5.621392607688904
+      },
+      "experiment_id": "T6a_rocm_dense_decoder_11m_hf_d4_progress_probe",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -1207,6 +1256,7 @@
     "docgen_proxy_positive": 1,
     "exploration_positive": 1,
     "hf_corpus_manifest_positive": 1,
+    "hf_corpus_materialized": 1,
     "limited_positive": 1,
     "measurement_positive": 1,
     "mixed": 1,
@@ -1219,9 +1269,9 @@
     "smoke_pass": 1,
     "training_failed": 6,
     "training_readiness_positive": 1,
-    "training_smoke_positive": 4,
+    "training_smoke_positive": 5,
     "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 65
+  "record_count": 67
 }
