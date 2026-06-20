@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
   "datasets>=2.20",
   "numpy>=2.0",
+  "tokenizers>=0.22",
   "torch>=2.0",
   "triton-rocm; sys_platform == 'linux'",
 ]
