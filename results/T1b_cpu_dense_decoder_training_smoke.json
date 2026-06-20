@@ -1,0 +1,122 @@
+{
+  "command": "uv run python scripts/train_dense_decoder.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device cpu --seq-len 32 --hidden-dim 64 --layers 1 --heads 4 --batch-size 4 --steps 5 --validation-batches 1 --gradient-accumulation-steps 1 --mixed-precision fp32 --output-dir artifacts/dense_decoder_smoke_cpu --output results/T1b_cpu_dense_decoder_training_smoke.json",
+  "experiment_id": "T1b_cpu_dense_decoder_training_smoke",
+  "git_commit": "9ae7a7b1f14e930195c0eceea225a537b70aa071",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_baseline_training",
+  "metrics": {
+    "accelerator_backend": "cpu",
+    "benchmark_label": "dense_decoder_training_smoke",
+    "checkpoint": {
+      "bytes": 1046245,
+      "path": "artifacts/dense_decoder_smoke_cpu/dense_decoder_last.pt",
+      "resume_ok": true
+    },
+    "corpus": {
+      "available_documents": 100,
+      "available_tokens": 428861,
+      "document_count_used": 64,
+      "file_roles": {
+        "code": 42,
+        "docs": 20,
+        "readme": 8,
+        "test": 30
+      },
+      "languages": {
+        "C": 18,
+        "C/C++ Header": 12,
+        "JSON": 9,
+        "Markdown": 18,
+        "Python": 20,
+        "TOML": 1,
+        "Text": 13,
+        "YAML": 2,
+        "reStructuredText": 7
+      },
+      "licenses": {
+        "BSD": 2,
+        "MIT": 1
+      },
+      "repo_count": 3
+    },
+    "failure": "",
+    "generation_samples": [
+      {
+        "prompt": "def ",
+        "text": "def  \u0011bEO\u0012uo#Hs\u0000\u0001H\u0619\fV{DD"
+      }
+    ],
+    "limitations": [
+      "training_smoke_only",
+      "byte_tokenizer_baseline",
+      "not_10m_parameter_model",
+      "not_50m_token_run",
+      "no_functional_coding_evaluation_yet"
+    ],
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "batch_size": 4,
+        "device": "cpu",
+        "gradient_accumulation_steps": 1,
+        "heads": 4,
+        "hidden_dim": 64,
+        "layers": 1,
+        "learning_rate": 0.0003,
+        "mixed_precision": "fp32",
+        "seq_len": 32,
+        "steps": 5,
+        "validation_batches": 1
+      },
+      "parameter_count": 85313
+    },
+    "rocm_available": true,
+    "rocm_runtime_version": "7.2.53211",
+    "status": "completed",
+    "tokenizer": {
+      "name": "byte_level",
+      "vocab_size": 257
+    },
+    "training": {
+      "elapsed_s": 0.010179995995713398,
+      "gradient_accumulation_steps": 1,
+      "loss_curve": [
+        {
+          "loss": 5.579019546508789,
+          "step": 1.0
+        },
+        {
+          "loss": 5.65270471572876,
+          "step": 2.0
+        },
+        {
+          "loss": 5.698764324188232,
+          "step": 3.0
+        },
+        {
+          "loss": 5.53627872467041,
+          "step": 4.0
+        },
+        {
+          "loss": 5.475679874420166,
+          "step": 5.0
+        }
+      ],
+      "steps": 5,
+      "tokens_per_second": 62868.39408085148,
+      "train_tokens": 640
+    },
+    "validation": {
+      "loss": 5.384519577026367
+    }
+  },
+  "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+  "recorded_at_unix": 1781953684.6071694,
+  "seed": 123,
+  "status": "completed"
+}

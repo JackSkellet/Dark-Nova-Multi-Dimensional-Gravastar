@@ -1,0 +1,128 @@
+{
+  "command": "uv run python scripts/run_rocm_training_validation.py --device rocm --batch-sizes 1,2,4,8,16,32,64 --seq-len 128 --hidden-dim 256 --vocab-size 4096 --steps-per-batch 3 --checkpoint-path artifacts/rocm_validation/resume.pt --output results/R1_rocm_training_validation.json",
+  "experiment_id": "R1_rocm_training_validation",
+  "git_commit": "9ae7a7b1f14e930195c0eceea225a537b70aa071",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "real_training_readiness",
+  "metrics": {
+    "accelerator_backend": "rocm",
+    "batch_results": [
+      {
+        "batch_size": 1,
+        "elapsed_s": 0.040548948978539556,
+        "error": "",
+        "loss": 8.374608993530273,
+        "status": "ok",
+        "steps": 3,
+        "tokens_per_second": 9470.035837506693,
+        "tokens_per_step": 128
+      },
+      {
+        "batch_size": 2,
+        "elapsed_s": 0.0035569210012909025,
+        "error": "",
+        "loss": 8.473997116088867,
+        "status": "ok",
+        "steps": 3,
+        "tokens_per_second": 215917.0810150892,
+        "tokens_per_step": 256
+      },
+      {
+        "batch_size": 4,
+        "elapsed_s": 0.006114805000834167,
+        "error": "",
+        "loss": 8.46654987335205,
+        "status": "ok",
+        "steps": 3,
+        "tokens_per_second": 251193.61938613947,
+        "tokens_per_step": 512
+      },
+      {
+        "batch_size": 8,
+        "elapsed_s": 0.010115855984622613,
+        "error": "",
+        "loss": 8.488759994506836,
+        "status": "ok",
+        "steps": 3,
+        "tokens_per_second": 303681.66615557106,
+        "tokens_per_step": 1024
+      },
+      {
+        "batch_size": 16,
+        "elapsed_s": 0.019260040018707514,
+        "error": "",
+        "loss": 8.465750694274902,
+        "status": "ok",
+        "steps": 3,
+        "tokens_per_second": 319002.45243687223,
+        "tokens_per_step": 2048
+      },
+      {
+        "batch_size": 32,
+        "elapsed_s": 0.14292304299306124,
+        "error": "",
+        "loss": 8.48982048034668,
+        "status": "ok",
+        "steps": 3,
+        "tokens_per_second": 85976.33903300372,
+        "tokens_per_step": 4096
+      },
+      {
+        "batch_size": 64,
+        "elapsed_s": 0.21876768401125446,
+        "error": "",
+        "loss": 8.483516693115234,
+        "status": "ok",
+        "steps": 3,
+        "tokens_per_second": 112338.34700529028,
+        "tokens_per_step": 8192
+      }
+    ],
+    "benchmark_label": "training_runtime_validation",
+    "checkpoint_resume": {
+      "bytes": 530190,
+      "path": "artifacts/rocm_validation/resume.pt",
+      "resume_ok": true,
+      "step": 1
+    },
+    "cuda_available": true,
+    "device": "cuda",
+    "device_properties": {
+      "multi_processor_count": 32,
+      "name": "AMD Radeon RX 9070 XT",
+      "total_memory_bytes": 17095983104
+    },
+    "limitations": [
+      "tiny_decoder_training_probe_only",
+      "not_full_model_training",
+      "not_occupancy_measurement",
+      "throughput_depends_on_python_training_loop"
+    ],
+    "max_stable_tokens": 8192,
+    "memory": {
+      "allocated_bytes": 159383552,
+      "free_bytes": 15680405504,
+      "reserved_bytes": 801112064,
+      "total_bytes": 17095983104
+    },
+    "precision_support": {
+      "bf16_forward_backward": true,
+      "fp16_forward_backward": true,
+      "fp32_forward_backward": true
+    },
+    "requested_device": "rocm",
+    "rocm_available": true,
+    "rocm_runtime_version": "7.2.53211",
+    "stable_batch_size": 64,
+    "torch_version": "2.12.1+rocm7.2"
+  },
+  "notes": "Local training-readiness probe for ROCm/CPU runtime, precision support, batch throughput, stable token count, memory reporting, and checkpoint resume.",
+  "recorded_at_unix": 1781953253.784561,
+  "seed": 123,
+  "status": "completed"
+}

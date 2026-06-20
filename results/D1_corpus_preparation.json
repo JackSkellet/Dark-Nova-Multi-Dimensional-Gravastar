@@ -1,0 +1,1211 @@
+{
+  "command": "uv run python scripts/prepare_training_corpus.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --min-tokens 50000000 --max-file-bytes 256000 --output results/D1_corpus_preparation.json",
+  "experiment_id": "D1_corpus_preparation",
+  "git_commit": "9ae7a7b1f14e930195c0eceea225a537b70aa071",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "real_training_data",
+  "metrics": {
+    "benchmark_label": "licensed_repository_corpus_preparation",
+    "document_count": 100,
+    "documents": [
+      {
+        "bytes": 828,
+        "language": "Markdown",
+        "license": "BSD",
+        "relative_path": "README.md",
+        "repo": "kilo",
+        "role": "readme",
+        "sha256": "618e70e30c7d11f383864f365c7d12c07586c6b9ec80f48e08791ad735a6522f",
+        "split": "train",
+        "tokens": 179
+      },
+      {
+        "bytes": 41602,
+        "language": "C",
+        "license": "BSD",
+        "relative_path": "kilo.c",
+        "repo": "kilo",
+        "role": "code",
+        "sha256": "20f6a421680d3efffed7920dfb36cb9e429d0ae8b4f9e73a844b54e9792483cb",
+        "split": "train",
+        "tokens": 11327
+      },
+      {
+        "bytes": 1330,
+        "language": "Text",
+        "license": "BSD",
+        "relative_path": "LICENSE",
+        "repo": "kilo",
+        "role": "code",
+        "sha256": "9bdd44a55ef15ede43378a7df20cbd99d1ec34e48d1358c45c1904b285e4ae7a",
+        "split": "train",
+        "tokens": 239
+      },
+      {
+        "bytes": 1695,
+        "language": "Markdown",
+        "license": "BSD",
+        "relative_path": "README.md",
+        "repo": "markupsafe",
+        "role": "readme",
+        "sha256": "4dac798c51f85daee7bc6e91c486a405b68640cd223a17f6432ddc4f05324220",
+        "split": "train",
+        "tokens": 455
+      },
+      {
+        "bytes": 927,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "bench.py",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "b78c1218906a56504ab96bccc9425c95737af556b5e49f673cd6ae48fc95e939",
+        "split": "train",
+        "tokens": 228
+      },
+      {
+        "bytes": 1916,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "docs/conf.py",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "258ea4eef15adef10581b28cdf80df05185f3e472647cfef824fbbda1af87837",
+        "split": "train",
+        "tokens": 647
+      },
+      {
+        "bytes": 2238,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "setup.py",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "2de53e4950f8f2038e009540548932bee020419e16a09c1194daa5d3a7e6f9c7",
+        "split": "train",
+        "tokens": 445
+      },
+      {
+        "bytes": 12736,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "src/markupsafe/__init__.py",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "b9ab6c8b22906bb3c4b40a2e9175ec8bce2a20a712afbebd77069ac9d2871194",
+        "split": "train",
+        "tokens": 3409
+      },
+      {
+        "bytes": 210,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "src/markupsafe/_native.py",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "6db484ff03fc43d318da1138319f366f29a43127a85789a0e6f4f9338a0907b3",
+        "split": "train",
+        "tokens": 84
+      },
+      {
+        "bytes": 4327,
+        "language": "C",
+        "license": "BSD",
+        "relative_path": "src/markupsafe/_speedups.c",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "0534dd624f7d27810f9bbb9e5276671f63202d490bfadeae1ee9686c4ad2aca1",
+        "split": "train",
+        "tokens": 1198
+      },
+      {
+        "bytes": 911,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "tests/conftest.py",
+        "repo": "markupsafe",
+        "role": "test",
+        "sha256": "26fd27b42c883b565e1ed57f5b1bc96230f0058e7b67d367bdc0bac7d46e4657",
+        "split": "train",
+        "tokens": 195
+      },
+      {
+        "bytes": 2048,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "tests/test_escape.py",
+        "repo": "markupsafe",
+        "role": "test",
+        "sha256": "cdccf7831eb6f434c5afefe657376b6ee2de86c5a86465b7fba879c91859c5e4",
+        "split": "train",
+        "tokens": 680
+      },
+      {
+        "bytes": 530,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "tests/test_exception_custom_html.py",
+        "repo": "markupsafe",
+        "role": "test",
+        "sha256": "49e9dc143ff2c409fef799643a91c7c75ec75ba0166e3061c47acab8452f2195",
+        "split": "train",
+        "tokens": 96
+      },
+      {
+        "bytes": 843,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "tests/test_ext_init.py",
+        "repo": "markupsafe",
+        "role": "test",
+        "sha256": "395027e5d10693b1f8e24b151b32046b900f4c22d4f223cad74a99216284d7e5",
+        "split": "train",
+        "tokens": 177
+      },
+      {
+        "bytes": 744,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "tests/test_leak.py",
+        "repo": "markupsafe",
+        "role": "test",
+        "sha256": "7a956b3f346e2b18e23b7751b78ead58d1a00efacfe1d4b86d8e71df377e083d",
+        "split": "train",
+        "tokens": 175
+      },
+      {
+        "bytes": 5973,
+        "language": "Python",
+        "license": "BSD",
+        "relative_path": "tests/test_markupsafe.py",
+        "repo": "markupsafe",
+        "role": "test",
+        "sha256": "6169735392b0d134e77dec1ed335021869fac08b0710262d7641cd7d592120a1",
+        "split": "train",
+        "tokens": 1881
+      },
+      {
+        "bytes": 45,
+        "language": "reStructuredText",
+        "license": "BSD",
+        "relative_path": "docs/changes.rst",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "736740c0ad2fbf5252da338e56cb7ed72663a60a872b7391d6457f0ef35043c7",
+        "split": "train",
+        "tokens": 19
+      },
+      {
+        "bytes": 318,
+        "language": "reStructuredText",
+        "license": "BSD",
+        "relative_path": "docs/escaping.rst",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "d9da3aafde3607e9376bfaf95a8bda01206368e2ece40fa53c8172c1f247ff92",
+        "split": "train",
+        "tokens": 116
+      },
+      {
+        "bytes": 2342,
+        "language": "reStructuredText",
+        "license": "BSD",
+        "relative_path": "docs/formatting.rst",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "76cbcbab64b7617eb668267f0106ca73616e157854fa25317af2b78c52e37196",
+        "split": "train",
+        "tokens": 696
+      },
+      {
+        "bytes": 1367,
+        "language": "reStructuredText",
+        "license": "BSD",
+        "relative_path": "docs/html.rst",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "2e58f2f3ad8cf148be9b3cddf555ed6abd9fee27f816168ce431abf8dc397e12",
+        "split": "train",
+        "tokens": 393
+      },
+      {
+        "bytes": 1217,
+        "language": "reStructuredText",
+        "license": "BSD",
+        "relative_path": "docs/index.rst",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "81d3b959f9df7a08b5e49f93ae6aaf909b88c32bfba2624e299dcc126d71a566",
+        "split": "train",
+        "tokens": 364
+      },
+      {
+        "bytes": 100,
+        "language": "reStructuredText",
+        "license": "BSD",
+        "relative_path": "docs/license.rst",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "5c8632bd735597180ce12f8488f9b1f935944503becd8da40204df1533b60725",
+        "split": "train",
+        "tokens": 43
+      },
+      {
+        "bytes": 439,
+        "language": "JSON",
+        "license": "BSD",
+        "relative_path": ".devcontainer/devcontainer.json",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "cface5f5b33c7fe927587c9763ac780c589e95f812e4cbd879a7a14ab695a758",
+        "split": "train",
+        "tokens": 109
+      },
+      {
+        "bytes": 629,
+        "language": "YAML",
+        "license": "BSD",
+        "relative_path": ".pre-commit-config.yaml",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "b6fa52de53a1f5e2444ee19ea4c0dd6b56daa0cc698860ae941acae5dcced1dc",
+        "split": "train",
+        "tokens": 159
+      },
+      {
+        "bytes": 242,
+        "language": "YAML",
+        "license": "BSD",
+        "relative_path": ".readthedocs.yaml",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "cb318b30d96e3fc8ce4135d923367bc3ba5e5db6b938521d70293f0340e92a4c",
+        "split": "train",
+        "tokens": 58
+      },
+      {
+        "bytes": 5269,
+        "language": "reStructuredText",
+        "license": "BSD",
+        "relative_path": "CHANGES.rst",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "f3cf13290077131ed636b2b87d54bfcc467bdbafb4b33adccc0a4e8dd6728f5c",
+        "split": "train",
+        "tokens": 1638
+      },
+      {
+        "bytes": 1475,
+        "language": "Text",
+        "license": "BSD",
+        "relative_path": "LICENSE.txt",
+        "repo": "markupsafe",
+        "role": "docs",
+        "sha256": "6baf29b91ec1ad4fce1bfd2e27abf84547d8f73e99f087ee9c63d3ae3296c7b2",
+        "split": "train",
+        "tokens": 258
+      },
+      {
+        "bytes": 5190,
+        "language": "TOML",
+        "license": "BSD",
+        "relative_path": "pyproject.toml",
+        "repo": "markupsafe",
+        "role": "code",
+        "sha256": "6aa981d96b6f4722645a7ce5d217f12d130002210e02b9bab16475d42604d0cf",
+        "split": "train",
+        "tokens": 1567
+      },
+      {
+        "bytes": 4880,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "dir-steering/README.md",
+        "repo": "ds4",
+        "role": "readme",
+        "sha256": "98aa8c862edc0204dd37d9dd27391ca6a2ba4e10bda66d4ad77137edad26b8cf",
+        "split": "test",
+        "tokens": 1197
+      },
+      {
+        "bytes": 1593,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "gguf-tools/imatrix/dataset/README.md",
+        "repo": "ds4",
+        "role": "readme",
+        "sha256": "7f906515ad379e8549274321ed81c9419cc854251e9bf2ca18ad27fe07808bb1",
+        "split": "test",
+        "tokens": 346
+      },
+      {
+        "bytes": 6792,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "gguf-tools/imatrix/README.md",
+        "repo": "ds4",
+        "role": "readme",
+        "sha256": "9d68a8e84c8be2e1bec869e74701aa4c2282c7429e2b893802da7cccb95dc25b",
+        "split": "test",
+        "tokens": 1704
+      },
+      {
+        "bytes": 1751,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "gguf-tools/mixed/README.md",
+        "repo": "ds4",
+        "role": "readme",
+        "sha256": "1d61cbb822c5f9fc6bce641bcbba82f21b12ef593e21574abc313bca6e4bf579",
+        "split": "test",
+        "tokens": 421
+      },
+      {
+        "bytes": 2599,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "gguf-tools/quality-testing/README.md",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "b45eee7ea62c55475cd976797d1fd2797e593a5ddd9db241e671dfacb21aa284",
+        "split": "test",
+        "tokens": 636
+      },
+      {
+        "bytes": 4700,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "gguf-tools/README.md",
+        "repo": "ds4",
+        "role": "readme",
+        "sha256": "f0482aa9a27ac3a20f4dbc504496523ad7169368b00ab5c15283fae57d0b204e",
+        "split": "test",
+        "tokens": 1181
+      },
+      {
+        "bytes": 785,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "speed-bench/README.md",
+        "repo": "ds4",
+        "role": "readme",
+        "sha256": "34fd864beae3a8752046c6df765eda73d21ab437dcd296f00d08f1bfd3defe05",
+        "split": "test",
+        "tokens": 203
+      },
+      {
+        "bytes": 2218,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/README.md",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "26255a6f0adb525f33f8b9c775c8da15432379e5aecac4b6fb54bb9b505602b2",
+        "split": "test",
+        "tokens": 529
+      },
+      {
+        "bytes": 7915,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "dir-steering/tools/build_direction.py",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "5f652987dccbe59734f5282fd36fa7a4922b1fd8d6aadb4b47ac5c00ed88e1e5",
+        "split": "test",
+        "tokens": 2009
+      },
+      {
+        "bytes": 2115,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "dir-steering/tools/run_sweep.py",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "2a19f943fab767aaf11b058357ffdac5f5c070bc0589a65ac11ca94178a1bb3f",
+        "split": "test",
+        "tokens": 580
+      },
+      {
+        "bytes": 14100,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "8a3ea7d0311c4d1ed7c6fb6fb4866973b6221d7c5c61522206f091d4a8027ab3",
+        "split": "test",
+        "tokens": 2255
+      },
+      {
+        "bytes": 24550,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "ds4_bench.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "15a1e9563a3c5ab08540d0d3f347414b8c3f8f189c5671885a4b80c497ac0721",
+        "split": "test",
+        "tokens": 6153
+      },
+      {
+        "bytes": 64120,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "ds4_cli.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "90dae3a05f4e808cc3fe6ec1a4c244cd1aeb0c0fdbde6beb53a114c6ecce73ed",
+        "split": "test",
+        "tokens": 15076
+      },
+      {
+        "bytes": 3782,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4_distributed.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "84f4803f423f6e002def809d21638edf447b2d2c6ba21c5d97f3f601e37b7441",
+        "split": "test",
+        "tokens": 660
+      },
+      {
+        "bytes": 205797,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "ds4_eval.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "2d9a1d6dad791ee2e3c7e4582bc2d6206b96f14cc022ad162df4cb02f19d6cb1",
+        "split": "test",
+        "tokens": 55144
+      },
+      {
+        "bytes": 40314,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4_gpu.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "310230aa29738b1ea42a4f2b7225f96b6f65f18a115f90580ff75786e26f189a",
+        "split": "test",
+        "tokens": 4918
+      },
+      {
+        "bytes": 28482,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "ds4_help.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "b06efddae1214b3bc6a4509ad5c412b9d971eda0c13ab4697451a9c059ed1605",
+        "split": "test",
+        "tokens": 8700
+      },
+      {
+        "bytes": 268,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4_help.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "56eccbf19e7852e54de5968384bc918cd5ca498dd374f5ea0a13f66aaff68a39",
+        "split": "test",
+        "tokens": 47
+      },
+      {
+        "bytes": 51586,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "ds4_kvstore.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "5a4399565ddf54296cd080d8235f828ab059dc19ca783fb39b8f11b533a2b8c3",
+        "split": "test",
+        "tokens": 11185
+      },
+      {
+        "bytes": 9030,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4_kvstore.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "5c0f6962ebeece9f0a77d7c8817d56835463d8f8b72c9f350aeebf7e1d4b4a97",
+        "split": "test",
+        "tokens": 1191
+      },
+      {
+        "bytes": 6086,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4_rocm.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "1bcf7aadfa80addb4019c19cf48c58d2c782eadb9b413e3edd22b4b06e78ef60",
+        "split": "test",
+        "tokens": 990
+      },
+      {
+        "bytes": 6000,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "ds4_ssd.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "c9760ddf8a1973df6f87407be893d41e0cbb43bc443ccb0bf20574753745864c",
+        "split": "test",
+        "tokens": 1413
+      },
+      {
+        "bytes": 1215,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4_ssd.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "a8443137ca3a68f600cda33aa5a02084770d83068ce62b16e265e892931f2c36",
+        "split": "test",
+        "tokens": 132
+      },
+      {
+        "bytes": 49051,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "ds4_web.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "78b7cc7fc39e7a66d907e8c004aab143eb0c99e6caa8db7a46ac2b80084c7bdb",
+        "split": "test",
+        "tokens": 14533
+      },
+      {
+        "bytes": 927,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "ds4_web.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "7a09902017a28a7494ad6d5976dd0539c2b7531631e4c963f4a417131bc0803d",
+        "split": "test",
+        "tokens": 175
+      },
+      {
+        "bytes": 70891,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "gguf-tools/deepseek4-quantize.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "69f7a348df52b9eed50a46be3aad5f7c0658846f16a89baf8deb1633a702c1c1",
+        "split": "test",
+        "tokens": 19843
+      },
+      {
+        "bytes": 104280,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "gguf-tools/imatrix/dataset/build_ds4_imatrix_dataset.py",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "af3aaeb9fa21fd53a4fdb4e3f9c1da27ef38a0af37e1c3d591c22fe1039981f0",
+        "split": "test",
+        "tokens": 25677
+      },
+      {
+        "bytes": 13764,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "gguf-tools/mixed/splice_mixed_expert_layers_gguf.py",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "31a88043beb36c82f274bc3e1f1a2df3cb7dfff982aa212b9b363b8b174946a2",
+        "split": "test",
+        "tokens": 3263
+      },
+      {
+        "bytes": 12652,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "gguf-tools/quality-testing/collect_official.py",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "0b3d56105e7ee38fedd1da18ee0473a28ff06b4f9c7c4f595ed1b0ae1833d219",
+        "split": "test",
+        "tokens": 2896
+      },
+      {
+        "bytes": 2944,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "gguf-tools/quality-testing/compare_scores.py",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "814a765797182eb7ee2512f77d5249d894598dab479f4d8a3f29b3a92c726ab6",
+        "split": "test",
+        "tokens": 880
+      },
+      {
+        "bytes": 5310,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "gguf-tools/quality-testing/score_official.c",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "60d9e4384dfd6d9884bd3fdb0d4ded8aa7a2c50e5b4e6ff82f89730eabd1c134",
+        "split": "test",
+        "tokens": 1468
+      },
+      {
+        "bytes": 41902,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "gguf-tools/quants.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "71203156de284f0529de121ecb60f278c5d5f2681598ee4e692021ba99959269",
+        "split": "test",
+        "tokens": 11242
+      },
+      {
+        "bytes": 2184,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "gguf-tools/quants.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "58cd37cd51aaa7d242cbc1a995714fe54f919169b955cc6de47f28614c2fe42a",
+        "split": "test",
+        "tokens": 384
+      },
+      {
+        "bytes": 94572,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "linenoise.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "704d9b2388a796b3df960f4120b57300da540b0979c3096c5a712ba776184520",
+        "split": "test",
+        "tokens": 23632
+      },
+      {
+        "bytes": 6605,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "linenoise.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "11241a5a51b1d27b1881267a18b09356cb491fe8f33a598da0ab8140e9007510",
+        "split": "test",
+        "tokens": 1310
+      },
+      {
+        "bytes": 105528,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "rax.c",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "5236b961f8ac72d57c190532fe27be0d9503b6196ad9056c2b9f3f4ebdee118c",
+        "split": "test",
+        "tokens": 25920
+      },
+      {
+        "bytes": 14251,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "rax.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "fa373c75f4a97aa691ac1cb43022e1b9b2779533d4083722b691d1a43f33f428",
+        "split": "test",
+        "tokens": 2970
+      },
+      {
+        "bytes": 2058,
+        "language": "C/C++ Header",
+        "license": "MIT",
+        "relative_path": "rax_malloc.h",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "0e0d04fcb6097cca6219247bc29bb21906b8184131a1fc1f4a1870032045c185",
+        "split": "test",
+        "tokens": 390
+      },
+      {
+        "bytes": 8890,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "speed-bench/plot_speed.py",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "7f4b4904ea132dddc0f2ccf5767662b3664c4a006f8b084f42d19b4c33beb3ca",
+        "split": "test",
+        "tokens": 2677
+      },
+      {
+        "bytes": 6483,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "tests/cuda_long_context_smoke.c",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "0a2076e35f9a07edf629e36d02c3953ab46aa0d1def9f3aec25c53ba025cf61c",
+        "split": "test",
+        "tokens": 1338
+      },
+      {
+        "bytes": 332,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "tests/ds4_agent_test.c",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "2fc66b39a051a083e4229f636501cb29b5c2fba7ed1d14467d5792f7610ebba7",
+        "split": "test",
+        "tokens": 74
+      },
+      {
+        "bytes": 84470,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "tests/ds4_test.c",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "fe6981f16716f64c267e3b2263556dfdfe60948f90320a585a10a1caa79b79b7",
+        "split": "test",
+        "tokens": 19219
+      },
+      {
+        "bytes": 8107,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "tests/generate_long_context_story_prompt.py",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "27453a16ab686c980aada4b7b67167af6d01b8600be980fc83d49e989fc18698",
+        "split": "test",
+        "tokens": 1866
+      },
+      {
+        "bytes": 9315,
+        "language": "Python",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/fetch_official_vectors.py",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "e9068f3ad1d542e13be839427e705fc15526201525c47022bd479388dafe700a",
+        "split": "test",
+        "tokens": 2329
+      },
+      {
+        "bytes": 7642,
+        "language": "C",
+        "license": "MIT",
+        "relative_path": "tests/test_q4k_dot.c",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "698d34d1631d547395825fd77630d084cbc79299dc5259176a1c5daeaf22bd3b",
+        "split": "test",
+        "tokens": 2488
+      },
+      {
+        "bytes": 3681,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "AGENT.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "8d9004d8daa08e91ed8d9dbd18e3be41b04ada4b9ee2ad657b828cb4277594e5",
+        "split": "test",
+        "tokens": 767
+      },
+      {
+        "bytes": 4372,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "CONTRIBUTING.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "40448bd22faf3838f062fe3fcb30a8dc78962727763fa111e0944df83687c5e5",
+        "split": "test",
+        "tokens": 1031
+      },
+      {
+        "bytes": 178,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "dir-steering/examples/eval_prompts.txt",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "322e1332490f9cbb076f1c75c0909a291e7f62b02bb33b50d17d0b7b44610ac7",
+        "split": "test",
+        "tokens": 33
+      },
+      {
+        "bytes": 4834,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "dir-steering/examples/succinct.txt",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "6aca2fc844d464dccf0aa9491721318acbbb2964ea23ac7379e2ce40a9f2e8d1",
+        "split": "test",
+        "tokens": 894
+      },
+      {
+        "bytes": 11806,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "dir-steering/examples/verbose.txt",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "7fefc9564e0831d95d2d585980a36ed373857ab926d9ca73cb3ad75416e85a38",
+        "split": "test",
+        "tokens": 2067
+      },
+      {
+        "bytes": 502,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "dir-steering/out/verbosity.json",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "78fe48da74591e8714db52544c2756bbfe15adf914d4f075c8ce8d6045224029",
+        "split": "test",
+        "tokens": 144
+      },
+      {
+        "bytes": 919,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "gguf-tools/imatrix/dataset/manifest.json",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "1bfb7fe2156ecf66cfd2b2dcfff7ab392ac693f9c699d15654aef7c506adf55b",
+        "split": "test",
+        "tokens": 222
+      },
+      {
+        "bytes": 1115,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "LICENSE",
+        "repo": "ds4",
+        "role": "code",
+        "sha256": "c86076cdf6e500440e052b3fddb05de1785e711c5a613522144cf79a166c4f89",
+        "split": "test",
+        "tokens": 218
+      },
+      {
+        "bytes": 5464,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "misc/ANTHROPIC_LIVE_CONTINUATION.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "6c7bbd23a8a911a51c74c092d2626714faec3cda48f907c59afc6777cfa72414",
+        "split": "test",
+        "tokens": 1140
+      },
+      {
+        "bytes": 3577,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "misc/COMPACT.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "9fb571b4f333105c760bfdcc418778952b9ced2311c7258fe68510eb46223132",
+        "split": "test",
+        "tokens": 724
+      },
+      {
+        "bytes": 23703,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "misc/RESPONSE_API.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "99c6d10bc34aaf160f5b962c413d350b6e0e889d8a2782d5e22b50be1fd7c427",
+        "split": "test",
+        "tokens": 4743
+      },
+      {
+        "bytes": 9309,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "MODEL_CARD.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "cfc337e388af43577f482ad6db9d841393a30c8f54fc3d85ec5a9ebf6235aef7",
+        "split": "test",
+        "tokens": 2259
+      },
+      {
+        "bytes": 11773,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "QA_BEFORE_RELEASES.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "3d8cedfdba1fa94701d1e90ce08cf7c21594647a15899ed7e5d5da4d1108296e",
+        "split": "test",
+        "tokens": 2681
+      },
+      {
+        "bytes": 3206,
+        "language": "Markdown",
+        "license": "MIT",
+        "relative_path": "STRIXHALO.md",
+        "repo": "ds4",
+        "role": "docs",
+        "sha256": "a1672a08d393d1cee8db82a6a8396c48c376694e1ae1a03170b6036380f10e26",
+        "split": "test",
+        "tokens": 873
+      },
+      {
+        "bytes": 148691,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "tests/long_context_security_prompt.txt",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "2ef3d38bc590d4bbfe08092bce7c991f30584bcae419e2c2ef4c5727acb54a6c",
+        "split": "test",
+        "tokens": 38349
+      },
+      {
+        "bytes": 140309,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "tests/long_context_story_prompt.txt",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "29363eab21bbbccaeea8e13f669e7ce05e8eafc48e31fcf9b725edabb2058666",
+        "split": "test",
+        "tokens": 27730
+      },
+      {
+        "bytes": 1431,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/manifest.json",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "97406b65390c7e6f7ba488ea08e7670df98c4ead5ef45048524f26b2cd5ab144",
+        "split": "test",
+        "tokens": 359
+      },
+      {
+        "bytes": 58915,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/official/long_code_audit.official.json",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "8fbc39171cef55d102638f242dba502c68f4146b99b5eceeb01ea4fd2ddd0d3b",
+        "split": "test",
+        "tokens": 11211
+      },
+      {
+        "bytes": 56934,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/official/long_memory_archive.official.json",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "d3d1d56d75ff2d984f834fe889dcedcdc5419acec909c183a219caaa3512ce5b",
+        "split": "test",
+        "tokens": 10213
+      },
+      {
+        "bytes": 19302,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/official/short_code_completion.official.json",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "389ba4860e0b0fbff68693f0f63bddde97ea16f8a79a7d451910499da80ec3c6",
+        "split": "test",
+        "tokens": 3646
+      },
+      {
+        "bytes": 18114,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/official/short_italian_fact.official.json",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "098c0222c9b5faa3dee0dc7d1c0a1f37fcc14af47b18de1f584c9bc7378829cb",
+        "split": "test",
+        "tokens": 3480
+      },
+      {
+        "bytes": 5458,
+        "language": "JSON",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/official/short_reasoning_plain.official.json",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "c4bdbd3a8aa9896f0f0ec22dc98f8a53cde88c7e028de4a9f66cb5f028abffb4",
+        "split": "test",
+        "tokens": 1107
+      },
+      {
+        "bytes": 18851,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/prompts/long_code_audit.txt",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "efae39172d088e3b8da70f408e53eeebe0f5b17fa407a440ed969cd85e4784dd",
+        "split": "test",
+        "tokens": 3637
+      },
+      {
+        "bytes": 18503,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/prompts/long_memory_archive.txt",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "38e7bf001e529b8557a20ca39bd5e9e78fe1dbc3c886b176466c8436b5cc00ae",
+        "split": "test",
+        "tokens": 3204
+      },
+      {
+        "bytes": 102,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/prompts/short_code_completion.txt",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "128f2c2a8b3d8b8ce2b75d9ff9b76339f838e68080bac3a0e19f208282cc88b3",
+        "split": "test",
+        "tokens": 27
+      },
+      {
+        "bytes": 57,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/prompts/short_italian_fact.txt",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "f8ba09a1973f567537f447e9a85400b0ca7369552dc72fe126b0a2623ae938dc",
+        "split": "test",
+        "tokens": 12
+      },
+      {
+        "bytes": 51,
+        "language": "Text",
+        "license": "MIT",
+        "relative_path": "tests/test-vectors/prompts/short_reasoning_plain.txt",
+        "repo": "ds4",
+        "role": "test",
+        "sha256": "0943f0869b5b5b81f5fd1aad28d81770bb494445f0d871bd6c57340088547b74",
+        "split": "test",
+        "tokens": 11
+      }
+    ],
+    "excluded_documents": [
+      {
+        "reason": "empty",
+        "relative_path": "tests/__init__.py",
+        "repo": "markupsafe"
+      },
+      {
+        "reason": "secret_pattern",
+        "relative_path": "README.md",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "ds4.c",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "ds4_agent.c",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "ds4_distributed.c",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "ds4_server.c",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "gguf-tools/imatrix/dataset/rendered_prompts.txt",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "gguf-tools/imatrix/dataset/rendered_prompts_nothink.txt",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "gguf-tools/imatrix/dataset/rendered_prompts_think.txt",
+        "repo": "ds4"
+      },
+      {
+        "reason": "too_large",
+        "relative_path": "speed-bench/promessi_sposi.txt",
+        "repo": "ds4"
+      }
+    ],
+    "file_roles": {
+      "code": 42,
+      "docs": 20,
+      "readme": 8,
+      "test": 30
+    },
+    "languages": {
+      "C": 18,
+      "C/C++ Header": 12,
+      "JSON": 9,
+      "Markdown": 18,
+      "Python": 20,
+      "TOML": 1,
+      "Text": 13,
+      "YAML": 2,
+      "reStructuredText": 7
+    },
+    "license_counts": {
+      "BSD": 2,
+      "MIT": 1
+    },
+    "limitations": [
+      "approximate_regex_token_count",
+      "heuristic_license_detection",
+      "heuristic_secret_scanning",
+      "no_model_tokenizer_yet"
+    ],
+    "meets_50m_token_requirement": false,
+    "rejected_repositories": [],
+    "repo_count": 3,
+    "split_counts": {
+      "test": 72,
+      "train": 28
+    },
+    "status": "insufficient_tokens",
+    "target_min_tokens": 50000000,
+    "total_tokens": 428861
+  },
+  "notes": "Licensed local repository corpus preparation report with license filtering, secret scanning, generated-file filtering, deduplication, repository-aware splits, and approximate token/source accounting.",
+  "recorded_at_unix": 1781953383.6423204,
+  "seed": 123,
+  "status": "insufficient_tokens"
+}

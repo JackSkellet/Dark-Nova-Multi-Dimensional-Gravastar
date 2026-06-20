@@ -1,0 +1,35 @@
+{
+  "command": "uv run python scripts/train_dense_decoder.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 128 --hidden-dim 128 --layers 2 --heads 4 --batch-size 16 --steps 20 --validation-batches 2 --gradient-accumulation-steps 1 --mixed-precision bf16 --max-documents 128 --output-dir artifacts/dense_decoder_smoke --output results/T1_dense_decoder_training_smoke.json",
+  "experiment_id": "T1a_rocm_dense_decoder_bf16_training_failure",
+  "git_commit": "9ae7a7b1f14e930195c0eceea225a537b70aa071",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_baseline_training",
+  "metrics": {
+    "accelerator_backend": "rocm",
+    "batch_size": 16,
+    "benchmark_label": "dense_decoder_training_smoke",
+    "exit_code": 134,
+    "failure": "HW Exception by GPU node-1 reason: GPU Hang",
+    "heads": 4,
+    "hidden_dim": 128,
+    "layers": 2,
+    "limitations": [
+      "failed_before_metrics_written",
+      "gpu_hang_requires_smaller_repro_and_rocm_debugging"
+    ],
+    "mixed_precision": "bf16",
+    "rocm_recovered_after_failure": true,
+    "seq_len": 128,
+    "status": "failed",
+    "steps": 20
+  },
+  "notes": "Failed ROCm BF16 dense decoder training smoke. The process aborted with a GPU hang before writing metrics; a later ROCm matmul smoke succeeded, so the failure is recorded as a training-path/config failure.",
+  "recorded_at_unix": 1781953593.7670333,
+  "seed": 123,
+  "status": "failed"
+}

@@ -657,6 +657,151 @@
       "outcome": "no_signal",
       "primary_reason": "all_precision_policies_have_zero_measurable_kl",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "bf16_forward_backward": true,
+        "checkpoint_resume_ok": true,
+        "device_name": "AMD Radeon RX 9070 XT",
+        "fp16_forward_backward": true,
+        "fp32_forward_backward": true,
+        "free_memory_bytes": 15680405504,
+        "max_stable_tokens": 8192,
+        "rocm_available": true,
+        "rocm_runtime_version": "7.2.53211",
+        "stable_batch_size": 64,
+        "total_memory_bytes": 17095983104
+      },
+      "experiment_id": "R1_rocm_training_validation",
+      "hypothesis": "real_training_readiness",
+      "limitations": [
+        "tiny_decoder_training_probe_only",
+        "not_full_model_training",
+        "not_50m_token_run",
+        "not_occupancy_measurement",
+        "throughput_depends_on_python_training_loop"
+      ],
+      "outcome": "training_readiness_positive",
+      "primary_reason": "rocm_training_runtime_probe_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "document_count": 100,
+        "file_roles": {
+          "code": 42,
+          "docs": 20,
+          "readme": 8,
+          "test": 30
+        },
+        "languages": {
+          "C": 18,
+          "C/C++ Header": 12,
+          "JSON": 9,
+          "Markdown": 18,
+          "Python": 20,
+          "TOML": 1,
+          "Text": 13,
+          "YAML": 2,
+          "reStructuredText": 7
+        },
+        "license_counts": {
+          "BSD": 2,
+          "MIT": 1
+        },
+        "meets_50m_token_requirement": false,
+        "repo_count": 3,
+        "split_counts": {
+          "test": 72,
+          "train": 28
+        },
+        "target_min_tokens": 50000000,
+        "total_tokens": 428861
+      },
+      "experiment_id": "D1_corpus_preparation",
+      "hypothesis": "real_training_data",
+      "limitations": [
+        "approximate_regex_token_count",
+        "heuristic_license_detection",
+        "heuristic_secret_scanning",
+        "no_model_tokenizer_yet",
+        "below_50m_token_requirement"
+      ],
+      "outcome": "corpus_prepared_insufficient_tokens",
+      "primary_reason": "licensed_corpus_prepared_below_required_token_floor",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": false,
+        "failure": "HW Exception by GPU node-1 reason: GPU Hang",
+        "parameter_count": 0,
+        "status": "failed",
+        "train_steps": 0,
+        "train_tokens": 0,
+        "validation_loss": 0.0
+      },
+      "experiment_id": "T1a_rocm_dense_decoder_bf16_training_failure",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "failed_training_run"
+      ],
+      "outcome": "training_failed",
+      "primary_reason": "dense_decoder_training_smoke_failed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "nonfinite_loss_at_step_2",
+        "parameter_count": 87361,
+        "status": "failed_nonfinite_loss",
+        "train_steps": 5,
+        "train_tokens": 1280,
+        "validation_loss": NaN
+      },
+      "experiment_id": "T1_dense_decoder_training_smoke",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "failed_training_run"
+      ],
+      "outcome": "training_failed",
+      "primary_reason": "dense_decoder_training_smoke_failed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "cpu",
+        "checkpoint_resume_ok": true,
+        "failure": "",
+        "parameter_count": 85313,
+        "status": "completed",
+        "train_steps": 5,
+        "train_tokens": 640,
+        "validation_loss": 5.384519577026367
+      },
+      "experiment_id": "T1b_cpu_dense_decoder_training_smoke",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -671,6 +816,7 @@
   ],
   "outcome_counts": {
     "codegen_proxy_positive": 3,
+    "corpus_prepared_insufficient_tokens": 1,
     "doc_drift_positive_control": 1,
     "docgen_proxy_positive": 1,
     "exploration_positive": 1,
@@ -683,8 +829,11 @@
     "recorded": 28,
     "rejected": 1,
     "runtime_positive": 1,
-    "smoke_pass": 1
+    "smoke_pass": 1,
+    "training_failed": 2,
+    "training_readiness_positive": 1,
+    "training_smoke_positive": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 44
+  "record_count": 49
 }

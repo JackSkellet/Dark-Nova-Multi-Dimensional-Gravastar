@@ -63,6 +63,51 @@ def test_assessment_marks_rocm_scaling_as_measurement_without_occupancy_claim():
     assert assessment["evidence"]["uses_rocm_transfer"] is True
 
 
+def test_assessment_marks_rocm_training_validation_as_readiness_evidence():
+    assessment = assess_record(_record("R1_rocm_training_validation"))
+
+    assert assessment["outcome"] == "training_readiness_positive"
+    assert assessment["primary_reason"] == "rocm_training_runtime_probe_completed"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "not_full_model_training" in assessment["limitations"]
+    assert assessment["evidence"]["accelerator_backend"] == "rocm"
+    assert assessment["evidence"]["rocm_available"] is True
+    assert assessment["evidence"]["checkpoint_resume_ok"] is True
+    assert assessment["evidence"]["stable_batch_size"] >= 1
+    assert assessment["evidence"]["max_stable_tokens"] >= 1
+
+
+def test_assessment_marks_corpus_preparation_as_insufficient_until_50m_tokens():
+    assessment = assess_record(_record("D1_corpus_preparation"))
+
+    assert assessment["outcome"] == "corpus_prepared_insufficient_tokens"
+    assert assessment["primary_reason"] == "licensed_corpus_prepared_below_required_token_floor"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "below_50m_token_requirement" in assessment["limitations"]
+    assert assessment["evidence"]["repo_count"] >= 1
+    assert assessment["evidence"]["total_tokens"] > 0
+    assert assessment["evidence"]["meets_50m_token_requirement"] is False
+
+
+def test_assessment_marks_dense_training_smoke_outcomes_without_overclaiming():
+    rocm = assess_record(_record("T1_dense_decoder_training_smoke"))
+    cpu = assess_record(_record("T1b_cpu_dense_decoder_training_smoke"))
+    bf16_failure = assess_record(_record("T1a_rocm_dense_decoder_bf16_training_failure"))
+
+    assert rocm["outcome"] == "training_failed"
+    assert rocm["primary_reason"] == "dense_decoder_training_smoke_failed"
+    assert rocm["evidence"]["accelerator_backend"] == "rocm"
+    assert rocm["evidence"]["failure"]
+
+    assert cpu["outcome"] == "training_smoke_positive"
+    assert cpu["primary_reason"] == "dense_decoder_training_pipeline_completed"
+    assert cpu["evidence"]["accelerator_backend"] == "cpu"
+    assert cpu["evidence"]["checkpoint_resume_ok"] is True
+
+    assert bf16_failure["outcome"] == "training_failed"
+    assert bf16_failure["evidence"]["accelerator_backend"] == "rocm"
+
+
 def test_assessment_marks_structured_external_memory_as_reduced_exploration():
     assessment = assess_record(_record("E6a_structured_repository_memory"))
 
@@ -222,9 +267,13 @@ def test_assessment_marks_synthetic_api_doc_drift_detection_as_positive_control(
 def test_assessment_manifest_includes_new_research_options_for_current_limits():
     summary = assess_manifest(Path("results"))
 
-    assert summary["record_count"] >= 44
+    assert summary["record_count"] >= 49
     assert summary["outcome_counts"]["runtime_positive"] >= 1
     assert summary["outcome_counts"]["measurement_positive"] >= 1
+    assert summary["outcome_counts"]["training_readiness_positive"] >= 1
+    assert summary["outcome_counts"]["corpus_prepared_insufficient_tokens"] >= 1
+    assert summary["outcome_counts"]["training_smoke_positive"] >= 1
+    assert summary["outcome_counts"]["training_failed"] >= 2
     assert summary["outcome_counts"]["exploration_positive"] >= 1
     assert summary["outcome_counts"]["real_repo_measurement_positive"] >= 2
     assert summary["outcome_counts"]["real_repo_doc_measurement_positive"] >= 1

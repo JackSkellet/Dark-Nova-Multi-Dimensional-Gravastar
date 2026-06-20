@@ -32,6 +32,16 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_e4c(record)
     if experiment_id == "E4d_rocm_transfer_scaling":
         return _assess_e4d(record)
+    if experiment_id == "R1_rocm_training_validation":
+        return _assess_r1(record)
+    if experiment_id == "D1_corpus_preparation":
+        return _assess_d1(record)
+    if experiment_id in {
+        "T1_dense_decoder_training_smoke",
+        "T1a_rocm_dense_decoder_bf16_training_failure",
+        "T1b_cpu_dense_decoder_training_smoke",
+    }:
+        return _assess_t1(record)
     if experiment_id == "E5g_public_patch_replay_suite":
         return _assess_e5g(record)
     if experiment_id == "S2c_semantic_extraction_red_team":
@@ -279,6 +289,120 @@ def _assess_e4d(record: dict[str, Any]) -> Assessment:
             ),
             "best_host_to_device_bandwidth_gb_s_p50": best_h2d_bandwidth,
             "best_device_to_host_bandwidth_gb_s_p50": best_d2h_bandwidth,
+        },
+    }
+
+
+def _assess_r1(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    checkpoint_resume_ok = bool(metrics["checkpoint_resume"]["resume_ok"])
+    rocm_ready = bool(
+        metrics.get("accelerator_backend") == "rocm"
+        and metrics.get("rocm_available") is True
+        and checkpoint_resume_ok
+        and int(metrics.get("stable_batch_size", 0)) > 0
+    )
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "training_readiness_positive" if rocm_ready else "mixed",
+        "supports_pareto_improvement": False,
+        "primary_reason": "rocm_training_runtime_probe_completed",
+        "limitations": [
+            "tiny_decoder_training_probe_only",
+            "not_full_model_training",
+            "not_50m_token_run",
+            "not_occupancy_measurement",
+            "throughput_depends_on_python_training_loop",
+        ],
+        "evidence": {
+            "accelerator_backend": metrics.get("accelerator_backend"),
+            "rocm_available": metrics.get("rocm_available"),
+            "rocm_runtime_version": metrics.get("rocm_runtime_version"),
+            "device_name": metrics.get("device_properties", {}).get("name", ""),
+            "total_memory_bytes": metrics.get("memory", {}).get("total_bytes", 0),
+            "free_memory_bytes": metrics.get("memory", {}).get("free_bytes", 0),
+            "fp32_forward_backward": metrics["precision_support"][
+                "fp32_forward_backward"
+            ],
+            "bf16_forward_backward": metrics["precision_support"][
+                "bf16_forward_backward"
+            ],
+            "fp16_forward_backward": metrics["precision_support"][
+                "fp16_forward_backward"
+            ],
+            "stable_batch_size": metrics.get("stable_batch_size", 0),
+            "max_stable_tokens": metrics.get("max_stable_tokens", 0),
+            "checkpoint_resume_ok": checkpoint_resume_ok,
+        },
+    }
+
+
+def _assess_d1(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    meets_50m = bool(metrics.get("meets_50m_token_requirement", False))
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "corpus_prepared" if meets_50m else "corpus_prepared_insufficient_tokens",
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "licensed_corpus_prepared"
+            if meets_50m
+            else "licensed_corpus_prepared_below_required_token_floor"
+        ),
+        "limitations": [
+            "approximate_regex_token_count",
+            "heuristic_license_detection",
+            "heuristic_secret_scanning",
+            "no_model_tokenizer_yet",
+        ]
+        + ([] if meets_50m else ["below_50m_token_requirement"]),
+        "evidence": {
+            "repo_count": metrics.get("repo_count", 0),
+            "document_count": metrics.get("document_count", 0),
+            "total_tokens": metrics.get("total_tokens", 0),
+            "target_min_tokens": metrics.get("target_min_tokens", 0),
+            "meets_50m_token_requirement": meets_50m,
+            "license_counts": metrics.get("license_counts", {}),
+            "languages": metrics.get("languages", {}),
+            "file_roles": metrics.get("file_roles", {}),
+            "split_counts": metrics.get("split_counts", {}),
+        },
+    }
+
+
+def _assess_t1(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    training = metrics.get("training", {})
+    checkpoint = metrics.get("checkpoint", {})
+    completed = bool(metrics.get("status") == "completed" and record.get("status") == "completed")
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "training_smoke_positive" if completed else "training_failed",
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "dense_decoder_training_pipeline_completed"
+            if completed
+            else "dense_decoder_training_smoke_failed"
+        ),
+        "limitations": [
+            "training_smoke_only",
+            "not_10m_parameter_model",
+            "not_50m_token_run",
+            "no_functional_coding_evaluation_yet",
+        ]
+        + ([] if completed else ["failed_training_run"]),
+        "evidence": {
+            "accelerator_backend": metrics.get("accelerator_backend"),
+            "status": metrics.get("status"),
+            "failure": metrics.get("failure", ""),
+            "parameter_count": metrics.get("model", {}).get("parameter_count", 0),
+            "train_tokens": training.get("train_tokens", 0),
+            "train_steps": training.get("steps", 0),
+            "validation_loss": metrics.get("validation", {}).get("loss", 0.0),
+            "checkpoint_resume_ok": bool(checkpoint.get("resume_ok", False)),
         },
     }
 
