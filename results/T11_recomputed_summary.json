@@ -1,9 +1,9 @@
 {
   "command": "uv run python scripts/recompute_t11_summary.py --results-dir results --output results/T11_recomputed_summary.json --experiment-id T11_recomputed_summary",
   "experiment_id": "T11_recomputed_summary",
-  "git_commit": "d062ab29bd02fca3ea0edd1ed0be455a0ceaf527",
-  "git_dirty": true,
-  "git_status_short": "M README.md\n M research/16_integrated_results.md\n M research/17_final_assessment.md\n M research/22_50m_adamw_dense_candidate_results.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? results/T11_recomputed_summary.json\n?? scripts/recompute_t11_summary.py\n?? src/weightlab/t11_analysis.py\n?? tests/test_t11_analysis.py",
+  "git_commit": "48d2768b13194d1d2e84d37554249840407d00e2",
+  "git_dirty": false,
+  "git_status_short": "",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -102,7 +102,7 @@
     }
   },
   "notes": "Recomputes T11 comparison from existing committed artifacts. Test loss is reported for evaluation only and is not used for checkpoint selection.",
-  "recorded_at_unix": 1781990253.8439844,
+  "recorded_at_unix": 1781990364.9516604,
   "resolved_config": {
     "experiment_id": "T11_recomputed_summary",
     "output": "results/T11_recomputed_summary.json",
