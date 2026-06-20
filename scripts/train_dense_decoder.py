@@ -42,6 +42,8 @@ def main() -> None:
     parser.add_argument("--optimizer-name", choices=["adamw", "sgd"], default="adamw")
     parser.add_argument("--progress-interval", type=int, default=0)
     parser.add_argument("--checkpoint-interval", type=int, default=0)
+    parser.add_argument("--architecture-variant", choices=["dense", "adapter"], default="dense")
+    parser.add_argument("--adapter-dim", type=int, default=0)
     parser.add_argument("--max-documents", type=int, default=128)
     parser.add_argument("--max-file-bytes", type=int, default=256_000)
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/dense_decoder_smoke"))
@@ -112,6 +114,8 @@ def main() -> None:
         optimizer_name=args.optimizer_name,
         progress_interval=args.progress_interval,
         checkpoint_interval=args.checkpoint_interval,
+        architecture_variant=args.architecture_variant,
+        adapter_dim=args.adapter_dim,
     )
     metrics = train_dense_decoder(
         texts,
@@ -154,6 +158,8 @@ def main() -> None:
             f"--mixed-precision {args.mixed_precision} --output-dir {args.output_dir} "
             f"--progress-interval {args.progress_interval} "
             f"--checkpoint-interval {args.checkpoint_interval} "
+            f"--architecture-variant {args.architecture_variant} "
+            f"--adapter-dim {args.adapter_dim} "
             f"--output {args.output}"
         ),
         metrics=metrics,

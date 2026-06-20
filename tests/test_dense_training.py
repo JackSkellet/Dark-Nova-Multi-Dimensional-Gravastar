@@ -41,6 +41,7 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert result["model"]["parameter_count"] > 0
     assert result["model"]["config"]["attention_mask_mode"] == "additive_causal"
     assert result["model"]["config"]["optimizer_name"] == "adamw"
+    assert result["model"]["config"]["architecture_variant"] == "dense"
     assert result["tokenizer"]["name"] == "byte_level"
     assert result["training"]["train_tokens"] > 0
     assert len(result["training"]["loss_curve"]) == 2
@@ -78,6 +79,39 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert resumed["training"]["start_step"] == 2
     assert resumed["training"]["completed_steps_this_invocation"] == 1
     assert resumed["training"]["resumed_from"].endswith("dense_decoder_latest.pt")
+
+
+def test_adapter_decoder_training_smoke_records_variant(tmp_path):
+    texts = [
+        "function usable(value) { return value + 1 }",
+        "README: usable increments a value.",
+        "test('usable', () => expect(usable(1)).toBe(2))",
+    ]
+    config = DenseTrainingConfig(
+        device="cpu",
+        seq_len=16,
+        hidden_dim=32,
+        layers=1,
+        heads=4,
+        batch_size=2,
+        steps=2,
+        validation_batches=1,
+        mixed_precision="fp32",
+        architecture_variant="adapter",
+        adapter_dim=8,
+    )
+
+    result = train_dense_decoder(
+        texts=texts,
+        config=config,
+        output_dir=tmp_path,
+        seed=123,
+    )
+
+    assert result["status"] == "completed"
+    assert result["model"]["config"]["architecture_variant"] == "adapter"
+    assert result["model"]["config"]["adapter_dim"] == 8
+    assert result["model"]["parameter_count"] > 0
 
 
 def test_dense_step_debug_probe_records_phase_tensor_health():

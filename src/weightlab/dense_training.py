@@ -29,6 +29,8 @@ class DenseTrainingConfig:
     optimizer_name: str = "adamw"
     progress_interval: int = 0
     checkpoint_interval: int = 0
+    architecture_variant: str = "dense"
+    adapter_dim: int = 0
 
 
 class ByteTokenizer:
@@ -53,21 +55,40 @@ class DenseDecoder(torch.nn.Module):
         layers: int,
         heads: int,
         attention_mask_mode: str = "additive_causal",
+        architecture_variant: str = "dense",
+        adapter_dim: int = 0,
     ) -> None:
         super().__init__()
         self.seq_len = seq_len
         self.attention_mask_mode = attention_mask_mode
+        self.architecture_variant = architecture_variant
         self.token_embedding = torch.nn.Embedding(vocab_size, hidden_dim)
         self.position_embedding = torch.nn.Embedding(seq_len, hidden_dim)
-        layer = torch.nn.TransformerEncoderLayer(
-            d_model=hidden_dim,
-            nhead=heads,
-            dim_feedforward=hidden_dim * 4,
-            dropout=0.0,
-            batch_first=True,
-            activation="gelu",
+        self.blocks = torch.nn.ModuleList(
+            [
+                torch.nn.TransformerEncoderLayer(
+                    d_model=hidden_dim,
+                    nhead=heads,
+                    dim_feedforward=hidden_dim * 4,
+                    dropout=0.0,
+                    batch_first=True,
+                    activation="gelu",
+                )
+                for _ in range(layers)
+            ]
         )
-        self.blocks = torch.nn.TransformerEncoder(layer, num_layers=layers)
+        if architecture_variant == "dense":
+            if adapter_dim != 0:
+                raise ValueError("dense architecture requires adapter_dim=0")
+            self.adapters = torch.nn.ModuleList([torch.nn.Identity() for _ in range(layers)])
+        elif architecture_variant == "adapter":
+            if adapter_dim <= 0:
+                raise ValueError("adapter architecture requires adapter_dim > 0")
+            self.adapters = torch.nn.ModuleList(
+                [_ResidualAdapter(hidden_dim, adapter_dim) for _ in range(layers)]
+            )
+        else:
+            raise ValueError(f"unknown architecture_variant: {architecture_variant}")
         self.norm = torch.nn.LayerNorm(hidden_dim)
         self.head = torch.nn.Linear(hidden_dim, vocab_size)
 
@@ -76,8 +97,26 @@ class DenseDecoder(torch.nn.Module):
         positions = torch.arange(seq_len, device=input_ids.device).unsqueeze(0).expand(batch, -1)
         hidden = self.token_embedding(input_ids) + self.position_embedding(positions)
         mask = _causal_mask(self.attention_mask_mode, seq_len, input_ids.device)
-        hidden = self.blocks(hidden, mask=mask, is_causal=mask is not None)
+        for block, adapter in zip(self.blocks, self.adapters, strict=True):
+            hidden = block(hidden, src_mask=mask, is_causal=mask is not None)
+            hidden = adapter(hidden)
         return self.head(self.norm(hidden))
+
+
+class _ResidualAdapter(torch.nn.Module):
+    def __init__(self, hidden_dim: int, adapter_dim: int) -> None:
+        super().__init__()
+        self.norm = torch.nn.LayerNorm(hidden_dim)
+        self.down = torch.nn.Linear(hidden_dim, adapter_dim)
+        self.up = torch.nn.Linear(adapter_dim, hidden_dim)
+        self.activation = torch.nn.GELU()
+        torch.nn.init.normal_(self.down.weight, mean=0.0, std=0.02)
+        torch.nn.init.zeros_(self.down.bias)
+        torch.nn.init.normal_(self.up.weight, mean=0.0, std=0.02)
+        torch.nn.init.zeros_(self.up.bias)
+
+    def forward(self, hidden: torch.Tensor) -> torch.Tensor:
+        return hidden + self.up(self.activation(self.down(self.norm(hidden))))
 
 
 def train_dense_decoder(
@@ -104,6 +143,8 @@ def train_dense_decoder(
         config.layers,
         config.heads,
         config.attention_mask_mode,
+        config.architecture_variant,
+        config.adapter_dim,
     ).to(device)
     optimizer = _make_optimizer(model, config)
     dtype = _autocast_dtype(config.mixed_precision)
@@ -305,6 +346,8 @@ def debug_dense_step_stability(
         config.layers,
         config.heads,
         config.attention_mask_mode,
+        config.architecture_variant,
+        config.adapter_dim,
     ).to(device)
     optimizer = _make_optimizer(model, config)
     dtype = _autocast_dtype(config.mixed_precision)
@@ -465,6 +508,8 @@ def _resume_check(
         config.layers,
         config.heads,
         config.attention_mask_mode,
+        config.architecture_variant,
+        config.adapter_dim,
     ).to(device)
     optimizer = _make_optimizer(model, config)
     model.load_state_dict(payload["model"])
