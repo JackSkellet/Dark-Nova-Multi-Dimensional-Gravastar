@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import math
 import time
 from dataclasses import asdict, dataclass
@@ -26,6 +27,8 @@ class DenseTrainingConfig:
     learning_rate: float = 3e-4
     attention_mask_mode: str = "additive_causal"
     optimizer_name: str = "adamw"
+    progress_interval: int = 0
+    checkpoint_interval: int = 0
 
 
 class ByteTokenizer:
@@ -106,6 +109,11 @@ def train_dense_decoder(
     use_autocast = device.type == "cuda" and dtype is not None
 
     loss_curve: list[dict[str, float]] = []
+    progress_path = output_dir / "training_progress.jsonl"
+    if config.progress_interval > 0 and progress_path.exists():
+        progress_path.unlink()
+    latest_checkpoint_path = output_dir / "dense_decoder_latest.pt"
+    checkpoint_flushes: list[dict[str, Any]] = []
     train_start = time.perf_counter()
     status = "completed"
     failure = ""
@@ -140,6 +148,44 @@ def train_dense_decoder(
         loss_curve.append(
             {"step": float(step), "loss": step_loss / config.gradient_accumulation_steps}
         )
+        step_loss_value = step_loss / config.gradient_accumulation_steps
+        elapsed_so_far = max(time.perf_counter() - train_start, 1e-9)
+        if _should_flush(step, config.progress_interval):
+            _append_progress(
+                progress_path,
+                {
+                    "step": step,
+                    "loss": step_loss_value,
+                    "train_tokens": step
+                    * config.gradient_accumulation_steps
+                    * config.batch_size
+                    * config.seq_len,
+                    "elapsed_s": elapsed_so_far,
+                    "tokens_per_second": (
+                        step
+                        * config.gradient_accumulation_steps
+                        * config.batch_size
+                        * config.seq_len
+                    )
+                    / elapsed_so_far,
+                },
+            )
+        if _should_flush(step, config.checkpoint_interval):
+            _save_training_checkpoint(
+                latest_checkpoint_path,
+                model,
+                optimizer,
+                config,
+                step=step,
+                latest_loss=step_loss_value,
+            )
+            checkpoint_flushes.append(
+                {
+                    "step": step,
+                    "path": str(latest_checkpoint_path),
+                    "bytes": latest_checkpoint_path.stat().st_size,
+                }
+            )
 
     elapsed = max(time.perf_counter() - train_start, 1e-9)
     train_tokens = (
@@ -186,6 +232,19 @@ def train_dense_decoder(
             "elapsed_s": elapsed,
             "tokens_per_second": train_tokens / elapsed,
             "loss_curve": loss_curve,
+        },
+        "progress": {
+            "path": str(progress_path),
+            "records": _count_jsonl_records(progress_path),
+            "latest": _last_jsonl_record(progress_path),
+            "checkpoint_flushes": checkpoint_flushes,
+            "latest_checkpoint": {
+                "path": str(latest_checkpoint_path),
+                "exists": latest_checkpoint_path.exists(),
+                "bytes": latest_checkpoint_path.stat().st_size
+                if latest_checkpoint_path.exists()
+                else 0,
+            },
         },
         "validation": {"loss": validation_loss},
         "generation_samples": [{"prompt": "def ", "text": sample}],
@@ -395,6 +454,53 @@ def _resume_check(
     model.load_state_dict(payload["model"])
     optimizer.load_state_dict(payload["optimizer"])
     return int(payload.get("step", 0)) == config.steps
+
+
+def _should_flush(step: int, interval: int) -> bool:
+    return interval > 0 and step > 0 and step % interval == 0
+
+
+def _append_progress(path: Path, row: dict[str, Any]) -> None:
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, sort_keys=True) + "\n")
+
+
+def _save_training_checkpoint(
+    checkpoint_path: Path,
+    model: torch.nn.Module,
+    optimizer: torch.optim.Optimizer,
+    config: DenseTrainingConfig,
+    *,
+    step: int,
+    latest_loss: float,
+) -> None:
+    torch.save(
+        {
+            "model": model.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "config": asdict(config),
+            "step": step,
+            "latest_loss": latest_loss,
+        },
+        checkpoint_path,
+    )
+
+
+def _count_jsonl_records(path: Path) -> int:
+    if not path.exists():
+        return 0
+    with path.open(encoding="utf-8") as handle:
+        return sum(1 for _ in handle)
+
+
+def _last_jsonl_record(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    last = ""
+    with path.open(encoding="utf-8") as handle:
+        for line in handle:
+            last = line
+    return json.loads(last) if last else {}
 
 
 def _autocast_dtype(mixed_precision: str) -> torch.dtype | None:

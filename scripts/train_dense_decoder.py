@@ -38,6 +38,8 @@ def main() -> None:
     parser.add_argument("--mixed-precision", choices=["fp32", "bf16", "fp16"], default="bf16")
     parser.add_argument("--learning-rate", type=float, default=3e-4)
     parser.add_argument("--optimizer-name", choices=["adamw", "sgd"], default="adamw")
+    parser.add_argument("--progress-interval", type=int, default=0)
+    parser.add_argument("--checkpoint-interval", type=int, default=0)
     parser.add_argument("--max-documents", type=int, default=128)
     parser.add_argument("--max-file-bytes", type=int, default=256_000)
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/dense_decoder_smoke"))
@@ -91,6 +93,8 @@ def main() -> None:
         mixed_precision=args.mixed_precision,
         learning_rate=args.learning_rate,
         optimizer_name=args.optimizer_name,
+        progress_interval=args.progress_interval,
+        checkpoint_interval=args.checkpoint_interval,
     )
     metrics = train_dense_decoder(texts, config, args.output_dir, seed=args.seed)
     metrics["corpus"] = {
@@ -119,6 +123,8 @@ def main() -> None:
             f"--gradient-accumulation-steps {args.gradient_accumulation_steps} "
             f"--max-file-bytes {args.max_file_bytes} "
             f"--mixed-precision {args.mixed_precision} --output-dir {args.output_dir} "
+            f"--progress-interval {args.progress_interval} "
+            f"--checkpoint-interval {args.checkpoint_interval} "
             f"--output {args.output}"
         ),
         metrics=metrics,

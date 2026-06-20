@@ -22,6 +22,8 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
         validation_batches=1,
         gradient_accumulation_steps=1,
         mixed_precision="fp32",
+        progress_interval=1,
+        checkpoint_interval=1,
     )
 
     assert config.attention_mask_mode == "additive_causal"
@@ -47,6 +49,10 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert result["checkpoint"]["path"]
     assert result["checkpoint"]["resume_ok"] is True
     assert (tmp_path / "dense_decoder_last.pt").exists()
+    assert result["progress"]["records"] == 2
+    assert result["progress"]["latest"]["step"] == 2
+    assert result["progress"]["latest_checkpoint"]["exists"] is True
+    assert (tmp_path / "dense_decoder_latest.pt").exists()
 
 
 def test_dense_step_debug_probe_records_phase_tensor_health():
