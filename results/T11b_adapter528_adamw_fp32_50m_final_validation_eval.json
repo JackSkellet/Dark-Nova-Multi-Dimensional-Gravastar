@@ -1,0 +1,95 @@
+{
+  "command": "uv run python scripts/evaluate_dense_checkpoint.py --checkpoint artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --split validation --device rocm --seed 424242 --batches 512 --output results/T11b_adapter528_adamw_fp32_50m_final_validation_eval.json --experiment-id T11b_adapter528_adamw_fp32_50m_final_validation_eval",
+  "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_validation_eval",
+  "git_commit": "2cf2d8bd9016d30aef359c80b3beff9e3a5a1adb",
+  "git_dirty": true,
+  "git_status_short": "M results/manifest.json\n?? results/T11a_dense544_adamw_fp32_50m.json\n?? results/T11a_dense544_adamw_fp32_50m_best_test_eval.json\n?? results/T11a_dense544_adamw_fp32_50m_best_validation_eval.json\n?? results/T11a_dense544_adamw_fp32_50m_final_test_eval.json\n?? results/T11a_dense544_adamw_fp32_50m_final_validation_eval.json\n?? results/T11b_adapter528_adamw_fp32_50m.json",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "true_d4_split_checkpoint_evaluation",
+  "metrics": {
+    "batches": 512,
+    "benchmark_label": "dense_checkpoint_evaluation",
+    "checkpoint": {
+      "bytes": 127337914,
+      "path": "artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt",
+      "step": 195313
+    },
+    "corpus": {
+      "document_count_used": 85,
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "source": "hf_jsonl_mirror",
+      "split": "validation",
+      "split_texts_loaded_separately": true
+    },
+    "device": {
+      "accelerator_backend": "rocm",
+      "requested": "rocm",
+      "resolved": "cuda",
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211"
+    },
+    "loss": 1.0387521978118457,
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "adapter_dim": 64,
+        "architecture_variant": "adapter",
+        "attention_mask_mode": "finite_causal",
+        "batch_size": 2,
+        "block_impl": "explicit_causal",
+        "checkpoint_interval": 5000,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "learning_rate": 0.0001,
+        "mixed_precision": "fp32",
+        "optimizer_name": "adamw",
+        "progress_interval": 5000,
+        "seq_len": 128,
+        "steps": 195313,
+        "validation_batches": 512,
+        "validation_seed": 424242
+      },
+      "parameter_count": 10604801
+    },
+    "resolved_config": {
+      "batches": 512,
+      "checkpoint": "artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt",
+      "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "device": "rocm",
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_validation_eval",
+      "output": "results/T11b_adapter528_adamw_fp32_50m_final_validation_eval.json",
+      "seed": 424242,
+      "split": "validation"
+    },
+    "sample_order_sha256": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+    "seed": 424242,
+    "split": "validation",
+    "tokenizer": {
+      "name": "byte_level",
+      "vocab_size": 257
+    },
+    "tokens": 132096
+  },
+  "notes": "Evaluation-only run against the labeled D4 split loaded separately from training rows. No optimizer step or retraining is performed.",
+  "recorded_at_unix": 1781988575.620461,
+  "resolved_config": {
+    "batches": 512,
+    "checkpoint": "artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "device": "rocm",
+    "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_validation_eval",
+    "output": "results/T11b_adapter528_adamw_fp32_50m_final_validation_eval.json",
+    "seed": 424242,
+    "split": "validation"
+  },
+  "seed": 424242,
+  "status": "completed"
+}
