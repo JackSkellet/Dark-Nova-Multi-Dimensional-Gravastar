@@ -35,6 +35,7 @@ def main() -> None:
     parser.add_argument("--gradient-accumulation-steps", type=int, default=1)
     parser.add_argument("--mixed-precision", choices=["fp32", "bf16", "fp16"], default="bf16")
     parser.add_argument("--learning-rate", type=float, default=3e-4)
+    parser.add_argument("--optimizer-name", choices=["adamw", "sgd"], default="adamw")
     parser.add_argument("--max-documents", type=int, default=128)
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/dense_decoder_smoke"))
     parser.add_argument(
@@ -65,6 +66,7 @@ def main() -> None:
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         mixed_precision=args.mixed_precision,
         learning_rate=args.learning_rate,
+        optimizer_name=args.optimizer_name,
     )
     metrics = train_dense_decoder(texts, config, args.output_dir, seed=args.seed)
     metrics["corpus"] = {

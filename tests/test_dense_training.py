@@ -20,6 +20,9 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
         mixed_precision="fp32",
     )
 
+    assert config.attention_mask_mode == "additive_causal"
+    assert config.optimizer_name == "adamw"
+
     result = train_dense_decoder(
         texts=texts,
         config=config,
@@ -30,6 +33,8 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert result["benchmark_label"] == "dense_decoder_training_smoke"
     assert result["status"] == "completed"
     assert result["model"]["parameter_count"] > 0
+    assert result["model"]["config"]["attention_mask_mode"] == "additive_causal"
+    assert result["model"]["config"]["optimizer_name"] == "adamw"
     assert result["tokenizer"]["name"] == "byte_level"
     assert result["training"]["train_tokens"] > 0
     assert len(result["training"]["loss_curve"]) == 2

@@ -264,6 +264,46 @@ def test_assessment_marks_synthetic_api_doc_drift_detection_as_positive_control(
     assert assessment["evidence"]["supports_model_level_claim"] is False
 
 
+def test_assessment_classifies_rocm_transformer_stability_records():
+    passing = {
+        "experiment_id": "R2_rocm_transformer_stability",
+        "hypothesis": "rocm_transformer_failure_is_component_or_kernel_path_specific",
+        "metrics": {
+            "failure_count": 0,
+            "case_count": 2,
+            "first_failure": None,
+            "case_results": [
+                {"component": "embedding", "status": "ok"},
+                {"component": "transformer", "status": "ok"},
+            ],
+        },
+    }
+    failing = {
+        "experiment_id": "R2_rocm_transformer_stability",
+        "hypothesis": "rocm_transformer_failure_is_component_or_kernel_path_specific",
+        "metrics": {
+            "failure_count": 1,
+            "case_count": 2,
+            "first_failure": {
+                "component": "transformer",
+                "dtype": "bf16",
+                "mask_mode": "bool_causal",
+                "status": "failed",
+                "error": "RuntimeError: gpu hang",
+            },
+            "case_results": [
+                {"component": "embedding", "status": "ok"},
+                {"component": "transformer", "status": "failed"},
+            ],
+        },
+    }
+
+    assert assess_record(passing)["outcome"] == "transformer_stability_positive"
+    failed_assessment = assess_record(failing)
+    assert failed_assessment["outcome"] == "transformer_stability_failed"
+    assert failed_assessment["evidence"]["first_failure_component"] == "transformer"
+
+
 def test_assessment_manifest_includes_new_research_options_for_current_limits():
     summary = assess_manifest(Path("results"))
 

@@ -36,12 +36,10 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_r1(record)
     if experiment_id == "D1_corpus_preparation":
         return _assess_d1(record)
-    if experiment_id in {
-        "T1_dense_decoder_training_smoke",
-        "T1a_rocm_dense_decoder_bf16_training_failure",
-        "T1b_cpu_dense_decoder_training_smoke",
-    }:
+    if record.get("metrics", {}).get("benchmark_label") == "dense_decoder_training_smoke":
         return _assess_t1(record)
+    if experiment_id == "R2_rocm_transformer_stability":
+        return _assess_r2(record)
     if experiment_id == "E5g_public_patch_replay_suite":
         return _assess_e5g(record)
     if experiment_id == "S2c_semantic_extraction_red_team":
@@ -403,6 +401,46 @@ def _assess_t1(record: dict[str, Any]) -> Assessment:
             "train_steps": training.get("steps", 0),
             "validation_loss": metrics.get("validation", {}).get("loss", 0.0),
             "checkpoint_resume_ok": bool(checkpoint.get("resume_ok", False)),
+        },
+    }
+
+
+def _assess_r2(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    failure_count = int(metrics.get("failure_count", 0))
+    first_failure = metrics.get("first_failure") or {}
+    passed = failure_count == 0
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "transformer_stability_positive"
+            if passed
+            else "transformer_stability_failed"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "all_component_stability_cases_passed"
+            if passed
+            else "component_stability_case_failed"
+        ),
+        "limitations": [
+            "microbench_only",
+            "not_full_dense_training",
+            "single_process_probe",
+            "does_not_measure_kernel_occupancy",
+        ]
+        + ([] if passed else ["failed_component_requires_isolation"]),
+        "evidence": {
+            "accelerator_backend": metrics.get("accelerator_backend"),
+            "rocm_available": metrics.get("rocm_available"),
+            "rocm_runtime_version": metrics.get("rocm_runtime_version"),
+            "case_count": metrics.get("case_count", 0),
+            "failure_count": failure_count,
+            "first_failure_component": first_failure.get("component", ""),
+            "first_failure_dtype": first_failure.get("dtype", ""),
+            "first_failure_mask_mode": first_failure.get("mask_mode", ""),
+            "first_failure_error": first_failure.get("error", ""),
         },
     }
 

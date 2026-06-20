@@ -66706,5 +66706,1001 @@
     "recorded_at_unix": 1781953684.6071694,
     "seed": 123,
     "status": "completed"
+  },
+  {
+    "command": "uv run python scripts/run_rocm_transformer_stability.py --device rocm --steps 2 --hidden-dim 64 --heads 4 --vocab-size 257 --learning-rate 0.0003 --output results/R2_rocm_transformer_stability.json",
+    "experiment_id": "R2_rocm_transformer_stability",
+    "git_commit": "c2130cf0385f9765358eba04a3fdd2c47b042781",
+    "hardware": {
+      "machine": "x86_64",
+      "processor": "",
+      "python": "3.12.13",
+      "system": "Linux"
+    },
+    "hypothesis": "rocm_transformer_failure_is_component_or_kernel_path_specific",
+    "metrics": {
+      "accelerator_backend": "rocm",
+      "benchmark_label": "rocm_transformer_stability_microbench",
+      "case_count": 17,
+      "case_results": [
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "embedding",
+          "dtype": "fp32",
+          "elapsed_s": 0.17725177301326767,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 0.335565984249115,
+          "mask_mode": "none",
+          "operation_stage": "forward",
+          "optimizer_foreach": false,
+          "parameters": 33153,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 2888.546564562013,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "embedding",
+          "dtype": "fp32",
+          "elapsed_s": 0.03049724199809134,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.672771453857422,
+          "mask_mode": "none",
+          "operation_stage": "loss",
+          "optimizer_foreach": false,
+          "parameters": 33153,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 16788.403358967455,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "embedding",
+          "dtype": "fp32",
+          "elapsed_s": 0.0219218650017865,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.699032306671143,
+          "mask_mode": "none",
+          "operation_stage": "backward",
+          "optimizer_foreach": false,
+          "parameters": 33153,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 23355.677081228037,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "embedding",
+          "dtype": "fp32",
+          "elapsed_s": 0.16596815100638196,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.732697486877441,
+          "mask_mode": "none",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 33153,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 3084.9292282608612,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "norm",
+          "dtype": "fp32",
+          "elapsed_s": 0.008362775988643989,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.731478214263916,
+          "mask_mode": "none",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 33281,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 61223.68944179025,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "mlp",
+          "dtype": "fp32",
+          "elapsed_s": 0.009569763002218679,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.728782653808594,
+          "mask_mode": "none",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 66369,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 53501.84742101728,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "attention",
+          "dtype": "fp32",
+          "elapsed_s": 0.006670247006695718,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.742119789123535,
+          "mask_mode": "none",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 49921,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 76758.77662192193,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "attention",
+          "dtype": "fp32",
+          "elapsed_s": 0.04847842498566024,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.705497741699219,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 49921,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 10561.399223498864,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "attention",
+          "dtype": "fp32",
+          "elapsed_s": 0.002348498994251713,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.727279186248779,
+          "mask_mode": "additive_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 49921,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 218011.59006377825,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "attention",
+          "dtype": "fp32",
+          "elapsed_s": 0.0,
+          "error": "FloatingPointError: nonfinite_loss",
+          "finite_loss": false,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 0.0,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 0,
+          "sdp_kernel": "math",
+          "seq_len": 64,
+          "status": "failed",
+          "steps": 2,
+          "tokens_per_second": 0.0,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "transformer",
+          "dtype": "fp32",
+          "elapsed_s": 0.0,
+          "error": "FloatingPointError: nonfinite_loss",
+          "finite_loss": false,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 0.0,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 0,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "failed",
+          "steps": 2,
+          "tokens_per_second": 0.0,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "transformer",
+          "dtype": "fp32",
+          "elapsed_s": 0.0031454520067200065,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.664151668548584,
+          "mask_mode": "additive_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 83265,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 162774.69785142262,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "transformer",
+          "dtype": "fp16",
+          "elapsed_s": 0.2639846119855065,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.757872581481934,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 83265,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 1939.5069892487152,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "transformer",
+          "dtype": "bf16",
+          "elapsed_s": 0.27131811500294134,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.751604080200195,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 83265,
+          "sdp_kernel": "default",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 1887.0837282444243,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 4,
+          "compile_model": false,
+          "component": "transformer",
+          "dtype": "bf16",
+          "elapsed_s": 0.003983433998655528,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 64,
+          "loss": 5.692948818206787,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 83265,
+          "sdp_kernel": "math",
+          "seq_len": 64,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 128532.31663253567,
+          "tokens_per_step": 256
+        },
+        {
+          "batch_size": 8,
+          "compile_model": false,
+          "component": "transformer",
+          "dtype": "fp32",
+          "elapsed_s": 0.009313538001151755,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 128,
+          "loss": 5.7050557136535645,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 264577,
+          "sdp_kernel": "default",
+          "seq_len": 128,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 219894.95288973264,
+          "tokens_per_step": 1024
+        },
+        {
+          "batch_size": 8,
+          "compile_model": false,
+          "component": "transformer",
+          "dtype": "bf16",
+          "elapsed_s": 0.008708394976565614,
+          "error": "",
+          "finite_loss": true,
+          "heads": 4,
+          "hidden_dim": 128,
+          "loss": 5.698980331420898,
+          "mask_mode": "bool_causal",
+          "operation_stage": "optimizer",
+          "optimizer_foreach": false,
+          "parameters": 264577,
+          "sdp_kernel": "default",
+          "seq_len": 128,
+          "status": "ok",
+          "steps": 2,
+          "tokens_per_second": 235175.36876900855,
+          "tokens_per_step": 1024
+        }
+      ],
+      "cuda_available": true,
+      "device": "cuda",
+      "device_properties": {
+        "multi_processor_count": 32,
+        "name": "AMD Radeon RX 9070 XT",
+        "total_memory_bytes": 17095983104
+      },
+      "failure_count": 2,
+      "first_failure": {
+        "batch_size": 4,
+        "compile_model": false,
+        "component": "attention",
+        "dtype": "fp32",
+        "elapsed_s": 0.0,
+        "error": "FloatingPointError: nonfinite_loss",
+        "finite_loss": false,
+        "heads": 4,
+        "hidden_dim": 64,
+        "loss": 0.0,
+        "mask_mode": "bool_causal",
+        "operation_stage": "optimizer",
+        "optimizer_foreach": false,
+        "parameters": 0,
+        "sdp_kernel": "math",
+        "seq_len": 64,
+        "status": "failed",
+        "steps": 2,
+        "tokens_per_second": 0.0,
+        "tokens_per_step": 256
+      },
+      "limitations": [
+        "microbench_only",
+        "not_full_dense_training",
+        "single_process_probe",
+        "does_not_measure_kernel_occupancy"
+      ],
+      "memory": {
+        "allocated_bytes": 159383552,
+        "free_bytes": 16176381952,
+        "reserved_bytes": 195035136,
+        "total_bytes": 17095983104
+      },
+      "requested_device": "rocm",
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "torch_version": "2.12.1+rocm7.2"
+    },
+    "notes": "Component-isolation ROCm transformer stability microbench for embedding, MLP, attention, mask, dtype, optimizer, and size-threshold paths.",
+    "recorded_at_unix": 1781954615.5500302,
+    "seed": 123,
+    "status": "failed"
+  },
+  {
+    "command": "uv run python scripts/train_dense_decoder.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 64 --hidden-dim 64 --layers 1 --heads 4 --batch-size 4 --steps 5 --validation-batches 1 --gradient-accumulation-steps 1 --mixed-precision fp32 --output-dir artifacts/dense_decoder_smoke_rocm_additive --output results/T1c_rocm_dense_decoder_additive_mask_smoke.json",
+    "experiment_id": "T1c_rocm_dense_decoder_additive_mask_smoke",
+    "git_commit": "c2130cf0385f9765358eba04a3fdd2c47b042781",
+    "hardware": {
+      "machine": "x86_64",
+      "processor": "",
+      "python": "3.12.13",
+      "system": "Linux"
+    },
+    "hypothesis": "dense_baseline_training",
+    "metrics": {
+      "accelerator_backend": "rocm",
+      "benchmark_label": "dense_decoder_training_smoke",
+      "checkpoint": {
+        "bytes": 1071589,
+        "path": "artifacts/dense_decoder_smoke_rocm_additive/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "corpus": {
+        "available_documents": 100,
+        "available_tokens": 428861,
+        "document_count_used": 64,
+        "file_roles": {
+          "code": 42,
+          "docs": 20,
+          "readme": 8,
+          "test": 30
+        },
+        "languages": {
+          "C": 18,
+          "C/C++ Header": 12,
+          "JSON": 9,
+          "Markdown": 18,
+          "Python": 20,
+          "TOML": 1,
+          "Text": 13,
+          "YAML": 2,
+          "reStructuredText": 7
+        },
+        "licenses": {
+          "BSD": 2,
+          "MIT": 1
+        },
+        "repo_count": 3
+      },
+      "failure": "",
+      "generation_samples": [
+        {
+          "prompt": "def ",
+          "text": "def gP/X\u0007bU{^lWa\u001eS~\u0438yn\u000f1"
+        }
+      ],
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 4,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 4,
+          "hidden_dim": 64,
+          "layers": 1,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "seq_len": 64,
+          "steps": 5,
+          "validation_batches": 1
+        },
+        "parameter_count": 87361
+      },
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "status": "completed",
+      "tokenizer": {
+        "name": "byte_level",
+        "vocab_size": 257
+      },
+      "training": {
+        "elapsed_s": 0.30267646300490014,
+        "gradient_accumulation_steps": 1,
+        "loss_curve": [
+          {
+            "loss": 5.771189212799072,
+            "step": 1.0
+          },
+          {
+            "loss": 5.671655178070068,
+            "step": 2.0
+          },
+          {
+            "loss": 5.633519649505615,
+            "step": 3.0
+          },
+          {
+            "loss": 5.712545394897461,
+            "step": 4.0
+          },
+          {
+            "loss": 5.625554084777832,
+            "step": 5.0
+          }
+        ],
+        "steps": 5,
+        "tokens_per_second": 4228.938012861864,
+        "train_tokens": 1280
+      },
+      "validation": {
+        "loss": 5.645702838897705
+      }
+    },
+    "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+    "recorded_at_unix": 1781954705.005867,
+    "seed": 123,
+    "status": "completed"
+  },
+  {
+    "command": "uv run python scripts/train_dense_decoder.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 128 --hidden-dim 512 --layers 4 --heads 8 --batch-size 2 --steps 20 --validation-batches 1 --gradient-accumulation-steps 1 --mixed-precision fp32 --output-dir artifacts/dense_decoder_10m_rocm_additive_probe --output results/T2_rocm_dense_decoder_10m_additive_probe.json",
+    "experiment_id": "T2_rocm_dense_decoder_10m_additive_probe",
+    "git_commit": "c2130cf0385f9765358eba04a3fdd2c47b042781",
+    "hardware": {
+      "machine": "x86_64",
+      "processor": "",
+      "python": "3.12.13",
+      "system": "Linux"
+    },
+    "hypothesis": "dense_baseline_training",
+    "metrics": {
+      "accelerator_backend": "rocm",
+      "benchmark_label": "dense_decoder_training_smoke",
+      "checkpoint": {
+        "bytes": 155342681,
+        "path": "artifacts/dense_decoder_10m_rocm_additive_probe/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "corpus": {
+        "available_documents": 100,
+        "available_tokens": 428861,
+        "document_count_used": 100,
+        "file_roles": {
+          "code": 42,
+          "docs": 20,
+          "readme": 8,
+          "test": 30
+        },
+        "languages": {
+          "C": 18,
+          "C/C++ Header": 12,
+          "JSON": 9,
+          "Markdown": 18,
+          "Python": 20,
+          "TOML": 1,
+          "Text": 13,
+          "YAML": 2,
+          "reStructuredText": 7
+        },
+        "licenses": {
+          "BSD": 2,
+          "MIT": 1
+        },
+        "repo_count": 3
+      },
+      "failure": "nonfinite_loss_at_step_2",
+      "generation_samples": [
+        {
+          "prompt": "def ",
+          "text": "def \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+        }
+      ],
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 512,
+          "layers": 4,
+          "learning_rate": 5e-05,
+          "mixed_precision": "fp32",
+          "seq_len": 128,
+          "steps": 20,
+          "validation_batches": 1
+        },
+        "parameter_count": 12939521
+      },
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "status": "failed_nonfinite_loss",
+      "tokenizer": {
+        "name": "byte_level",
+        "vocab_size": 257
+      },
+      "training": {
+        "elapsed_s": 0.3329986550088506,
+        "gradient_accumulation_steps": 1,
+        "loss_curve": [
+          {
+            "loss": 5.6322479248046875,
+            "step": 1.0
+          }
+        ],
+        "steps": 20,
+        "tokens_per_second": 15375.437476958932,
+        "train_tokens": 5120
+      },
+      "validation": {
+        "loss": NaN
+      }
+    },
+    "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+    "recorded_at_unix": 1781954751.3671076,
+    "seed": 123,
+    "status": "failed"
+  },
+  {
+    "command": "uv run python scripts/train_dense_decoder.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 128 --hidden-dim 512 --layers 4 --heads 8 --batch-size 2 --steps 20 --validation-batches 1 --gradient-accumulation-steps 1 --mixed-precision fp32 --output-dir artifacts/dense_decoder_10m_rocm_additive_lr1e6_probe --output results/T2a_rocm_dense_decoder_10m_additive_lr1e6_probe.json",
+    "experiment_id": "T2a_rocm_dense_decoder_10m_additive_lr1e6_probe",
+    "git_commit": "c2130cf0385f9765358eba04a3fdd2c47b042781",
+    "hardware": {
+      "machine": "x86_64",
+      "processor": "",
+      "python": "3.12.13",
+      "system": "Linux"
+    },
+    "hypothesis": "dense_baseline_training",
+    "metrics": {
+      "accelerator_backend": "rocm",
+      "benchmark_label": "dense_decoder_training_smoke",
+      "checkpoint": {
+        "bytes": 155342681,
+        "path": "artifacts/dense_decoder_10m_rocm_additive_lr1e6_probe/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "corpus": {
+        "available_documents": 100,
+        "available_tokens": 428861,
+        "document_count_used": 100,
+        "file_roles": {
+          "code": 42,
+          "docs": 20,
+          "readme": 8,
+          "test": 30
+        },
+        "languages": {
+          "C": 18,
+          "C/C++ Header": 12,
+          "JSON": 9,
+          "Markdown": 18,
+          "Python": 20,
+          "TOML": 1,
+          "Text": 13,
+          "YAML": 2,
+          "reStructuredText": 7
+        },
+        "licenses": {
+          "BSD": 2,
+          "MIT": 1
+        },
+        "repo_count": 3
+      },
+      "failure": "nonfinite_loss_at_step_2",
+      "generation_samples": [
+        {
+          "prompt": "def ",
+          "text": "def \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+        }
+      ],
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 512,
+          "layers": 4,
+          "learning_rate": 1e-06,
+          "mixed_precision": "fp32",
+          "seq_len": 128,
+          "steps": 20,
+          "validation_batches": 1
+        },
+        "parameter_count": 12939521
+      },
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "status": "failed_nonfinite_loss",
+      "tokenizer": {
+        "name": "byte_level",
+        "vocab_size": 257
+      },
+      "training": {
+        "elapsed_s": 0.306098278000718,
+        "gradient_accumulation_steps": 1,
+        "loss_curve": [
+          {
+            "loss": 5.6322479248046875,
+            "step": 1.0
+          }
+        ],
+        "steps": 20,
+        "tokens_per_second": 16726.6540453651,
+        "train_tokens": 5120
+      },
+      "validation": {
+        "loss": NaN
+      }
+    },
+    "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+    "recorded_at_unix": 1781954778.9333565,
+    "seed": 123,
+    "status": "failed"
+  },
+  {
+    "command": "uv run python scripts/train_dense_decoder.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 128 --hidden-dim 512 --layers 4 --heads 8 --batch-size 2 --steps 20 --validation-batches 1 --gradient-accumulation-steps 1 --mixed-precision fp32 --output-dir artifacts/dense_decoder_10m_rocm_additive_sgd_probe --output results/T2b_rocm_dense_decoder_10m_additive_sgd_probe.json",
+    "experiment_id": "T2b_rocm_dense_decoder_10m_additive_sgd_probe",
+    "git_commit": "c2130cf0385f9765358eba04a3fdd2c47b042781",
+    "hardware": {
+      "machine": "x86_64",
+      "processor": "",
+      "python": "3.12.13",
+      "system": "Linux"
+    },
+    "hypothesis": "dense_baseline_training",
+    "metrics": {
+      "accelerator_backend": "rocm",
+      "benchmark_label": "dense_decoder_training_smoke",
+      "checkpoint": {
+        "bytes": 51779541,
+        "path": "artifacts/dense_decoder_10m_rocm_additive_sgd_probe/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "corpus": {
+        "available_documents": 100,
+        "available_tokens": 428861,
+        "document_count_used": 100,
+        "file_roles": {
+          "code": 42,
+          "docs": 20,
+          "readme": 8,
+          "test": 30
+        },
+        "languages": {
+          "C": 18,
+          "C/C++ Header": 12,
+          "JSON": 9,
+          "Markdown": 18,
+          "Python": 20,
+          "TOML": 1,
+          "Text": 13,
+          "YAML": 2,
+          "reStructuredText": 7
+        },
+        "licenses": {
+          "BSD": 2,
+          "MIT": 1
+        },
+        "repo_count": 3
+      },
+      "failure": "nonfinite_loss_at_step_2",
+      "generation_samples": [
+        {
+          "prompt": "def ",
+          "text": "def \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+        }
+      ],
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 512,
+          "layers": 4,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "sgd",
+          "seq_len": 128,
+          "steps": 20,
+          "validation_batches": 1
+        },
+        "parameter_count": 12939521
+      },
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "status": "failed_nonfinite_loss",
+      "tokenizer": {
+        "name": "byte_level",
+        "vocab_size": 257
+      },
+      "training": {
+        "elapsed_s": 0.31389660999411717,
+        "gradient_accumulation_steps": 1,
+        "loss_curve": [
+          {
+            "loss": 5.6322479248046875,
+            "step": 1.0
+          }
+        ],
+        "steps": 20,
+        "tokens_per_second": 16311.103200814929,
+        "train_tokens": 5120
+      },
+      "validation": {
+        "loss": NaN
+      }
+    },
+    "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+    "recorded_at_unix": 1781954832.9868953,
+    "seed": 123,
+    "status": "failed"
+  },
+  {
+    "command": "uv run python scripts/train_dense_decoder.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 128 --hidden-dim 512 --layers 4 --heads 8 --batch-size 2 --steps 5 --validation-batches 1 --gradient-accumulation-steps 1 --mixed-precision fp32 --output-dir artifacts/dense_decoder_10m_rocm_additive_sgd_lr0_probe --output results/T2c_rocm_dense_decoder_10m_additive_sgd_lr0_probe.json",
+    "experiment_id": "T2c_rocm_dense_decoder_10m_additive_sgd_lr0_probe",
+    "git_commit": "c2130cf0385f9765358eba04a3fdd2c47b042781",
+    "hardware": {
+      "machine": "x86_64",
+      "processor": "",
+      "python": "3.12.13",
+      "system": "Linux"
+    },
+    "hypothesis": "dense_baseline_training",
+    "metrics": {
+      "accelerator_backend": "rocm",
+      "benchmark_label": "dense_decoder_training_smoke",
+      "checkpoint": {
+        "bytes": 51779541,
+        "path": "artifacts/dense_decoder_10m_rocm_additive_sgd_lr0_probe/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "corpus": {
+        "available_documents": 100,
+        "available_tokens": 428861,
+        "document_count_used": 100,
+        "file_roles": {
+          "code": 42,
+          "docs": 20,
+          "readme": 8,
+          "test": 30
+        },
+        "languages": {
+          "C": 18,
+          "C/C++ Header": 12,
+          "JSON": 9,
+          "Markdown": 18,
+          "Python": 20,
+          "TOML": 1,
+          "Text": 13,
+          "YAML": 2,
+          "reStructuredText": 7
+        },
+        "licenses": {
+          "BSD": 2,
+          "MIT": 1
+        },
+        "repo_count": 3
+      },
+      "failure": "nonfinite_loss_at_step_2",
+      "generation_samples": [
+        {
+          "prompt": "def ",
+          "text": "def \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+        }
+      ],
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 512,
+          "layers": 4,
+          "learning_rate": 0.0,
+          "mixed_precision": "fp32",
+          "optimizer_name": "sgd",
+          "seq_len": 128,
+          "steps": 5,
+          "validation_batches": 1
+        },
+        "parameter_count": 12939521
+      },
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "status": "failed_nonfinite_loss",
+      "tokenizer": {
+        "name": "byte_level",
+        "vocab_size": 257
+      },
+      "training": {
+        "elapsed_s": 0.31072250299621373,
+        "gradient_accumulation_steps": 1,
+        "loss_curve": [
+          {
+            "loss": 5.6322479248046875,
+            "step": 1.0
+          }
+        ],
+        "steps": 5,
+        "tokens_per_second": 4119.431285656184,
+        "train_tokens": 1280
+      },
+      "validation": {
+        "loss": NaN
+      }
+    },
+    "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+    "recorded_at_unix": 1781954853.899267,
+    "seed": 123,
+    "status": "failed"
   }
 ]

@@ -24,6 +24,8 @@ class DenseTrainingConfig:
     gradient_accumulation_steps: int = 1
     mixed_precision: str = "bf16"
     learning_rate: float = 3e-4
+    attention_mask_mode: str = "additive_causal"
+    optimizer_name: str = "adamw"
 
 
 class ByteTokenizer:
@@ -47,9 +49,11 @@ class DenseDecoder(torch.nn.Module):
         hidden_dim: int,
         layers: int,
         heads: int,
+        attention_mask_mode: str = "additive_causal",
     ) -> None:
         super().__init__()
         self.seq_len = seq_len
+        self.attention_mask_mode = attention_mask_mode
         self.token_embedding = torch.nn.Embedding(vocab_size, hidden_dim)
         self.position_embedding = torch.nn.Embedding(seq_len, hidden_dim)
         layer = torch.nn.TransformerEncoderLayer(
@@ -68,11 +72,8 @@ class DenseDecoder(torch.nn.Module):
         batch, seq_len = input_ids.shape
         positions = torch.arange(seq_len, device=input_ids.device).unsqueeze(0).expand(batch, -1)
         hidden = self.token_embedding(input_ids) + self.position_embedding(positions)
-        mask = torch.triu(
-            torch.ones(seq_len, seq_len, dtype=torch.bool, device=input_ids.device),
-            diagonal=1,
-        )
-        hidden = self.blocks(hidden, mask=mask, is_causal=True)
+        mask = _causal_mask(self.attention_mask_mode, seq_len, input_ids.device)
+        hidden = self.blocks(hidden, mask=mask, is_causal=mask is not None)
         return self.head(self.norm(hidden))
 
 
@@ -98,8 +99,9 @@ def train_dense_decoder(
         config.hidden_dim,
         config.layers,
         config.heads,
+        config.attention_mask_mode,
     ).to(device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
+    optimizer = _make_optimizer(model, config)
     dtype = _autocast_dtype(config.mixed_precision)
     use_autocast = device.type == "cuda" and dtype is not None
 
@@ -153,6 +155,7 @@ def train_dense_decoder(
     )
     sample = _generate_sample(model, tokenizer, "def ", config.seq_len, device)
     checkpoint_path = output_dir / "dense_decoder_last.pt"
+    parameter_count = sum(param.numel() for param in model.parameters())
     torch.save(
         {
             "model": model.state_dict(),
@@ -173,7 +176,7 @@ def train_dense_decoder(
         "tokenizer": {"name": tokenizer.name, "vocab_size": tokenizer.vocab_size},
         "model": {
             "architecture": "causal_transformer_decoder",
-            "parameter_count": sum(param.numel() for param in model.parameters()),
+            "parameter_count": parameter_count,
             "config": asdict(config),
         },
         "training": {
@@ -194,10 +197,14 @@ def train_dense_decoder(
         "limitations": [
             "training_smoke_only",
             "byte_tokenizer_baseline",
-            "not_10m_parameter_model",
             "not_50m_token_run",
             "no_functional_coding_evaluation_yet",
-        ],
+        ]
+        + (
+            ["not_10m_parameter_model"]
+            if parameter_count < 10_000_000
+            else ["10m_parameter_floor_reached"]
+        ),
     }
 
 
@@ -277,8 +284,9 @@ def _resume_check(
         config.hidden_dim,
         config.layers,
         config.heads,
+        config.attention_mask_mode,
     ).to(device)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
+    optimizer = _make_optimizer(model, config)
     model.load_state_dict(payload["model"])
     optimizer.load_state_dict(payload["optimizer"])
     return int(payload.get("step", 0)) == config.steps
@@ -292,3 +300,35 @@ def _autocast_dtype(mixed_precision: str) -> torch.dtype | None:
     if mixed_precision == "fp32":
         return None
     raise ValueError(f"unknown mixed precision mode: {mixed_precision}")
+
+
+def _make_optimizer(
+    model: torch.nn.Module,
+    config: DenseTrainingConfig,
+) -> torch.optim.Optimizer:
+    if config.optimizer_name == "adamw":
+        return torch.optim.AdamW(model.parameters(), lr=config.learning_rate, foreach=False)
+    if config.optimizer_name == "sgd":
+        return torch.optim.SGD(model.parameters(), lr=config.learning_rate)
+    raise ValueError(f"unknown optimizer: {config.optimizer_name}")
+
+
+def _causal_mask(
+    attention_mask_mode: str,
+    seq_len: int,
+    device: torch.device,
+) -> torch.Tensor | None:
+    if attention_mask_mode == "none":
+        return None
+    if attention_mask_mode == "bool_causal":
+        return torch.triu(
+            torch.ones(seq_len, seq_len, dtype=torch.bool, device=device),
+            diagonal=1,
+        )
+    if attention_mask_mode == "additive_causal":
+        mask = torch.zeros(seq_len, seq_len, dtype=torch.float32, device=device)
+        return mask.masked_fill(
+            torch.triu(torch.ones_like(mask, dtype=torch.bool), diagonal=1),
+            float("-inf"),
+        )
+    raise ValueError(f"unknown attention mask mode: {attention_mask_mode}")

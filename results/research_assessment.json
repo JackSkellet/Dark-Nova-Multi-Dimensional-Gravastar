@@ -802,6 +802,150 @@
       "outcome": "training_smoke_positive",
       "primary_reason": "dense_decoder_training_pipeline_completed",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "case_count": 17,
+        "failure_count": 2,
+        "first_failure_component": "attention",
+        "first_failure_dtype": "fp32",
+        "first_failure_error": "FloatingPointError: nonfinite_loss",
+        "first_failure_mask_mode": "bool_causal",
+        "rocm_available": true,
+        "rocm_runtime_version": "7.2.53211"
+      },
+      "experiment_id": "R2_rocm_transformer_stability",
+      "hypothesis": "rocm_transformer_failure_is_component_or_kernel_path_specific",
+      "limitations": [
+        "microbench_only",
+        "not_full_dense_training",
+        "single_process_probe",
+        "does_not_measure_kernel_occupancy",
+        "failed_component_requires_isolation"
+      ],
+      "outcome": "transformer_stability_failed",
+      "primary_reason": "component_stability_case_failed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "",
+        "parameter_count": 87361,
+        "status": "completed",
+        "train_steps": 5,
+        "train_tokens": 1280,
+        "validation_loss": 5.645702838897705
+      },
+      "experiment_id": "T1c_rocm_dense_decoder_additive_mask_smoke",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "nonfinite_loss_at_step_2",
+        "parameter_count": 12939521,
+        "status": "failed_nonfinite_loss",
+        "train_steps": 20,
+        "train_tokens": 5120,
+        "validation_loss": NaN
+      },
+      "experiment_id": "T2_rocm_dense_decoder_10m_additive_probe",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "failed_training_run"
+      ],
+      "outcome": "training_failed",
+      "primary_reason": "dense_decoder_training_smoke_failed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "nonfinite_loss_at_step_2",
+        "parameter_count": 12939521,
+        "status": "failed_nonfinite_loss",
+        "train_steps": 20,
+        "train_tokens": 5120,
+        "validation_loss": NaN
+      },
+      "experiment_id": "T2a_rocm_dense_decoder_10m_additive_lr1e6_probe",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "failed_training_run"
+      ],
+      "outcome": "training_failed",
+      "primary_reason": "dense_decoder_training_smoke_failed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "nonfinite_loss_at_step_2",
+        "parameter_count": 12939521,
+        "status": "failed_nonfinite_loss",
+        "train_steps": 20,
+        "train_tokens": 5120,
+        "validation_loss": NaN
+      },
+      "experiment_id": "T2b_rocm_dense_decoder_10m_additive_sgd_probe",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "failed_training_run"
+      ],
+      "outcome": "training_failed",
+      "primary_reason": "dense_decoder_training_smoke_failed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "nonfinite_loss_at_step_2",
+        "parameter_count": 12939521,
+        "status": "failed_nonfinite_loss",
+        "train_steps": 5,
+        "train_tokens": 1280,
+        "validation_loss": NaN
+      },
+      "experiment_id": "T2c_rocm_dense_decoder_10m_additive_sgd_lr0_probe",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "failed_training_run"
+      ],
+      "outcome": "training_failed",
+      "primary_reason": "dense_decoder_training_smoke_failed",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -830,10 +974,11 @@
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
-    "training_failed": 2,
+    "training_failed": 6,
     "training_readiness_positive": 1,
-    "training_smoke_positive": 1
+    "training_smoke_positive": 2,
+    "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 49
+  "record_count": 55
 }
