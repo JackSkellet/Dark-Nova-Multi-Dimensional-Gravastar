@@ -1,0 +1,4374 @@
+{
+  "architecture": {
+    "adapter_candidate": {
+      "active_parameters_per_token": 10604801,
+      "config": {
+        "adapter_dim": 64,
+        "architecture_variant": "adapter",
+        "attention_mask_mode": "additive_causal",
+        "batch_size": 2,
+        "checkpoint_interval": 1000,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "learning_rate": 0.0001,
+        "mixed_precision": "fp32",
+        "optimizer_name": "sgd",
+        "progress_interval": 500,
+        "seq_len": 128,
+        "steps": 10000,
+        "validation_batches": 8
+      },
+      "module_tree": "DenseDecoder(\n  (token_embedding): Embedding(257, 528)\n  (position_embedding): Embedding(128, 528)\n  (blocks): ModuleList(\n    (0-2): 3 x TransformerEncoderLayer(\n      (self_attn): MultiheadAttention(\n        (out_proj): NonDynamicallyQuantizableLinear(in_features=528, out_features=528, bias=True)\n      )\n      (linear1): Linear(in_features=528, out_features=2112, bias=True)\n      (dropout): Dropout(p=0.0, inplace=False)\n      (linear2): Linear(in_features=2112, out_features=528, bias=True)\n      (norm1): LayerNorm((528,), eps=1e-05, elementwise_affine=True, bias=True)\n      (norm2): LayerNorm((528,), eps=1e-05, elementwise_affine=True, bias=True)\n      (dropout1): Dropout(p=0.0, inplace=False)\n      (dropout2): Dropout(p=0.0, inplace=False)\n    )\n  )\n  (adapters): ModuleList(\n    (0-2): 3 x _ResidualAdapter(\n      (norm): LayerNorm((528,), eps=1e-05, elementwise_affine=True, bias=True)\n      (down): Linear(in_features=528, out_features=64, bias=True)\n      (up): Linear(in_features=64, out_features=528, bias=True)\n      (activation): GELU(approximate='none')\n    )\n  )\n  (norm): LayerNorm((528,), eps=1e-05, elementwise_affine=True, bias=True)\n  (head): Linear(in_features=528, out_features=257, bias=True)\n)",
+      "top_level_parameter_counts": {
+        "adapters": 0,
+        "blocks": 0,
+        "head": 135953,
+        "norm": 1056,
+        "position_embedding": 67584,
+        "token_embedding": 135696
+      },
+      "total_parameters": 10604801,
+      "trainable_parameters": 10604801
+    },
+    "dense_11m": {
+      "active_parameters_per_token": 11025505,
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "additive_causal",
+        "batch_size": 2,
+        "checkpoint_interval": 1000,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 544,
+        "layers": 3,
+        "learning_rate": 0.0001,
+        "mixed_precision": "fp32",
+        "optimizer_name": "adamw",
+        "progress_interval": 500,
+        "seq_len": 128,
+        "steps": 10000,
+        "validation_batches": 8
+      },
+      "module_tree": "DenseDecoder(\n  (token_embedding): Embedding(257, 544)\n  (position_embedding): Embedding(128, 544)\n  (blocks): ModuleList(\n    (0-2): 3 x TransformerEncoderLayer(\n      (self_attn): MultiheadAttention(\n        (out_proj): NonDynamicallyQuantizableLinear(in_features=544, out_features=544, bias=True)\n      )\n      (linear1): Linear(in_features=544, out_features=2176, bias=True)\n      (dropout): Dropout(p=0.0, inplace=False)\n      (linear2): Linear(in_features=2176, out_features=544, bias=True)\n      (norm1): LayerNorm((544,), eps=1e-05, elementwise_affine=True, bias=True)\n      (norm2): LayerNorm((544,), eps=1e-05, elementwise_affine=True, bias=True)\n      (dropout1): Dropout(p=0.0, inplace=False)\n      (dropout2): Dropout(p=0.0, inplace=False)\n    )\n  )\n  (adapters): ModuleList(\n    (0-2): 3 x Identity()\n  )\n  (norm): LayerNorm((544,), eps=1e-05, elementwise_affine=True, bias=True)\n  (head): Linear(in_features=544, out_features=257, bias=True)\n)",
+      "top_level_parameter_counts": {
+        "adapters": 0,
+        "blocks": 0,
+        "head": 140065,
+        "norm": 1088,
+        "position_embedding": 69632,
+        "token_embedding": 139808
+      },
+      "total_parameters": 11025505,
+      "trainable_parameters": 11025505
+    },
+    "routing_or_residual_expert_candidate": "No routed/residual-expert trained model exists in the current dense-training path. Earlier routing work is proxy/synthetic and not a trained decoder candidate."
+  },
+  "claims_to_sources": [
+    {
+      "claim": "D4 is exploratory-research-only and exceeds 50M train tokens.",
+      "source": "results/D4_hf_corpus_materialization.json"
+    },
+    {
+      "claim": "T6 is the completed 11M dense 50M-token SGD/FP32 baseline.",
+      "source": "results/T6_rocm_dense_decoder_11m_hf_d4_50m_tokens.json"
+    },
+    {
+      "claim": "T7a adapter candidate failed at step_2_gradients.",
+      "source": "results/T7a_rocm_adapter_decoder_10m_hf_d4_step_debug.json"
+    },
+    {
+      "claim": "T7c identity-initialized adapter trains 2.56M tokens but underperforms dense AdamW.",
+      "source": "results/T7c_rocm_adapter_decoder_10m_hf_d4_identity_probe.json"
+    },
+    {
+      "claim": "T8g and T8h are exactly identical in loss, validation, sample, and checkpoint size.",
+      "source": "results/T8i_dense_adamw_fp32_vs_bf16_control_comparison.json"
+    },
+    {
+      "claim": "Three-step fixed-batch diagnostic proves BF16-requested and FP32 paths are identical under current masked-block fallback.",
+      "source": "results/current_setup_precision_identity_diagnostic.json"
+    },
+    {
+      "claim": "Experiment records now include dirty-worktree metadata for future runs.",
+      "source": "src/weightlab/metrics.py"
+    }
+  ],
+  "data_and_tokenizer": {
+    "d3_manifest_summary": {
+      "accepted_config_count": 7,
+      "benchmark_label": "hf_corpus_manifest",
+      "datasets_loader_policy": {
+        "cache_dir": "data/hf_cache",
+        "dataset_builder": "parquet",
+        "library": "datasets",
+        "load_dataset_template": "load_dataset('parquet', data_files={'train': parquet_urls}, split='train', streaming=True, cache_dir='data/hf_cache')",
+        "local_mirror_dir": "data/hf_mirror",
+        "pin_revision": true,
+        "remote_dataset_script_policy": "do not execute dataset repository scripts; use Dataset Viewer converted parquet URLs pinned by dataset revision metadata",
+        "streaming": true,
+        "trust_remote_code": false
+      },
+      "filter_policy": {
+        "binary_rejection": "reject rows containing NUL bytes or decode failures",
+        "corpus_use": "exploratory-research-only",
+        "deduplication": {
+          "exact": "sha256 over normalized text",
+          "near": "simhash/minhash before materialized train/validation split"
+        },
+        "generated_file_markers": [
+          "auto-generated",
+          "autogenerated",
+          "do not edit",
+          "generated by"
+        ],
+        "license_metadata_policy": "record stated license/config metadata and restrictions; do not reject normally accessible rows solely for mixed, other, unknown, gated, or unsuitable-for-production license metadata during this exploratory phase",
+        "path_excludes": [
+          ".git/",
+          "__pycache__/",
+          "build/",
+          "dist/",
+          "node_modules/",
+          "site-packages/",
+          "third_party/",
+          "vendor/"
+        ],
+        "production_approval": false,
+        "redistribution_approval": false,
+        "secret_scan": [
+          "api_key",
+          "aws_access_key_id",
+          "bearer ",
+          "client_secret",
+          "private_key",
+          "secret",
+          "token"
+        ],
+        "split_policy": "repository-aware hash split by repo name before file-level shuffling",
+        "strict_policy_deferred": "later production/company deployment pass must apply strict legal and company-policy filters before any redistribution or deployment"
+      },
+      "limitations": [
+        "metadata_manifest_only",
+        "parquet_shards_not_downloaded_yet",
+        "token_count_pending_materialized_stream",
+        "row_level_vendor_secret_quality_filters_pending_streaming_pass",
+        "exploratory_research_only_not_production_approved"
+      ],
+      "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3",
+      "rejected_config_count": 0,
+      "source_count": 2,
+      "sources": [
+        {
+          "accepted_configs": [
+            {
+              "config": "JavaScript-all",
+              "corpus_use": "exploratory-research-only",
+              "language": "JavaScript",
+              "license": "mixed",
+              "license_metadata_status": "recorded_mixed_or_unclear_exploratory_only",
+              "memory_bytes": 5009488048,
+              "num_rows": 209000,
+              "parquet_bytes": 1945880794,
+              "parquet_files": [
+                {
+                  "filename": "0000.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 195313383,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0000.parquet"
+                },
+                {
+                  "filename": "0001.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 198951121,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0001.parquet"
+                },
+                {
+                  "filename": "0002.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 193973692,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0002.parquet"
+                },
+                {
+                  "filename": "0003.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 205616363,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0003.parquet"
+                },
+                {
+                  "filename": "0004.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 194612960,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0004.parquet"
+                },
+                {
+                  "filename": "0005.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 196308874,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0005.parquet"
+                },
+                {
+                  "filename": "0006.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 203686900,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0006.parquet"
+                },
+                {
+                  "filename": "0007.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 201368223,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0007.parquet"
+                },
+                {
+                  "filename": "0008.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 200862844,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0008.parquet"
+                },
+                {
+                  "filename": "0009.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 155186434,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0009.parquet"
+                }
+              ],
+              "split": "train"
+            },
+            {
+              "config": "all-mit",
+              "corpus_use": "exploratory-research-only",
+              "language": "all",
+              "license": "mit",
+              "license_metadata_status": "recorded_exploratory_only",
+              "memory_bytes": 5021216929,
+              "num_rows": 233000,
+              "parquet_bytes": 1844197149,
+              "parquet_files": [
+                {
+                  "filename": "0000.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 186687086,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0000.parquet"
+                },
+                {
+                  "filename": "0001.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 190665146,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0001.parquet"
+                },
+                {
+                  "filename": "0002.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 182821799,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0002.parquet"
+                },
+                {
+                  "filename": "0003.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 184781721,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0003.parquet"
+                },
+                {
+                  "filename": "0004.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 184765574,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0004.parquet"
+                },
+                {
+                  "filename": "0005.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 192302724,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0005.parquet"
+                },
+                {
+                  "filename": "0006.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 187804582,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0006.parquet"
+                },
+                {
+                  "filename": "0007.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 185321289,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0007.parquet"
+                },
+                {
+                  "filename": "0008.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 184055449,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0008.parquet"
+                },
+                {
+                  "filename": "0009.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 164991779,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0009.parquet"
+                }
+              ],
+              "split": "train"
+            },
+            {
+              "config": "all-apache-2.0",
+              "corpus_use": "exploratory-research-only",
+              "language": "all",
+              "license": "apache-2.0",
+              "license_metadata_status": "recorded_exploratory_only",
+              "memory_bytes": 5011152409,
+              "num_rows": 463000,
+              "parquet_bytes": 1690264025,
+              "parquet_files": [
+                {
+                  "filename": "0000.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 171570890,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0000.parquet"
+                },
+                {
+                  "filename": "0001.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 172882741,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0001.parquet"
+                },
+                {
+                  "filename": "0002.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 168310971,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0002.parquet"
+                },
+                {
+                  "filename": "0003.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 171042488,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0003.parquet"
+                },
+                {
+                  "filename": "0004.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 170178945,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0004.parquet"
+                },
+                {
+                  "filename": "0005.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 172392013,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0005.parquet"
+                },
+                {
+                  "filename": "0006.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 172017191,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0006.parquet"
+                },
+                {
+                  "filename": "0007.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 169972299,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0007.parquet"
+                },
+                {
+                  "filename": "0008.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 169289457,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0008.parquet"
+                },
+                {
+                  "filename": "0009.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 152607030,
+                  "url": "https://huggingface.co/datasets/CodedotAI/code_clippy_github/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0009.parquet"
+                }
+              ],
+              "split": "train"
+            }
+          ],
+          "card_license": "mit",
+          "card_review": "HF card reports MIT license and public GitHub BigQuery provenance. Dataset configs include language and license partitions. This exploratory manifest intentionally includes mixed-license metadata where normally accessible, and records it as not approved for production or redistribution. Preview shows vendored paths such as node_modules, so streaming materialization must apply vendor/generated/secret filters.",
+          "column_aliases": {
+            "language": [
+              "language",
+              "lang"
+            ],
+            "license": [
+              "license"
+            ],
+            "path": [
+              "path",
+              "file_path",
+              "filepath",
+              "file"
+            ],
+            "repo": [
+              "repo_name",
+              "repository_name",
+              "repo",
+              "repository"
+            ],
+            "size": [
+              "size",
+              "bytes"
+            ],
+            "text": [
+              "code",
+              "code_text",
+              "content",
+              "text"
+            ]
+          },
+          "dataset": "CodedotAI/code_clippy_github",
+          "last_modified": "2022-08-05T02:57:36.000Z",
+          "local_mirror_dir": "data/hf_mirror/CodedotAI__code_clippy_github",
+          "rejected_configs": [],
+          "requested_revision": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+          "resolved_revision": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+          "restrictions": false,
+          "tags": [
+            "license:mit"
+          ]
+        },
+        {
+          "accepted_configs": [
+            {
+              "config": "Python-all",
+              "corpus_use": "exploratory-research-only",
+              "language": "Python",
+              "license": "mixed",
+              "license_metadata_status": "recorded_mixed_or_unclear_exploratory_only",
+              "memory_bytes": 5005928097,
+              "num_rows": 645000,
+              "parquet_bytes": 1796659874,
+              "parquet_files": [
+                {
+                  "filename": "0000.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179723419,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0000.parquet"
+                },
+                {
+                  "filename": "0001.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 180218451,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0001.parquet"
+                },
+                {
+                  "filename": "0002.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 180575320,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0002.parquet"
+                },
+                {
+                  "filename": "0003.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 182742536,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0003.parquet"
+                },
+                {
+                  "filename": "0004.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 180510023,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0004.parquet"
+                },
+                {
+                  "filename": "0005.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179098309,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0005.parquet"
+                },
+                {
+                  "filename": "0006.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 180193149,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0006.parquet"
+                },
+                {
+                  "filename": "0007.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179805154,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0007.parquet"
+                },
+                {
+                  "filename": "0008.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 181077013,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0008.parquet"
+                },
+                {
+                  "filename": "0009.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 172716500,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/Python-all/partial-train/0009.parquet"
+                }
+              ],
+              "split": "train"
+            },
+            {
+              "config": "JavaScript-all",
+              "corpus_use": "exploratory-research-only",
+              "language": "JavaScript",
+              "license": "mixed",
+              "license_metadata_status": "recorded_mixed_or_unclear_exploratory_only",
+              "memory_bytes": 5008805681,
+              "num_rows": 572000,
+              "parquet_bytes": 1787903380,
+              "parquet_files": [
+                {
+                  "filename": "0000.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 180092432,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0000.parquet"
+                },
+                {
+                  "filename": "0001.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179535334,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0001.parquet"
+                },
+                {
+                  "filename": "0002.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 182943244,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0002.parquet"
+                },
+                {
+                  "filename": "0003.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179983700,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0003.parquet"
+                },
+                {
+                  "filename": "0004.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179332250,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0004.parquet"
+                },
+                {
+                  "filename": "0005.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 181151972,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0005.parquet"
+                },
+                {
+                  "filename": "0006.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 178564888,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0006.parquet"
+                },
+                {
+                  "filename": "0007.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179029981,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0007.parquet"
+                },
+                {
+                  "filename": "0008.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 179284262,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0008.parquet"
+                },
+                {
+                  "filename": "0009.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 167985317,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/JavaScript-all/partial-train/0009.parquet"
+                }
+              ],
+              "split": "train"
+            },
+            {
+              "config": "all-mit",
+              "corpus_use": "exploratory-research-only",
+              "language": "all",
+              "license": "mit",
+              "license_metadata_status": "recorded_exploratory_only",
+              "memory_bytes": 5002715424,
+              "num_rows": 737000,
+              "parquet_bytes": 1705037150,
+              "parquet_files": [
+                {
+                  "filename": "0000.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 172370083,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0000.parquet"
+                },
+                {
+                  "filename": "0001.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 171433052,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0001.parquet"
+                },
+                {
+                  "filename": "0002.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 172215157,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0002.parquet"
+                },
+                {
+                  "filename": "0003.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 170834430,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0003.parquet"
+                },
+                {
+                  "filename": "0004.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 170782364,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0004.parquet"
+                },
+                {
+                  "filename": "0005.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 170803267,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0005.parquet"
+                },
+                {
+                  "filename": "0006.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 173598902,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0006.parquet"
+                },
+                {
+                  "filename": "0007.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 173522080,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0007.parquet"
+                },
+                {
+                  "filename": "0008.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 170505306,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0008.parquet"
+                },
+                {
+                  "filename": "0009.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 158972509,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-mit/partial-train/0009.parquet"
+                }
+              ],
+              "split": "train"
+            },
+            {
+              "config": "all-apache-2.0",
+              "corpus_use": "exploratory-research-only",
+              "language": "all",
+              "license": "apache-2.0",
+              "license_metadata_status": "recorded_exploratory_only",
+              "memory_bytes": 5004580050,
+              "num_rows": 685000,
+              "parquet_bytes": 1629882641,
+              "parquet_files": [
+                {
+                  "filename": "0000.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 165742365,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0000.parquet"
+                },
+                {
+                  "filename": "0001.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 165124740,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0001.parquet"
+                },
+                {
+                  "filename": "0002.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 163262757,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0002.parquet"
+                },
+                {
+                  "filename": "0003.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 163467284,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0003.parquet"
+                },
+                {
+                  "filename": "0004.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 166064374,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0004.parquet"
+                },
+                {
+                  "filename": "0005.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 165365902,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0005.parquet"
+                },
+                {
+                  "filename": "0006.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 162766499,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0006.parquet"
+                },
+                {
+                  "filename": "0007.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 161524570,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0007.parquet"
+                },
+                {
+                  "filename": "0008.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 163620216,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0008.parquet"
+                },
+                {
+                  "filename": "0009.parquet",
+                  "sha256": "metadata_only_not_downloaded",
+                  "size": 152943934,
+                  "url": "https://huggingface.co/datasets/codeparrot/github-code-clean/resolve/refs%2Fconvert%2Fparquet/all-apache-2.0/partial-train/0009.parquet"
+                }
+              ],
+              "split": "train"
+            }
+          ],
+          "card_license": "apache-2.0",
+          "card_review": "HF card reports Apache-2.0 for the cleaned GitHub-code dataset. Dataset configs include language and license partitions. This exploratory manifest records stated license metadata and restrictions, while deferring strict legal/company-policy filtering to a later production approval pass.",
+          "column_aliases": {
+            "language": [
+              "language",
+              "lang"
+            ],
+            "license": [
+              "license"
+            ],
+            "path": [
+              "path",
+              "file_path",
+              "filepath",
+              "file"
+            ],
+            "repo": [
+              "repo_name",
+              "repository_name",
+              "repo",
+              "repository"
+            ],
+            "size": [
+              "size",
+              "bytes"
+            ],
+            "text": [
+              "code",
+              "code_text",
+              "content",
+              "text"
+            ]
+          },
+          "dataset": "codeparrot/github-code-clean",
+          "last_modified": "2022-07-05T09:35:14.000Z",
+          "local_mirror_dir": "data/hf_mirror/codeparrot__github-code-clean",
+          "rejected_configs": [],
+          "requested_revision": "c48d40f9e70f0196f8236901ee35807f7d6c44c0",
+          "resolved_revision": "c48d40f9e70f0196f8236901ee35807f7d6c44c0",
+          "restrictions": false,
+          "tags": [
+            "license:apache-2.0"
+          ]
+        }
+      ],
+      "status": "completed",
+      "token_count": {
+        "count": 0,
+        "method": "will count byte-tokenizer tokens during streamed mirror build",
+        "status": "not_materialized_yet",
+        "target_min_tokens": 50000000
+      },
+      "total_parquet_bytes": 12399825013,
+      "total_rows": 3544000
+    },
+    "d4_materialization_summary": {
+      "benchmark_label": "hf_corpus_materialization",
+      "corpus_use": "exploratory-research-only",
+      "dataset_config_counts": {
+        "CodedotAI/code_clippy_github::JavaScript-all": 3415
+      },
+      "document_count": 3415,
+      "excluded_examples": [
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/lib/transports/jsonp-polling.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "voidlock/contacts"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/connect/lib-cov/middleware/session/store.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "vignesh9136/node-google-calendar-sample"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/backstopjs/node_modules/gulp-open/node_modules/gulp-util/node_modules/minimist/test/unknown.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "gregsqueeb/khoilajsdfkjsakldfj"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "todoapp/node_modules/mocha/lib/reporters/json-cov.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "Foxoon/Todooze"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "me/node_modules/sequelize/node_modules/lodash/result.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "hbzhang/me"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/angular.js/1.4.4/angular-route.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "CyrusSUEN/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/angular.js/1.4.14/i18n/angular-locale_ko-kr.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "sajochiu/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/angular-i18n/1.5.9/angular-locale_en-ke.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "honestree/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "bower_components/jquery-ui/ui/minified/i18n/datepicker-ar-DZ.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "HerrR/mobutv-projekt"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "webroot/bower_components/jquery-ui/ui/minified/i18n/datepicker-sr.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "aoliverio/builder"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "docs/shuffle-text.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "conan-equal-newone/yenten"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "dist/visualizer.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "jgarverick/RequirementsIntegrator"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "dist/autocompleteList.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "jamesfer/angular-material-autocomplete-list"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/voxel-engine/node_modules/three/src/extras/helpers/DirectionalLightHelper.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "seacloud9/ds.fracVader"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "build/webpack.base.conf.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "ElixirStudy0730/phoenix_webpack2"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "assets/plugins/jquery-ui/ui/minified/i18n/datepicker-eo.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "GowthamITMARTX/adsports"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "data/docs/tweaks.js",
+          "reason": "secret_or_confidential_pattern",
+          "repo": "meboHQ/mebo"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/angular-google-maps/2.0.18/angular-google-maps_dev_mapped.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "sufuf3/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/jade/1.1.4/jade.min.js",
+          "reason": "too_large",
+          "repo": "froala/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/mojio-js/3.1.2/mojio-js.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "chrillep/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "files/p5.js/0.3.5/p5.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "royswastik/jsdelivr"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/rxjs/2.3.17/rx.coincidence.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "perdona/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/react-icons/lib/md/local-restaurant.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "bairrada97/festival"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/deeplearn/0.5.0/graph/graph.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "cdnjs/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/pdfjs-dist/lib/core/obj.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "AngeliaGong/AngeliaGong.github.io"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/codemirror/5.17.0/mode/slim/slim.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "wout/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/semver/semver.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "thehashrocket/angular2-2waydata-confirmation"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "public/node_modules/alt/node_modules/es-symbol/dist/symbol.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "cloudship/memory"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "src/Sharif/CalendarBundle/Resources/public/js/kendoui/cultures/kendo.culture.ta-IN.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "sahand-mozaffari/SharifCalendar"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "leapstrap/leapstrap/documentation/dist/js/leapstrap.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "gnitemouse/leap2048"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/browser-sync/lib/public/public-utils.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "vvlladimir/project1"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/apexcharts/2.1.7/apexcharts.js",
+          "reason": "too_large",
+          "repo": "cdnjs/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "cdk/node_modules/aws-sdk/lib/protocol/rest_xml.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "iamatypeofwalrus/GlasswavesCo"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "modapi/node_modules/lab/lib/leaks.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "Gambya/mod"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/pnp-config-store/1.3.4/config-store.es5.umd.bundle.js",
+          "reason": "secret_or_confidential_pattern",
+          "repo": "joeyparrish/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/dojo/1.15.5/cldr/nls/pl/generic.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "cdnjs/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "web/bundles/makinmindeditor/js/lib/ace/mode/coffee_highlight_rules.js",
+          "reason": "secret_or_confidential_pattern",
+          "repo": "ragulan77/MakinMind"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "www/js/ion.rangeSlider.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "FirstDateApp/FirstDateApp.github.io"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/bower/node_modules/insight/node_modules/inquirer/node_modules/rx/dist/rx.lite.extras.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "anato-lee/ang-test"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/karma/node_modules/chokidar/node_modules/fsevents/node_modules/cryptiles/lib/index.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "Lshreya/UniversalProject"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/uikit/3.0.0-rc.14/js/components/tooltip.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "jonobr1/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/simple-icons/5.22.0/webauthn.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "cdnjs/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/es-abstract/2017/QuoteJSONString.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "arvenil/resume"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/node-geocoder/lib/geocoder/abstractgeocoder.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "samkho10/claire"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "platforms/ios/www/lib/aerisjs/examples/amd/bower_components/aerisjs/examples/amd/bower_components/aerisjs/examples/amd/bower_components/leaflet.markercluster/example/realworld.10000.js",
+          "reason": "too_large",
+          "repo": "MikeLockz/exit-now-mobile"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/absurd/0.3.135/absurd.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "Pranay92/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/absurd/0.1.17/absurd.min.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "LorenzoBoccaccia/cdnjs"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/karma/node_modules/http-proxy/examples/middleware/jsonp-middleware.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "AceMood/Algorithms-in-JavaScript"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "node_modules/babel-loader/node_modules/babel-core/node_modules/lodash/function/bindAll.js",
+          "reason": "vendor_or_generated_path",
+          "repo": "oneillci/egghead-react-app"
+        },
+        {
+          "config": "JavaScript-all",
+          "dataset": "CodedotAI/code_clippy_github",
+          "path": "ajax/libs/yui/3.8.0pr2/resize-plugin/resize-plugin.js",
+          "reason": "duplicate_text",
+          "repo": "magoni/cdnjs"
+        }
+      ],
+      "excluded_reasons": {
+        "duplicate_text": 181,
+        "evaluation_contamination_path": 5,
+        "generated_marker": 45,
+        "secret_or_confidential_pattern": 58,
+        "too_large": 119,
+        "vendor_or_generated_path": 1985
+      },
+      "filters": {
+        "contamination_path_markers": [
+          "/benchmark/",
+          "/benchmarks/",
+          "/eval/",
+          "/evals/",
+          "/evaluation/",
+          "/evaluations/",
+          "humaneval",
+          "mbpp"
+        ],
+        "generated_markers": [
+          "auto-generated",
+          "autogenerated",
+          "do not edit",
+          "generated by",
+          "this file was generated"
+        ],
+        "malicious_instruction_markers": [
+          "ignore previous instructions",
+          "ignore all previous instructions",
+          "reveal your system prompt",
+          "developer message",
+          "system prompt",
+          "prompt injection"
+        ],
+        "max_row_bytes": 256000,
+        "min_row_bytes": 20,
+        "path_excludes": [
+          ".git/",
+          "__pycache__/",
+          "build/",
+          "dist/",
+          "node_modules/",
+          "site-packages/",
+          "third_party/",
+          "vendor/"
+        ]
+      },
+      "languages": {
+        "JavaScript": 3415
+      },
+      "licenses": {
+        "agpl-3.0": 34,
+        "apache-2.0": 89,
+        "bsd-2-clause": 8,
+        "bsd-3-clause": 42,
+        "cc0-1.0": 3,
+        "epl-1.0": 1,
+        "gpl-2.0": 134,
+        "gpl-3.0": 60,
+        "isc": 1,
+        "lgpl-2.1": 5,
+        "lgpl-3.0": 5,
+        "mit": 3024,
+        "mpl-2.0": 8,
+        "unlicense": 1
+      },
+      "limitations": [
+        "exploratory_research_only_not_production_approved",
+        "mixed_or_unclear_license_metadata_not_blocking_exploratory_training",
+        "near_duplicate_filter_pending",
+        "no_functional_training_run_from_this_mirror_yet"
+      ],
+      "meets_50m_token_requirement": true,
+      "output": {
+        "bytes": 58615129,
+        "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+        "sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc"
+      },
+      "production_approval": false,
+      "redistribution_approval": false,
+      "rows_accepted": 3415,
+      "rows_excluded": 2393,
+      "rows_seen": 5808,
+      "source_manifest": {
+        "dataset_revisions": {
+          "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+          "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+        },
+        "experiment_id": "D3_hf_corpus_manifest",
+        "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+        "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+      },
+      "split_counts": {
+        "test": 50,
+        "train": 3280,
+        "validation": 85
+      },
+      "status": "completed",
+      "target_train_tokens": 50000000,
+      "tokens": {
+        "test": 735566,
+        "train": 50102528,
+        "validation": 1455924
+      },
+      "total_tokens": 52294018,
+      "transformations": [
+        "extract text/repo/path/language/license columns from Dataset Viewer parquet rows",
+        "reject binary/corrupt/unusable rows",
+        "reject technical secret/confidential patterns",
+        "reject generated/vendor dependency paths",
+        "reject exact duplicate normalized text",
+        "reject known evaluation-contamination path markers",
+        "reject malicious embedded instruction markers",
+        "assign repository-aware train/validation/test split by stable repo hash",
+        "count byte-tokenizer tokens as utf8 bytes plus eos",
+        "write jsonl rows with source dataset/config/revision and row checksums"
+      ]
+    },
+    "sampling": {
+      "packing": "All accepted JSONL texts are concatenated as byte-token IDs with EOS after each document. Each batch samples random contiguous seq_len+1 windows from the concatenated tensor.",
+      "reason": "There is no split-aware sampler in train_dense_decoder; the D4 JSONL rows include split metadata, but load_jsonl_texts currently loads all text rows for training and validation sampling.",
+      "train_sampling": "torch.randint over start offsets with a CPU torch.Generator seeded from --seed. Sampling is with replacement; no epoch boundaries or wraparound logic.",
+      "train_validation_overlap_possible": true,
+      "validation_sampling": "After training, the same CPU generator state samples validation_batches random windows from the same concatenated corpus. Current records now include validation.sample_order_sha256 for new runs."
+    },
+    "tokenizer": {
+      "description": "UTF-8 bytes plus EOS token 256; no BPE, no learned vocab file.",
+      "eos_id": 256,
+      "implementation_file": "src/weightlab/dense_training.py",
+      "implementation_sha256": "7cfbd0cc54602364df94c68c5e53014325df26e81d8b0ac001c206b23f64b792",
+      "special_tokens": {
+        "eos": 256
+      },
+      "type": "byte_level",
+      "vocab_size": 257
+    }
+  },
+  "hardware_software": {
+    "accelerator_backend": "cpu",
+    "dependency_freeze": [
+      "aiohappyeyeballs==2.6.2",
+      "aiohttp==3.14.1",
+      "aiosignal==1.4.0",
+      "annotated-doc==0.0.4",
+      "anyio==4.14.0",
+      "attrs==26.1.0",
+      "certifi==2026.6.17",
+      "charset-normalizer==3.4.7",
+      "click==8.4.1",
+      "cuda-bindings==13.3.1",
+      "cuda-pathfinder==1.5.5",
+      "cuda-toolkit==13.0.2",
+      "-e file://<repo>",
+      "datasets==5.0.0",
+      "dill==0.4.1",
+      "filelock==3.29.4",
+      "frozenlist==1.8.0",
+      "fsspec==2026.4.0",
+      "h11==0.16.0",
+      "hf-xet==1.5.1",
+      "httpcore==1.0.9",
+      "httpx==0.28.1",
+      "huggingface-hub==1.20.1",
+      "idna==3.18",
+      "iniconfig==2.3.0",
+      "jinja2==3.1.6",
+      "markdown-it-py==4.2.0",
+      "markupsafe==3.0.3",
+      "mdurl==0.1.2",
+      "mpmath==1.3.0",
+      "multidict==6.7.1",
+      "multiprocess==0.70.19",
+      "networkx==3.6.1",
+      "numpy==2.4.6",
+      "nvidia-cublas==13.1.1.3",
+      "nvidia-cuda-cupti==13.0.85",
+      "nvidia-cuda-nvrtc==13.0.88",
+      "nvidia-cuda-runtime==13.0.96",
+      "nvidia-cudnn-cu13==9.20.0.48",
+      "nvidia-cufft==12.0.0.61",
+      "nvidia-cufile==1.15.1.6",
+      "nvidia-curand==10.4.0.35",
+      "nvidia-cusolver==12.0.4.66",
+      "nvidia-cusparse==12.6.3.3",
+      "nvidia-cusparselt-cu13==0.8.1",
+      "nvidia-nccl-cu13==2.29.7",
+      "nvidia-nvjitlink==13.0.88",
+      "nvidia-nvshmem-cu13==3.4.5",
+      "nvidia-nvtx==13.0.85",
+      "packaging==26.2",
+      "pandas==3.0.3",
+      "pluggy==1.6.0",
+      "propcache==0.5.2",
+      "pyarrow==24.0.0",
+      "pygments==2.20.0",
+      "pytest==9.1.1",
+      "python-dateutil==2.9.0.post0",
+      "pyyaml==6.0.3",
+      "requests==2.34.2",
+      "rich==15.0.0",
+      "ruff==0.15.18",
+      "setuptools==81.0.0",
+      "shellingham==1.5.4",
+      "six==1.17.0",
+      "sympy==1.14.0",
+      "torch==2.12.1+rocm7.2",
+      "tqdm==4.68.3",
+      "triton==3.7.1",
+      "triton-rocm==3.7.1",
+      "typer==0.25.1",
+      "typing-extensions==4.15.0",
+      "urllib3==2.7.0",
+      "xxhash==3.7.0",
+      "yarl==1.24.2"
+    ],
+    "device_properties": "",
+    "gpu_name": "",
+    "platform": "Linux-7.1.0-rc7-2-cachyos-rc-x86_64-with-glibc2.43",
+    "python_version": "3.12.13",
+    "relevant_environment_variables": {
+      "ROCM_PATH": "/opt/rocm"
+    },
+    "rocm_available": false,
+    "rocm_runtime_version": "7.2.53211",
+    "rocminfo_excerpt": "unavailable: CalledProcessError: Command '['rocminfo']' returned non-zero exit status 1.",
+    "torch_device_string": "cpu",
+    "torch_version": "2.12.1+rocm7.2"
+  },
+  "known_limitations": [
+    "T7b/T7c/T8h/T8i were generated before dirty-worktree metadata existed; their git_commit fields point at the previous committed snapshot even though current source edits were present.",
+    "T8g was generated before validation.sample_order_sha256 existed; T8h has the validation sample-order fingerprint for the matching FP32 control.",
+    "Current training uses all loaded D4 JSONL texts for both training and validation sampling; D4 row split metadata is not enforced by train_dense_decoder.",
+    "BF16-requested path is effectively FP32 for meaningful masked transformer computation under the current fallback."
+  ],
+  "precision_identity_diagnostic": {
+    "benchmark_label": "current_setup_precision_identity_diagnostic",
+    "comparison": {
+      "after_model_hash_equal": true,
+      "after_optimizer_hash_equal": true,
+      "before_model_hash_equal": true,
+      "before_optimizer_hash_equal": true,
+      "input_batch_hashes": [
+        "1b2e2b6b08866119d5967eb5aa63d16c0956ab30784eea70e3ae71d99508cb4f",
+        "620acbe6eb5023d3d36d8c84a18ca3c47f52767ac2ca103f4f89654db9189cc5",
+        "b858b59ded4b4cae35b82ec1deb7f5d09ef1cc6c5f3706a62d774c7482eeb411"
+      ],
+      "input_batch_hashes_equal": true,
+      "model_state_after_step_diffs": {
+        "max_abs_diff": 0.0,
+        "max_abs_name": "",
+        "max_rel_diff": 0.0,
+        "tensors_with_nonzero_abs_diff": 0
+      },
+      "per_step": [
+        {
+          "gradient_hash_equal": true,
+          "input_ids_hash_equal": true,
+          "logits_hash_equal": true,
+          "loss_abs_diff": 0.0,
+          "loss_equal": true,
+          "model_hash_after_step_equal": true,
+          "optimizer_hash_after_step_equal": true,
+          "step": 1,
+          "targets_hash_equal": true
+        },
+        {
+          "gradient_hash_equal": true,
+          "input_ids_hash_equal": true,
+          "logits_hash_equal": true,
+          "loss_abs_diff": 0.0,
+          "loss_equal": true,
+          "model_hash_after_step_equal": true,
+          "optimizer_hash_after_step_equal": true,
+          "step": 2,
+          "targets_hash_equal": true
+        },
+        {
+          "gradient_hash_equal": true,
+          "input_ids_hash_equal": true,
+          "logits_hash_equal": true,
+          "loss_abs_diff": 0.0,
+          "loss_equal": true,
+          "model_hash_after_step_equal": true,
+          "optimizer_hash_after_step_equal": true,
+          "step": 3,
+          "targets_hash_equal": true
+        }
+      ]
+    },
+    "config": {
+      "adapter_dim": 0,
+      "architecture_variant": "dense",
+      "attention_mask_mode": "additive_causal",
+      "batch_size": 2,
+      "checkpoint_interval": 0,
+      "device": "rocm",
+      "gradient_accumulation_steps": 1,
+      "heads": 8,
+      "hidden_dim": 544,
+      "layers": 3,
+      "learning_rate": 0.0001,
+      "mixed_precision": "fp32",
+      "optimizer_name": "adamw",
+      "progress_interval": 0,
+      "seq_len": 128,
+      "steps": 3,
+      "validation_batches": 8
+    },
+    "device": {
+      "backend": "cpu",
+      "device_name": "",
+      "device_properties": "",
+      "requested": "rocm",
+      "rocm_available": false,
+      "rocm_runtime_version": "7.2.53211",
+      "torch_device": "cpu",
+      "torch_version": "2.12.1+rocm7.2"
+    },
+    "environment_variables": {
+      "ROCM_PATH": "/opt/rocm",
+      "TORCHINDUCTOR_CACHE_DIR": "/tmp/torchinductor_<user>"
+    },
+    "operation_dtype_limitations": [
+      "PyTorch TransformerEncoderLayer/MultiheadAttention does not expose attention score or softmax tensors via public forward hooks.",
+      "Q/K/V projection dtypes are represented by MultiheadAttention input/output and parameter dtypes; individual internal Q/K/V tensors are not directly captured.",
+      "The causal mask is created as torch.float32 additive -inf mask before entering the block."
+    ],
+    "runs": {
+      "bf16_requested": {
+        "after_model_hash": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+        "after_optimizer_hash": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+        "autocast_dtype": "torch.bfloat16",
+        "before_model_hash": "ed6771d1be1834ddec7545294c04af7f08fe378d7bfd50fc2890259658d8eedb",
+        "before_optimizer_hash": "67c70871a8bb5b0595d34819981d6d64c2a5742877a5b42eb10942953a4fca34",
+        "dtype_trace_first_step": [
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "token_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "position_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.0.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.1.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.2.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "norm",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "head",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "token_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "position_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.0.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.1.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.2.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "norm",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "head",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "token_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "position_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.0.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.1.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.2.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "bf16_requested",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "bf16_requested",
+            "type": "Linear"
+          }
+        ],
+        "label": "bf16_requested",
+        "mixed_precision": "bf16",
+        "optimizer_summary": {
+          "dtype_counts": {
+            "torch.float32": 126
+          },
+          "parameter_state_entries": 42,
+          "tensor_count": 126
+        },
+        "steps": [
+          {
+            "gradient_dtype_counts": {
+              "torch.float32": 42
+            },
+            "gradient_hash": "98b52d5be990a1d80d98f2fa9ea6c1b225494233ea77cf9316999d3e5bcd1f13",
+            "input_ids_hash": "f35ae02abdd1e68f3811d7d893c88852c432700ee022074fe663cf1a332f4d55",
+            "logits_abs_max": 2.4179553985595703,
+            "logits_dtype": "torch.float32",
+            "logits_hash": "e0d013fdc367094ab8153016c28a02591c9805c9ca84695d9b820c283842a593",
+            "loss": 5.728969097137451,
+            "loss_dtype": "torch.float32",
+            "model_hash_after_step": "657855251e73086959011b35d65efeede60c71ce08f3de2738d42dcd93072606",
+            "optimizer_hash_after_step": "6866fb415a423f4f335303866dd55cb64bf3dc1b51eb0062984d2af5c282ac92",
+            "optimizer_state": {
+              "dtype_counts": {
+                "torch.float32": 126
+              },
+              "parameter_state_entries": 42,
+              "tensor_count": 126
+            },
+            "step": 1,
+            "targets_hash": "5cbf5130a36514cc975e3ffb2de0cc9101c60d35966624c3bdcb8ebabeb29e6c"
+          },
+          {
+            "gradient_dtype_counts": {
+              "torch.float32": 42
+            },
+            "gradient_hash": "b25f8c35f79e2883db7a537ccb742a34e4b45e27f83f14f1aa24938d89b2185b",
+            "input_ids_hash": "074584e8000a69cafef1477655653380e194a8ef31c12f7c1c96c1b4c206dd43",
+            "logits_abs_max": 2.8228063583374023,
+            "logits_dtype": "torch.float32",
+            "logits_hash": "b0bd5da6d4f310e0a4ef4d21aa35444bbe0100826b21947a8a31e9558538c043",
+            "loss": 5.5082011222839355,
+            "loss_dtype": "torch.float32",
+            "model_hash_after_step": "10efc5ab041d96b8bffe12163b2baff8c790c4ca835ec8cb3203f6561a0c9824",
+            "optimizer_hash_after_step": "fcc1a2d163836f6c9bf71d6a8d968b3cd49d6d0c5b08c5a7bd17f4fdeb70356b",
+            "optimizer_state": {
+              "dtype_counts": {
+                "torch.float32": 126
+              },
+              "parameter_state_entries": 42,
+              "tensor_count": 126
+            },
+            "step": 2,
+            "targets_hash": "e93c2fac2b94f478ef4415beeedf4becd055233b9d85078aedc9a6386f2f50c9"
+          },
+          {
+            "gradient_dtype_counts": {
+              "torch.float32": 42
+            },
+            "gradient_hash": "e9c37316aac6576dc2bcdd96caab47b0a3289968718a735472b21585ae240aa4",
+            "input_ids_hash": "d9ca9ca2f2d247026883e8a73d599de7f47508f37c0c0ea7658aedfb7cf93c90",
+            "logits_abs_max": 3.5019211769104004,
+            "logits_dtype": "torch.float32",
+            "logits_hash": "23c9d76cf94c88636fa614f6bf1b586d27a9093ee8c66122b0bde524cc3de229",
+            "loss": 5.455477714538574,
+            "loss_dtype": "torch.float32",
+            "model_hash_after_step": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+            "optimizer_hash_after_step": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+            "optimizer_state": {
+              "dtype_counts": {
+                "torch.float32": 126
+              },
+              "parameter_state_entries": 42,
+              "tensor_count": 126
+            },
+            "step": 3,
+            "targets_hash": "2913c39783b8a34f23fb39c1b15e6168b3e371f37822a00db0768cad85e1613b"
+          }
+        ],
+        "use_autocast": false
+      },
+      "fp32_control": {
+        "after_model_hash": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+        "after_optimizer_hash": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+        "autocast_dtype": "None",
+        "before_model_hash": "ed6771d1be1834ddec7545294c04af7f08fe378d7bfd50fc2890259658d8eedb",
+        "before_optimizer_hash": "67c70871a8bb5b0595d34819981d6d64c2a5742877a5b42eb10942953a4fca34",
+        "dtype_trace_first_step": [
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "token_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "position_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.0.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.1.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.2.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "norm",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "head",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "token_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "position_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.0.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.1.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.2.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "norm",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "head",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "token_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.int64"
+            ],
+            "module": "position_embedding",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Embedding"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.0.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.0.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.1.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.dropout2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.1.norm2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32",
+              "torch.float32",
+              "torch.float32"
+            ],
+            "module": "blocks.2.self_attn",
+            "output_dtype": [
+              "torch.float32",
+              "NoneType"
+            ],
+            "parameter_dtypes": {
+              "in_proj_bias": "torch.float32",
+              "in_proj_weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "MultiheadAttention"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.norm1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "LayerNorm"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear1",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.dropout",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {},
+            "run": "fp32_control",
+            "type": "Dropout"
+          },
+          {
+            "autocast_cuda_enabled": false,
+            "input_dtype": [
+              "torch.float32"
+            ],
+            "module": "blocks.2.linear2",
+            "output_dtype": "torch.float32",
+            "parameter_dtypes": {
+              "bias": "torch.float32",
+              "weight": "torch.float32"
+            },
+            "run": "fp32_control",
+            "type": "Linear"
+          }
+        ],
+        "label": "fp32_control",
+        "mixed_precision": "fp32",
+        "optimizer_summary": {
+          "dtype_counts": {
+            "torch.float32": 126
+          },
+          "parameter_state_entries": 42,
+          "tensor_count": 126
+        },
+        "steps": [
+          {
+            "gradient_dtype_counts": {
+              "torch.float32": 42
+            },
+            "gradient_hash": "98b52d5be990a1d80d98f2fa9ea6c1b225494233ea77cf9316999d3e5bcd1f13",
+            "input_ids_hash": "f35ae02abdd1e68f3811d7d893c88852c432700ee022074fe663cf1a332f4d55",
+            "logits_abs_max": 2.4179553985595703,
+            "logits_dtype": "torch.float32",
+            "logits_hash": "e0d013fdc367094ab8153016c28a02591c9805c9ca84695d9b820c283842a593",
+            "loss": 5.728969097137451,
+            "loss_dtype": "torch.float32",
+            "model_hash_after_step": "657855251e73086959011b35d65efeede60c71ce08f3de2738d42dcd93072606",
+            "optimizer_hash_after_step": "6866fb415a423f4f335303866dd55cb64bf3dc1b51eb0062984d2af5c282ac92",
+            "optimizer_state": {
+              "dtype_counts": {
+                "torch.float32": 126
+              },
+              "parameter_state_entries": 42,
+              "tensor_count": 126
+            },
+            "step": 1,
+            "targets_hash": "5cbf5130a36514cc975e3ffb2de0cc9101c60d35966624c3bdcb8ebabeb29e6c"
+          },
+          {
+            "gradient_dtype_counts": {
+              "torch.float32": 42
+            },
+            "gradient_hash": "b25f8c35f79e2883db7a537ccb742a34e4b45e27f83f14f1aa24938d89b2185b",
+            "input_ids_hash": "074584e8000a69cafef1477655653380e194a8ef31c12f7c1c96c1b4c206dd43",
+            "logits_abs_max": 2.8228063583374023,
+            "logits_dtype": "torch.float32",
+            "logits_hash": "b0bd5da6d4f310e0a4ef4d21aa35444bbe0100826b21947a8a31e9558538c043",
+            "loss": 5.5082011222839355,
+            "loss_dtype": "torch.float32",
+            "model_hash_after_step": "10efc5ab041d96b8bffe12163b2baff8c790c4ca835ec8cb3203f6561a0c9824",
+            "optimizer_hash_after_step": "fcc1a2d163836f6c9bf71d6a8d968b3cd49d6d0c5b08c5a7bd17f4fdeb70356b",
+            "optimizer_state": {
+              "dtype_counts": {
+                "torch.float32": 126
+              },
+              "parameter_state_entries": 42,
+              "tensor_count": 126
+            },
+            "step": 2,
+            "targets_hash": "e93c2fac2b94f478ef4415beeedf4becd055233b9d85078aedc9a6386f2f50c9"
+          },
+          {
+            "gradient_dtype_counts": {
+              "torch.float32": 42
+            },
+            "gradient_hash": "e9c37316aac6576dc2bcdd96caab47b0a3289968718a735472b21585ae240aa4",
+            "input_ids_hash": "d9ca9ca2f2d247026883e8a73d599de7f47508f37c0c0ea7658aedfb7cf93c90",
+            "logits_abs_max": 3.5019211769104004,
+            "logits_dtype": "torch.float32",
+            "logits_hash": "23c9d76cf94c88636fa614f6bf1b586d27a9093ee8c66122b0bde524cc3de229",
+            "loss": 5.455477714538574,
+            "loss_dtype": "torch.float32",
+            "model_hash_after_step": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+            "optimizer_hash_after_step": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+            "optimizer_state": {
+              "dtype_counts": {
+                "torch.float32": 126
+              },
+              "parameter_state_entries": 42,
+              "tensor_count": 126
+            },
+            "step": 3,
+            "targets_hash": "2913c39783b8a34f23fb39c1b15e6168b3e371f37822a00db0768cad85e1613b"
+          }
+        ],
+        "use_autocast": false
+      }
+    },
+    "software": {
+      "pip_freeze_selected": "aiohappyeyeballs==2.6.2\naiohttp==3.14.1\naiosignal==1.4.0\nannotated-doc==0.0.4\nanyio==4.14.0\nattrs==26.1.0\ncertifi==2026.6.17\ncharset-normalizer==3.4.7\nclick==8.4.1\ncuda-bindings==13.3.1\ncuda-pathfinder==1.5.5\ncuda-toolkit==13.0.2\n-e file://<repo>\ndatasets==5.0.0\ndill==0.4.1\nfilelock==3.29.4\nfrozenlist==1.8.0\nfsspec==2026.4.0\nh11==0.16.0\nhf-xet==1.5.1\nhttpcore==1.0.9\nhttpx==0.28.1\nhuggingface-hub==1.20.1\nidna==3.18\niniconfig==2.3.0\njinja2==3.1.6\nmarkdown-it-py==4.2.0\nmarkupsafe==3.0.3\nmdurl==0.1.2\nmpmath==1.3.0\nmultidict==6.7.1\nmultiprocess==0.70.19\nnetworkx==3.6.1\nnumpy==2.4.6\nnvidia-cublas==13.1.1.3\nnvidia-cuda-cupti==13.0.85\nnvidia-cuda-nvrtc==13.0.88\nnvidia-cuda-runtime==13.0.96\nnvidia-cudnn-cu13==9.20.0.48\nnvidia-cufft==12.0.0.61\nnvidia-cufile==1.15.1.6\nnvidia-curand==10.4.0.35\nnvidia-cusolver==12.0.4.66\nnvidia-cusparse==12.6.3.3\nnvidia-cusparselt-cu13==0.8.1\nnvidia-nccl-cu13==2.29.7\nnvidia-nvjitlink==13.0.88\nnvidia-nvshmem-cu13==3.4.5\nnvidia-nvtx==13.0.85\npackaging==26.2\npandas==3.0.3\npluggy==1.6.0\npropcache==0.5.2\npyarrow==24.0.0\npygments==2.20.0\npytest==9.1.1\npython-dateutil==2.9.0.post0\npyyaml==6.0.3\nrequests==2.34.2\nrich==15.0.0\nruff==0.15.18\nsetuptools==81.0.0\nshellingham==1.5.4\nsix==1.17.0\nsympy==1.14.0\ntorch==2.12.1+rocm7.2\ntqdm==4.68.3\ntriton==3.7.1\ntriton-rocm==3.7.1\ntyper==0.25.1\ntyping-extensions==4.15.0\nurllib3==2.7.0\nxxhash==3.7.0\nyarl==1.24.2",
+      "platform": "Linux-7.1.0-rc7-2-cachyos-rc-x86_64-with-glibc2.43",
+      "python": "3.12.13",
+      "rocminfo_excerpt": "unavailable: CalledProcessError: Command '['rocminfo']' returned non-zero exit status 1."
+    },
+    "status": "completed"
+  },
+  "redaction_note": "Private home paths, usernames, hostnames, credentials, tokens, and secrets are omitted or redacted where detected. Repository paths are represented relative to the repository root.",
+  "repository_state": {
+    "branch": "main",
+    "dirty": true,
+    "head_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+    "recent_commits": [
+      "3a23ce9 (HEAD -> main, tag: adamw-bf16-dense-probe-2026-06-20) Stabilize AdamW BF16 dense training path",
+      "41282c5 Add adapter decoder candidate path",
+      "349dcfa (tag: hf-50m-dense-baseline-2026-06-20) Record 50m-token dense HF baseline",
+      "ff4e0f8 Link HF corpus records and resume dense checkpoints",
+      "9cbad3b (tag: hf-50m-mirror-dense-probe-2026-06-20) Record HF mirror and instrumented dense probe",
+      "abbcf36 Flush dense training progress and checkpoints",
+      "de86b45 Add exploratory HF corpus materializer",
+      "c2fa347 (tag: exploratory-hf-corpus-2026-06-20) Record exploratory HF corpus selection",
+      "39e5247 Add exploratory HF corpus manifest builder",
+      "866d8ba Expand corpus source handling",
+      "a7f61de (tag: rocm-11m-dense-foothold-2026-06-20) Record stable 11m ROCm dense probe",
+      "7378ad6 Add dense step stability debug probe"
+    ],
+    "relevant_tags": [
+      "adamw-bf16-dense-probe-2026-06-20",
+      "hf-50m-dense-baseline-2026-06-20",
+      "hf-50m-mirror-dense-probe-2026-06-20",
+      "exploratory-hf-corpus-2026-06-20",
+      "rocm-11m-dense-foothold-2026-06-20",
+      "rocm-transformer-stability-2026-06-20",
+      "real-training-bootstrap-2026-06-20",
+      "real-training-transition-2026-06-20",
+      "reduced-research-baseline-2026-06-20"
+    ],
+    "status_short": "M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/dense_training.py\n M src/weightlab/metrics.py\n M tests/test_dense_training.py\n?? results/T7b_rocm_adapter_decoder_10m_hf_d4_identity_init_step_debug.json\n?? results/T7c_rocm_adapter_decoder_10m_hf_d4_identity_probe.json\n?? results/T8h_rocm_dense_decoder_11m_hf_d4_adamw_fp32_probe.json\n?? results/T8i_dense_adamw_fp32_vs_bf16_control_comparison.json\n?? results/current_setup_precision_identity_diagnostic.json\n?? tests/test_metrics.py",
+    "tags_at_head": [
+      "adamw-bf16-dense-probe-2026-06-20"
+    ]
+  },
+  "result_hashes": {
+    "D3": {
+      "bytes": 32788,
+      "path": "results/D3_hf_corpus_manifest.json",
+      "sha256": "74f7ae185c031e659ec5546821a822c3c47a5b9d155662a16bd2f621e99ac00e"
+    },
+    "D4": {
+      "bytes": 17937,
+      "path": "results/D4_hf_corpus_materialization.json",
+      "sha256": "61699f17f635ec103f4c390ffd67873156355f5192638f4cfc333d120db4f678"
+    },
+    "T6": {
+      "bytes": 16522131,
+      "path": "results/T6_rocm_dense_decoder_11m_hf_d4_50m_tokens.json",
+      "sha256": "e523dadd0c95b938fbe365c6ef77f8d189af24f74b3b61b03e9321988b83a2de"
+    },
+    "T7a": {
+      "bytes": 9860,
+      "path": "results/T7a_rocm_adapter_decoder_10m_hf_d4_step_debug.json",
+      "sha256": "8e076694f5a842f6018ccb6cab939d6dceaf63a81df0bcdcc6c2de131e884775"
+    },
+    "T7b": {
+      "bytes": 7533,
+      "path": "results/T7b_rocm_adapter_decoder_10m_hf_d4_identity_init_step_debug.json",
+      "sha256": "38aa869c84c5dd14540e36c4294cc2ec202fb5f0d6507943d1e61698d4c44021"
+    },
+    "T7c": {
+      "bytes": 836402,
+      "path": "results/T7c_rocm_adapter_decoder_10m_hf_d4_identity_probe.json",
+      "sha256": "3dfa73d0a4dbe893ae9d5fa66308e0ce0111efd3467169f0477e44c1c557bcc4"
+    },
+    "T8g": {
+      "bytes": 842352,
+      "path": "results/T8g_rocm_dense_decoder_11m_hf_d4_adamw_bf16_probe.json",
+      "sha256": "bdde96f3ea337ba39c24705a55e8c77265cab67fd41d22f9cdf187559d7dbd19"
+    },
+    "T8h": {
+      "bytes": 842497,
+      "path": "results/T8h_rocm_dense_decoder_11m_hf_d4_adamw_fp32_probe.json",
+      "sha256": "498126ffe4b8b8dbf8d1dfa5541a9780dac618455d2279cff05175af129f74be"
+    },
+    "T8i": {
+      "bytes": 5876,
+      "path": "results/T8i_dense_adamw_fp32_vs_bf16_control_comparison.json",
+      "sha256": "dbdf294f650889a4507338d21a14bb2a7d23cc94f2a5ab60ebdde89a9af664c2"
+    },
+    "assessment": {
+      "bytes": 53461,
+      "path": "results/research_assessment.json",
+      "sha256": "ec8e0b8d022d7ca29452d0ed29a53a4d448a26969bbb59d9f7b8a0902e5f7fbb"
+    },
+    "precision_identity": {
+      "bytes": 73645,
+      "path": "results/current_setup_precision_identity_diagnostic.json",
+      "sha256": "6c6d944770d81906ca1ae78e83b35f3572a71e7b06ba4e0927b12a4d4dc41b67"
+    }
+  },
+  "snapshot_schema": 1,
+  "source_hashes": {
+    "configs/smoke.yaml": "4e4c5ca98e3e88cf0e27c6ce7883e204449e964b365beee7a02b9c5a7c33f096",
+    "pyproject.toml": "5ecefb8d8d133280bef572a392d903eea86dcb0391428f89185009a76590d977",
+    "scripts/debug_dense_step_stability.py": "3c25e6b6ce770dcf7abff4aaee8abb1231a2c07d929f5339250f05cceb62e19f",
+    "scripts/materialize_hf_corpus.py": "c271c67ed0e236997a78e3844171986045f7efa8e2af52b0a3bb00a6add25c76",
+    "scripts/prepare_hf_corpus_manifest.py": "d3b20ae65afb1c47962f6d35abcff688d7b6bff4e59170c1af2823942eb13aec",
+    "scripts/summarize_research_assessment.py": "0aede5854e402e033352a66c8ea1e05c2a96b7a80d12d06450ff84b7e87d5787",
+    "scripts/train_dense_decoder.py": "c09f72eda8da8a7bfea0489c7849ca7db9e424cabbfb2111b70918b069f148a5",
+    "src/weightlab/assessment.py": "276739c676c24cd1c727755efca861f7fc02aea475f1fbc4061a68689ea59024",
+    "src/weightlab/dense_training.py": "7cfbd0cc54602364df94c68c5e53014325df26e81d8b0ac001c206b23f64b792",
+    "src/weightlab/hf_corpus.py": "ac88d0f43eea9af7b074504eeac1e571fe2849be64201b8c68650cb569327838",
+    "src/weightlab/hf_materializer.py": "b409d34c049dc54738d5f5fb5afab99a56f96e359bbcea9e059d6aa51f1e8c63",
+    "src/weightlab/metrics.py": "1568f6d2082c682b5126d08bcef1e924f24888c25d04f92b641f704bf9a7831e",
+    "tests/test_dense_training.py": "f7634e2fc0162d7539c72776978e5db0132a71ed606abe65812b10de97b20abf",
+    "tests/test_metrics.py": "395258ab28fe50fc6a1a689663e2a8f8df60716f415168ca300cbb10ed834e51",
+    "tests/test_train_dense_decoder_cli.py": "6ec45eaf013b9cf19fb3c9a6154576683a403378158ff9b8b608ff358d5d4579",
+    "uv.lock": "7ab8cf2a69f28afec9948451c37f2865e959ee27a59f8eb62f43ba4945d5a522"
+  },
+  "training_runs": {
+    "T6": {
+      "checkpoint": {
+        "bytes": 44124477,
+        "path": "artifacts/dense_decoder_11m_hf_d4_50m_tokens/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "command": "uv run python scripts/train_dense_decoder.py --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --corpus-record results/D4_hf_corpus_materialization.json  --device rocm --seq-len 128 --hidden-dim 544 --layers 3 --heads 8 --batch-size 2 --steps 195313 --validation-batches 8 --gradient-accumulation-steps 1 --max-file-bytes 256000 --mixed-precision fp32 --output-dir artifacts/dense_decoder_11m_hf_d4_50m_tokens --progress-interval 2500 --checkpoint-interval 5000 --output results/T6_rocm_dense_decoder_11m_hf_d4_50m_tokens.json",
+      "experiment_id": "T6_rocm_dense_decoder_11m_hf_d4_50m_tokens",
+      "git_commit": "ff4e0f80c314a16830e88c8a07e8654b3404cc9f",
+      "git_dirty": "field_absent_in_older_record_schema",
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 5000,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 544,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "sgd",
+          "progress_interval": 2500,
+          "seq_len": 128,
+          "steps": 195313,
+          "validation_batches": 8
+        },
+        "parameter_count": 11025505
+      },
+      "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+      "progress": {
+        "checkpoint_flush_count": 39,
+        "latest": {
+          "elapsed_s": 1848.5932597490028,
+          "loss": 4.299619674682617,
+          "step": 195000,
+          "tokens_per_second": 27004.317870756495,
+          "train_tokens": 49920000
+        },
+        "latest_checkpoint": {
+          "bytes": 44124575,
+          "exists": true,
+          "path": "artifacts/dense_decoder_11m_hf_d4_50m_tokens/dense_decoder_latest.pt"
+        },
+        "path": "artifacts/dense_decoder_11m_hf_d4_50m_tokens/training_progress.jsonl",
+        "records": 78
+      },
+      "status": "completed",
+      "training": {
+        "completed_steps_this_invocation": 195313,
+        "elapsed_s": 1851.5812312570051,
+        "final_loss": 4.3262939453125,
+        "first_loss": 5.706747055053711,
+        "loss_curve_points": 195313,
+        "steps": 195313,
+        "tokens_per_second": 27004.015355057265,
+        "train_tokens": 50000128
+      },
+      "validation": {
+        "loss": 4.0454936027526855
+      }
+    },
+    "T7a": {
+      "checkpoint": {},
+      "command": "uv run python <inline debug_dense_step_stability adapter candidate>",
+      "experiment_id": "T7a_rocm_adapter_decoder_10m_hf_d4_step_debug",
+      "git_commit": "41282c5a7203b70eeef2093d01f0fadee4889066",
+      "git_dirty": "field_absent_in_older_record_schema",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "adapter_dim": 64,
+          "architecture_variant": "adapter",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 0,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 528,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "sgd",
+          "progress_interval": 0,
+          "seq_len": 128,
+          "steps": 2,
+          "validation_batches": 1
+        },
+        "parameter_count": 10604801
+      },
+      "notes": "Two-step ROCm finite-state debug for the matched adapter decoder candidate on the D4 HF mirror.",
+      "progress": {
+        "checkpoint_flush_count": 0,
+        "latest": null,
+        "latest_checkpoint": null,
+        "path": null,
+        "records": null
+      },
+      "status": "failed",
+      "training": {
+        "completed_steps_this_invocation": null,
+        "elapsed_s": null,
+        "final_loss": null,
+        "first_loss": null,
+        "loss_curve_points": 0,
+        "steps": null,
+        "tokens_per_second": null,
+        "train_tokens": null
+      },
+      "validation": {}
+    },
+    "T7b": {
+      "checkpoint": {},
+      "command": "UV_CACHE_DIR=/tmp/uv-cache uv run python <inline debug_dense_step_stability identity adapter>",
+      "experiment_id": "T7b_rocm_adapter_decoder_10m_hf_d4_identity_init_step_debug",
+      "git_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+      "git_dirty": "field_absent_in_older_record_schema",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "adapter_dim": 64,
+          "architecture_variant": "adapter",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 0,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 528,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "sgd",
+          "progress_interval": 0,
+          "seq_len": 128,
+          "steps": 2,
+          "validation_batches": 1
+        },
+        "parameter_count": 10604801
+      },
+      "notes": "Two-step ROCm finite-state debug for the 10.6M adapter candidate after changing residual adapters to identity initialization. Uses the same D4 HF mirror, tokenizer, and additive mask.",
+      "progress": {
+        "checkpoint_flush_count": 0,
+        "latest": null,
+        "latest_checkpoint": null,
+        "path": null,
+        "records": null
+      },
+      "status": "completed",
+      "training": {
+        "completed_steps_this_invocation": null,
+        "elapsed_s": null,
+        "final_loss": null,
+        "first_loss": null,
+        "loss_curve_points": 0,
+        "steps": null,
+        "tokens_per_second": null,
+        "train_tokens": null
+      },
+      "validation": {}
+    },
+    "T7c": {
+      "checkpoint": {
+        "bytes": 42446733,
+        "path": "artifacts/adapter_decoder_10m_hf_d4_identity_probe/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "command": "uv run python scripts/train_dense_decoder.py --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --corpus-record results/D4_hf_corpus_materialization.json  --device rocm --seq-len 128 --hidden-dim 528 --layers 3 --heads 8 --batch-size 2 --steps 10000 --validation-batches 8 --gradient-accumulation-steps 1 --max-file-bytes 256000 --mixed-precision fp32 --output-dir artifacts/adapter_decoder_10m_hf_d4_identity_probe --attention-mask-mode additive_causal --progress-interval 500 --checkpoint-interval 1000 --architecture-variant adapter --adapter-dim 64 --output results/T7c_rocm_adapter_decoder_10m_hf_d4_identity_probe.json",
+      "experiment_id": "T7c_rocm_adapter_decoder_10m_hf_d4_identity_probe",
+      "git_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+      "git_dirty": "field_absent_in_older_record_schema",
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "adapter_dim": 64,
+          "architecture_variant": "adapter",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 1000,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 528,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "sgd",
+          "progress_interval": 500,
+          "seq_len": 128,
+          "steps": 10000,
+          "validation_batches": 8
+        },
+        "parameter_count": 10604801
+      },
+      "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+      "progress": {
+        "checkpoint_flush_count": 10,
+        "latest": {
+          "elapsed_s": 320.4991463829999,
+          "loss": 3.6250383853912354,
+          "step": 10000,
+          "tokens_per_second": 7987.540774728843,
+          "train_tokens": 2560000
+        },
+        "latest_checkpoint": {
+          "bytes": 42446931,
+          "exists": true,
+          "path": "artifacts/adapter_decoder_10m_hf_d4_identity_probe/dense_decoder_latest.pt"
+        },
+        "path": "artifacts/adapter_decoder_10m_hf_d4_identity_probe/training_progress.jsonl",
+        "records": 20
+      },
+      "status": "completed",
+      "training": {
+        "completed_steps_this_invocation": 10000,
+        "elapsed_s": 320.5225335609998,
+        "final_loss": 3.6250383853912354,
+        "first_loss": 5.826710224151611,
+        "loss_curve_points": 10000,
+        "steps": 10000,
+        "tokens_per_second": 7986.957957552763,
+        "train_tokens": 2560000
+      },
+      "validation": {
+        "loss": 4.637662619352341
+      }
+    },
+    "T8g": {
+      "checkpoint": {
+        "bytes": 132362866,
+        "path": "artifacts/dense_decoder_11m_hf_d4_adamw_bf16_probe/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "command": "uv run python scripts/train_dense_decoder.py --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --corpus-record results/D4_hf_corpus_materialization.json  --device rocm --seq-len 128 --hidden-dim 544 --layers 3 --heads 8 --batch-size 2 --steps 10000 --validation-batches 8 --gradient-accumulation-steps 1 --max-file-bytes 256000 --mixed-precision bf16 --output-dir artifacts/dense_decoder_11m_hf_d4_adamw_bf16_probe --attention-mask-mode additive_causal --progress-interval 500 --checkpoint-interval 1000 --architecture-variant dense --adapter-dim 0 --output results/T8g_rocm_dense_decoder_11m_hf_d4_adamw_bf16_probe.json",
+      "experiment_id": "T8g_rocm_dense_decoder_11m_hf_d4_adamw_bf16_probe",
+      "git_commit": "41282c5a7203b70eeef2093d01f0fadee4889066",
+      "git_dirty": "field_absent_in_older_record_schema",
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "adapter_dim": 0,
+          "architecture_variant": "dense",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 1000,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 544,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "bf16",
+          "optimizer_name": "adamw",
+          "progress_interval": 500,
+          "seq_len": 128,
+          "steps": 10000,
+          "validation_batches": 8
+        },
+        "parameter_count": 11025505
+      },
+      "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+      "progress": {
+        "checkpoint_flush_count": 10,
+        "latest": {
+          "elapsed_s": 375.943197467,
+          "loss": 1.3345202207565308,
+          "step": 10000,
+          "tokens_per_second": 6809.539359266409,
+          "train_tokens": 2560000
+        },
+        "latest_checkpoint": {
+          "bytes": 132363216,
+          "exists": true,
+          "path": "artifacts/dense_decoder_11m_hf_d4_adamw_bf16_probe/dense_decoder_latest.pt"
+        },
+        "path": "artifacts/dense_decoder_11m_hf_d4_adamw_bf16_probe/training_progress.jsonl",
+        "records": 20
+      },
+      "status": "completed",
+      "training": {
+        "completed_steps_this_invocation": 10000,
+        "elapsed_s": 376.009254093,
+        "final_loss": 1.3345202207565308,
+        "first_loss": 5.728969097137451,
+        "loss_curve_points": 10000,
+        "steps": 10000,
+        "tokens_per_second": 6808.34307170223,
+        "train_tokens": 2560000
+      },
+      "validation": {
+        "loss": 1.664748802781105
+      }
+    },
+    "T8h": {
+      "checkpoint": {
+        "bytes": 132362866,
+        "path": "artifacts/dense_decoder_11m_hf_d4_adamw_fp32_probe/dense_decoder_last.pt",
+        "resume_ok": true
+      },
+      "command": "uv run python scripts/train_dense_decoder.py --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --corpus-record results/D4_hf_corpus_materialization.json  --device rocm --seq-len 128 --hidden-dim 544 --layers 3 --heads 8 --batch-size 2 --steps 10000 --validation-batches 8 --gradient-accumulation-steps 1 --max-file-bytes 256000 --mixed-precision fp32 --output-dir artifacts/dense_decoder_11m_hf_d4_adamw_fp32_probe --attention-mask-mode additive_causal --progress-interval 500 --checkpoint-interval 1000 --architecture-variant dense --adapter-dim 0 --output results/T8h_rocm_dense_decoder_11m_hf_d4_adamw_fp32_probe.json",
+      "experiment_id": "T8h_rocm_dense_decoder_11m_hf_d4_adamw_fp32_probe",
+      "git_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+      "git_dirty": "field_absent_in_older_record_schema",
+      "limitations": [
+        "training_smoke_only",
+        "byte_tokenizer_baseline",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "model": {
+        "architecture": "causal_transformer_decoder",
+        "config": {
+          "adapter_dim": 0,
+          "architecture_variant": "dense",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 1000,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 544,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "adamw",
+          "progress_interval": 500,
+          "seq_len": 128,
+          "steps": 10000,
+          "validation_batches": 8
+        },
+        "parameter_count": 11025505
+      },
+      "notes": "Initial configurable dense decoder training smoke from random initialization on the filtered local repository corpus. This validates the pipeline only; it is not the required 10-50M parameter or 50M-token run.",
+      "progress": {
+        "checkpoint_flush_count": 10,
+        "latest": {
+          "elapsed_s": 385.335593516,
+          "loss": 1.3345202207565308,
+          "step": 10000,
+          "tokens_per_second": 6643.559647945429,
+          "train_tokens": 2560000
+        },
+        "latest_checkpoint": {
+          "bytes": 132363216,
+          "exists": true,
+          "path": "artifacts/dense_decoder_11m_hf_d4_adamw_fp32_probe/dense_decoder_latest.pt"
+        },
+        "path": "artifacts/dense_decoder_11m_hf_d4_adamw_fp32_probe/training_progress.jsonl",
+        "records": 20
+      },
+      "status": "completed",
+      "training": {
+        "completed_steps_this_invocation": 10000,
+        "elapsed_s": 385.3972600090001,
+        "final_loss": 1.3345202207565308,
+        "first_loss": 5.728969097137451,
+        "loss_curve_points": 10000,
+        "steps": 10000,
+        "tokens_per_second": 6642.496627869687,
+        "train_tokens": 2560000
+      },
+      "validation": {
+        "batches": 8,
+        "loss": 1.664748802781105,
+        "sample_order_sha256": "0ff92096e61783cf57fcc5feff7e4576d7e7e980331b699b25c2bbc68b35ee0e",
+        "tokens": 2064
+      }
+    },
+    "T8i": {
+      "checkpoint": {},
+      "command": "UV_CACHE_DIR=/tmp/uv-cache uv run python <inline compare T8g T8h and export model-only checkpoints>",
+      "experiment_id": "T8i_dense_adamw_fp32_vs_bf16_control_comparison",
+      "git_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+      "git_dirty": "field_absent_in_older_record_schema",
+      "limitations": [
+        "post_hoc_comparison_record",
+        "T8g_record_was_created_before_validation_sample_order_sha256_was_added",
+        "does_not_measure_deployed_runtime_latency"
+      ],
+      "model": {},
+      "notes": "Compares T8g mixed-precision-requested dense AdamW probe against the T8h FP32 AdamW control and exports model-only checkpoints for size accounting.",
+      "progress": {
+        "checkpoint_flush_count": 0,
+        "latest": null,
+        "latest_checkpoint": null,
+        "path": null,
+        "records": null
+      },
+      "status": "completed",
+      "training": {
+        "completed_steps_this_invocation": null,
+        "elapsed_s": null,
+        "final_loss": null,
+        "first_loss": null,
+        "loss_curve_points": 0,
+        "steps": null,
+        "tokens_per_second": null,
+        "train_tokens": null
+      },
+      "validation": {}
+    }
+  },
+  "verification": {
+    "latest_lint_command": "UV_CACHE_DIR=/tmp/uv-cache uv run ruff check .",
+    "latest_lint_result": "passed after handoff generation: All checks passed!",
+    "latest_test_command": "UV_CACHE_DIR=/tmp/uv-cache uv run pytest -q",
+    "latest_test_result": "passed after handoff generation: 104 tests collected; full suite reached 100%"
+  }
+}

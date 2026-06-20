@@ -1,0 +1,2445 @@
+{
+  "benchmark_label": "current_setup_precision_identity_diagnostic",
+  "comparison": {
+    "after_model_hash_equal": true,
+    "after_optimizer_hash_equal": true,
+    "before_model_hash_equal": true,
+    "before_optimizer_hash_equal": true,
+    "input_batch_hashes": [
+      "1b2e2b6b08866119d5967eb5aa63d16c0956ab30784eea70e3ae71d99508cb4f",
+      "620acbe6eb5023d3d36d8c84a18ca3c47f52767ac2ca103f4f89654db9189cc5",
+      "b858b59ded4b4cae35b82ec1deb7f5d09ef1cc6c5f3706a62d774c7482eeb411"
+    ],
+    "input_batch_hashes_equal": true,
+    "model_state_after_step_diffs": {
+      "max_abs_diff": 0.0,
+      "max_abs_name": "",
+      "max_rel_diff": 0.0,
+      "tensors_with_nonzero_abs_diff": 0
+    },
+    "per_step": [
+      {
+        "gradient_hash_equal": true,
+        "input_ids_hash_equal": true,
+        "logits_hash_equal": true,
+        "loss_abs_diff": 0.0,
+        "loss_equal": true,
+        "model_hash_after_step_equal": true,
+        "optimizer_hash_after_step_equal": true,
+        "step": 1,
+        "targets_hash_equal": true
+      },
+      {
+        "gradient_hash_equal": true,
+        "input_ids_hash_equal": true,
+        "logits_hash_equal": true,
+        "loss_abs_diff": 0.0,
+        "loss_equal": true,
+        "model_hash_after_step_equal": true,
+        "optimizer_hash_after_step_equal": true,
+        "step": 2,
+        "targets_hash_equal": true
+      },
+      {
+        "gradient_hash_equal": true,
+        "input_ids_hash_equal": true,
+        "logits_hash_equal": true,
+        "loss_abs_diff": 0.0,
+        "loss_equal": true,
+        "model_hash_after_step_equal": true,
+        "optimizer_hash_after_step_equal": true,
+        "step": 3,
+        "targets_hash_equal": true
+      }
+    ]
+  },
+  "config": {
+    "adapter_dim": 0,
+    "architecture_variant": "dense",
+    "attention_mask_mode": "additive_causal",
+    "batch_size": 2,
+    "checkpoint_interval": 0,
+    "device": "rocm",
+    "gradient_accumulation_steps": 1,
+    "heads": 8,
+    "hidden_dim": 544,
+    "layers": 3,
+    "learning_rate": 0.0001,
+    "mixed_precision": "fp32",
+    "optimizer_name": "adamw",
+    "progress_interval": 0,
+    "seq_len": 128,
+    "steps": 3,
+    "validation_batches": 8
+  },
+  "device": {
+    "backend": "cpu",
+    "device_name": "",
+    "device_properties": "",
+    "requested": "rocm",
+    "rocm_available": false,
+    "rocm_runtime_version": "7.2.53211",
+    "torch_device": "cpu",
+    "torch_version": "2.12.1+rocm7.2"
+  },
+  "environment_variables": {
+    "ROCM_PATH": "/opt/rocm",
+    "TORCHINDUCTOR_CACHE_DIR": "/tmp/torchinductor_<user>"
+  },
+  "operation_dtype_limitations": [
+    "PyTorch TransformerEncoderLayer/MultiheadAttention does not expose attention score or softmax tensors via public forward hooks.",
+    "Q/K/V projection dtypes are represented by MultiheadAttention input/output and parameter dtypes; individual internal Q/K/V tensors are not directly captured.",
+    "The causal mask is created as torch.float32 additive -inf mask before entering the block."
+  ],
+  "runs": {
+    "bf16_requested": {
+      "after_model_hash": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+      "after_optimizer_hash": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+      "autocast_dtype": "torch.bfloat16",
+      "before_model_hash": "ed6771d1be1834ddec7545294c04af7f08fe378d7bfd50fc2890259658d8eedb",
+      "before_optimizer_hash": "67c70871a8bb5b0595d34819981d6d64c2a5742877a5b42eb10942953a4fca34",
+      "dtype_trace_first_step": [
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "token_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "position_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.0.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.1.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.2.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "norm",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "head",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "token_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "position_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.0.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.1.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.2.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "norm",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "head",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "token_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "position_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.0.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.1.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.2.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "bf16_requested",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "bf16_requested",
+          "type": "Linear"
+        }
+      ],
+      "label": "bf16_requested",
+      "mixed_precision": "bf16",
+      "optimizer_summary": {
+        "dtype_counts": {
+          "torch.float32": 126
+        },
+        "parameter_state_entries": 42,
+        "tensor_count": 126
+      },
+      "steps": [
+        {
+          "gradient_dtype_counts": {
+            "torch.float32": 42
+          },
+          "gradient_hash": "98b52d5be990a1d80d98f2fa9ea6c1b225494233ea77cf9316999d3e5bcd1f13",
+          "input_ids_hash": "f35ae02abdd1e68f3811d7d893c88852c432700ee022074fe663cf1a332f4d55",
+          "logits_abs_max": 2.4179553985595703,
+          "logits_dtype": "torch.float32",
+          "logits_hash": "e0d013fdc367094ab8153016c28a02591c9805c9ca84695d9b820c283842a593",
+          "loss": 5.728969097137451,
+          "loss_dtype": "torch.float32",
+          "model_hash_after_step": "657855251e73086959011b35d65efeede60c71ce08f3de2738d42dcd93072606",
+          "optimizer_hash_after_step": "6866fb415a423f4f335303866dd55cb64bf3dc1b51eb0062984d2af5c282ac92",
+          "optimizer_state": {
+            "dtype_counts": {
+              "torch.float32": 126
+            },
+            "parameter_state_entries": 42,
+            "tensor_count": 126
+          },
+          "step": 1,
+          "targets_hash": "5cbf5130a36514cc975e3ffb2de0cc9101c60d35966624c3bdcb8ebabeb29e6c"
+        },
+        {
+          "gradient_dtype_counts": {
+            "torch.float32": 42
+          },
+          "gradient_hash": "b25f8c35f79e2883db7a537ccb742a34e4b45e27f83f14f1aa24938d89b2185b",
+          "input_ids_hash": "074584e8000a69cafef1477655653380e194a8ef31c12f7c1c96c1b4c206dd43",
+          "logits_abs_max": 2.8228063583374023,
+          "logits_dtype": "torch.float32",
+          "logits_hash": "b0bd5da6d4f310e0a4ef4d21aa35444bbe0100826b21947a8a31e9558538c043",
+          "loss": 5.5082011222839355,
+          "loss_dtype": "torch.float32",
+          "model_hash_after_step": "10efc5ab041d96b8bffe12163b2baff8c790c4ca835ec8cb3203f6561a0c9824",
+          "optimizer_hash_after_step": "fcc1a2d163836f6c9bf71d6a8d968b3cd49d6d0c5b08c5a7bd17f4fdeb70356b",
+          "optimizer_state": {
+            "dtype_counts": {
+              "torch.float32": 126
+            },
+            "parameter_state_entries": 42,
+            "tensor_count": 126
+          },
+          "step": 2,
+          "targets_hash": "e93c2fac2b94f478ef4415beeedf4becd055233b9d85078aedc9a6386f2f50c9"
+        },
+        {
+          "gradient_dtype_counts": {
+            "torch.float32": 42
+          },
+          "gradient_hash": "e9c37316aac6576dc2bcdd96caab47b0a3289968718a735472b21585ae240aa4",
+          "input_ids_hash": "d9ca9ca2f2d247026883e8a73d599de7f47508f37c0c0ea7658aedfb7cf93c90",
+          "logits_abs_max": 3.5019211769104004,
+          "logits_dtype": "torch.float32",
+          "logits_hash": "23c9d76cf94c88636fa614f6bf1b586d27a9093ee8c66122b0bde524cc3de229",
+          "loss": 5.455477714538574,
+          "loss_dtype": "torch.float32",
+          "model_hash_after_step": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+          "optimizer_hash_after_step": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+          "optimizer_state": {
+            "dtype_counts": {
+              "torch.float32": 126
+            },
+            "parameter_state_entries": 42,
+            "tensor_count": 126
+          },
+          "step": 3,
+          "targets_hash": "2913c39783b8a34f23fb39c1b15e6168b3e371f37822a00db0768cad85e1613b"
+        }
+      ],
+      "use_autocast": false
+    },
+    "fp32_control": {
+      "after_model_hash": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+      "after_optimizer_hash": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+      "autocast_dtype": "None",
+      "before_model_hash": "ed6771d1be1834ddec7545294c04af7f08fe378d7bfd50fc2890259658d8eedb",
+      "before_optimizer_hash": "67c70871a8bb5b0595d34819981d6d64c2a5742877a5b42eb10942953a4fca34",
+      "dtype_trace_first_step": [
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "token_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "position_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.0.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.1.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.2.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "norm",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "head",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "token_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "position_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.0.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.1.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.2.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "norm",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "head",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "token_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.int64"
+          ],
+          "module": "position_embedding",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Embedding"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.0.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.0.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.1.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.dropout2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.1.norm2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "module": "blocks.2.self_attn",
+          "output_dtype": [
+            "torch.float32",
+            "NoneType"
+          ],
+          "parameter_dtypes": {
+            "in_proj_bias": "torch.float32",
+            "in_proj_weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "MultiheadAttention"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.norm1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "LayerNorm"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear1",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.dropout",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {},
+          "run": "fp32_control",
+          "type": "Dropout"
+        },
+        {
+          "autocast_cuda_enabled": false,
+          "input_dtype": [
+            "torch.float32"
+          ],
+          "module": "blocks.2.linear2",
+          "output_dtype": "torch.float32",
+          "parameter_dtypes": {
+            "bias": "torch.float32",
+            "weight": "torch.float32"
+          },
+          "run": "fp32_control",
+          "type": "Linear"
+        }
+      ],
+      "label": "fp32_control",
+      "mixed_precision": "fp32",
+      "optimizer_summary": {
+        "dtype_counts": {
+          "torch.float32": 126
+        },
+        "parameter_state_entries": 42,
+        "tensor_count": 126
+      },
+      "steps": [
+        {
+          "gradient_dtype_counts": {
+            "torch.float32": 42
+          },
+          "gradient_hash": "98b52d5be990a1d80d98f2fa9ea6c1b225494233ea77cf9316999d3e5bcd1f13",
+          "input_ids_hash": "f35ae02abdd1e68f3811d7d893c88852c432700ee022074fe663cf1a332f4d55",
+          "logits_abs_max": 2.4179553985595703,
+          "logits_dtype": "torch.float32",
+          "logits_hash": "e0d013fdc367094ab8153016c28a02591c9805c9ca84695d9b820c283842a593",
+          "loss": 5.728969097137451,
+          "loss_dtype": "torch.float32",
+          "model_hash_after_step": "657855251e73086959011b35d65efeede60c71ce08f3de2738d42dcd93072606",
+          "optimizer_hash_after_step": "6866fb415a423f4f335303866dd55cb64bf3dc1b51eb0062984d2af5c282ac92",
+          "optimizer_state": {
+            "dtype_counts": {
+              "torch.float32": 126
+            },
+            "parameter_state_entries": 42,
+            "tensor_count": 126
+          },
+          "step": 1,
+          "targets_hash": "5cbf5130a36514cc975e3ffb2de0cc9101c60d35966624c3bdcb8ebabeb29e6c"
+        },
+        {
+          "gradient_dtype_counts": {
+            "torch.float32": 42
+          },
+          "gradient_hash": "b25f8c35f79e2883db7a537ccb742a34e4b45e27f83f14f1aa24938d89b2185b",
+          "input_ids_hash": "074584e8000a69cafef1477655653380e194a8ef31c12f7c1c96c1b4c206dd43",
+          "logits_abs_max": 2.8228063583374023,
+          "logits_dtype": "torch.float32",
+          "logits_hash": "b0bd5da6d4f310e0a4ef4d21aa35444bbe0100826b21947a8a31e9558538c043",
+          "loss": 5.5082011222839355,
+          "loss_dtype": "torch.float32",
+          "model_hash_after_step": "10efc5ab041d96b8bffe12163b2baff8c790c4ca835ec8cb3203f6561a0c9824",
+          "optimizer_hash_after_step": "fcc1a2d163836f6c9bf71d6a8d968b3cd49d6d0c5b08c5a7bd17f4fdeb70356b",
+          "optimizer_state": {
+            "dtype_counts": {
+              "torch.float32": 126
+            },
+            "parameter_state_entries": 42,
+            "tensor_count": 126
+          },
+          "step": 2,
+          "targets_hash": "e93c2fac2b94f478ef4415beeedf4becd055233b9d85078aedc9a6386f2f50c9"
+        },
+        {
+          "gradient_dtype_counts": {
+            "torch.float32": 42
+          },
+          "gradient_hash": "e9c37316aac6576dc2bcdd96caab47b0a3289968718a735472b21585ae240aa4",
+          "input_ids_hash": "d9ca9ca2f2d247026883e8a73d599de7f47508f37c0c0ea7658aedfb7cf93c90",
+          "logits_abs_max": 3.5019211769104004,
+          "logits_dtype": "torch.float32",
+          "logits_hash": "23c9d76cf94c88636fa614f6bf1b586d27a9093ee8c66122b0bde524cc3de229",
+          "loss": 5.455477714538574,
+          "loss_dtype": "torch.float32",
+          "model_hash_after_step": "2ee44f737482542bf47a0ef24a75bf7b976e7100477453ebb30554dca4f72572",
+          "optimizer_hash_after_step": "d48968220fe1a98aa7a10a2973d81d88405642d6b4c9f01beb373d7ee713e9af",
+          "optimizer_state": {
+            "dtype_counts": {
+              "torch.float32": 126
+            },
+            "parameter_state_entries": 42,
+            "tensor_count": 126
+          },
+          "step": 3,
+          "targets_hash": "2913c39783b8a34f23fb39c1b15e6168b3e371f37822a00db0768cad85e1613b"
+        }
+      ],
+      "use_autocast": false
+    }
+  },
+  "software": {
+    "pip_freeze_selected": "aiohappyeyeballs==2.6.2\naiohttp==3.14.1\naiosignal==1.4.0\nannotated-doc==0.0.4\nanyio==4.14.0\nattrs==26.1.0\ncertifi==2026.6.17\ncharset-normalizer==3.4.7\nclick==8.4.1\ncuda-bindings==13.3.1\ncuda-pathfinder==1.5.5\ncuda-toolkit==13.0.2\n-e file://<repo>\ndatasets==5.0.0\ndill==0.4.1\nfilelock==3.29.4\nfrozenlist==1.8.0\nfsspec==2026.4.0\nh11==0.16.0\nhf-xet==1.5.1\nhttpcore==1.0.9\nhttpx==0.28.1\nhuggingface-hub==1.20.1\nidna==3.18\niniconfig==2.3.0\njinja2==3.1.6\nmarkdown-it-py==4.2.0\nmarkupsafe==3.0.3\nmdurl==0.1.2\nmpmath==1.3.0\nmultidict==6.7.1\nmultiprocess==0.70.19\nnetworkx==3.6.1\nnumpy==2.4.6\nnvidia-cublas==13.1.1.3\nnvidia-cuda-cupti==13.0.85\nnvidia-cuda-nvrtc==13.0.88\nnvidia-cuda-runtime==13.0.96\nnvidia-cudnn-cu13==9.20.0.48\nnvidia-cufft==12.0.0.61\nnvidia-cufile==1.15.1.6\nnvidia-curand==10.4.0.35\nnvidia-cusolver==12.0.4.66\nnvidia-cusparse==12.6.3.3\nnvidia-cusparselt-cu13==0.8.1\nnvidia-nccl-cu13==2.29.7\nnvidia-nvjitlink==13.0.88\nnvidia-nvshmem-cu13==3.4.5\nnvidia-nvtx==13.0.85\npackaging==26.2\npandas==3.0.3\npluggy==1.6.0\npropcache==0.5.2\npyarrow==24.0.0\npygments==2.20.0\npytest==9.1.1\npython-dateutil==2.9.0.post0\npyyaml==6.0.3\nrequests==2.34.2\nrich==15.0.0\nruff==0.15.18\nsetuptools==81.0.0\nshellingham==1.5.4\nsix==1.17.0\nsympy==1.14.0\ntorch==2.12.1+rocm7.2\ntqdm==4.68.3\ntriton==3.7.1\ntriton-rocm==3.7.1\ntyper==0.25.1\ntyping-extensions==4.15.0\nurllib3==2.7.0\nxxhash==3.7.0\nyarl==1.24.2",
+    "platform": "Linux-7.1.0-rc7-2-cachyos-rc-x86_64-with-glibc2.43",
+    "python": "3.12.13",
+    "rocminfo_excerpt": "unavailable: CalledProcessError: Command '['rocminfo']' returned non-zero exit status 1."
+  },
+  "status": "completed"
+}

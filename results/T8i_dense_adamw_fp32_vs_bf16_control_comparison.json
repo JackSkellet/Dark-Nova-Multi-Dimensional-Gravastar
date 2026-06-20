@@ -1,0 +1,152 @@
+{
+  "command": "UV_CACHE_DIR=/tmp/uv-cache uv run python <inline compare T8g T8h and export model-only checkpoints>",
+  "experiment_id": "T8i_dense_adamw_fp32_vs_bf16_control_comparison",
+  "git_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "adamw_precision_control_equivalence",
+  "metrics": {
+    "benchmark_label": "dense_adamw_precision_control_comparison",
+    "limitations": [
+      "post_hoc_comparison_record",
+      "T8g_record_was_created_before_validation_sample_order_sha256_was_added",
+      "does_not_measure_deployed_runtime_latency"
+    ],
+    "model_only_exports": {
+      "t7c_adapter_sgd_fp32": {
+        "model_only_bytes": 42441425,
+        "model_only_checkpoint": "artifacts/adapter_decoder_10m_hf_d4_identity_probe/dense_decoder_model_only.pt",
+        "optimizer_and_training_state_bytes": 5308,
+        "source_checkpoint": "artifacts/adapter_decoder_10m_hf_d4_identity_probe/dense_decoder_last.pt",
+        "source_checkpoint_bytes": 42446733
+      },
+      "t8g_bf16_requested": {
+        "model_only_bytes": 44118165,
+        "model_only_checkpoint": "artifacts/dense_decoder_11m_hf_d4_adamw_bf16_probe/dense_decoder_model_only.pt",
+        "optimizer_and_training_state_bytes": 88244701,
+        "source_checkpoint": "artifacts/dense_decoder_11m_hf_d4_adamw_bf16_probe/dense_decoder_last.pt",
+        "source_checkpoint_bytes": 132362866
+      },
+      "t8h_fp32_control": {
+        "model_only_bytes": 44118165,
+        "model_only_checkpoint": "artifacts/dense_decoder_11m_hf_d4_adamw_fp32_probe/dense_decoder_model_only.pt",
+        "optimizer_and_training_state_bytes": 88244701,
+        "source_checkpoint": "artifacts/dense_decoder_11m_hf_d4_adamw_fp32_probe/dense_decoder_last.pt",
+        "source_checkpoint_bytes": 132362866
+      }
+    },
+    "records_compared": {
+      "t7c_adapter_sgd_fp32": {
+        "checkpoint_resume_ok": true,
+        "config": {
+          "adapter_dim": 64,
+          "architecture_variant": "adapter",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 1000,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 528,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "sgd",
+          "progress_interval": 500,
+          "seq_len": 128,
+          "steps": 10000,
+          "validation_batches": 8
+        },
+        "experiment_id": "T7c_rocm_adapter_decoder_10m_hf_d4_identity_probe",
+        "git_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+        "status": "completed",
+        "tokens_per_second": 7986.957957552763,
+        "train_tokens": 2560000,
+        "validation": {
+          "loss": 4.637662619352341
+        }
+      },
+      "t8g_bf16_requested": {
+        "checkpoint_resume_ok": true,
+        "config": {
+          "adapter_dim": 0,
+          "architecture_variant": "dense",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 1000,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 544,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "bf16",
+          "optimizer_name": "adamw",
+          "progress_interval": 500,
+          "seq_len": 128,
+          "steps": 10000,
+          "validation_batches": 8
+        },
+        "experiment_id": "T8g_rocm_dense_decoder_11m_hf_d4_adamw_bf16_probe",
+        "git_commit": "41282c5a7203b70eeef2093d01f0fadee4889066",
+        "status": "completed",
+        "tokens_per_second": 6808.34307170223,
+        "train_tokens": 2560000,
+        "validation": {
+          "loss": 1.664748802781105
+        }
+      },
+      "t8h_fp32_control": {
+        "checkpoint_resume_ok": true,
+        "config": {
+          "adapter_dim": 0,
+          "architecture_variant": "dense",
+          "attention_mask_mode": "additive_causal",
+          "batch_size": 2,
+          "checkpoint_interval": 1000,
+          "device": "rocm",
+          "gradient_accumulation_steps": 1,
+          "heads": 8,
+          "hidden_dim": 544,
+          "layers": 3,
+          "learning_rate": 0.0001,
+          "mixed_precision": "fp32",
+          "optimizer_name": "adamw",
+          "progress_interval": 500,
+          "seq_len": 128,
+          "steps": 10000,
+          "validation_batches": 8
+        },
+        "experiment_id": "T8h_rocm_dense_decoder_11m_hf_d4_adamw_fp32_probe",
+        "git_commit": "3a23ce9ba9abfd7f59c0ef4cf8f848a9b8edd4b1",
+        "status": "completed",
+        "tokens_per_second": 6642.496627869687,
+        "train_tokens": 2560000,
+        "validation": {
+          "batches": 8,
+          "loss": 1.664748802781105,
+          "sample_order_sha256": "0ff92096e61783cf57fcc5feff7e4576d7e7e980331b699b25c2bbc68b35ee0e",
+          "tokens": 2064
+        }
+      }
+    },
+    "t8g_vs_t8h": {
+      "checkpoint_bytes_equal": true,
+      "generation_sample_equal": true,
+      "interpretation": "T8g requested bf16, but masked transformer blocks ran outside autocast; exact equality with the FP32 control means T8g should be interpreted as AdamW with FP32 masked blocks rather than a separate BF16 quality win.",
+      "loss_curve_length": 10000,
+      "loss_curves_exactly_equal": true,
+      "max_loss_abs_diff": 0.0,
+      "validation_loss_abs_diff": 0.0,
+      "validation_loss_equal": true
+    }
+  },
+  "notes": "Compares T8g mixed-precision-requested dense AdamW probe against the T8h FP32 AdamW control and exports model-only checkpoints for size accounting.",
+  "recorded_at_unix": 1781978576.8445907,
+  "seed": 123,
+  "status": "completed"
+}
