@@ -1,9 +1,9 @@
 {
   "command": "uv run python scripts/recompute_t11_summary.py --results-dir results --output results/T11_recomputed_summary.json --experiment-id T11_recomputed_summary",
   "experiment_id": "T11_recomputed_summary",
-  "git_commit": "48d2768b13194d1d2e84d37554249840407d00e2",
-  "git_dirty": false,
-  "git_status_short": "",
+  "git_commit": "8919d563886e464da1f32d138f62435fa9991d62",
+  "git_dirty": true,
+  "git_status_short": "M results/T11_recomputed_summary.json\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M src/weightlab/t11_analysis.py\n M tests/test_assessment.py\n M tests/test_t11_analysis.py\n?? results/T11c_dense528_adamw_fp32_50m.json\n?? results/T11c_dense528_adamw_fp32_50m_best_test_eval.json\n?? results/T11c_dense528_adamw_fp32_50m_best_validation_eval.json\n?? results/T11c_dense528_adamw_fp32_50m_final_test_eval.json\n?? results/T11c_dense528_adamw_fp32_50m_final_test_functional.json\n?? results/T11c_dense528_adamw_fp32_50m_final_validation_eval.json",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -37,6 +37,155 @@
       "reported_test_loss_winner": "T11b",
       "throughput_winner": "T11a",
       "ties": []
+    },
+    "pairwise_comparisons": {
+      "T11b_vs_T11a": {
+        "baseline": "T11a",
+        "candidate": "T11b",
+        "candidate_losses": [
+          "tokens_per_second"
+        ],
+        "candidate_wins": [
+          "prefix_token_accuracy",
+          "span_token_accuracy",
+          "comment_token_accuracy",
+          "final_validation_loss",
+          "final_test_loss",
+          "parameters",
+          "model_only_bytes",
+          "optimizer_state_bytes",
+          "peak_vram_bytes",
+          "max_gradient_norm"
+        ],
+        "frontier_expansion": true,
+        "pareto_dominates_baseline": false,
+        "primary_validation_loss_winner": "T11b",
+        "reported_test_loss_winner": "T11b",
+        "throughput_winner": "T11a",
+        "ties": []
+      },
+      "T11c_vs_T11a": {
+        "baseline": "T11a",
+        "candidate": "T11c",
+        "candidate_losses": [
+          "span_token_accuracy"
+        ],
+        "candidate_wins": [
+          "prefix_token_accuracy",
+          "comment_token_accuracy",
+          "final_validation_loss",
+          "final_test_loss",
+          "parameters",
+          "model_only_bytes",
+          "optimizer_state_bytes",
+          "peak_vram_bytes",
+          "max_gradient_norm",
+          "tokens_per_second"
+        ],
+        "frontier_expansion": true,
+        "pareto_dominates_baseline": false,
+        "primary_validation_loss_winner": "T11c",
+        "reported_test_loss_winner": "T11c",
+        "throughput_winner": "T11c",
+        "ties": []
+      },
+      "T11c_vs_T11b": {
+        "baseline": "T11b",
+        "candidate": "T11c",
+        "candidate_losses": [
+          "span_token_accuracy",
+          "final_test_loss"
+        ],
+        "candidate_wins": [
+          "prefix_token_accuracy",
+          "comment_token_accuracy",
+          "final_validation_loss",
+          "parameters",
+          "model_only_bytes",
+          "optimizer_state_bytes",
+          "peak_vram_bytes",
+          "max_gradient_norm",
+          "tokens_per_second"
+        ],
+        "frontier_expansion": true,
+        "pareto_dominates_baseline": false,
+        "primary_validation_loss_winner": "T11c",
+        "reported_test_loss_winner": "T11b",
+        "throughput_winner": "T11c",
+        "ties": []
+      }
+    },
+    "rankings": {
+      "final_test_loss": [
+        {
+          "run": "T11b",
+          "value": 1.0450384634314105
+        },
+        {
+          "run": "T11c",
+          "value": 1.0488805254572071
+        },
+        {
+          "run": "T11a",
+          "value": 1.074529936129693
+        }
+      ],
+      "final_validation_loss": [
+        {
+          "run": "T11c",
+          "value": 1.0335341689933557
+        },
+        {
+          "run": "T11b",
+          "value": 1.0387521978118457
+        },
+        {
+          "run": "T11a",
+          "value": 1.1141934367478825
+        }
+      ],
+      "max_gradient_norm": [
+        {
+          "run": "T11c",
+          "value": 4.899395942687988
+        },
+        {
+          "run": "T11b",
+          "value": 18.785385131835938
+        },
+        {
+          "run": "T11a",
+          "value": 405092.5625
+        }
+      ],
+      "model_only_bytes": [
+        {
+          "run": "T11c",
+          "value": 41605125
+        },
+        {
+          "run": "T11b",
+          "value": 42442331
+        },
+        {
+          "run": "T11a",
+          "value": 44118725
+        }
+      ],
+      "tokens_per_second": [
+        {
+          "run": "T11c",
+          "value": 22762.295803679943
+        },
+        {
+          "run": "T11a",
+          "value": 22119.326524463857
+        },
+        {
+          "run": "T11b",
+          "value": 20532.41263900038
+        }
+      ]
     },
     "resolved_config": {
       "experiment_id": "T11_recomputed_summary",
@@ -89,6 +238,29 @@
         "span_token_accuracy": 0.29875,
         "tokens_per_second": 20532.41263900038,
         "train_tokens": 50000128
+      },
+      "T11c": {
+        "active_parameters": 10397105,
+        "adapter_dim": 0,
+        "architecture": "dense",
+        "best_test_loss": 1.0345332396682352,
+        "best_validation_loss": 1.0354822403751314,
+        "comment_token_accuracy": 0.2607421875,
+        "experiment_id": "T11c_dense528_adamw_fp32_50m",
+        "final_test_loss": 1.0488805254572071,
+        "final_validation_loss": 1.0335341689933557,
+        "hidden_dim": 528,
+        "max_gradient_norm": 4.899395942687988,
+        "model_only_bytes": 41605125,
+        "nonfinite_gradient_records": 0,
+        "optimizer_state_bytes": 83218477,
+        "parameters": 10397105,
+        "peak_vram_bytes": 463684096,
+        "prefix_token_accuracy": 0.26,
+        "runtime_s": 2196.6206059020005,
+        "span_token_accuracy": 0.281875,
+        "tokens_per_second": 22762.295803679943,
+        "train_tokens": 50000128
       }
     },
     "selection_policy": {
@@ -96,13 +268,14 @@
       "reason": "Final checkpoints have lower validation loss than the best periodic checkpoints because final step 195313 is not an interval checkpoint.",
       "selected_checkpoints": {
         "T11a": "final",
-        "T11b": "final"
+        "T11b": "final",
+        "T11c": "final"
       },
       "test_loss_used_for_selection": false
     }
   },
   "notes": "Recomputes T11 comparison from existing committed artifacts. Test loss is reported for evaluation only and is not used for checkpoint selection.",
-  "recorded_at_unix": 1781990364.9516604,
+  "recorded_at_unix": 1781993033.0727682,
   "resolved_config": {
     "experiment_id": "T11_recomputed_summary",
     "output": "results/T11_recomputed_summary.json",

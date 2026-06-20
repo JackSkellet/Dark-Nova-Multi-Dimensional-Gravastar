@@ -21,7 +21,7 @@ uv run python scripts/run_experiments.py --seed 123
 uv run python scripts/run_experiments.py --seed 123 --config configs/smoke.yaml
 ```
 
-Generated metrics are written to `results/manifest.json`, one JSON file per experiment, and `results/summary.csv`. The current manifest preserves explicit standalone runs and contains 114 records, including real-training, split-correct evaluation, held-out functional probes, and trained-checkpoint quantization records. The current assessment records T11b as a measured frontier expansion over T11a because it improves validation/test loss, storage, VRAM, gradient stability, and source-local functional probes, while T11a remains faster in training throughput.
+Generated metrics are written to `results/manifest.json`, one JSON file per experiment, and `results/summary.csv`. The current manifest preserves explicit standalone runs and contains 120 records, including real-training, split-correct evaluation, held-out functional probes, and trained-checkpoint quantization records. The current assessment records T11 frontier expansion without Pareto dominance: dense-528 T11c leads validation loss, storage, VRAM, gradient stability, and throughput, while residual-adapter T11b keeps a small final-test-loss edge.
 
 `configs/smoke.yaml` requests `accelerator.backend: rocm`. The project routes Linux PyTorch resolution to the ROCm 7.2 wheel index and adds `triton-rocm`; E4c and E4d map ROCm to PyTorch HIP and report the logical ROCm backend separately from PyTorch's internal `cuda` device type.
 

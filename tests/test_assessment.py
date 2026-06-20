@@ -453,6 +453,7 @@ def test_assessment_manifest_includes_new_research_options_for_current_limits():
     assert summary["outcome_counts"]["no_signal"] >= 1
     assert summary["outcome_counts"]["smoke_pass"] >= 1
     assert summary["outcome_counts"]["t11_adapter_frontier_expansion"] == 1
+    assert summary["outcome_counts"]["t11_dense528_width_control_frontier_expansion"] == 1
     assert summary["pareto_improvement_found"] is True
     assert summary["pareto_dominance_found"] is False
     assert summary["frontier_expansion_found"] is True
@@ -476,6 +477,16 @@ def test_assessment_manifest_includes_new_research_options_for_current_limits():
         t11["evidence"]["adapter_train_tokens_per_second"]
         < t11["evidence"]["dense_train_tokens_per_second"]
     )
+    t11c = next(
+        row
+        for row in summary["assessments"]
+        if row["experiment_id"] == "T11_dense528_width_control_assessment"
+    )
+    assert t11c["supports_pareto_improvement"] is True
+    assert t11c["evidence"]["dense528_best_final_validation"] is True
+    assert t11c["evidence"]["dense528_resource_wins"] is True
+    assert t11c["evidence"]["dense528_throughput_wins"] is True
+    assert t11c["evidence"]["adapter528_final_test_win"] is True
     assert "activation_residual_cache" in summary["next_research_options"]
     assert "upstream_test_suite_patch_mining" in summary["next_research_options"]
     assert "structured_external_repository_memory" in summary["next_research_options"]

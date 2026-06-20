@@ -24,15 +24,61 @@ def recompute_t11_summary(results_dir: Path) -> dict[str, Any]:
     runs = {
         "T11a": _load_t11_run(results_dir, "T11a_dense544_adamw_fp32_50m"),
         "T11b": _load_t11_run(results_dir, "T11b_adapter528_adamw_fp32_50m"),
+        "T11c": _load_t11_run(results_dir, "T11c_dense528_adamw_fp32_50m"),
     }
-    pairwise = _pairwise_comparison(runs["T11b"], runs["T11a"])
+    adapter_vs_dense544 = _pairwise_comparison(
+        runs["T11b"],
+        runs["T11a"],
+        candidate_label="T11b",
+        baseline_label="T11a",
+    )
+    dense528_vs_dense544 = _pairwise_comparison(
+        runs["T11c"],
+        runs["T11a"],
+        candidate_label="T11c",
+        baseline_label="T11a",
+    )
+    dense528_vs_adapter = _pairwise_comparison(
+        runs["T11c"],
+        runs["T11b"],
+        candidate_label="T11c",
+        baseline_label="T11b",
+    )
     return {
         "benchmark_label": "t11_recomputed_pareto_frontier",
         "runs": runs,
         "pairwise": {
             "candidate": "T11b",
             "baseline": "T11a",
-            **pairwise,
+            **adapter_vs_dense544,
+        },
+        "pairwise_comparisons": {
+            "T11b_vs_T11a": {
+                "candidate": "T11b",
+                "baseline": "T11a",
+                **adapter_vs_dense544,
+            },
+            "T11c_vs_T11a": {
+                "candidate": "T11c",
+                "baseline": "T11a",
+                **dense528_vs_dense544,
+            },
+            "T11c_vs_T11b": {
+                "candidate": "T11c",
+                "baseline": "T11b",
+                **dense528_vs_adapter,
+            },
+        },
+        "rankings": {
+            "final_validation_loss": _rank_runs(
+                runs,
+                "final_validation_loss",
+                lower_is_better=True,
+            ),
+            "final_test_loss": _rank_runs(runs, "final_test_loss", lower_is_better=True),
+            "tokens_per_second": _rank_runs(runs, "tokens_per_second", lower_is_better=False),
+            "model_only_bytes": _rank_runs(runs, "model_only_bytes", lower_is_better=True),
+            "max_gradient_norm": _rank_runs(runs, "max_gradient_norm", lower_is_better=True),
         },
         "selection_policy": {
             "checkpoint_selection": "validation_only",
@@ -40,6 +86,7 @@ def recompute_t11_summary(results_dir: Path) -> dict[str, Any]:
             "selected_checkpoints": {
                 "T11a": "final",
                 "T11b": "final",
+                "T11c": "final",
             },
             "reason": (
                 "Final checkpoints have lower validation loss than the best periodic "
@@ -100,7 +147,13 @@ def _load_t11_run(results_dir: Path, experiment_id: str) -> dict[str, Any]:
     }
 
 
-def _pairwise_comparison(candidate: dict[str, Any], baseline: dict[str, Any]) -> dict[str, Any]:
+def _pairwise_comparison(
+    candidate: dict[str, Any],
+    baseline: dict[str, Any],
+    *,
+    candidate_label: str,
+    baseline_label: str,
+) -> dict[str, Any]:
     wins = []
     losses = []
     ties = []
@@ -150,21 +203,37 @@ def _pairwise_comparison(candidate: dict[str, Any], baseline: dict[str, Any]) ->
         "pareto_dominates_baseline": pareto_dominates,
         "frontier_expansion": frontier_expansion,
         "primary_validation_loss_winner": (
-            "T11b"
+            candidate_label
             if candidate["final_validation_loss"] < baseline["final_validation_loss"]
-            else "T11a"
+            else baseline_label
         ),
         "reported_test_loss_winner": (
-            "T11b"
+            candidate_label
             if candidate["final_test_loss"] < baseline["final_test_loss"]
-            else "T11a"
+            else baseline_label
         ),
         "throughput_winner": (
-            "T11b"
+            candidate_label
             if candidate["tokens_per_second"] > baseline["tokens_per_second"]
-            else "T11a"
+            else baseline_label
         ),
     }
+
+
+def _rank_runs(
+    runs: dict[str, dict[str, Any]],
+    metric: str,
+    *,
+    lower_is_better: bool,
+) -> list[dict[str, Any]]:
+    return [
+        {"run": name, "value": run[metric]}
+        for name, run in sorted(
+            runs.items(),
+            key=lambda item: item[1][metric],
+            reverse=not lower_is_better,
+        )
+    ]
 
 
 def _classify_metric(

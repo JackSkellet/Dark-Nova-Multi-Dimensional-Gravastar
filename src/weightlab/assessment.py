@@ -86,6 +86,9 @@ def assess_manifest(results_dir: Path) -> Assessment:
     t11_comparison = _assess_t11_dense_adapter_comparison(records)
     if t11_comparison:
         assessments.append(t11_comparison)
+    t11_width_control = _assess_t11_dense528_width_control(records)
+    if t11_width_control:
+        assessments.append(t11_width_control)
     outcome_counts = Counter(str(row["outcome"]) for row in assessments)
     pareto_dominance_found = any(
         bool(row.get("evidence", {}).get("dominates_dense_baseline"))
@@ -251,6 +254,107 @@ def _assess_t11_dense_adapter_comparison(
             "functional_tasks_won_by_adapter": functional_tasks_won,
             "dense_functional_scores": dense_functional_scores,
             "adapter_functional_scores": adapter_functional_scores,
+        },
+    }
+
+
+def _assess_t11_dense528_width_control(records: list[dict[str, Any]]) -> Assessment | None:
+    by_id = {str(record.get("experiment_id", "")): record for record in records}
+    required_ids = {
+        "dense544_train": "T11a_dense544_adamw_fp32_50m",
+        "adapter528_train": "T11b_adapter528_adamw_fp32_50m",
+        "dense528_train": "T11c_dense528_adamw_fp32_50m",
+        "dense544_validation": "T11a_dense544_adamw_fp32_50m_final_validation_eval",
+        "adapter528_validation": "T11b_adapter528_adamw_fp32_50m_final_validation_eval",
+        "dense528_validation": "T11c_dense528_adamw_fp32_50m_final_validation_eval",
+        "dense544_test": "T11a_dense544_adamw_fp32_50m_final_test_eval",
+        "adapter528_test": "T11b_adapter528_adamw_fp32_50m_final_test_eval",
+        "dense528_test": "T11c_dense528_adamw_fp32_50m_final_test_eval",
+        "dense528_functional": "T11c_dense528_adamw_fp32_50m_final_test_functional",
+    }
+    if any(experiment_id not in by_id for experiment_id in required_ids.values()):
+        return None
+
+    dense544_train = by_id[required_ids["dense544_train"]]["metrics"]
+    adapter528_train = by_id[required_ids["adapter528_train"]]["metrics"]
+    dense528_train = by_id[required_ids["dense528_train"]]["metrics"]
+    dense544_validation = by_id[required_ids["dense544_validation"]]["metrics"]
+    adapter528_validation = by_id[required_ids["adapter528_validation"]]["metrics"]
+    dense528_validation = by_id[required_ids["dense528_validation"]]["metrics"]
+    dense544_test = by_id[required_ids["dense544_test"]]["metrics"]
+    adapter528_test = by_id[required_ids["adapter528_test"]]["metrics"]
+    dense528_test = by_id[required_ids["dense528_test"]]["metrics"]
+    dense528_functional = by_id[required_ids["dense528_functional"]]["metrics"]["tasks"]
+
+    dense528_best_validation = (
+        float(dense528_validation["loss"]) < float(dense544_validation["loss"])
+        and float(dense528_validation["loss"]) < float(adapter528_validation["loss"])
+    )
+    dense528_resource_wins = (
+        int(dense528_train["checkpoint"]["model_only_bytes"])
+        < int(dense544_train["checkpoint"]["model_only_bytes"])
+        and int(dense528_train["checkpoint"]["model_only_bytes"])
+        < int(adapter528_train["checkpoint"]["model_only_bytes"])
+        and int(dense528_train["memory"]["peak_allocated_bytes"])
+        < int(dense544_train["memory"]["peak_allocated_bytes"])
+        and int(dense528_train["memory"]["peak_allocated_bytes"])
+        < int(adapter528_train["memory"]["peak_allocated_bytes"])
+    )
+    dense528_throughput_wins = (
+        float(dense528_train["training"]["tokens_per_second"])
+        > float(dense544_train["training"]["tokens_per_second"])
+        and float(dense528_train["training"]["tokens_per_second"])
+        > float(adapter528_train["training"]["tokens_per_second"])
+    )
+    adapter_test_win = float(adapter528_test["loss"]) < float(dense528_test["loss"])
+
+    return {
+        "experiment_id": "T11_dense528_width_control_assessment",
+        "hypothesis": "dense528_width_control_isolates_t11_adapter_gain",
+        "outcome": "t11_dense528_width_control_frontier_expansion",
+        "supports_pareto_improvement": bool(
+            dense528_best_validation and dense528_resource_wins and dense528_throughput_wins
+        ),
+        "primary_reason": (
+            "dense528_beats_dense544_and_adapter528_on_validation_resource_and_throughput"
+        ),
+        "limitations": [
+            "adapter528_still_has_slightly_lower_final_test_loss",
+            "test_loss_not_used_for_selection",
+            "single_seed_width_control",
+            "d4_javascript_source_local_only",
+            "functional_probe_not_executable_javascript",
+        ],
+        "evidence": {
+            "dominates_dense_baseline": False,
+            "expands_measured_frontier": True,
+            "dense528_best_final_validation": dense528_best_validation,
+            "dense528_resource_wins": dense528_resource_wins,
+            "dense528_throughput_wins": dense528_throughput_wins,
+            "adapter528_final_test_win": adapter_test_win,
+            "dense544_final_validation_loss": float(dense544_validation["loss"]),
+            "adapter528_final_validation_loss": float(adapter528_validation["loss"]),
+            "dense528_final_validation_loss": float(dense528_validation["loss"]),
+            "dense544_final_test_loss": float(dense544_test["loss"]),
+            "adapter528_final_test_loss": float(adapter528_test["loss"]),
+            "dense528_final_test_loss": float(dense528_test["loss"]),
+            "dense544_tokens_per_second": float(
+                dense544_train["training"]["tokens_per_second"]
+            ),
+            "adapter528_tokens_per_second": float(
+                adapter528_train["training"]["tokens_per_second"]
+            ),
+            "dense528_tokens_per_second": float(
+                dense528_train["training"]["tokens_per_second"]
+            ),
+            "dense528_functional_scores": {
+                name: {
+                    "token_accuracy_mean": float(task.get("token_accuracy_mean", 0.0)),
+                    "exact_match_rate": float(task.get("exact_match_rate", 0.0)),
+                }
+                for name, task in dense528_functional.items()
+                if isinstance(task, dict) and "token_accuracy_mean" in task
+            },
         },
     }
 
