@@ -17,14 +17,14 @@ from weightlab.matched_comparison import (
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=DEFAULT_COMPARISON_CONFIG)
-    parser.add_argument("--run", action="append", default=["all"])
+    parser.add_argument("--run", action="append")
     parser.add_argument("--phase", choices=["train", "eval", "all"], default="all")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
     config = load_comparison_config(args.config)
     commands: list[list[str]] = []
-    for run in selected_runs(config, args.run):
+    for run in selected_runs(config, args.run or ["all"]):
         if args.phase in {"train", "all"}:
             commands.append(build_train_command(config, run))
         if args.phase in {"eval", "all"}:

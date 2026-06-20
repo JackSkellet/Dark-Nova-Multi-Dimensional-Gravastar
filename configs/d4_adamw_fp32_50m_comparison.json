@@ -77,6 +77,15 @@
       "adapter_dim": 64,
       "output_dir": "artifacts/T11b_adapter528_adamw_fp32_50m",
       "output": "results/T11b_adapter528_adamw_fp32_50m.json"
+    },
+    {
+      "label": "dense_528_50m",
+      "experiment_id": "T11c_dense528_adamw_fp32_50m",
+      "architecture_variant": "dense",
+      "hidden_dim": 528,
+      "adapter_dim": 0,
+      "output_dir": "artifacts/T11c_dense528_adamw_fp32_50m",
+      "output": "results/T11c_dense528_adamw_fp32_50m.json"
     }
   ]
 }
