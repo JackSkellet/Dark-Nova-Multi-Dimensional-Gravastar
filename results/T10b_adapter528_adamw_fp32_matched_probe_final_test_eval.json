@@ -1,0 +1,95 @@
+{
+  "command": "uv run python scripts/evaluate_dense_checkpoint.py --checkpoint artifacts/T10b_adapter528_adamw_fp32_matched_probe/dense_decoder_last.pt --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --split test --device rocm --seed 424243 --batches 512 --output results/T10b_adapter528_adamw_fp32_matched_probe_final_test_eval.json --experiment-id T10b_adapter528_adamw_fp32_matched_probe_final_test_eval",
+  "experiment_id": "T10b_adapter528_adamw_fp32_matched_probe_final_test_eval",
+  "git_commit": "8aa768645f30b98593ded4ae1365b980a9e3c6ca",
+  "git_dirty": true,
+  "git_status_short": "M results/manifest.json\n?? results/T10a_dense544_adamw_fp32_matched_probe.json\n?? results/T10a_dense544_adamw_fp32_matched_probe_best_test_eval.json\n?? results/T10a_dense544_adamw_fp32_matched_probe_best_validation_eval.json\n?? results/T10a_dense544_adamw_fp32_matched_probe_final_test_eval.json\n?? results/T10a_dense544_adamw_fp32_matched_probe_final_validation_eval.json\n?? results/T10b_adapter528_adamw_fp32_matched_probe.json\n?? results/T10b_adapter528_adamw_fp32_matched_probe_final_validation_eval.json",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "true_d4_split_checkpoint_evaluation",
+  "metrics": {
+    "batches": 512,
+    "benchmark_label": "dense_checkpoint_evaluation",
+    "checkpoint": {
+      "bytes": 127337850,
+      "path": "artifacts/T10b_adapter528_adamw_fp32_matched_probe/dense_decoder_last.pt",
+      "step": 10000
+    },
+    "corpus": {
+      "document_count_used": 50,
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "source": "hf_jsonl_mirror",
+      "split": "test",
+      "split_texts_loaded_separately": true
+    },
+    "device": {
+      "accelerator_backend": "rocm",
+      "requested": "rocm",
+      "resolved": "cuda",
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211"
+    },
+    "loss": 1.5543821790488437,
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "adapter_dim": 64,
+        "architecture_variant": "adapter",
+        "attention_mask_mode": "finite_causal",
+        "batch_size": 2,
+        "block_impl": "explicit_causal",
+        "checkpoint_interval": 1000,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "learning_rate": 0.0001,
+        "mixed_precision": "fp32",
+        "optimizer_name": "adamw",
+        "progress_interval": 500,
+        "seq_len": 128,
+        "steps": 10000,
+        "validation_batches": 512,
+        "validation_seed": 424242
+      },
+      "parameter_count": 10604801
+    },
+    "resolved_config": {
+      "batches": 512,
+      "checkpoint": "artifacts/T10b_adapter528_adamw_fp32_matched_probe/dense_decoder_last.pt",
+      "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "device": "rocm",
+      "experiment_id": "T10b_adapter528_adamw_fp32_matched_probe_final_test_eval",
+      "output": "results/T10b_adapter528_adamw_fp32_matched_probe_final_test_eval.json",
+      "seed": 424243,
+      "split": "test"
+    },
+    "sample_order_sha256": "0f40e3d06e9e9a9f64a44f6192f41eb41143666c7506d8132e0109feb17c017d",
+    "seed": 424243,
+    "split": "test",
+    "tokenizer": {
+      "name": "byte_level",
+      "vocab_size": 257
+    },
+    "tokens": 132096
+  },
+  "notes": "Evaluation-only run against the labeled D4 split loaded separately from training rows. No optimizer step or retraining is performed.",
+  "recorded_at_unix": 1781983245.7487059,
+  "resolved_config": {
+    "batches": 512,
+    "checkpoint": "artifacts/T10b_adapter528_adamw_fp32_matched_probe/dense_decoder_last.pt",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "device": "rocm",
+    "experiment_id": "T10b_adapter528_adamw_fp32_matched_probe_final_test_eval",
+    "output": "results/T10b_adapter528_adamw_fp32_matched_probe_final_test_eval.json",
+    "seed": 424243,
+    "split": "test"
+  },
+  "seed": 424243,
+  "status": "completed"
+}
