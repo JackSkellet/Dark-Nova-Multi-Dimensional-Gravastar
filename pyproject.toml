@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Small-scale research prototypes for secure local continually evolving AI-weight architectures."
 requires-python = ">=3.12"
 dependencies = [
+  "datasets>=2.20",
   "numpy>=2.0",
   "torch>=2.0",
   "triton-rocm; sys_platform == 'linux'",

@@ -36,6 +36,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_r1(record)
     if record.get("metrics", {}).get("benchmark_label") == "licensed_repository_corpus_preparation":
         return _assess_d1(record)
+    if record.get("metrics", {}).get("benchmark_label") == "hf_corpus_manifest":
+        return _assess_hf_corpus_manifest(record)
     if record.get("metrics", {}).get("benchmark_label") == "dense_decoder_training_smoke":
         return _assess_t1(record)
     if record.get("metrics", {}).get("benchmark_label") == "dense_step_stability_debug":
@@ -372,11 +374,46 @@ def _assess_d1(record: dict[str, Any]) -> Assessment:
     }
 
 
+def _assess_hf_corpus_manifest(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    accepted_configs = int(metrics.get("accepted_config_count", 0))
+    pinned_sources = all(
+        bool(source.get("resolved_revision"))
+        and source.get("resolved_revision") == source.get("requested_revision")
+        for source in metrics.get("sources", [])
+    )
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "hf_corpus_manifest_positive"
+        if accepted_configs and pinned_sources
+        else "hf_corpus_manifest_incomplete",
+        "supports_pareto_improvement": False,
+        "primary_reason": "reviewed_revision_pinned_hf_corpus_metadata_recorded",
+        "limitations": [
+            "metadata_manifest_only",
+            "token_count_pending_streaming_materialization",
+            "not_training_run",
+            "row_level_quality_filters_pending",
+        ],
+        "evidence": {
+            "source_count": metrics.get("source_count", 0),
+            "accepted_config_count": accepted_configs,
+            "rejected_config_count": metrics.get("rejected_config_count", 0),
+            "total_rows": metrics.get("total_rows", 0),
+            "total_parquet_bytes": metrics.get("total_parquet_bytes", 0),
+            "pinned_sources": pinned_sources,
+            "token_count_status": metrics.get("token_count", {}).get("status", ""),
+        },
+    }
+
+
 def _assess_t1(record: dict[str, Any]) -> Assessment:
     metrics = record["metrics"]
     training = metrics.get("training", {})
     checkpoint = metrics.get("checkpoint", {})
     completed = bool(metrics.get("status") == "completed" and record.get("status") == "completed")
+    parameter_count = int(metrics.get("model", {}).get("parameter_count", 0))
     return {
         "experiment_id": record["experiment_id"],
         "hypothesis": record.get("hypothesis"),
@@ -389,16 +426,20 @@ def _assess_t1(record: dict[str, Any]) -> Assessment:
         ),
         "limitations": [
             "training_smoke_only",
-            "not_10m_parameter_model",
             "not_50m_token_run",
             "no_functional_coding_evaluation_yet",
         ]
+        + (
+            ["10m_parameter_floor_reached"]
+            if parameter_count >= 10_000_000
+            else ["not_10m_parameter_model"]
+        )
         + ([] if completed else ["failed_training_run"]),
         "evidence": {
             "accelerator_backend": metrics.get("accelerator_backend"),
             "status": metrics.get("status"),
             "failure": metrics.get("failure", ""),
-            "parameter_count": metrics.get("model", {}).get("parameter_count", 0),
+            "parameter_count": parameter_count,
             "train_tokens": training.get("train_tokens", 0),
             "train_steps": training.get("steps", 0),
             "validation_loss": metrics.get("validation", {}).get("loss", 0.0),
