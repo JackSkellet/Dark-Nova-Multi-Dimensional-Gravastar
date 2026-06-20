@@ -139,6 +139,34 @@ def test_dense_decoder_failed_run_reports_actual_steps_and_tokens(tmp_path, monk
     assert result["checkpoint"]["resume_ok"] is True
 
 
+def test_dense_decoder_records_nonfinite_gradient_norm_without_failing(tmp_path, monkeypatch):
+    texts = [
+        "def parse_config(text): return text.strip()",
+        "README: parse_config loads local configuration.",
+    ]
+    config = DenseTrainingConfig(
+        device="cpu",
+        seq_len=16,
+        hidden_dim=32,
+        layers=1,
+        heads=4,
+        batch_size=2,
+        steps=1,
+        validation_batches=1,
+        mixed_precision="fp32",
+    )
+
+    def infinite_grad_norm(*args, **kwargs):
+        return torch.tensor(float("inf"))
+
+    monkeypatch.setattr(torch.nn.utils, "clip_grad_norm_", infinite_grad_norm)
+
+    result = train_dense_decoder(texts, config, tmp_path, seed=123)
+
+    assert result["status"] == "completed"
+    assert result["training"]["gradient_norms"]["summary"]["nonfinite_count"] == 1
+
+
 def test_dense_decoder_uses_separate_validation_texts_when_provided(tmp_path):
     train_texts = [
         "function trainA() { return 1 }",

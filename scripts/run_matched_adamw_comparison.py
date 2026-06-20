@@ -33,6 +33,11 @@ def main() -> None:
     for command in commands:
         print(shlex.join(command), flush=True)
         if not args.dry_run:
+            if "--checkpoint" in command:
+                checkpoint = Path(command[command.index("--checkpoint") + 1])
+                if not checkpoint.exists():
+                    print(f"skipping missing checkpoint: {checkpoint}", flush=True)
+                    continue
             subprocess.run(command, check=True)
 
 

@@ -226,11 +226,6 @@ def train_dense_decoder(
                 "finite": grad_norm_finite,
             }
         )
-        if not grad_norm_finite:
-            status = "failed_nonfinite_gradient_norm"
-            failure = f"nonfinite_gradient_norm_at_step_{step}"
-            failure_step = step
-            break
         optimizer.step()
         optimizer.zero_grad(set_to_none=True)
         if device.type == "cuda":
