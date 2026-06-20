@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import time
 from collections import Counter
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
@@ -64,6 +66,7 @@ def compare_tokenizers(
     *,
     target_vocab_size: int = 1024,
     max_train_texts: int | None = None,
+    context_lengths: tuple[int, ...] = (128, 512, 1024),
 ) -> dict[str, Any]:
     tokenizer = train_byte_pair_tokenizer(
         train_texts,
@@ -71,17 +74,18 @@ def compare_tokenizers(
         max_texts=max_train_texts,
     )
     byte_metrics = {
-        split: _token_count_metrics(texts, _byte_encode)
+        split: _tokenizer_eval_metrics(texts, _byte_encode, context_lengths)
         for split, texts in eval_splits.items()
     }
     bpe_metrics = {
-        split: _token_count_metrics(texts, tokenizer.encode)
+        split: _tokenizer_eval_metrics(texts, tokenizer.encode, context_lengths)
         for split, texts in eval_splits.items()
     }
     return {
         "benchmark_label": "tokenizer_efficiency_comparison",
         "train_document_count": len(train_texts),
         "max_train_texts": max_train_texts,
+        "context_lengths": list(context_lengths),
         "tokenizers": {
             "byte_level": {
                 "type": "byte_level_utf8_plus_eos",
@@ -142,17 +146,70 @@ def _apply_merge(sequence: list[int], left: int, right: int, merged: int) -> lis
     return output
 
 
-def _token_count_metrics(texts: list[str], encode) -> dict[str, Any]:
-    token_count = 0
-    byte_count = 0
+def _tokenizer_eval_metrics(
+    texts: list[str],
+    encode: Callable[[str], list[int]],
+    context_lengths: tuple[int, ...],
+) -> dict[str, Any]:
+    encoded_lengths: list[int] = []
+    byte_lengths: list[int] = []
+    start = time.perf_counter()
     for text in texts:
-        token_count += len(encode(text))
-        byte_count += len(text.encode("utf-8", errors="ignore"))
+        encoded_lengths.append(len(encode(text)))
+        byte_lengths.append(len(text.encode("utf-8", errors="ignore")))
+    elapsed_s = max(time.perf_counter() - start, 1e-12)
+    token_count = sum(encoded_lengths)
+    byte_count = sum(byte_lengths)
     return {
         "document_count": len(texts),
         "byte_count": byte_count,
         "token_count": token_count,
         "bytes_per_token": _ratio(byte_count, token_count),
+        "throughput": {
+            "elapsed_s": elapsed_s,
+            "documents_per_second": _ratio(len(texts), elapsed_s),
+            "bytes_per_second": _ratio(byte_count, elapsed_s),
+            "tokens_per_second": _ratio(token_count, elapsed_s),
+        },
+        "context_coverage": {
+            str(context_len): _context_coverage(
+                byte_lengths,
+                encoded_lengths,
+                context_len,
+            )
+            for context_len in context_lengths
+        },
+    }
+
+
+def _context_coverage(
+    byte_lengths: list[int],
+    token_lengths: list[int],
+    context_len: int,
+) -> dict[str, Any]:
+    if not byte_lengths:
+        return {
+            "context_tokens": context_len,
+            "full_document_fit_count": 0,
+            "full_document_fit_ratio": 0.0,
+            "mean_bytes_covered": 0.0,
+            "mean_fraction_bytes_covered": 0.0,
+        }
+    fit_count = sum(1 for token_len in token_lengths if token_len <= context_len)
+    bytes_covered = [
+        byte_len * min(1.0, _ratio(context_len, token_len))
+        for byte_len, token_len in zip(byte_lengths, token_lengths, strict=True)
+    ]
+    fractions = [
+        min(1.0, _ratio(context_len, token_len))
+        for token_len in token_lengths
+    ]
+    return {
+        "context_tokens": context_len,
+        "full_document_fit_count": fit_count,
+        "full_document_fit_ratio": _ratio(fit_count, len(token_lengths)),
+        "mean_bytes_covered": _ratio(sum(bytes_covered), len(bytes_covered)),
+        "mean_fraction_bytes_covered": _ratio(sum(fractions), len(fractions)),
     }
 
 

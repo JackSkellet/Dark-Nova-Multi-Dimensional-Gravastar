@@ -28,6 +28,30 @@ def test_byte_pair_tokenizer_reduces_repeated_code_tokens():
     assert comparison["splits"]["train"]["token_reduction_ratio"] > 1.0
 
 
+def test_compare_tokenizers_reports_throughput_and_context_coverage():
+    texts = [
+        "function parseConfig(value) { return value.trim(); }\n" * 20,
+        "function renderConfig(value) { return value.trim(); }\n" * 20,
+        "function parseConfig(input) { return input.trim(); }\n" * 20,
+    ]
+
+    comparison = compare_tokenizers(
+        texts,
+        {"validation": texts},
+        target_vocab_size=300,
+        context_lengths=(64, 128),
+    )
+    split = comparison["splits"]["validation"]
+
+    assert split["byte_level"]["throughput"]["bytes_per_second"] > 0
+    assert split["byte_pair"]["throughput"]["tokens_per_second"] > 0
+    assert split["byte_level"]["context_coverage"]["64"]["mean_fraction_bytes_covered"] > 0
+    assert (
+        split["byte_pair"]["context_coverage"]["64"]["mean_fraction_bytes_covered"]
+        > split["byte_level"]["context_coverage"]["64"]["mean_fraction_bytes_covered"]
+    )
+
+
 def test_compare_tokenizers_cli_writes_machine_readable_record(tmp_path):
     corpus_path = tmp_path / "corpus.jsonl"
     corpus_path.write_text(

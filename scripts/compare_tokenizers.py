@@ -29,6 +29,7 @@ def main() -> None:
     parser.add_argument("--target-vocab-size", type=int, default=1024)
     parser.add_argument("--max-train-texts", type=int)
     parser.add_argument("--max-eval-documents", type=int)
+    parser.add_argument("--context-lengths", nargs="+", type=int, default=[128, 512, 1024])
     parser.add_argument(
         "--output",
         type=Path,
@@ -56,6 +57,7 @@ def main() -> None:
         eval_splits,
         target_vocab_size=args.target_vocab_size,
         max_train_texts=args.max_train_texts,
+        context_lengths=tuple(args.context_lengths),
     )
     metrics["corpus"] = {
         "jsonl_path": str(args.corpus_jsonl),
@@ -66,6 +68,7 @@ def main() -> None:
         "target_vocab_size": args.target_vocab_size,
         "max_train_texts": args.max_train_texts,
         "max_eval_documents": args.max_eval_documents,
+        "context_lengths": args.context_lengths,
         "output": str(args.output),
         "experiment_id": args.experiment_id,
         "seed": args.seed,
@@ -82,6 +85,7 @@ def main() -> None:
         command += f" --max-train-texts {args.max_train_texts}"
     if args.max_eval_documents is not None:
         command += f" --max-eval-documents {args.max_eval_documents}"
+    command += " --context-lengths " + " ".join(str(value) for value in args.context_lengths)
     record = ExperimentRecord(
         experiment_id=args.experiment_id,
         hypothesis="code_tokenizer_efficiency",
