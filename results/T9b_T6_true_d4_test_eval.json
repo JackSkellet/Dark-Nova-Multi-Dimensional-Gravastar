@@ -1,0 +1,93 @@
+{
+  "command": "uv run python scripts/evaluate_dense_checkpoint.py --checkpoint artifacts/dense_decoder_11m_hf_d4_50m_tokens/dense_decoder_last.pt --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --split test --device rocm --seed 424242 --batches 512 --output results/T9b_T6_true_d4_test_eval.json --experiment-id T9b_T6_true_d4_test_eval",
+  "experiment_id": "T9b_T6_true_d4_test_eval",
+  "git_commit": "f90a50e74aed8cc7ceeb9b5dd7774a841fce0be7",
+  "git_dirty": true,
+  "git_status_short": "M results/manifest.json\n M scripts/train_dense_decoder.py\n M src/weightlab/dense_training.py\n M src/weightlab/hf_materializer.py\n M tests/test_dense_training.py\n M tests/test_hf_materializer.py\n M tests/test_train_dense_decoder_cli.py\n?? results/T9a_T6_true_d4_validation_eval.json\n?? scripts/evaluate_dense_checkpoint.py\n?? tests/test_evaluate_dense_checkpoint_cli.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "true_d4_split_checkpoint_evaluation",
+  "metrics": {
+    "batches": 512,
+    "benchmark_label": "dense_checkpoint_evaluation",
+    "checkpoint": {
+      "bytes": 44124477,
+      "path": "artifacts/dense_decoder_11m_hf_d4_50m_tokens/dense_decoder_last.pt",
+      "step": 195313
+    },
+    "corpus": {
+      "document_count_used": 50,
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "source": "hf_jsonl_mirror",
+      "split": "test",
+      "split_texts_loaded_separately": true
+    },
+    "device": {
+      "accelerator_backend": "rocm",
+      "requested": "rocm",
+      "resolved": "cuda",
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211"
+    },
+    "loss": 4.0433961120434105,
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "additive_causal",
+        "batch_size": 2,
+        "checkpoint_interval": 5000,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 544,
+        "layers": 3,
+        "learning_rate": 0.0001,
+        "mixed_precision": "fp32",
+        "optimizer_name": "sgd",
+        "progress_interval": 2500,
+        "seq_len": 128,
+        "steps": 195313,
+        "validation_batches": 512
+      },
+      "parameter_count": 11025505
+    },
+    "resolved_config": {
+      "batches": 512,
+      "checkpoint": "artifacts/dense_decoder_11m_hf_d4_50m_tokens/dense_decoder_last.pt",
+      "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "device": "rocm",
+      "experiment_id": "T9b_T6_true_d4_test_eval",
+      "output": "results/T9b_T6_true_d4_test_eval.json",
+      "seed": 424242,
+      "split": "test"
+    },
+    "sample_order_sha256": "c5dab6ea10dc9d064ea0054fcbb7064d3b8892f6672c38459bbee81625f59f71",
+    "seed": 424242,
+    "split": "test",
+    "tokenizer": {
+      "name": "byte_level",
+      "vocab_size": 257
+    },
+    "tokens": 132096
+  },
+  "notes": "Evaluation-only run against the labeled D4 split loaded separately from training rows. No optimizer step or retraining is performed.",
+  "recorded_at_unix": 1781980738.5025954,
+  "resolved_config": {
+    "batches": 512,
+    "checkpoint": "artifacts/dense_decoder_11m_hf_d4_50m_tokens/dense_decoder_last.pt",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "device": "rocm",
+    "experiment_id": "T9b_T6_true_d4_test_eval",
+    "output": "results/T9b_T6_true_d4_test_eval.json",
+    "seed": 424242,
+    "split": "test"
+  },
+  "seed": 424242,
+  "status": "completed"
+}

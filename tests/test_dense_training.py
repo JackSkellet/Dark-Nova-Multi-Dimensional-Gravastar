@@ -4,6 +4,7 @@ from weightlab.dense_training import (
     DenseDecoder,
     DenseTrainingConfig,
     debug_dense_step_stability,
+    evaluate_dense_checkpoint,
     train_dense_decoder,
 )
 
@@ -87,6 +88,79 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert resumed["training"]["resumed_from"].endswith("dense_decoder_latest.pt")
 
 
+def test_dense_decoder_failed_run_reports_actual_steps_and_tokens(tmp_path, monkeypatch):
+    texts = [
+        "def parse_config(text): return text.strip()",
+        "README: parse_config loads local configuration.",
+    ]
+    config = DenseTrainingConfig(
+        device="cpu",
+        seq_len=16,
+        hidden_dim=32,
+        layers=1,
+        heads=4,
+        batch_size=2,
+        steps=3,
+        validation_batches=1,
+        mixed_precision="fp32",
+    )
+
+    def infinite_loss(*args, **kwargs):
+        return torch.tensor(float("inf"), requires_grad=True)
+
+    monkeypatch.setattr(torch.nn.functional, "cross_entropy", infinite_loss)
+
+    result = train_dense_decoder(texts, config, tmp_path, seed=123)
+
+    assert result["status"] == "failed_nonfinite_loss"
+    assert result["failure"] == "nonfinite_loss_at_step_1"
+    assert result["training"]["failure_step"] == 1
+    assert result["training"]["completed_steps_this_invocation"] == 0
+    assert result["training"]["last_completed_step"] == 0
+    assert result["training"]["train_tokens"] == 0
+    assert result["training"]["planned_train_tokens"] == 96
+    assert result["checkpoint"]["step"] == 0
+    assert result["checkpoint"]["resume_ok"] is True
+
+
+def test_dense_decoder_uses_separate_validation_texts_when_provided(tmp_path):
+    train_texts = [
+        "function trainA() { return 1 }",
+        "function trainB() { return 2 }",
+        "function trainC() { return 3 }",
+    ]
+    validation_texts = [
+        "function validationA() { return 4 }",
+        "function validationB() { return 5 }",
+    ]
+    config = DenseTrainingConfig(
+        device="cpu",
+        seq_len=8,
+        hidden_dim=16,
+        layers=1,
+        heads=4,
+        batch_size=2,
+        steps=1,
+        validation_batches=2,
+        mixed_precision="fp32",
+        optimizer_name="sgd",
+        learning_rate=0.0,
+    )
+
+    result = train_dense_decoder(
+        train_texts,
+        config,
+        tmp_path,
+        seed=123,
+        validation_texts=validation_texts,
+    )
+
+    assert result["status"] == "completed"
+    assert result["validation"]["source"] == "provided_validation_texts"
+    assert result["validation"]["heldout_texts_provided"] is True
+    assert result["validation"]["tokens"] == 36
+
+
 def test_adapter_decoder_training_smoke_records_variant(tmp_path):
     texts = [
         "function usable(value) { return value + 1 }",
@@ -136,6 +210,103 @@ def test_adapter_decoder_starts_with_identity_residual_adapters():
     adapted = model.adapters[0](hidden)
 
     assert torch.equal(adapted, hidden)
+
+
+def test_evaluate_dense_checkpoint_uses_dedicated_texts_and_seed(tmp_path):
+    train_texts = [
+        "function trainA() { return 1 }",
+        "function trainB() { return 2 }",
+        "function trainC() { return 3 }",
+    ]
+    heldout_texts = [
+        "function heldoutA() { return 4 }",
+        "function heldoutB() { return 5 }",
+    ]
+    config = DenseTrainingConfig(
+        device="cpu",
+        seq_len=8,
+        hidden_dim=16,
+        layers=1,
+        heads=4,
+        batch_size=2,
+        steps=1,
+        validation_batches=1,
+        mixed_precision="fp32",
+        optimizer_name="sgd",
+        learning_rate=0.0,
+    )
+    train_dense_decoder(train_texts, config, tmp_path, seed=123)
+
+    first = evaluate_dense_checkpoint(
+        checkpoint_path=tmp_path / "dense_decoder_last.pt",
+        texts=heldout_texts,
+        split_name="validation",
+        device="cpu",
+        seed=999,
+        batches=3,
+    )
+    second = evaluate_dense_checkpoint(
+        checkpoint_path=tmp_path / "dense_decoder_last.pt",
+        texts=heldout_texts,
+        split_name="validation",
+        device="cpu",
+        seed=999,
+        batches=3,
+    )
+
+    assert first["benchmark_label"] == "dense_checkpoint_evaluation"
+    assert first["split"] == "validation"
+    assert first["batches"] == 3
+    assert first["tokens"] == 54
+    assert first["sample_order_sha256"] == second["sample_order_sha256"]
+    assert first["loss"] == second["loss"]
+    assert first["checkpoint"]["step"] == 1
+    assert first["model"]["config"]["seq_len"] == 8
+
+
+def test_evaluate_dense_checkpoint_loads_legacy_transformer_encoder_keys(tmp_path):
+    train_texts = [
+        "function trainA() { return 1 }",
+        "function trainB() { return 2 }",
+    ]
+    heldout_texts = [
+        "function heldoutA() { return 4 }",
+        "function heldoutB() { return 5 }",
+    ]
+    config = DenseTrainingConfig(
+        device="cpu",
+        seq_len=8,
+        hidden_dim=16,
+        layers=1,
+        heads=4,
+        batch_size=2,
+        steps=1,
+        validation_batches=1,
+        mixed_precision="fp32",
+        optimizer_name="sgd",
+        learning_rate=0.0,
+    )
+    train_dense_decoder(train_texts, config, tmp_path, seed=123)
+    checkpoint_path = tmp_path / "dense_decoder_last.pt"
+    payload = torch.load(checkpoint_path, map_location="cpu")
+    payload["model"] = {
+        key.replace("blocks.0.", "blocks.layers.0."): value
+        for key, value in payload["model"].items()
+    }
+    legacy_path = tmp_path / "legacy_dense_decoder_last.pt"
+    torch.save(payload, legacy_path)
+
+    result = evaluate_dense_checkpoint(
+        checkpoint_path=legacy_path,
+        texts=heldout_texts,
+        split_name="validation",
+        device="cpu",
+        seed=999,
+        batches=1,
+    )
+
+    assert result["benchmark_label"] == "dense_checkpoint_evaluation"
+    assert result["loss"] > 0.0
 
 
 def test_dense_step_debug_probe_records_phase_tensor_health():

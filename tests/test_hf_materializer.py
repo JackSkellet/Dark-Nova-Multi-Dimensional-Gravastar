@@ -1,3 +1,5 @@
+import json
+
 from weightlab.hf_materializer import MaterializationConfig, load_jsonl_texts, materialize_hf_corpus
 
 
@@ -88,6 +90,27 @@ def test_hf_materializer_filters_and_writes_repo_aware_jsonl(tmp_path):
     assert metrics["tokens"]["train"] > 0
     assert metrics["output"]["sha256"]
     assert load_jsonl_texts(output_jsonl) == ["def usable(value):\n    return value + 1\n"]
+
+
+def test_load_jsonl_texts_can_filter_by_split(tmp_path):
+    output_jsonl = tmp_path / "corpus.jsonl"
+    output_jsonl.write_text(
+        "\n".join(
+            [
+                json.dumps({"text": "train one", "split": "train"}),
+                json.dumps({"text": "validation one", "split": "validation"}),
+                json.dumps({"text": "test one", "split": "test"}),
+                json.dumps({"text": "train two", "split": "train"}),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    assert load_jsonl_texts(output_jsonl, split="train") == ["train one", "train two"]
+    assert load_jsonl_texts(output_jsonl, split="validation") == ["validation one"]
+    assert load_jsonl_texts(output_jsonl, split="test") == ["test one"]
+    assert load_jsonl_texts(output_jsonl, split="train", max_documents=1) == ["train one"]
 
 
 def test_hf_materializer_records_filter_reasons_when_target_requires_scan(tmp_path):

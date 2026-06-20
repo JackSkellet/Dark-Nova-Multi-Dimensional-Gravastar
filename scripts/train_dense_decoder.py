@@ -10,6 +10,90 @@ from weightlab.hf_materializer import load_jsonl_texts
 from weightlab.metrics import ExperimentRecord, write_json
 
 
+def _jsonl_split_counts(path: Path) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    with path.open(encoding="utf-8") as handle:
+        for line in handle:
+            row = json.loads(line)
+            split = str(row.get("split", "unlabeled"))
+            counts[split] = counts.get(split, 0) + 1
+    return counts
+
+
+def _resolved_config(args: argparse.Namespace) -> dict[str, object]:
+    return {
+        "repo_path": [str(path) for path in args.repo_path],
+        "corpus_jsonl": str(args.corpus_jsonl) if args.corpus_jsonl else "",
+        "corpus_record": str(args.corpus_record) if args.corpus_record else "",
+        "resume_checkpoint": str(args.resume_checkpoint) if args.resume_checkpoint else "",
+        "device": args.device,
+        "seq_len": args.seq_len,
+        "hidden_dim": args.hidden_dim,
+        "layers": args.layers,
+        "heads": args.heads,
+        "batch_size": args.batch_size,
+        "steps": args.steps,
+        "validation_batches": args.validation_batches,
+        "gradient_accumulation_steps": args.gradient_accumulation_steps,
+        "mixed_precision": args.mixed_precision,
+        "learning_rate": args.learning_rate,
+        "optimizer_name": args.optimizer_name,
+        "attention_mask_mode": args.attention_mask_mode,
+        "progress_interval": args.progress_interval,
+        "checkpoint_interval": args.checkpoint_interval,
+        "architecture_variant": args.architecture_variant,
+        "adapter_dim": args.adapter_dim,
+        "max_documents": args.max_documents,
+        "max_documents_resolved": None if args.max_documents <= 0 else args.max_documents,
+        "max_file_bytes": args.max_file_bytes,
+        "output_dir": str(args.output_dir),
+        "output": str(args.output),
+        "experiment_id": args.experiment_id,
+        "seed": args.seed,
+    }
+
+
+def _command_from_resolved(config: dict[str, object]) -> str:
+    parts = ["uv", "run", "python", "scripts/train_dense_decoder.py"]
+    for path in config["repo_path"]:
+        parts.extend(["--repo-path", str(path)])
+    optional_paths = {
+        "--corpus-jsonl": config["corpus_jsonl"],
+        "--corpus-record": config["corpus_record"],
+        "--resume-checkpoint": config["resume_checkpoint"],
+    }
+    for flag, value in optional_paths.items():
+        if value:
+            parts.extend([flag, str(value)])
+    for flag, key in [
+        ("--device", "device"),
+        ("--seq-len", "seq_len"),
+        ("--hidden-dim", "hidden_dim"),
+        ("--layers", "layers"),
+        ("--heads", "heads"),
+        ("--batch-size", "batch_size"),
+        ("--steps", "steps"),
+        ("--validation-batches", "validation_batches"),
+        ("--gradient-accumulation-steps", "gradient_accumulation_steps"),
+        ("--mixed-precision", "mixed_precision"),
+        ("--learning-rate", "learning_rate"),
+        ("--optimizer-name", "optimizer_name"),
+        ("--attention-mask-mode", "attention_mask_mode"),
+        ("--progress-interval", "progress_interval"),
+        ("--checkpoint-interval", "checkpoint_interval"),
+        ("--architecture-variant", "architecture_variant"),
+        ("--adapter-dim", "adapter_dim"),
+        ("--max-documents", "max_documents"),
+        ("--max-file-bytes", "max_file_bytes"),
+        ("--output-dir", "output_dir"),
+        ("--output", "output"),
+        ("--experiment-id", "experiment_id"),
+        ("--seed", "seed"),
+    ]:
+        parts.extend([flag, str(config[key])])
+    return " ".join(parts)
+
+
 def _append_manifest(output: Path, record: dict[str, object]) -> None:
     manifest_path = output.parent / "manifest.json"
     if manifest_path.exists():
@@ -64,9 +148,18 @@ def main() -> None:
     if not args.repo_path and args.corpus_jsonl is None:
         parser.error("provide at least one --repo-path or --corpus-jsonl")
 
+    resolved_config = _resolved_config(args)
+    write_json(args.output_dir / "resolved_config.json", resolved_config)
     max_documents = None if args.max_documents <= 0 else args.max_documents
+    validation_texts = None
     if args.corpus_jsonl is not None:
-        texts = load_jsonl_texts(args.corpus_jsonl, max_documents=max_documents)
+        split_counts = _jsonl_split_counts(args.corpus_jsonl)
+        texts = load_jsonl_texts(args.corpus_jsonl, max_documents=max_documents, split="train")
+        validation_texts = load_jsonl_texts(args.corpus_jsonl, split="validation")
+        if not texts:
+            texts = load_jsonl_texts(args.corpus_jsonl, max_documents=max_documents)
+        if not validation_texts:
+            validation_texts = None
         corpus_record = (
             json.loads(args.corpus_record.read_text(encoding="utf-8"))
             if args.corpus_record is not None
@@ -79,6 +172,9 @@ def main() -> None:
             "document_count": len(texts),
             "total_tokens": sum(len(text.encode("utf-8", errors="ignore")) + 1 for text in texts),
             "repo_count": 0,
+            "split_document_counts": split_counts,
+            "train_document_count": len(texts),
+            "validation_document_count": len(validation_texts or []),
             "license_counts": corpus_metrics.get("licenses", {}),
             "languages": corpus_metrics.get("languages", {}),
             "file_roles": {},
@@ -93,6 +189,7 @@ def main() -> None:
             },
         }
     else:
+        split_counts = {}
         corpus = prepare_repository_corpus(
             args.repo_path,
             min_tokens=1,
@@ -129,12 +226,16 @@ def main() -> None:
         args.output_dir,
         seed=args.seed,
         resume_checkpoint=args.resume_checkpoint,
+        validation_texts=validation_texts,
     )
+    metrics["resolved_config"] = resolved_config
     metrics["corpus"] = {
         "source": corpus.get("source", "local_repositories"),
         "jsonl_path": corpus.get("jsonl_path", ""),
         "repo_count": corpus["repo_count"],
         "document_count_used": len(texts),
+        "validation_document_count_used": len(validation_texts or []),
+        "split_document_counts": corpus.get("split_document_counts", split_counts),
         "available_documents": corpus["document_count"],
         "available_tokens": corpus["total_tokens"],
         "licenses": corpus["license_counts"],
@@ -142,33 +243,12 @@ def main() -> None:
         "file_roles": corpus["file_roles"],
         "record": corpus.get("record", {}),
     }
-    command_repos = " ".join(f"--repo-path {path}" for path in args.repo_path)
-    command_corpus = f"--corpus-jsonl {args.corpus_jsonl} " if args.corpus_jsonl else ""
-    command_corpus_record = f"--corpus-record {args.corpus_record} " if args.corpus_record else ""
-    command_resume = (
-        f"--resume-checkpoint {args.resume_checkpoint} " if args.resume_checkpoint else ""
-    )
+    command = _command_from_resolved(resolved_config)
     record = ExperimentRecord(
         experiment_id=args.experiment_id,
         hypothesis="dense_baseline_training",
         seed=args.seed,
-        command=(
-            "uv run python scripts/train_dense_decoder.py "
-            f"{command_corpus}{command_corpus_record}{command_resume}{command_repos} "
-            f"--device {args.device} --seq-len {args.seq_len} "
-            f"--hidden-dim {args.hidden_dim} --layers {args.layers} --heads {args.heads} "
-            f"--batch-size {args.batch_size} --steps {args.steps} "
-            f"--validation-batches {args.validation_batches} "
-            f"--gradient-accumulation-steps {args.gradient_accumulation_steps} "
-            f"--max-file-bytes {args.max_file_bytes} "
-            f"--mixed-precision {args.mixed_precision} --output-dir {args.output_dir} "
-            f"--attention-mask-mode {args.attention_mask_mode} "
-            f"--progress-interval {args.progress_interval} "
-            f"--checkpoint-interval {args.checkpoint_interval} "
-            f"--architecture-variant {args.architecture_variant} "
-            f"--adapter-dim {args.adapter_dim} "
-            f"--output {args.output}"
-        ),
+        command=command,
         metrics=metrics,
         status="completed" if metrics["status"] == "completed" else "failed",
         notes=(
@@ -177,6 +257,7 @@ def main() -> None:
             "it is not the required 10-50M parameter or 50M-token run."
         ),
     ).to_jsonable()
+    record["resolved_config"] = resolved_config
     write_json(args.output, record)
     _append_manifest(args.output, record)
 

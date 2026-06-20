@@ -1559,6 +1559,72 @@
       "outcome": "recorded",
       "primary_reason": "not_classified_by_current_assessment_layer",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T9a_T6_true_d4_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T9b_T6_true_d4_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T9c_T7c_true_d4_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T9d_T7c_true_d4_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T9e_T8h_true_d4_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T9f_T8h_true_d4_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -1588,7 +1654,7 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
-    "recorded": 29,
+    "recorded": 35,
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
@@ -1598,5 +1664,5 @@
     "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 78
+  "record_count": 84
 }

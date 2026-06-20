@@ -131,12 +131,20 @@ def train_dense_decoder(
     output_dir: Path,
     seed: int = 123,
     resume_checkpoint: Path | None = None,
+    validation_texts: list[str] | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     tokenizer = ByteTokenizer()
     tokens = _tokens_from_texts(texts, tokenizer)
     if len(tokens) < config.seq_len + 2:
         raise ValueError("not enough tokens for dense decoder training")
+    validation_source = "training_texts"
+    validation_tokens_tensor = tokens
+    if validation_texts is not None:
+        validation_tokens_tensor = _tokens_from_texts(validation_texts, tokenizer)
+        validation_source = "provided_validation_texts"
+        if len(validation_tokens_tensor) < config.seq_len + 2:
+            raise ValueError("not enough tokens for dense decoder validation")
 
     accelerator = _resolve_torch_accelerator(config.device)
     device = accelerator.device
@@ -159,7 +167,7 @@ def train_dense_decoder(
     resumed_from = ""
     if resume_checkpoint is not None:
         payload = torch.load(resume_checkpoint, map_location=device)
-        model.load_state_dict(payload["model"])
+        _load_model_state(model, payload["model"])
         optimizer.load_state_dict(payload["optimizer"])
         if "generator_state" in payload:
             generator.set_state(payload["generator_state"].cpu())
@@ -175,6 +183,8 @@ def train_dense_decoder(
     train_start = time.perf_counter()
     status = "completed"
     failure = ""
+    failure_step = 0
+    last_completed_step = start_step
     model.train()
     optimizer.zero_grad(set_to_none=True)
     for step in range(start_step + 1, config.steps + 1):
@@ -193,6 +203,7 @@ def train_dense_decoder(
             if not torch.isfinite(loss):
                 status = "failed_nonfinite_loss"
                 failure = f"nonfinite_loss_at_step_{step}"
+                failure_step = step
                 break
             scaled_loss.backward()
             step_loss += float(loss.detach().cpu())
@@ -203,6 +214,7 @@ def train_dense_decoder(
         optimizer.zero_grad(set_to_none=True)
         if device.type == "cuda":
             torch.cuda.synchronize()
+        last_completed_step = step
         loss_curve.append(
             {"step": float(step), "loss": step_loss / config.gradient_accumulation_steps}
         )
@@ -247,14 +259,19 @@ def train_dense_decoder(
             )
 
     elapsed = max(time.perf_counter() - train_start, 1e-9)
-    train_tokens = (
-        config.steps
-        * config.gradient_accumulation_steps
-        * config.batch_size
-        * config.seq_len
-    )
+    completed_steps_this_invocation = len(loss_curve)
+    train_tokens = completed_steps_this_invocation * _tokens_per_step(config)
+    planned_train_tokens = (config.steps - start_step) * _tokens_per_step(config)
+    total_completed_tokens = last_completed_step * _tokens_per_step(config)
     validation = (
-        _validation_metrics(model, tokens, tokenizer.vocab_size, config, generator, device)
+        _validation_metrics(
+            model,
+            validation_tokens_tensor,
+            tokenizer.vocab_size,
+            config,
+            generator,
+            device,
+        )
         if status == "completed"
         else {
             "loss": math.nan,
@@ -263,6 +280,8 @@ def train_dense_decoder(
             "sample_order_sha256": "",
         }
     )
+    validation["source"] = validation_source
+    validation["heldout_texts_provided"] = validation_texts is not None
     sample = _generate_sample(model, tokenizer, "def ", config.seq_len, device)
     checkpoint_path = output_dir / "dense_decoder_last.pt"
     parameter_count = sum(param.numel() for param in model.parameters())
@@ -271,12 +290,18 @@ def train_dense_decoder(
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
             "config": asdict(config),
-            "step": config.steps,
+            "step": last_completed_step,
             "generator_state": generator.get_state(),
         },
         checkpoint_path,
     )
-    resume_ok = _resume_check(checkpoint_path, tokenizer.vocab_size, config, device)
+    resume_ok = _resume_check(
+        checkpoint_path,
+        tokenizer.vocab_size,
+        config,
+        device,
+        expected_step=last_completed_step,
+    )
     return {
         "benchmark_label": "dense_decoder_training_smoke",
         "status": status,
@@ -292,13 +317,17 @@ def train_dense_decoder(
         },
         "training": {
             "train_tokens": train_tokens,
+            "planned_train_tokens": planned_train_tokens,
+            "total_completed_tokens": total_completed_tokens,
             "steps": config.steps,
             "start_step": start_step,
-            "completed_steps_this_invocation": len(loss_curve),
+            "last_completed_step": last_completed_step,
+            "completed_steps_this_invocation": completed_steps_this_invocation,
+            "failure_step": failure_step,
             "resumed_from": resumed_from,
             "gradient_accumulation_steps": config.gradient_accumulation_steps,
             "elapsed_s": elapsed,
-            "tokens_per_second": train_tokens / elapsed,
+            "tokens_per_second": train_tokens / elapsed if train_tokens else 0.0,
             "loss_curve": loss_curve,
         },
         "progress": {
@@ -319,6 +348,7 @@ def train_dense_decoder(
         "checkpoint": {
             "path": str(checkpoint_path),
             "bytes": checkpoint_path.stat().st_size,
+            "step": last_completed_step,
             "resume_ok": resume_ok,
         },
         "limitations": [
@@ -442,11 +472,105 @@ def debug_dense_step_stability(
     }
 
 
+def evaluate_dense_checkpoint(
+    checkpoint_path: Path,
+    texts: list[str],
+    split_name: str,
+    device: str = "rocm",
+    seed: int = 123,
+    batches: int | None = None,
+) -> dict[str, Any]:
+    tokenizer = ByteTokenizer()
+    tokens = _tokens_from_texts(texts, tokenizer)
+    accelerator = _resolve_torch_accelerator(device)
+    torch_device = accelerator.device
+    payload = torch.load(checkpoint_path, map_location=torch_device)
+    checkpoint_config = dict(payload["config"])
+    if batches is not None:
+        checkpoint_config["validation_batches"] = batches
+    config = DenseTrainingConfig(**checkpoint_config)
+    if len(tokens) < config.seq_len + 2:
+        raise ValueError(f"not enough tokens for dense decoder {split_name} evaluation")
+    model = DenseDecoder(
+        tokenizer.vocab_size,
+        config.seq_len,
+        config.hidden_dim,
+        config.layers,
+        config.heads,
+        config.attention_mask_mode,
+        config.architecture_variant,
+        config.adapter_dim,
+    ).to(torch_device)
+    _load_model_state(model, payload["model"])
+    generator = torch.Generator(device="cpu").manual_seed(seed)
+    metrics = _validation_metrics(
+        model,
+        tokens,
+        tokenizer.vocab_size,
+        config,
+        generator,
+        torch_device,
+    )
+    return {
+        "benchmark_label": "dense_checkpoint_evaluation",
+        "split": split_name,
+        "seed": seed,
+        "checkpoint": {
+            "path": str(checkpoint_path),
+            "step": int(payload.get("step", 0)),
+            "bytes": checkpoint_path.stat().st_size,
+        },
+        "model": {
+            "architecture": "causal_transformer_decoder",
+            "parameter_count": sum(param.numel() for param in model.parameters()),
+            "config": asdict(config),
+        },
+        "tokenizer": {"name": tokenizer.name, "vocab_size": tokenizer.vocab_size},
+        "device": {
+            "requested": accelerator.requested_device,
+            "resolved": str(torch_device),
+            "accelerator_backend": accelerator.backend,
+            "rocm_available": accelerator.rocm_available,
+            "rocm_runtime_version": accelerator.rocm_runtime_version,
+        },
+        **metrics,
+    }
+
+
 def _tokens_from_texts(texts: list[str], tokenizer: ByteTokenizer) -> torch.Tensor:
     ids: list[int] = []
     for text in texts:
         ids.extend(tokenizer.encode(text))
     return torch.tensor(ids, dtype=torch.long)
+
+
+def _load_model_state(model: torch.nn.Module, state_dict: dict[str, torch.Tensor]) -> None:
+    try:
+        model.load_state_dict(state_dict)
+    except RuntimeError as exc:
+        migrated = _migrate_legacy_transformer_encoder_keys(state_dict)
+        if migrated == state_dict:
+            raise exc
+        model.load_state_dict(migrated)
+
+
+def _migrate_legacy_transformer_encoder_keys(
+    state_dict: dict[str, torch.Tensor],
+) -> dict[str, torch.Tensor]:
+    migrated: dict[str, torch.Tensor] = {}
+    changed = False
+    for key, value in state_dict.items():
+        if key.startswith("blocks.layers."):
+            new_key = "blocks." + key.removeprefix("blocks.layers.")
+            changed = True
+        else:
+            new_key = key
+        migrated[new_key] = value
+    return migrated if changed else state_dict
+
+
+def _tokens_per_step(config: DenseTrainingConfig) -> int:
+    return config.gradient_accumulation_steps * config.batch_size * config.seq_len
 
 
 def _sample_batch(
@@ -520,6 +644,8 @@ def _resume_check(
     vocab_size: int,
     config: DenseTrainingConfig,
     device: torch.device,
+    *,
+    expected_step: int,
 ) -> bool:
     payload = torch.load(checkpoint_path, map_location=device)
     model = DenseDecoder(
@@ -533,9 +659,9 @@ def _resume_check(
         config.adapter_dim,
     ).to(device)
     optimizer = _make_optimizer(model, config)
-    model.load_state_dict(payload["model"])
+    _load_model_state(model, payload["model"])
     optimizer.load_state_dict(payload["optimizer"])
-    return int(payload.get("step", 0)) == config.steps
+    return int(payload.get("step", 0)) == expected_step
 
 
 def _should_flush(step: int, interval: int) -> bool:

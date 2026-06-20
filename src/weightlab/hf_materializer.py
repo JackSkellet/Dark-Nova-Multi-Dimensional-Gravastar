@@ -197,11 +197,18 @@ def materialize_hf_corpus(
     }
 
 
-def load_jsonl_texts(path: Path, max_documents: int | None = None) -> list[str]:
+def load_jsonl_texts(
+    path: Path,
+    max_documents: int | None = None,
+    *,
+    split: str | None = None,
+) -> list[str]:
     texts: list[str] = []
     with path.open(encoding="utf-8") as handle:
         for line in handle:
             row = json.loads(line)
+            if split is not None and row.get("split") != split:
+                continue
             texts.append(str(row["text"]))
             if max_documents is not None and len(texts) >= max_documents:
                 break
