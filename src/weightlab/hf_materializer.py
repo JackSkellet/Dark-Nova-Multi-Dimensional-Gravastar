@@ -62,6 +62,7 @@ CONTAMINATION_PATH_MARKERS = (
 @dataclass(frozen=True)
 class MaterializationConfig:
     target_train_tokens: int = 50_000_000
+    max_train_tokens_per_config: int | None = None
     max_row_bytes: int = 256_000
     min_row_bytes: int = 20
     max_rows: int | None = None
@@ -100,9 +101,14 @@ def materialize_hf_corpus(
             for accepted_config in source["accepted_configs"]:
                 if _target_met(counters, config):
                     break
+                config_key = _config_key(source, accepted_config)
+                if _config_train_cap_met(counters, config, config_key):
+                    continue
                 rows = row_factory(source, accepted_config)
                 for raw_row in rows:
                     if _target_met(counters, config):
+                        break
+                    if _config_train_cap_met(counters, config, config_key):
                         break
                     counters.rows_seen += 1
                     candidate = _row_to_candidate(
@@ -155,6 +161,7 @@ def materialize_hf_corpus(
             "sha256": checksum,
         },
         "target_train_tokens": config.target_train_tokens,
+        "max_train_tokens_per_config": config.max_train_tokens_per_config,
         "meets_50m_token_requirement": counters.split_tokens["train"] >= 50_000_000,
         "rows_seen": counters.rows_seen,
         "rows_accepted": counters.rows_accepted,
@@ -165,6 +172,7 @@ def materialize_hf_corpus(
         "total_tokens": sum(counters.split_tokens.values()),
         "document_count": counters.rows_accepted,
         "split_counts": dict(sorted(counters.split_counts.items())),
+        "config_split_tokens": dict(sorted(counters.config_split_tokens.items())),
         "dataset_config_counts": dict(sorted(counters.dataset_config_counts.items())),
         "languages": dict(sorted(counters.languages.items())),
         "licenses": dict(sorted(counters.licenses.items())),
@@ -178,6 +186,7 @@ def materialize_hf_corpus(
             "reject malicious embedded instruction markers",
             "assign repository-aware train/validation/test split by stable repo hash",
             "count byte-tokenizer tokens as utf8 bytes plus eos",
+            "optionally cap accepted train tokens per dataset/config before moving on",
             "write jsonl rows with source dataset/config/revision and row checksums",
         ],
         "filters": {
@@ -222,6 +231,7 @@ class _Counters:
     split_tokens: Counter[str]
     split_counts: Counter[str]
     dataset_config_counts: Counter[str]
+    config_split_tokens: Counter[str]
     languages: Counter[str]
     licenses: Counter[str]
     excluded_reasons: Counter[str]
@@ -234,6 +244,7 @@ class _Counters:
             split_tokens=Counter(metrics.get("tokens", {})),
             split_counts=Counter(metrics.get("split_counts", {})),
             dataset_config_counts=Counter(metrics.get("dataset_config_counts", {})),
+            config_split_tokens=Counter(metrics.get("config_split_tokens", {})),
             languages=Counter(metrics.get("languages", {})),
             licenses=Counter(metrics.get("licenses", {})),
             excluded_reasons=Counter(metrics.get("excluded_reasons", {})),
@@ -244,7 +255,9 @@ class _Counters:
         self.rows_accepted += 1
         self.split_tokens[split] += int(row["tokens"])
         self.split_counts[split] += 1
-        self.dataset_config_counts[f"{row['dataset']}::{row['config']}"] += 1
+        config_key = f"{row['dataset']}::{row['config']}"
+        self.dataset_config_counts[config_key] += 1
+        self.config_split_tokens[f"{config_key}::{split}"] += int(row["tokens"])
         self.languages[str(row["language"])] += 1
         self.licenses[str(row["license"])] += 1
 
@@ -336,6 +349,23 @@ def _target_met(counters: _Counters, config: MaterializationConfig) -> bool:
     return config.max_rows is not None and counters.rows_accepted >= config.max_rows
 
 
+def _config_train_cap_met(
+    counters: _Counters,
+    config: MaterializationConfig,
+    config_key: str,
+) -> bool:
+    if config.max_train_tokens_per_config is None:
+        return False
+    return (
+        counters.config_split_tokens[f"{config_key}::train"]
+        >= config.max_train_tokens_per_config
+    )
+
+
+def _config_key(source: dict[str, Any], accepted_config: dict[str, Any]) -> str:
+    return f"{source['dataset']}::{accepted_config['config']}"
+
+
 def _first_value(row: dict[str, Any], names: list[str]) -> str:
     for name in names:
         value = row.get(name)
@@ -390,6 +420,7 @@ def _empty_metrics() -> dict[str, Any]:
         "tokens": {},
         "split_counts": {},
         "dataset_config_counts": {},
+        "config_split_tokens": {},
         "languages": {},
         "licenses": {},
         "excluded_reasons": {},

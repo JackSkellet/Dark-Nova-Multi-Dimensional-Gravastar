@@ -33,6 +33,21 @@ def _manifest():
     }
 
 
+def _two_config_manifest():
+    manifest = _manifest()
+    manifest["metrics"]["sources"][0]["accepted_configs"].append(
+        {
+            "config": "JavaScript-all",
+            "split": "train",
+            "language": "JavaScript",
+            "license": "mixed",
+            "license_metadata_status": "recorded_mixed_or_unclear_exploratory_only",
+            "parquet_files": [{"url": "https://example.test/js.parquet", "size": 100}],
+        }
+    )
+    return manifest
+
+
 def test_hf_materializer_filters_and_writes_repo_aware_jsonl(tmp_path):
     rows = [
         {
@@ -158,3 +173,52 @@ def test_hf_materializer_records_filter_reasons_when_target_requires_scan(tmp_pa
     assert metrics["excluded_reasons"]["duplicate_text"] == 1
     assert metrics["excluded_reasons"]["malicious_embedded_instruction"] == 1
     assert metrics["excluded_reasons"]["vendor_or_generated_path"] == 1
+
+
+def test_hf_materializer_can_cap_train_tokens_per_config(tmp_path):
+    rows_by_config = {
+        "Python-all": [
+            {
+                "code_text": "def alpha():\n    return 'python-alpha'\n",
+                "repo_name": "repo-python-a",
+                "file_path": "src/alpha.py",
+                "language": "Python",
+                "license": "mit",
+            },
+            {
+                "code_text": "def beta():\n    return 'python-beta'\n",
+                "repo_name": "repo-python-b",
+                "file_path": "src/beta.py",
+                "language": "Python",
+                "license": "mit",
+            },
+        ],
+        "JavaScript-all": [
+            {
+                "code_text": "export function gamma() { return 'js-gamma' }\n",
+                "repo_name": "repo-js-a",
+                "file_path": "src/gamma.js",
+                "language": "JavaScript",
+                "license": "mit",
+            }
+        ],
+    }
+
+    def row_factory(_source, accepted_config):
+        return iter(rows_by_config[accepted_config["config"]])
+
+    metrics = materialize_hf_corpus(
+        _two_config_manifest(),
+        output_jsonl=tmp_path / "corpus.jsonl",
+        row_factory=row_factory,
+        config=MaterializationConfig(
+            target_train_tokens=70,
+            max_train_tokens_per_config=40,
+        ),
+    )
+
+    assert metrics["status"] == "completed"
+    assert metrics["dataset_config_counts"]["example/code::Python-all"] == 1
+    assert metrics["dataset_config_counts"]["example/code::JavaScript-all"] == 1
+    assert metrics["config_split_tokens"]["example/code::Python-all::train"] <= 40
+    assert metrics["tokens"]["train"] >= 70

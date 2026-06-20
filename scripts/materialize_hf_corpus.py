@@ -41,6 +41,7 @@ def main() -> None:
     )
     parser.add_argument("--experiment-id", default="D4_hf_corpus_materialization")
     parser.add_argument("--target-train-tokens", type=int, default=50_000_000)
+    parser.add_argument("--max-train-tokens-per-config", type=int)
     parser.add_argument("--max-row-bytes", type=int, default=256_000)
     parser.add_argument("--min-row-bytes", type=int, default=20)
     parser.add_argument("--max-rows", type=int, default=None)
@@ -72,6 +73,11 @@ def main() -> None:
         "--min-row-bytes",
         str(args.min_row_bytes),
     ]
+    if args.max_train_tokens_per_config is not None:
+        command.extend([
+            "--max-train-tokens-per-config",
+            str(args.max_train_tokens_per_config),
+        ])
     if args.max_rows is not None:
         command.extend(["--max-rows", str(args.max_rows)])
     if args.no_resume:
@@ -80,15 +86,43 @@ def main() -> None:
 
     metrics = json.loads(tmp_metrics.read_text(encoding="utf-8"))
     tmp_metrics.unlink(missing_ok=True)
+    recorded_command = [
+        "uv",
+        "run",
+        "python",
+        "scripts/materialize_hf_corpus.py",
+        "--manifest",
+        str(args.manifest),
+        "--output-jsonl",
+        str(args.output_jsonl),
+        "--target-train-tokens",
+        str(args.target_train_tokens),
+        "--max-row-bytes",
+        str(args.max_row_bytes),
+        "--min-row-bytes",
+        str(args.min_row_bytes),
+        "--output",
+        str(args.output),
+        "--experiment-id",
+        args.experiment_id,
+        "--seed",
+        str(args.seed),
+    ]
+    if args.max_train_tokens_per_config is not None:
+        recorded_command.extend([
+            "--max-train-tokens-per-config",
+            str(args.max_train_tokens_per_config),
+        ])
+    if args.max_rows is not None:
+        recorded_command.extend(["--max-rows", str(args.max_rows)])
+    if args.no_resume:
+        recorded_command.append("--no-resume")
+
     record = ExperimentRecord(
         experiment_id=args.experiment_id,
         hypothesis="real_training_data",
         seed=args.seed,
-        command=(
-            "uv run python scripts/materialize_hf_corpus.py "
-            f"--manifest {args.manifest} --output-jsonl {args.output_jsonl} "
-            f"--target-train-tokens {args.target_train_tokens} --output {args.output}"
-        ),
+        command=" ".join(recorded_command),
         metrics=metrics,
         status=metrics["status"],
         notes=(
@@ -105,6 +139,7 @@ def _child_main(args: argparse.Namespace) -> None:
     manifest_record = json.loads(args.manifest.read_text(encoding="utf-8"))
     config = MaterializationConfig(
         target_train_tokens=args.target_train_tokens,
+        max_train_tokens_per_config=args.max_train_tokens_per_config,
         max_row_bytes=args.max_row_bytes,
         min_row_bytes=args.min_row_bytes,
         max_rows=args.max_rows,
