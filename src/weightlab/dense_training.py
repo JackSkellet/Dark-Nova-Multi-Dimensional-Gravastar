@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import time
@@ -117,7 +118,7 @@ class _ResidualAdapter(torch.nn.Module):
         self.activation = torch.nn.GELU()
         torch.nn.init.normal_(self.down.weight, mean=0.0, std=0.02)
         torch.nn.init.zeros_(self.down.bias)
-        torch.nn.init.normal_(self.up.weight, mean=0.0, std=0.02)
+        torch.nn.init.zeros_(self.up.weight)
         torch.nn.init.zeros_(self.up.bias)
 
     def forward(self, hidden: torch.Tensor) -> torch.Tensor:
@@ -252,10 +253,15 @@ def train_dense_decoder(
         * config.batch_size
         * config.seq_len
     )
-    validation_loss = (
-        _validation_loss(model, tokens, tokenizer.vocab_size, config, generator, device)
+    validation = (
+        _validation_metrics(model, tokens, tokenizer.vocab_size, config, generator, device)
         if status == "completed"
-        else math.nan
+        else {
+            "loss": math.nan,
+            "batches": 0,
+            "tokens": 0,
+            "sample_order_sha256": "",
+        }
     )
     sample = _generate_sample(model, tokenizer, "def ", config.seq_len, device)
     checkpoint_path = output_dir / "dense_decoder_last.pt"
@@ -308,7 +314,7 @@ def train_dense_decoder(
                 else 0,
             },
         },
-        "validation": {"loss": validation_loss},
+        "validation": validation,
         "generation_samples": [{"prompt": "def ", "text": sample}],
         "checkpoint": {
             "path": str(checkpoint_path),
@@ -454,19 +460,24 @@ def _sample_batch(
     return torch.stack([tokens[start: start + seq_len + 1] for start in starts])
 
 
-def _validation_loss(
+def _validation_metrics(
     model: DenseDecoder,
     tokens: torch.Tensor,
     vocab_size: int,
     config: DenseTrainingConfig,
     generator: torch.Generator,
     device: torch.device,
-) -> float:
+) -> dict[str, Any]:
     model.eval()
     losses: list[float] = []
+    sample_order = hashlib.sha256()
+    validation_tokens = 0
     with torch.no_grad():
         for _ in range(config.validation_batches):
             batch = _sample_batch(tokens, config.batch_size, config.seq_len, generator).to(device)
+            batch_cpu = batch.detach().cpu().contiguous()
+            sample_order.update(batch_cpu.numpy().tobytes())
+            validation_tokens += int(batch_cpu.numel())
             logits = model(batch[:, :-1])
             loss = torch.nn.functional.cross_entropy(
                 logits.reshape(-1, vocab_size),
@@ -474,7 +485,12 @@ def _validation_loss(
             )
             losses.append(float(loss.detach().cpu()))
     model.train()
-    return float(sum(losses) / max(len(losses), 1))
+    return {
+        "loss": float(sum(losses) / max(len(losses), 1)),
+        "batches": len(losses),
+        "tokens": validation_tokens,
+        "sample_order_sha256": sample_order.hexdigest(),
+    }
 
 
 def _generate_sample(

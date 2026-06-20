@@ -55,6 +55,17 @@ def git_commit() -> str:
         return "uncommitted"
 
 
+def git_status_short() -> str:
+    try:
+        return subprocess.check_output(
+            ["git", "status", "--short"],
+            stderr=subprocess.DEVNULL,
+            text=True,
+        ).strip()
+    except Exception:
+        return ""
+
+
 def hardware_summary() -> dict[str, str]:
     return {
         "system": platform.system(),
@@ -77,6 +88,9 @@ class ExperimentRecord:
     def to_jsonable(self) -> dict[str, Any]:
         data = asdict(self)
         data["git_commit"] = git_commit()
+        status_short = git_status_short()
+        data["git_dirty"] = bool(status_short)
+        data["git_status_short"] = status_short
         data["hardware"] = hardware_summary()
         data["recorded_at_unix"] = time.time()
         return data

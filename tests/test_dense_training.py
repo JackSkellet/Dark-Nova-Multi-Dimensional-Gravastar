@@ -49,6 +49,9 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert result["training"]["train_tokens"] > 0
     assert len(result["training"]["loss_curve"]) == 2
     assert result["validation"]["loss"] > 0.0
+    assert result["validation"]["batches"] == 1
+    assert result["validation"]["tokens"] == 34
+    assert len(result["validation"]["sample_order_sha256"]) == 64
     assert result["generation_samples"]
     assert result["checkpoint"]["path"]
     assert result["checkpoint"]["resume_ok"] is True
@@ -115,6 +118,24 @@ def test_adapter_decoder_training_smoke_records_variant(tmp_path):
     assert result["model"]["config"]["architecture_variant"] == "adapter"
     assert result["model"]["config"]["adapter_dim"] == 8
     assert result["model"]["parameter_count"] > 0
+
+
+def test_adapter_decoder_starts_with_identity_residual_adapters():
+    torch.manual_seed(123)
+    model = DenseDecoder(
+        vocab_size=257,
+        seq_len=16,
+        hidden_dim=32,
+        layers=1,
+        heads=4,
+        architecture_variant="adapter",
+        adapter_dim=8,
+    )
+    hidden = torch.randn(2, 16, 32)
+
+    adapted = model.adapters[0](hidden)
+
+    assert torch.equal(adapted, hidden)
 
 
 def test_dense_step_debug_probe_records_phase_tensor_health():
