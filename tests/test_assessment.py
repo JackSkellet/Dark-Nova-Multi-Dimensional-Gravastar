@@ -304,6 +304,49 @@ def test_assessment_classifies_rocm_transformer_stability_records():
     assert failed_assessment["evidence"]["first_failure_component"] == "transformer"
 
 
+def test_assessment_classifies_dense_step_debug_records():
+    passing = {
+        "experiment_id": "T3e_dense_step_stability_544x3_sgd_lr0",
+        "hypothesis": "dense_step_two_nonfinite_origin",
+        "metrics": {
+            "benchmark_label": "dense_step_stability_debug",
+            "first_nonfinite_phase": None,
+            "model": {"parameter_count": 11_025_505, "config": {"layers": 3, "hidden_dim": 544}},
+            "step_results": [
+                {"gradients": {"nonfinite_count": 0, "nonfinite_tensors": []}},
+                {"loss": {"finite": True}},
+            ],
+        },
+    }
+    failing = {
+        "experiment_id": "T3_dense_step_stability_10m_sgd_lr0",
+        "hypothesis": "dense_step_two_nonfinite_origin",
+        "metrics": {
+            "benchmark_label": "dense_step_stability_debug",
+            "first_nonfinite_phase": "step_1_gradients",
+            "model": {"parameter_count": 12_939_521, "config": {"layers": 4, "hidden_dim": 512}},
+            "step_results": [
+                {
+                    "gradients": {
+                        "nonfinite_count": 1592,
+                        "nonfinite_tensors": [
+                            {"name": "blocks.layers.1.norm2.weight"}
+                        ],
+                    }
+                }
+            ],
+        },
+    }
+
+    assert assess_record(passing)["outcome"] == "dense_step_debug_positive"
+    failed_assessment = assess_record(failing)
+    assert failed_assessment["outcome"] == "dense_step_debug_failed"
+    assert failed_assessment["evidence"]["first_nonfinite_phase"] == "step_1_gradients"
+    assert failed_assessment["evidence"]["first_nonfinite_tensor"] == (
+        "blocks.layers.1.norm2.weight"
+    )
+
+
 def test_assessment_manifest_includes_new_research_options_for_current_limits():
     summary = assess_manifest(Path("results"))
 

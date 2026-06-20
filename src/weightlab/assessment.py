@@ -38,6 +38,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_d1(record)
     if record.get("metrics", {}).get("benchmark_label") == "dense_decoder_training_smoke":
         return _assess_t1(record)
+    if record.get("metrics", {}).get("benchmark_label") == "dense_step_stability_debug":
+        return _assess_t3(record)
     if experiment_id == "R2_rocm_transformer_stability":
         return _assess_r2(record)
     if experiment_id == "E5g_public_patch_replay_suite":
@@ -441,6 +443,44 @@ def _assess_r2(record: dict[str, Any]) -> Assessment:
             "first_failure_dtype": first_failure.get("dtype", ""),
             "first_failure_mask_mode": first_failure.get("mask_mode", ""),
             "first_failure_error": first_failure.get("error", ""),
+        },
+    }
+
+
+def _assess_t3(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    first_nonfinite_phase = metrics.get("first_nonfinite_phase")
+    first_step = (metrics.get("step_results") or [{}])[0]
+    gradients = first_step.get("gradients", {})
+    first_nonfinite_tensors = gradients.get("nonfinite_tensors") or []
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "dense_step_debug_positive"
+            if first_nonfinite_phase is None
+            else "dense_step_debug_failed"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "dense_step_debug_window_remained_finite"
+            if first_nonfinite_phase is None
+            else "dense_step_debug_found_nonfinite_phase"
+        ),
+        "limitations": [
+            "debug_probe_only",
+            "short_two_step_window",
+            "not_training_quality_evaluation",
+        ],
+        "evidence": {
+            "parameter_count": metrics.get("model", {}).get("parameter_count", 0),
+            "layers": metrics.get("model", {}).get("config", {}).get("layers", 0),
+            "hidden_dim": metrics.get("model", {}).get("config", {}).get("hidden_dim", 0),
+            "first_nonfinite_phase": first_nonfinite_phase or "",
+            "gradient_nonfinite_count": gradients.get("nonfinite_count", 0),
+            "first_nonfinite_tensor": first_nonfinite_tensors[0].get("name", "")
+            if first_nonfinite_tensors
+            else "",
         },
     }
 

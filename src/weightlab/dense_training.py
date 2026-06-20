@@ -208,6 +208,111 @@ def train_dense_decoder(
     }
 
 
+def debug_dense_step_stability(
+    texts: list[str],
+    config: DenseTrainingConfig,
+    seed: int = 123,
+    steps: int = 2,
+) -> dict[str, Any]:
+    tokenizer = ByteTokenizer()
+    tokens = _tokens_from_texts(texts, tokenizer)
+    if len(tokens) < config.seq_len + 2:
+        raise ValueError("not enough tokens for dense decoder debug probe")
+
+    accelerator = _resolve_torch_accelerator(config.device)
+    device = accelerator.device
+    torch.manual_seed(seed)
+    generator = torch.Generator(device="cpu").manual_seed(seed)
+    model = DenseDecoder(
+        tokenizer.vocab_size,
+        config.seq_len,
+        config.hidden_dim,
+        config.layers,
+        config.heads,
+        config.attention_mask_mode,
+    ).to(device)
+    optimizer = _make_optimizer(model, config)
+    dtype = _autocast_dtype(config.mixed_precision)
+    use_autocast = device.type == "cuda" and dtype is not None
+
+    first_nonfinite_phase: str | None = None
+    step_results: list[dict[str, Any]] = []
+    model.train()
+    optimizer.zero_grad(set_to_none=True)
+    initial_parameters = _module_tensor_summary(model.named_parameters())
+
+    for step in range(1, steps + 1):
+        batch = _sample_batch(tokens, config.batch_size, config.seq_len, generator).to(device)
+        inputs = batch[:, :-1]
+        targets = batch[:, 1:]
+        row: dict[str, Any] = {
+            "step": step,
+            "input_ids": _tensor_stats(inputs),
+            "targets": _tensor_stats(targets),
+        }
+        optimizer.zero_grad(set_to_none=True)
+        with torch.autocast(device_type="cuda", dtype=dtype, enabled=use_autocast):
+            logits = model(inputs)
+            loss = torch.nn.functional.cross_entropy(
+                logits.reshape(-1, tokenizer.vocab_size),
+                targets.reshape(-1),
+            )
+        row["logits"] = _tensor_stats(logits)
+        row["loss"] = _tensor_stats(loss)
+        if first_nonfinite_phase is None and not row["logits"]["finite"]:
+            first_nonfinite_phase = f"step_{step}_logits"
+        if first_nonfinite_phase is None and not row["loss"]["finite"]:
+            first_nonfinite_phase = f"step_{step}_loss"
+        if row["loss"]["finite"]:
+            loss.backward()
+            row["gradients"] = _module_tensor_summary(
+                (name, parameter.grad)
+                for name, parameter in model.named_parameters()
+                if parameter.grad is not None
+            )
+            if first_nonfinite_phase is None and not row["gradients"]["finite"]:
+                first_nonfinite_phase = f"step_{step}_gradients"
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            row["parameters_after_clip"] = _module_tensor_summary(model.named_parameters())
+            optimizer.step()
+            if device.type == "cuda":
+                torch.cuda.synchronize()
+            row["parameters_after_optimizer"] = _module_tensor_summary(model.named_parameters())
+            if first_nonfinite_phase is None and not row["parameters_after_optimizer"]["finite"]:
+                first_nonfinite_phase = f"step_{step}_parameters_after_optimizer"
+        else:
+            row["gradients"] = _empty_tensor_summary()
+            row["parameters_after_clip"] = _module_tensor_summary(model.named_parameters())
+            row["parameters_after_optimizer"] = _module_tensor_summary(model.named_parameters())
+        step_results.append(row)
+        if first_nonfinite_phase is not None:
+            break
+
+    return {
+        "benchmark_label": "dense_step_stability_debug",
+        "requested_device": accelerator.requested_device,
+        "device": str(device),
+        "accelerator_backend": accelerator.backend,
+        "rocm_available": accelerator.rocm_available,
+        "rocm_runtime_version": accelerator.rocm_runtime_version,
+        "torch_version": torch.__version__,
+        "first_nonfinite_phase": first_nonfinite_phase,
+        "initial_parameters": initial_parameters,
+        "step_results": step_results,
+        "tokenizer": {"name": tokenizer.name, "vocab_size": tokenizer.vocab_size},
+        "model": {
+            "architecture": "causal_transformer_decoder",
+            "parameter_count": sum(param.numel() for param in model.parameters()),
+            "config": asdict(config),
+        },
+        "limitations": [
+            "debug_probe_only",
+            "short_two_step_window",
+            "not_training_quality_evaluation",
+        ],
+    }
+
+
 def _tokens_from_texts(texts: list[str], tokenizer: ByteTokenizer) -> torch.Tensor:
     ids: list[int] = []
     for text in texts:
@@ -332,3 +437,75 @@ def _causal_mask(
             float("-inf"),
         )
     raise ValueError(f"unknown attention mask mode: {attention_mask_mode}")
+
+
+def _tensor_stats(tensor: torch.Tensor | None) -> dict[str, Any]:
+    if tensor is None:
+        return _empty_tensor_summary()
+    detached = tensor.detach()
+    if detached.dtype == torch.bool:
+        numeric = detached.to(dtype=torch.float32)
+    elif detached.is_floating_point() or detached.is_complex():
+        numeric = detached.float()
+    else:
+        numeric = detached.to(dtype=torch.float32)
+    finite_mask = torch.isfinite(numeric)
+    finite = bool(finite_mask.all().detach().cpu())
+    finite_values = numeric[finite_mask]
+    return {
+        "shape": list(detached.shape),
+        "dtype": str(detached.dtype),
+        "finite": finite,
+        "numel": int(detached.numel()),
+        "finite_count": int(finite_mask.sum().detach().cpu()),
+        "nan_count": int(torch.isnan(numeric).sum().detach().cpu()),
+        "posinf_count": int(torch.isposinf(numeric).sum().detach().cpu()),
+        "neginf_count": int(torch.isneginf(numeric).sum().detach().cpu()),
+        "abs_max": float(finite_values.abs().max().detach().cpu())
+        if finite_values.numel()
+        else math.nan,
+        "mean": float(finite_values.mean().detach().cpu()) if finite_values.numel() else math.nan,
+    }
+
+
+def _module_tensor_summary(
+    named_tensors: Any,
+    max_examples: int = 8,
+) -> dict[str, Any]:
+    total_numel = 0
+    finite_count = 0
+    nonfinite_tensors: list[dict[str, Any]] = []
+    max_abs = 0.0
+    tensor_count = 0
+    for name, tensor in named_tensors:
+        if tensor is None:
+            continue
+        tensor_count += 1
+        stats = _tensor_stats(tensor)
+        total_numel += int(stats["numel"])
+        finite_count += int(stats["finite_count"])
+        if math.isfinite(float(stats["abs_max"])):
+            max_abs = max(max_abs, float(stats["abs_max"]))
+        if not stats["finite"] and len(nonfinite_tensors) < max_examples:
+            nonfinite_tensors.append({"name": name, **stats})
+    return {
+        "finite": finite_count == total_numel,
+        "tensor_count": tensor_count,
+        "numel": total_numel,
+        "finite_count": finite_count,
+        "nonfinite_count": total_numel - finite_count,
+        "abs_max": max_abs,
+        "nonfinite_tensors": nonfinite_tensors,
+    }
+
+
+def _empty_tensor_summary() -> dict[str, Any]:
+    return {
+        "finite": True,
+        "tensor_count": 0,
+        "numel": 0,
+        "finite_count": 0,
+        "nonfinite_count": 0,
+        "abs_max": 0.0,
+        "nonfinite_tensors": [],
+    }
