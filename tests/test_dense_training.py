@@ -1,4 +1,7 @@
+import torch
+
 from weightlab.dense_training import (
+    DenseDecoder,
     DenseTrainingConfig,
     debug_dense_step_stability,
     train_dense_decoder,
@@ -148,3 +151,27 @@ def test_dense_step_debug_probe_records_phase_tensor_health():
         assert row["loss"]["finite"] is True
         assert row["gradients"]["finite"] is True
         assert row["parameters_after_optimizer"]["finite"] is True
+
+
+def test_masked_decoder_blocks_disable_autocast_for_stable_backward(monkeypatch):
+    autocast_states = []
+
+    def recording_forward(self, *args, **kwargs):
+        autocast_states.append(torch.is_autocast_enabled("cpu"))
+        return args[0]
+
+    monkeypatch.setattr(torch.nn.TransformerEncoderLayer, "forward", recording_forward)
+    model = DenseDecoder(
+        vocab_size=257,
+        seq_len=16,
+        hidden_dim=32,
+        layers=1,
+        heads=4,
+        attention_mask_mode="additive_causal",
+    )
+
+    with torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+        logits = model(torch.randint(0, 257, (2, 16)))
+
+    assert logits.shape == (2, 16, 257)
+    assert autocast_states == [False]

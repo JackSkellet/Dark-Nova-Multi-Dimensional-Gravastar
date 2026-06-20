@@ -40,6 +40,11 @@ def main() -> None:
     parser.add_argument("--mixed-precision", choices=["fp32", "bf16", "fp16"], default="bf16")
     parser.add_argument("--learning-rate", type=float, default=3e-4)
     parser.add_argument("--optimizer-name", choices=["adamw", "sgd"], default="adamw")
+    parser.add_argument(
+        "--attention-mask-mode",
+        choices=["none", "bool_causal", "additive_causal"],
+        default="additive_causal",
+    )
     parser.add_argument("--progress-interval", type=int, default=0)
     parser.add_argument("--checkpoint-interval", type=int, default=0)
     parser.add_argument("--architecture-variant", choices=["dense", "adapter"], default="dense")
@@ -111,6 +116,7 @@ def main() -> None:
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         mixed_precision=args.mixed_precision,
         learning_rate=args.learning_rate,
+        attention_mask_mode=args.attention_mask_mode,
         optimizer_name=args.optimizer_name,
         progress_interval=args.progress_interval,
         checkpoint_interval=args.checkpoint_interval,
@@ -156,6 +162,7 @@ def main() -> None:
             f"--gradient-accumulation-steps {args.gradient_accumulation_steps} "
             f"--max-file-bytes {args.max_file_bytes} "
             f"--mixed-precision {args.mixed_precision} --output-dir {args.output_dir} "
+            f"--attention-mask-mode {args.attention_mask_mode} "
             f"--progress-interval {args.progress_interval} "
             f"--checkpoint-interval {args.checkpoint_interval} "
             f"--architecture-variant {args.architecture_variant} "

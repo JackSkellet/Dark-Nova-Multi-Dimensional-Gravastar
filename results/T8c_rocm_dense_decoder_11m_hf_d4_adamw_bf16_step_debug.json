@@ -1,0 +1,207 @@
+{
+  "command": "uv run python <inline debug_dense_step_stability matrix>",
+  "experiment_id": "T8c_rocm_dense_decoder_11m_hf_d4_adamw_bf16_step_debug",
+  "git_commit": "41282c5a7203b70eeef2093d01f0fadee4889066",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "optimizer_precision_stability",
+  "metrics": {
+    "accelerator_backend": "rocm",
+    "benchmark_label": "dense_step_stability_debug",
+    "corpus": {
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "record": {
+        "experiment_id": "D4_hf_corpus_materialization",
+        "git_commit": "de86b4508a0972d970ed9115f9f2a3be546deaa4",
+        "output_sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+        "source_manifest": {
+          "dataset_revisions": {
+            "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+            "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+          },
+          "experiment_id": "D3_hf_corpus_manifest",
+          "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+          "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+        }
+      },
+      "source": "hf_jsonl_mirror"
+    },
+    "device": "cuda",
+    "first_nonfinite_phase": "step_1_gradients",
+    "initial_parameters": {
+      "abs_max": 4.933903694152832,
+      "finite": true,
+      "finite_count": 11025505,
+      "nonfinite_count": 0,
+      "nonfinite_tensors": [],
+      "numel": 11025505,
+      "tensor_count": 42
+    },
+    "limitations": [
+      "debug_probe_only",
+      "short_two_step_window",
+      "not_training_quality_evaluation"
+    ],
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "additive_causal",
+        "batch_size": 2,
+        "checkpoint_interval": 0,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 544,
+        "layers": 3,
+        "learning_rate": 0.0001,
+        "mixed_precision": "bf16",
+        "optimizer_name": "adamw",
+        "progress_interval": 0,
+        "seq_len": 128,
+        "steps": 2,
+        "validation_batches": 1
+      },
+      "parameter_count": 11025505
+    },
+    "requested_device": "rocm",
+    "rocm_available": true,
+    "rocm_runtime_version": "7.2.53211",
+    "step_results": [
+      {
+        "gradients": {
+          "abs_max": 1.0005574226379395,
+          "finite": false,
+          "finite_count": 11025499,
+          "nonfinite_count": 6,
+          "nonfinite_tensors": [
+            {
+              "abs_max": 0.0071830786764621735,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 538,
+              "mean": -1.7543679859954864e-05,
+              "name": "blocks.1.norm1.weight",
+              "nan_count": 0,
+              "neginf_count": 6,
+              "numel": 544,
+              "posinf_count": 0,
+              "shape": [
+                544
+              ]
+            }
+          ],
+          "numel": 11025505,
+          "tensor_count": 42
+        },
+        "input_ids": {
+          "abs_max": 125.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 88.9609375,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        },
+        "logits": {
+          "abs_max": 2.421875,
+          "dtype": "torch.bfloat16",
+          "finite": true,
+          "finite_count": 65792,
+          "mean": 0.007578915450721979,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 65792,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128,
+            257
+          ]
+        },
+        "loss": {
+          "abs_max": 5.72857666015625,
+          "dtype": "torch.float32",
+          "finite": true,
+          "finite_count": 1,
+          "mean": 5.72857666015625,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 1,
+          "posinf_count": 0,
+          "shape": []
+        },
+        "parameters_after_clip": {
+          "abs_max": 4.933903694152832,
+          "finite": true,
+          "finite_count": 11025505,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 11025505,
+          "tensor_count": 42
+        },
+        "parameters_after_optimizer": {
+          "abs_max": 4.93389892578125,
+          "finite": false,
+          "finite_count": 11025499,
+          "nonfinite_count": 6,
+          "nonfinite_tensors": [
+            {
+              "abs_max": 0.9999989867210388,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 538,
+              "mean": 0.9999989867210388,
+              "name": "blocks.1.norm1.weight",
+              "nan_count": 6,
+              "neginf_count": 0,
+              "numel": 544,
+              "posinf_count": 0,
+              "shape": [
+                544
+              ]
+            }
+          ],
+          "numel": 11025505,
+          "tensor_count": 42
+        },
+        "step": 1,
+        "targets": {
+          "abs_max": 125.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 88.5703125,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        }
+      }
+    ],
+    "tokenizer": {
+      "name": "byte_level",
+      "vocab_size": 257
+    },
+    "torch_version": "2.12.1+rocm7.2"
+  },
+  "notes": "Two-step ROCm finite-state debug for AdamW/BF16 stabilization on the D4 HF mirror using the dense T6 model dimensions and additive causal mask.",
+  "recorded_at_unix": 1781960842.5135,
+  "seed": 123,
+  "status": "failed"
+}

@@ -98,7 +98,12 @@ class DenseDecoder(torch.nn.Module):
         hidden = self.token_embedding(input_ids) + self.position_embedding(positions)
         mask = _causal_mask(self.attention_mask_mode, seq_len, input_ids.device)
         for block, adapter in zip(self.blocks, self.adapters, strict=True):
-            hidden = block(hidden, src_mask=mask, is_causal=mask is not None)
+            hidden = _run_transformer_block(
+                block,
+                hidden,
+                mask,
+                device_type=input_ids.device.type,
+            )
             hidden = adapter(hidden)
         return self.head(self.norm(hidden))
 
@@ -574,6 +579,26 @@ def _autocast_dtype(mixed_precision: str) -> torch.dtype | None:
     if mixed_precision == "fp32":
         return None
     raise ValueError(f"unknown mixed precision mode: {mixed_precision}")
+
+
+def _run_transformer_block(
+    block: torch.nn.TransformerEncoderLayer,
+    hidden: torch.Tensor,
+    mask: torch.Tensor | None,
+    *,
+    device_type: str,
+) -> torch.Tensor:
+    if mask is not None and _is_autocast_enabled(device_type):
+        with torch.autocast(device_type=device_type, enabled=False):
+            return block(hidden.float(), src_mask=mask, is_causal=True)
+    return block(hidden, src_mask=mask, is_causal=mask is not None)
+
+
+def _is_autocast_enabled(device_type: str) -> bool:
+    try:
+        return bool(torch.is_autocast_enabled(device_type))
+    except TypeError:
+        return bool(torch.is_autocast_enabled())
 
 
 def _make_optimizer(

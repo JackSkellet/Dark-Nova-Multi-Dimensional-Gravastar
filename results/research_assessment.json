@@ -1290,6 +1290,152 @@
       "outcome": "dense_50m_baseline_positive",
       "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "step_2_gradients",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 528,
+        "layers": 3,
+        "parameter_count": 10604801
+      },
+      "experiment_id": "T7a_rocm_adapter_decoder_10m_hf_d4_step_debug",
+      "hypothesis": "matched_candidate_training",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_failed",
+      "primary_reason": "dense_step_debug_found_nonfinite_phase",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 544,
+        "layers": 3,
+        "parameter_count": 11025505
+      },
+      "experiment_id": "T8a_rocm_dense_decoder_11m_hf_d4_adamw_fp32_step_debug",
+      "hypothesis": "optimizer_precision_stability",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_positive",
+      "primary_reason": "dense_step_debug_window_remained_finite",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "step_1_gradients",
+        "first_nonfinite_tensor": "blocks.1.norm1.weight",
+        "gradient_nonfinite_count": 6,
+        "hidden_dim": 544,
+        "layers": 3,
+        "parameter_count": 11025505
+      },
+      "experiment_id": "T8b_rocm_dense_decoder_11m_hf_d4_sgd_bf16_step_debug",
+      "hypothesis": "optimizer_precision_stability",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_failed",
+      "primary_reason": "dense_step_debug_found_nonfinite_phase",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "step_1_gradients",
+        "first_nonfinite_tensor": "blocks.1.norm1.weight",
+        "gradient_nonfinite_count": 6,
+        "hidden_dim": 544,
+        "layers": 3,
+        "parameter_count": 11025505
+      },
+      "experiment_id": "T8c_rocm_dense_decoder_11m_hf_d4_adamw_bf16_step_debug",
+      "hypothesis": "optimizer_precision_stability",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_failed",
+      "primary_reason": "dense_step_debug_found_nonfinite_phase",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 544,
+        "layers": 3,
+        "parameter_count": 11025505
+      },
+      "experiment_id": "T8f_rocm_dense_decoder_11m_hf_d4_adamw_bf16_masked_block_fp32_step_debug",
+      "hypothesis": "optimizer_precision_stability",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_positive",
+      "primary_reason": "dense_step_debug_window_remained_finite",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "cpu",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 3415
+          },
+          "experiment_id": "D4_hf_corpus_materialization",
+          "git_commit": "de86b4508a0972d970ed9115f9f2a3be546deaa4",
+          "output_sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 735566,
+            "train": 50102528,
+            "validation": 1455924
+          }
+        },
+        "failure": "",
+        "parameter_count": 11025505,
+        "status": "completed",
+        "train_steps": 10000,
+        "train_tokens": 2560000,
+        "validation_loss": 1.664748802781105
+      },
+      "experiment_id": "T8g_rocm_dense_decoder_11m_hf_d4_adamw_bf16_probe",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "training_smoke_only",
+        "not_50m_token_run",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -1306,8 +1452,8 @@
     "codegen_proxy_positive": 3,
     "corpus_prepared_insufficient_tokens": 2,
     "dense_50m_baseline_positive": 1,
-    "dense_step_debug_failed": 1,
-    "dense_step_debug_positive": 5,
+    "dense_step_debug_failed": 4,
+    "dense_step_debug_positive": 7,
     "doc_drift_positive_control": 1,
     "docgen_proxy_positive": 1,
     "exploration_positive": 1,
@@ -1325,9 +1471,9 @@
     "smoke_pass": 1,
     "training_failed": 6,
     "training_readiness_positive": 1,
-    "training_smoke_positive": 5,
+    "training_smoke_positive": 6,
     "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 68
+  "record_count": 74
 }
