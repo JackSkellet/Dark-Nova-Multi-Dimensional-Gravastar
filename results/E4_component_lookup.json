@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E4_component_lookup",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -14,36 +14,36 @@
       "cached_previous": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 131072.0,
-        "latency_ms_p50": 0.01654197694733739,
-        "latency_ms_p95": 0.016952988517004997,
+        "latency_ms_p50": 0.016883015632629395,
+        "latency_ms_p95": 0.017409009160473943,
         "recall_at_1": 1.0
       },
       "dense_topk": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 131072.0,
-        "latency_ms_p50": 0.01725301262922585,
-        "latency_ms_p95": 0.017518999811727554,
+        "latency_ms_p50": 0.01742401218507439,
+        "latency_ms_p95": 0.018167513189837337,
         "recall_at_1": 1.0
       },
       "exact_vector": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 131072.0,
-        "latency_ms_p50": 0.014588003978133202,
-        "latency_ms_p95": 0.014913995983079076,
+        "latency_ms_p50": 0.014527991879731417,
+        "latency_ms_p95": 0.014814009773544967,
         "recall_at_1": 1.0
       },
       "hash_routing": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 9216.0,
-        "latency_ms_p50": 0.024422493879683316,
-        "latency_ms_p95": 0.025948240363504738,
+        "latency_ms_p50": 0.02457249502185732,
+        "latency_ms_p95": 0.025922752683982253,
         "recall_at_1": 0.64453125
       },
       "tree_centroid": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 4096.0,
-        "latency_ms_p50": 0.007624999852851033,
-        "latency_ms_p95": 0.007958500646054745,
+        "latency_ms_p50": 0.007675000233575702,
+        "latency_ms_p95": 0.00826598989078775,
         "recall_at_1": 0.1796875
       }
     },
@@ -51,36 +51,36 @@
       "cached_previous": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 16384.0,
-        "latency_ms_p50": 0.004539004294201732,
-        "latency_ms_p95": 0.0047015128075145185,
+        "latency_ms_p50": 0.004679503035731614,
+        "latency_ms_p95": 0.004863999492954463,
         "recall_at_1": 1.0
       },
       "dense_topk": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 16384.0,
-        "latency_ms_p50": 0.0024850014597177505,
-        "latency_ms_p95": 0.0025874978746287525,
+        "latency_ms_p50": 0.002535001840442419,
+        "latency_ms_p95": 0.0026275156415067613,
         "recall_at_1": 1.0
       },
       "exact_vector": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 16384.0,
-        "latency_ms_p50": 0.0029859947971999645,
-        "latency_ms_p95": 0.003076012944802642,
+        "latency_ms_p50": 0.003116001607850194,
+        "latency_ms_p95": 0.0031962626962922513,
         "recall_at_1": 1.0
       },
       "hash_routing": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 2048.0,
-        "latency_ms_p50": 0.00818549597170204,
-        "latency_ms_p95": 0.00855624966789037,
+        "latency_ms_p50": 0.008316506864503026,
+        "latency_ms_p95": 0.008672010153532028,
         "recall_at_1": 0.78515625
       },
       "tree_centroid": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 1408.0,
-        "latency_ms_p50": 0.004618981620296836,
-        "latency_ms_p95": 0.004739005817100406,
+        "latency_ms_p50": 0.0046889763325452805,
+        "latency_ms_p95": 0.004820001777261496,
         "recall_at_1": 0.640625
       }
     },
@@ -88,42 +88,42 @@
       "cached_previous": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 2048.0,
-        "latency_ms_p50": 0.003367022145539522,
-        "latency_ms_p95": 0.0036220080801285803,
+        "latency_ms_p50": 0.00347601599059999,
+        "latency_ms_p95": 0.0036852434277534485,
         "recall_at_1": 1.0
       },
       "dense_topk": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 2048.0,
-        "latency_ms_p50": 0.0016129924915730953,
-        "latency_ms_p95": 0.001696243998594582,
+        "latency_ms_p50": 0.0016530102584511042,
+        "latency_ms_p95": 0.0017732527339830995,
         "recall_at_1": 1.0
       },
       "exact_vector": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 2048.0,
-        "latency_ms_p50": 0.001794018317013979,
-        "latency_ms_p95": 0.001936503394972533,
+        "latency_ms_p50": 0.0018739956431090832,
+        "latency_ms_p95": 0.0019862345652654767,
         "recall_at_1": 1.0
       },
       "hash_routing": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 1152.0,
-        "latency_ms_p50": 0.006532995030283928,
-        "latency_ms_p95": 0.0068637600634247065,
+        "latency_ms_p50": 0.0066029897425323725,
+        "latency_ms_p95": 0.006898997526150197,
         "recall_at_1": 0.98046875
       },
       "tree_centroid": {
         "cache_hit_rate": 0.0,
         "index_memory_bytes": 512.0,
-        "latency_ms_p50": 0.004238012479618192,
-        "latency_ms_p95": 0.004374007403384894,
+        "latency_ms_p50": 0.004268018528819084,
+        "latency_ms_p95": 0.0044215048546902835,
         "recall_at_1": 0.90234375
       }
     }
   },
   "notes": "CPU isolated lookup benchmark; complete routed execution remains future work.",
-  "recorded_at_unix": 1781952213.8026755,
+  "recorded_at_unix": 1781952964.74431,
   "seed": 123,
   "status": "completed"
 }

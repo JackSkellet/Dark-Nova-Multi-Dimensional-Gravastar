@@ -2,166 +2,6 @@
   "assessments": [
     {
       "evidence": {},
-      "experiment_id": "E5_public_repo_chronology",
-      "hypothesis": "H5",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E5_public_repo_symbol_qa",
-      "hypothesis": "H5",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E5_public_repo_stale_docs",
-      "hypothesis": "H5",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E5_markupsafe_chronology",
-      "hypothesis": "H5",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E5_markupsafe_symbol_qa",
-      "hypothesis": "H5",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E5_markupsafe_stale_docs",
-      "hypothesis": "H5",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E5_markupsafe_public_patch_replay",
-      "hypothesis": "H5",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E3h_real_open_model_matrix_precision",
-      "hypothesis": "H3",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "E3i_real_open_model_task_precision",
-      "hypothesis": "H3",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {
-        "full_fp32_bytes": 402056.0,
-        "random_bf16_best_kl": 1.660081068166619e-07,
-        "random_bf16_mean_kl": 5.80204088884706e-07,
-        "selected_bf16_bytes": 653597.0,
-        "selected_bf16_kl": 1.7758168269210728e-07,
-        "selected_fp32_kl": 2.143507060736738e-07,
-        "uniform_int4_bytes": 50269.0
-      },
-      "experiment_id": "E3j_real_open_model_natural_text_precision",
-      "hypothesis": "H3",
-      "limitations": [
-        "not_pareto_improvement",
-        "storage_loss",
-        "does_not_beat_best_random",
-        "tiny_open_model_smoke_test"
-      ],
-      "outcome": "mixed",
-      "primary_reason": "selected_rows_beat_random_mean_but_lose_storage",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {
-        "baseline_failures": 2,
-        "generated_task_successes": 2,
-        "historical_patch_successes": 2,
-        "task_count": 2
-      },
-      "experiment_id": "E5g_public_patch_replay_suite",
-      "hypothesis": "H5",
-      "limitations": [
-        "hand_authored_heuristics",
-        "not_autonomous_repair",
-        "small_task_count",
-        "source_level_kilo_regression"
-      ],
-      "outcome": "limited_positive",
-      "primary_reason": "generated_candidates_passed_narrow_public_patch_replay",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {
-        "max_abs_heldout_kl": 0.0,
-        "protected_count": 1,
-        "tensor_shape": [
-          2,
-          8
-        ]
-      },
-      "experiment_id": "E3k_real_open_model_internal_tensor_precision",
-      "hypothesis": "H3",
-      "limitations": [
-        "tiny_tensor",
-        "zero_task_sensitivity",
-        "selective_precision_not_supported"
-      ],
-      "outcome": "no_signal",
-      "primary_reason": "all_precision_policies_have_zero_measurable_kl",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
       "experiment_id": "E1_contextual_routing",
       "hypothesis": "H1",
       "limitations": [
@@ -302,7 +142,7 @@
     {
       "evidence": {
         "accelerator_backend": "rocm",
-        "max_p95_to_p50_ratio": 56.899845227717,
+        "max_p95_to_p50_ratio": 54.26201863918468,
         "rocm_available": true,
         "rocm_runtime_version": "7.2.53211",
         "uses_cuda_transfer": false,
@@ -324,8 +164,8 @@
     {
       "evidence": {
         "accelerator_backend": "rocm",
-        "best_device_to_host_bandwidth_gb_s_p50": 24.93444486257389,
-        "best_host_to_device_bandwidth_gb_s_p50": 20.769125038732586,
+        "best_device_to_host_bandwidth_gb_s_p50": 25.850991748035874,
+        "best_host_to_device_bandwidth_gb_s_p50": 20.64090459734582,
         "payload_count": 3,
         "rocm_runtime_version": "7.2.53211",
         "uses_cuda_transfer": false,
@@ -656,6 +496,166 @@
       ],
       "outcome": "doc_drift_positive_control",
       "primary_reason": "structured_source_doc_consistency_memory_detects_synthetic_api_doc_drift",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_public_repo_chronology",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_public_repo_symbol_qa",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_public_repo_stale_docs",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_chronology",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_symbol_qa",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_stale_docs",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_public_patch_replay",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "baseline_failures": 2,
+        "generated_task_successes": 2,
+        "historical_patch_successes": 2,
+        "task_count": 2
+      },
+      "experiment_id": "E5g_public_patch_replay_suite",
+      "hypothesis": "H5",
+      "limitations": [
+        "hand_authored_heuristics",
+        "not_autonomous_repair",
+        "small_task_count",
+        "source_level_kilo_regression"
+      ],
+      "outcome": "limited_positive",
+      "primary_reason": "generated_candidates_passed_narrow_public_patch_replay",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3h_real_open_model_matrix_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3i_real_open_model_task_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "full_fp32_bytes": 402056.0,
+        "random_bf16_best_kl": 1.660081068166619e-07,
+        "random_bf16_mean_kl": 5.80204088884706e-07,
+        "selected_bf16_bytes": 653597.0,
+        "selected_bf16_kl": 1.7758168269210728e-07,
+        "selected_fp32_kl": 2.143507060736738e-07,
+        "uniform_int4_bytes": 50269.0
+      },
+      "experiment_id": "E3j_real_open_model_natural_text_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "not_pareto_improvement",
+        "storage_loss",
+        "does_not_beat_best_random",
+        "tiny_open_model_smoke_test"
+      ],
+      "outcome": "mixed",
+      "primary_reason": "selected_rows_beat_random_mean_but_lose_storage",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "max_abs_heldout_kl": 0.0,
+        "protected_count": 1,
+        "tensor_shape": [
+          2,
+          8
+        ]
+      },
+      "experiment_id": "E3k_real_open_model_internal_tensor_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "tiny_tensor",
+        "zero_task_sensitivity",
+        "selective_precision_not_supported"
+      ],
+      "outcome": "no_signal",
+      "primary_reason": "all_precision_policies_have_zero_measurable_kl",
       "supports_pareto_improvement": false
     }
   ],

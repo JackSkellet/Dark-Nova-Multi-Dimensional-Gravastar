@@ -1,11 +1,4 @@
 experiment_id,hypothesis,seed,status,notes
-E5_public_repo_chronology,H5,0,completed,Explicit local-clone public repository chronology experiment.
-E5_public_repo_symbol_qa,H5,0,completed,Explicit local-clone public repository symbol-definition QA experiment.
-E5_public_repo_stale_docs,H5,0,completed,Explicit local-clone public repository stale-document detection experiment.
-E5_markupsafe_chronology,H5,0,completed,Explicit local-clone public repository chronology experiment.
-E5_markupsafe_symbol_qa,H5,0,completed,Explicit local-clone public repository symbol-definition QA experiment.
-E5_markupsafe_stale_docs,H5,0,completed,Explicit local-clone public repository stale-document detection experiment.
-E5_markupsafe_public_patch_replay,H5,0,completed,"Explicit local-clone public historical patch replay graded by executable tests, not text similarity."
 E3h_real_open_model_matrix_precision,H3,123,completed,"Explicitly downloaded pinned Hugging Face tiny-gpt2 checkpoint and evaluated selective precision on a real open-model matrix. Measures reconstruction error, not task loss."
 E3i_real_open_model_task_precision,H3,123,completed,Pinned tiny-gpt2 checkpoint evaluated with a local minimal GPT-2 forward pass. Measures held-out next-token loss and KL on deterministic token-id sequences; not a natural-language benchmark.
 E3j_real_open_model_natural_text_precision,H3,123,completed,Pinned tiny-gpt2 checkpoint evaluated with byte-level GPT-2 BPE tokenized natural-language repository/code prose. This addresses the E3i token-id smoke-test limitation but remains a tiny-model CPU experiment.
@@ -43,3 +36,10 @@ E6f_public_repository_docstring_skeleton_generation,A1_external_memory,123,compl
 E6g_public_repository_api_reference_generation,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for Markdown API reference generation from public Python signatures, source file paths, and first docstring lines, compared with a signature-only reference baseline and a frozen parametric proxy. Uses local public clones when present."
 E6h_public_repository_api_doc_coverage_qa,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for API documentation coverage QA from Sphinx directives, compared with a source-symbol-only memory baseline and a frozen parametric proxy. Uses local public clones when present."
 E6i_synthetic_api_doc_drift_detection,A1_external_memory,123,completed,Synthetic Git-history positive control for API documentation drift: a source symbol is renamed while a Sphinx autofunction directive still references the old API. Compares doc-directive-only memory with structured source/documentation consistency memory.
+E5_public_repo_chronology,H5,0,completed,Explicit local-clone public repository chronology experiment.
+E5_public_repo_symbol_qa,H5,0,completed,Explicit local-clone public repository symbol-definition QA experiment.
+E5_public_repo_stale_docs,H5,0,completed,Explicit local-clone public repository stale-document detection experiment.
+E5_markupsafe_chronology,H5,0,completed,Explicit local-clone public repository chronology experiment.
+E5_markupsafe_symbol_qa,H5,0,completed,Explicit local-clone public repository symbol-definition QA experiment.
+E5_markupsafe_stale_docs,H5,0,completed,Explicit local-clone public repository stale-document detection experiment.
+E5_markupsafe_public_patch_replay,H5,0,completed,"Explicit local-clone public historical patch replay graded by executable tests, not text similarity."

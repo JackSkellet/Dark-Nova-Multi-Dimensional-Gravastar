@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/kilo --max-commits 12 --top-k 5 --include-stale-docs",
   "experiment_id": "E5_public_repo_stale_docs",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -12,7 +12,7 @@
   "metrics": {
     "final": {
       "retrieval_stale_doc_topk_accuracy": null,
-      "runtime_ms": 54.67101599788293,
+      "runtime_ms": 55.1757309876848,
       "stale_doc_issue_count": 0,
       "steps_with_removed_symbols": 1,
       "steps_with_stale_docs": 0,
@@ -152,7 +152,7 @@
     ]
   },
   "notes": "Explicit local-clone public repository stale-document detection experiment.",
-  "recorded_at_unix": 1781925612.6489334,
+  "recorded_at_unix": 1781952987.6221592,
   "seed": 0,
   "status": "completed"
 }

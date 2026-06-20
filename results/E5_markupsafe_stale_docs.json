@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/markupsafe --max-commits 30 --top-k 5 --include-stale-docs",
   "experiment_id": "E5_markupsafe_stale_docs",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -12,7 +12,7 @@
   "metrics": {
     "final": {
       "retrieval_stale_doc_topk_accuracy": null,
-      "runtime_ms": 1205.4331510153133,
+      "runtime_ms": 1177.1707020234317,
       "stale_doc_issue_count": 0,
       "steps_with_removed_symbols": 0,
       "steps_with_stale_docs": 0,
@@ -348,7 +348,7 @@
     ]
   },
   "notes": "Explicit local-clone public repository stale-document detection experiment.",
-  "recorded_at_unix": 1781925623.325714,
+  "recorded_at_unix": 1781952992.8671625,
   "seed": 0,
   "status": "completed"
 }

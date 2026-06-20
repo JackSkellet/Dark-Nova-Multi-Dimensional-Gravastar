@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E6c_public_repository_signature_qa",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -697,8 +697,8 @@
         ],
         "correct_count": 0,
         "latency": {
-          "latency_ms_p50": 5.00003807246685e-05,
-          "latency_ms_p95": 8.901697583496562e-05
+          "latency_ms_p50": 9.997165761888027e-05,
+          "latency_ms_p95": 0.0001500011421740055
         },
         "question_count": 83,
         "storage_bytes": 96
@@ -1373,8 +1373,8 @@
         ],
         "correct_count": 83,
         "latency": {
-          "latency_ms_p50": 0.00013000681065022945,
-          "latency_ms_p95": 0.00019709987100213742
+          "latency_ms_p50": 0.00018000719137489796,
+          "latency_ms_p95": 0.00032101524993777275
         },
         "question_count": 83,
         "storage_bytes": 6391
@@ -2049,8 +2049,8 @@
         ],
         "correct_count": 72,
         "latency": {
-          "latency_ms_p50": 0.24719801149331033,
-          "latency_ms_p95": 0.6505083816591649
+          "latency_ms_p50": 0.25654700584709644,
+          "latency_ms_p95": 0.6392738054273649
         },
         "question_count": 83,
         "storage_bytes": 49153
@@ -2075,7 +2075,7 @@
     "status": "completed"
   },
   "notes": "Public-repository structured external-memory benchmark for defining signature-line QA, compared with text signature lookup and a frozen parametric proxy. Uses local public clones when present.",
-  "recorded_at_unix": 1781952213.8097682,
+  "recorded_at_unix": 1781952964.7519908,
   "seed": 123,
   "status": "completed"
 }

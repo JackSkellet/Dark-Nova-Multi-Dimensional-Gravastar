@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/kilo --max-commits 12 --top-k 5 --include-symbol-qa",
   "experiment_id": "E5_public_repo_symbol_qa",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -16,7 +16,7 @@
       "mean_retrieval_prior_symbol_topk_accuracy": 1.0,
       "mean_structured_prior_symbol_topk_accuracy": 1.0,
       "retrieval_prior_symbol_topk_accuracy": 1.0,
-      "runtime_ms": 74.04514899826609,
+      "runtime_ms": 81.00995098357089,
       "structured_prior_symbol_topk_accuracy": 1.0
     },
     "notes": "Uses only symbols and files visible at exposed_commit to answer repository QA questions of the form 'which file defines symbol X'. Future symbol questions are reported separately and should not be answerable before exposure.",
@@ -173,7 +173,7 @@
     ]
   },
   "notes": "Explicit local-clone public repository symbol-definition QA experiment.",
-  "recorded_at_unix": 1781925612.5907085,
+  "recorded_at_unix": 1781952987.5254304,
   "seed": 0,
   "status": "completed"
 }

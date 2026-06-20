@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/markupsafe --include-patch-replay --patch-base-commit 54bb00b^ --patch-fix-commit 54bb00b --patch-test-code '<python regression code>'",
   "experiment_id": "E5_markupsafe_public_patch_replay",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -10,7 +10,7 @@
   },
   "hypothesis": "H5",
   "metrics": {
-    "baseline_test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
+    "baseline_test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-ntws_i5k/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-ntws_i5k/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
     "candidates": [
       {
         "apply_output_tail": "empty patch",
@@ -18,7 +18,7 @@
         "notes": "No future commit patch is available to the exposed state.",
         "patch_applied": true,
         "patch_bytes": 0,
-        "test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
+        "test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-ntws_i5k/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-ntws_i5k/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
         "tests_passed": false
       },
       {
@@ -47,8 +47,9 @@
       "functional_success_rate": 0.6666666666666666,
       "generated_clamp_bounds_patch_passed": null,
       "generated_proxy_class_patch_passed": true,
+      "generated_saved_hl_free_patch_passed": null,
       "historical_patch_passed": true,
-      "runtime_ms": 84.65493298717774
+      "runtime_ms": 88.16654101246968
     },
     "notes": "Chronological public-patch replay harness. The exposed state is the base commit; deterministic generated candidates and the historical future diff are applied as candidates and graded only by executable tests, not by textual similarity.",
     "repo": {
@@ -65,7 +66,7 @@
     }
   },
   "notes": "Explicit local-clone public historical patch replay graded by executable tests, not text similarity.",
-  "recorded_at_unix": 1781925623.4152007,
+  "recorded_at_unix": 1781952992.9973297,
   "seed": 0,
   "status": "completed"
 }

@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E6i_synthetic_api_doc_drift_detection",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -43,8 +43,8 @@
         ],
         "correct_count": 0,
         "latency": {
-          "latency_ms_p50": 0.0012020173016935587,
-          "latency_ms_p95": 0.0012020173016935587
+          "latency_ms_p50": 0.0009020150173455477,
+          "latency_ms_p95": 0.0009020150173455477
         },
         "question_count": 1,
         "storage_bytes": 32
@@ -63,8 +63,8 @@
         ],
         "correct_count": 0,
         "latency": {
-          "latency_ms_p50": 0.000620988430455327,
-          "latency_ms_p95": 0.000620988430455327
+          "latency_ms_p50": 0.0007119961082935333,
+          "latency_ms_p95": 0.0007119961082935333
         },
         "question_count": 1,
         "storage_bytes": 96
@@ -83,8 +83,8 @@
         ],
         "correct_count": 1,
         "latency": {
-          "latency_ms_p50": 0.0004709872882813215,
-          "latency_ms_p95": 0.0004709872882813215
+          "latency_ms_p50": 0.0005210167728364468,
+          "latency_ms_p95": 0.0005210167728364468
         },
         "question_count": 1,
         "storage_bytes": 86
@@ -93,7 +93,7 @@
     "question_count": 1,
     "repos": [
       {
-        "commit": "d48afa182701",
+        "commit": "71fb79f0a30e",
         "doc_directive_symbol_count_available": 1,
         "python_signature_count_available": 1,
         "repo": "synthetic_api_doc_drift",
@@ -103,7 +103,7 @@
     "status": "completed"
   },
   "notes": "Synthetic Git-history positive control for API documentation drift: a source symbol is renamed while a Sphinx autofunction directive still references the old API. Compares doc-directive-only memory with structured source/documentation consistency memory.",
-  "recorded_at_unix": 1781952213.8127162,
+  "recorded_at_unix": 1781952964.7555037,
   "seed": 123,
   "status": "completed"
 }

@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E6b_public_repository_memory_qa",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -593,8 +593,8 @@
         ],
         "correct_count": 0,
         "latency": {
-          "latency_ms_p50": 5.00003807246685e-05,
-          "latency_ms_p95": 0.00014595425454899666
+          "latency_ms_p50": 7.549533620476723e-05,
+          "latency_ms_p95": 0.0002120126737281679
         },
         "question_count": 70,
         "storage_bytes": 96
@@ -1165,8 +1165,8 @@
         ],
         "correct_count": 70,
         "latency": {
-          "latency_ms_p50": 0.00013000681065022945,
-          "latency_ms_p95": 0.0002010026946663856
+          "latency_ms_p50": 0.00012099917512387037,
+          "latency_ms_p95": 0.00019604049157351253
         },
         "question_count": 70,
         "storage_bytes": 3641
@@ -1737,8 +1737,8 @@
         ],
         "correct_count": 12,
         "latency": {
-          "latency_ms_p50": 0.022117994376458228,
-          "latency_ms_p95": 0.02328606060473248
+          "latency_ms_p50": 0.021280997316353023,
+          "latency_ms_p95": 0.022836045536678284
         },
         "question_count": 70,
         "storage_bytes": 1229
@@ -1763,7 +1763,7 @@
     "status": "completed"
   },
   "notes": "Public-repository structured external-memory benchmark for symbol definition file QA, compared with text file retrieval and a frozen parametric proxy. Uses local public clones when present.",
-  "recorded_at_unix": 1781952213.8091078,
+  "recorded_at_unix": 1781952964.7513113,
   "seed": 123,
   "status": "completed"
 }

@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_real_model_task_precision.py --model-id sshleifer/tiny-gpt2 --model-commit 5f91d94bd9cd7190a9f3216ff93cd1dd95f2c7be --filename pytorch_model.bin --checkpoint-path data/raw/public/tiny-gpt2/pytorch_model.bin --tensor-name transformer.wte.weight --seed 123 --protected-count 16 --calibration-sequences 6 --heldout-sequences 6 --sequence-length 12 --token-pool-size 256 --n-layer 2 --n-head 2",
   "experiment_id": "E3i_real_open_model_task_precision",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -212,6 +212,7 @@
     },
     "task": {
       "calibration_sequences": 6,
+      "candidate_row_strategy": "token_ids",
       "candidate_rows": 61,
       "heldout_sequences": 6,
       "metric": "next_token_cross_entropy",
@@ -230,7 +231,7 @@
     }
   },
   "notes": "Pinned tiny-gpt2 checkpoint evaluated with a local minimal GPT-2 forward pass. Measures held-out next-token loss and KL on deterministic token-id sequences; not a natural-language benchmark.",
-  "recorded_at_unix": 1781925636.7588518,
+  "recorded_at_unix": 1781952997.06039,
   "seed": 123,
   "status": "completed"
 }

@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_public_patch_replay_suite.py --markupsafe-repo data/raw/public/markupsafe --markupsafe-base-commit 54bb00b^ --markupsafe-fix-commit 54bb00b --kilo-repo data/raw/public/kilo --kilo-base-commit 8e9a9bb^ --kilo-fix-commit 8e9a9bb --timeout-s 20",
   "experiment_id": "E5g_public_patch_replay_suite",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -16,7 +16,7 @@
       "generated_task_success_rate": 1.0,
       "generated_task_successes": 2,
       "historical_patch_successes": 2,
-      "runtime_ms": 162.86886899615638,
+      "runtime_ms": 152.89323800243437,
       "task_count": 2
     },
     "notes": "Aggregates chronological public patch replay tasks. Each task keeps the base commit as the exposed state, grades generated candidates and the historical future patch by the task's executable command, and reports task-level success rather than text similarity.",
@@ -46,7 +46,7 @@
           ]
         },
         "result": {
-          "baseline_test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-esv0c6qg/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-esv0c6qg/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
+          "baseline_test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-5p1kl0ic/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-5p1kl0ic/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
           "candidates": [
             {
               "apply_output_tail": "empty patch",
@@ -54,7 +54,7 @@
               "notes": "No future commit patch is available to the exposed state.",
               "patch_applied": true,
               "patch_bytes": 0,
-              "test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-esv0c6qg/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-esv0c6qg/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
+              "test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-5p1kl0ic/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-5p1kl0ic/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
               "tests_passed": false
             },
             {
@@ -85,7 +85,7 @@
             "generated_proxy_class_patch_passed": true,
             "generated_saved_hl_free_patch_passed": null,
             "historical_patch_passed": true,
-            "runtime_ms": 107.61514899786562
+            "runtime_ms": 96.04083999875002
           },
           "notes": "Chronological public-patch replay harness. The exposed state is the base commit; deterministic generated candidates and the historical future diff are applied as candidates and graded only by executable tests, not by textual similarity.",
           "repo": {
@@ -167,7 +167,7 @@
             "generated_proxy_class_patch_passed": null,
             "generated_saved_hl_free_patch_passed": true,
             "historical_patch_passed": true,
-            "runtime_ms": 53.98671599687077
+            "runtime_ms": 55.74618699029088
           },
           "notes": "Chronological public-patch replay harness. The exposed state is the base commit; deterministic generated candidates and the historical future diff are applied as candidates and graded only by executable tests, not by textual similarity.",
           "repo": {
@@ -188,7 +188,7 @@
     ]
   },
   "notes": "Two-task local public historical patch replay suite covering MarkupSafe proxy exact-type behavior and Kilo saved_hl memory-leak repair. MarkupSafe uses a functional Python regression; Kilo uses an executable source-level regression.",
-  "recorded_at_unix": 1781926387.2709177,
+  "recorded_at_unix": 1781952993.26083,
   "seed": 0,
   "status": "completed"
 }

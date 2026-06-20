@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "S1_security_canary_access_control",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -57,7 +57,7 @@
     ]
   },
   "notes": "Synthetic canary, authorization-before-retrieval, prompt-injection quarantine, and audit-log simulation.",
-  "recorded_at_unix": 1781952213.8060505,
+  "recorded_at_unix": 1781952964.7480378,
   "seed": 123,
   "status": "completed"
 }

@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_real_model_natural_text_precision.py --model-id sshleifer/tiny-gpt2 --model-commit 5f91d94bd9cd7190a9f3216ff93cd1dd95f2c7be --checkpoint-path data/raw/public/tiny-gpt2/pytorch_model.bin --tokenizer-vocab-path data/raw/public/tiny-gpt2/vocab.json --tokenizer-merges-path data/raw/public/tiny-gpt2/merges.txt --checkpoint-filename pytorch_model.bin --vocab-filename vocab.json --merges-filename merges.txt --tensor-name transformer.h.0.mlp.c_fc.weight --candidate-row-strategy all_rows --experiment-id E3k_real_open_model_internal_tensor_precision --seed 123 --protected-count 1 --sequence-length 24 --n-layer 2 --n-head 2",
   "experiment_id": "E3k_real_open_model_internal_tensor_precision",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -104,7 +104,7 @@
     }
   },
   "notes": "Pinned tiny-gpt2 checkpoint evaluated with byte-level GPT-2 BPE tokenized natural-language repository/code prose. This addresses the E3i token-id smoke-test limitation but remains a tiny-model CPU experiment.",
-  "recorded_at_unix": 1781926703.647607,
+  "recorded_at_unix": 1781953003.9530663,
   "seed": 123,
   "status": "completed"
 }

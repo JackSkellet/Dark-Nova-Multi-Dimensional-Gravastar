@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E5c_trainable_adapter_vs_retrieval",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -18,8 +18,8 @@
       "adapter_with_replay_new_accuracy": 1.0,
       "adapter_with_replay_prior_accuracy": 1.0,
       "adapter_with_replay_storage_bytes": 384.0,
-      "no_replay_update_ms": 0.015680008800700307,
-      "replay_update_ms": 0.01697198604233563,
+      "no_replay_update_ms": 0.01593100023455918,
+      "replay_update_ms": 0.016862992197275162,
       "retrieval_accuracy": 1.0,
       "retrieval_new_accuracy": 1.0,
       "retrieval_prior_accuracy": 1.0,
@@ -82,8 +82,8 @@
         "adapter_with_replay_new_accuracy": 1.0,
         "adapter_with_replay_prior_accuracy": 1.0,
         "adapter_with_replay_storage_bytes": 384.0,
-        "no_replay_update_ms": 0.1352420076727867,
-        "replay_update_ms": 0.04935599281452596,
+        "no_replay_update_ms": 0.11034400085918605,
+        "replay_update_ms": 0.026430992875248194,
         "retrieval_accuracy": 1.0,
         "retrieval_new_accuracy": 1.0,
         "retrieval_prior_accuracy": 1.0,
@@ -98,8 +98,8 @@
         "adapter_with_replay_new_accuracy": 1.0,
         "adapter_with_replay_prior_accuracy": 1.0,
         "adapter_with_replay_storage_bytes": 384.0,
-        "no_replay_update_ms": 0.02824500552378595,
-        "replay_update_ms": 0.029847986297681928,
+        "no_replay_update_ms": 0.024376990040764213,
+        "replay_update_ms": 0.029076007194817066,
         "retrieval_accuracy": 1.0,
         "retrieval_new_accuracy": 1.0,
         "retrieval_prior_accuracy": 1.0,
@@ -114,8 +114,8 @@
         "adapter_with_replay_new_accuracy": 1.0,
         "adapter_with_replay_prior_accuracy": 1.0,
         "adapter_with_replay_storage_bytes": 384.0,
-        "no_replay_update_ms": 0.01867598621174693,
-        "replay_update_ms": 0.017835001926869154,
+        "no_replay_update_ms": 0.01832601265050471,
+        "replay_update_ms": 0.017974001821130514,
         "retrieval_accuracy": 1.0,
         "retrieval_new_accuracy": 1.0,
         "retrieval_prior_accuracy": 1.0,
@@ -130,8 +130,8 @@
         "adapter_with_replay_new_accuracy": 1.0,
         "adapter_with_replay_prior_accuracy": 1.0,
         "adapter_with_replay_storage_bytes": 384.0,
-        "no_replay_update_ms": 0.01549001899547875,
-        "replay_update_ms": 0.0166520185302943,
+        "no_replay_update_ms": 0.01623100251890719,
+        "replay_update_ms": 0.017143000150099397,
         "retrieval_accuracy": 1.0,
         "retrieval_new_accuracy": 1.0,
         "retrieval_prior_accuracy": 1.0,
@@ -146,8 +146,8 @@
         "adapter_with_replay_new_accuracy": 1.0,
         "adapter_with_replay_prior_accuracy": 1.0,
         "adapter_with_replay_storage_bytes": 384.0,
-        "no_replay_update_ms": 0.016552017768844962,
-        "replay_update_ms": 0.01729399082250893,
+        "no_replay_update_ms": 0.022504013031721115,
+        "replay_update_ms": 0.01806500949896872,
         "retrieval_accuracy": 1.0,
         "retrieval_new_accuracy": 1.0,
         "retrieval_prior_accuracy": 1.0,
@@ -162,8 +162,8 @@
         "adapter_with_replay_new_accuracy": 1.0,
         "adapter_with_replay_prior_accuracy": 1.0,
         "adapter_with_replay_storage_bytes": 384.0,
-        "no_replay_update_ms": 0.015680008800700307,
-        "replay_update_ms": 0.01697198604233563,
+        "no_replay_update_ms": 0.01593100023455918,
+        "replay_update_ms": 0.016862992197275162,
         "retrieval_accuracy": 1.0,
         "retrieval_new_accuracy": 1.0,
         "retrieval_prior_accuracy": 1.0,
@@ -176,79 +176,79 @@
         "adapter": "no_replay",
         "step": 0.0,
         "training_examples": 1.0,
-        "update_ms": 0.1352420076727867
+        "update_ms": 0.11034400085918605
       },
       {
         "adapter": "with_replay",
         "step": 0.0,
         "training_examples": 1.0,
-        "update_ms": 0.04935599281452596
+        "update_ms": 0.026430992875248194
       },
       {
         "adapter": "no_replay",
         "step": 1.0,
         "training_examples": 1.0,
-        "update_ms": 0.02824500552378595
+        "update_ms": 0.024376990040764213
       },
       {
         "adapter": "with_replay",
         "step": 1.0,
         "training_examples": 2.0,
-        "update_ms": 0.029847986297681928
+        "update_ms": 0.029076007194817066
       },
       {
         "adapter": "no_replay",
         "step": 2.0,
         "training_examples": 1.0,
-        "update_ms": 0.01867598621174693
+        "update_ms": 0.01832601265050471
       },
       {
         "adapter": "with_replay",
         "step": 2.0,
         "training_examples": 3.0,
-        "update_ms": 0.017835001926869154
+        "update_ms": 0.017974001821130514
       },
       {
         "adapter": "no_replay",
         "step": 3.0,
         "training_examples": 1.0,
-        "update_ms": 0.01549001899547875
+        "update_ms": 0.01623100251890719
       },
       {
         "adapter": "with_replay",
         "step": 3.0,
         "training_examples": 4.0,
-        "update_ms": 0.0166520185302943
+        "update_ms": 0.017143000150099397
       },
       {
         "adapter": "no_replay",
         "step": 4.0,
         "training_examples": 1.0,
-        "update_ms": 0.016552017768844962
+        "update_ms": 0.022504013031721115
       },
       {
         "adapter": "with_replay",
         "step": 4.0,
         "training_examples": 5.0,
-        "update_ms": 0.01729399082250893
+        "update_ms": 0.01806500949896872
       },
       {
         "adapter": "no_replay",
         "step": 5.0,
         "training_examples": 1.0,
-        "update_ms": 0.015680008800700307
+        "update_ms": 0.01593100023455918
       },
       {
         "adapter": "with_replay",
         "step": 5.0,
         "training_examples": 6.0,
-        "update_ms": 0.01697198604233563
+        "update_ms": 0.016862992197275162
       }
     ],
     "weight_update_count": 12
   },
   "notes": "Toy trainable low-rank adapter delta compared with continuously updated retrieval under chronological API-fact replay.",
-  "recorded_at_unix": 1781952213.8048527,
+  "recorded_at_unix": 1781952964.7466493,
   "seed": 123,
   "status": "completed"
 }

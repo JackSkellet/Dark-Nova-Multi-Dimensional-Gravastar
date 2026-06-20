@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E5d_synthetic_stale_doc_positive_control",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -12,7 +12,7 @@
   "metrics": {
     "final": {
       "retrieval_stale_doc_topk_accuracy": 1.0,
-      "runtime_ms": 10.827149992110208,
+      "runtime_ms": 10.36758700502105,
       "stale_doc_issue_count": 1,
       "steps_with_removed_symbols": 1,
       "steps_with_stale_docs": 1,
@@ -35,15 +35,15 @@
     },
     "repo": {
       "commit_count_used": 3,
-      "head": "9c6358d5f789",
+      "head": "c9146a58691f",
       "path_name": "repo",
       "top_k": 1
     },
     "steps": [
       {
-        "current_commit": "14c52cb34721",
+        "current_commit": "6051c64a3eec",
         "doc_file_count": 1,
-        "previous_commit": "b5e602f451c5",
+        "previous_commit": "769f0d43793e",
         "removed_symbols": [
           "parse_config"
         ],
@@ -60,9 +60,9 @@
         "structured_stale_doc_topk_hit": 1.0
       },
       {
-        "current_commit": "9c6358d5f789",
+        "current_commit": "c9146a58691f",
         "doc_file_count": 1,
-        "previous_commit": "14c52cb34721",
+        "previous_commit": "6051c64a3eec",
         "removed_symbols": [],
         "retrieval_stale_doc_topk_hit": null,
         "stale_doc_files": [],
@@ -73,7 +73,7 @@
     ]
   },
   "notes": "Generated Git-history positive control for stale-document detection after an API rename and later documentation fix.",
-  "recorded_at_unix": 1781952213.805261,
+  "recorded_at_unix": 1781952964.7471523,
   "seed": 123,
   "status": "completed"
 }

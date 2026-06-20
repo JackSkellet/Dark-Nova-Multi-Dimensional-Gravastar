@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E6g_public_repository_api_reference_generation",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -114,8 +114,8 @@
         ],
         "correct_count": 0,
         "latency": {
-          "latency_ms_p50": 6.050686351954937e-05,
-          "latency_ms_p95": 0.00029454968171194185
+          "latency_ms_p50": 5.50062395632267e-05,
+          "latency_ms_p95": 0.0003200024366378782
         },
         "question_count": 10,
         "storage_bytes": 96
@@ -206,8 +206,8 @@
         ],
         "correct_count": 0,
         "latency": {
-          "latency_ms_p50": 0.00015100522432476282,
-          "latency_ms_p95": 0.00048254150897264453
+          "latency_ms_p50": 0.0001554872142150998,
+          "latency_ms_p95": 0.0004415385774336753
         },
         "question_count": 10,
         "storage_bytes": 652
@@ -298,8 +298,8 @@
         ],
         "correct_count": 10,
         "latency": {
-          "latency_ms_p50": 0.0003655150067061186,
-          "latency_ms_p95": 0.0011100433766841884
+          "latency_ms_p50": 0.00029550574254244566,
+          "latency_ms_p95": 0.001169004826806485
         },
         "question_count": 10,
         "storage_bytes": 1504
@@ -318,7 +318,7 @@
     "status": "completed"
   },
   "notes": "Public-repository structured external-memory benchmark for Markdown API reference generation from public Python signatures, source file paths, and first docstring lines, compared with a signature-only reference baseline and a frozen parametric proxy. Uses local public clones when present.",
-  "recorded_at_unix": 1781952213.8118362,
+  "recorded_at_unix": 1781952964.75453,
   "seed": 123,
   "status": "completed"
 }

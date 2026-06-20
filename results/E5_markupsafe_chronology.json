@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/markupsafe --max-commits 30 --top-k 5",
   "experiment_id": "E5_markupsafe_chronology",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -13,7 +13,7 @@
     "final": {
       "frozen_future_topk_accuracy": 0.7777777777777778,
       "retrieval_prior_topk_accuracy": 0.7619047619047619,
-      "runtime_ms": 2273.83898300468,
+      "runtime_ms": 2334.874394990038,
       "structured_future_topk_accuracy": 0.7777777777777778,
       "structured_prior_topk_accuracy": 0.8571428571428571,
       "updated_retrieval_future_topk_accuracy": 0.6666666666666666
@@ -178,7 +178,7 @@
     ]
   },
   "notes": "Explicit local-clone public repository chronology experiment.",
-  "recorded_at_unix": 1781925620.6408973,
+  "recorded_at_unix": 1781952990.0706704,
   "seed": 0,
   "status": "completed"
 }

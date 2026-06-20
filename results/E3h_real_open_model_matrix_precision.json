@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_real_model_precision.py --model-id sshleifer/tiny-gpt2 --model-commit 5f91d94bd9cd7190a9f3216ff93cd1dd95f2c7be --filename pytorch_model.bin --checkpoint-path data/raw/public/tiny-gpt2/pytorch_model.bin --tensor-name transformer.wte.weight --seed 123 --protected-count 128",
   "experiment_id": "E3h_real_open_model_matrix_precision",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -50456,7 +50456,7 @@
     }
   },
   "notes": "Explicitly downloaded pinned Hugging Face tiny-gpt2 checkpoint and evaluated selective precision on a real open-model matrix. Measures reconstruction error, not task loss.",
-  "recorded_at_unix": 1781925629.0030851,
+  "recorded_at_unix": 1781952994.4718661,
   "seed": 123,
   "status": "completed"
 }

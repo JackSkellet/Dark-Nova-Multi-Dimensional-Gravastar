@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_experiments.py --seed 123",
   "experiment_id": "E3g_trained_internal_layer_precision",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -143,7 +143,7 @@
     }
   },
   "notes": "Tiny transformer-style LM with the internal MLP output matrix trained by ridge regression before selective precision is evaluated.",
-  "recorded_at_unix": 1781952213.802235,
+  "recorded_at_unix": 1781952964.7438424,
   "seed": 123,
   "status": "completed"
 }

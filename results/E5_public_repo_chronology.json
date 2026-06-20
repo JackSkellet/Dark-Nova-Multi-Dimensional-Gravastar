@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/kilo --max-commits 12 --top-k 5",
   "experiment_id": "E5_public_repo_chronology",
-  "git_commit": "uncommitted",
+  "git_commit": "28bab1911bd991db920ab7b6906bbec8e81c458d",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -13,7 +13,7 @@
     "final": {
       "frozen_future_topk_accuracy": 0.7142857142857143,
       "retrieval_prior_topk_accuracy": 0.9090909090909091,
-      "runtime_ms": 485.76119999052025,
+      "runtime_ms": 494.5706699800212,
       "structured_future_topk_accuracy": 1.0,
       "structured_prior_topk_accuracy": 1.0,
       "updated_retrieval_future_topk_accuracy": 0.8571428571428571
@@ -134,7 +134,7 @@
     ]
   },
   "notes": "Explicit local-clone public repository chronology experiment.",
-  "recorded_at_unix": 1781925612.513038,
+  "recorded_at_unix": 1781952987.4018278,
   "seed": 0,
   "status": "completed"
 }
