@@ -1,0 +1,241 @@
+{
+  "command": "uv run python scripts/debug_dense_step_stability.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 128 --hidden-dim 512 --layers 3 --heads 8 --batch-size 2 --steps 2 --mixed-precision fp32 --learning-rate 0.0 --optimizer-name sgd --attention-mask-mode additive_causal --max-documents 100 --experiment-id T3c_dense_step_stability_512x3_sgd_lr0 --output results/T3c_dense_step_stability_512x3_sgd_lr0.json",
+  "experiment_id": "T3c_dense_step_stability_512x3_sgd_lr0",
+  "git_commit": "7378ad688029eaf92aa770bcbda297157a9e400c",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_step_two_nonfinite_origin",
+  "metrics": {
+    "accelerator_backend": "rocm",
+    "benchmark_label": "dense_step_stability_debug",
+    "device": "cuda",
+    "first_nonfinite_phase": null,
+    "initial_parameters": {
+      "abs_max": 4.933903694152832,
+      "finite": true,
+      "finite_count": 9787137,
+      "nonfinite_count": 0,
+      "nonfinite_tensors": [],
+      "numel": 9787137,
+      "tensor_count": 42
+    },
+    "limitations": [
+      "debug_probe_only",
+      "short_two_step_window",
+      "not_training_quality_evaluation"
+    ],
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "attention_mask_mode": "additive_causal",
+        "batch_size": 2,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 512,
+        "layers": 3,
+        "learning_rate": 0.0,
+        "mixed_precision": "fp32",
+        "optimizer_name": "sgd",
+        "seq_len": 128,
+        "steps": 2,
+        "validation_batches": 1
+      },
+      "parameter_count": 9787137
+    },
+    "requested_device": "rocm",
+    "rocm_available": true,
+    "rocm_runtime_version": "7.2.53211",
+    "step_results": [
+      {
+        "gradients": {
+          "abs_max": 5.438693523406982,
+          "finite": true,
+          "finite_count": 9787137,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 9787137,
+          "tensor_count": 42
+        },
+        "input_ids": {
+          "abs_max": 122.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 72.5859375,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        },
+        "logits": {
+          "abs_max": 2.5295441150665283,
+          "dtype": "torch.float32",
+          "finite": true,
+          "finite_count": 65792,
+          "mean": 0.017891554161906242,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 65792,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128,
+            257
+          ]
+        },
+        "loss": {
+          "abs_max": 5.632607936859131,
+          "dtype": "torch.float32",
+          "finite": true,
+          "finite_count": 1,
+          "mean": 5.632607936859131,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 1,
+          "posinf_count": 0,
+          "shape": []
+        },
+        "parameters_after_clip": {
+          "abs_max": 4.933903694152832,
+          "finite": true,
+          "finite_count": 9787137,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 9787137,
+          "tensor_count": 42
+        },
+        "parameters_after_optimizer": {
+          "abs_max": 4.933903694152832,
+          "finite": true,
+          "finite_count": 9787137,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 9787137,
+          "tensor_count": 42
+        },
+        "step": 1,
+        "targets": {
+          "abs_max": 122.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 73.16796875,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        }
+      },
+      {
+        "gradients": {
+          "abs_max": 5.281128883361816,
+          "finite": true,
+          "finite_count": 9787137,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 9787137,
+          "tensor_count": 42
+        },
+        "input_ids": {
+          "abs_max": 119.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 75.8203125,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        },
+        "logits": {
+          "abs_max": 2.550011396408081,
+          "dtype": "torch.float32",
+          "finite": true,
+          "finite_count": 65792,
+          "mean": 0.011599244549870491,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 65792,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128,
+            257
+          ]
+        },
+        "loss": {
+          "abs_max": 5.685417175292969,
+          "dtype": "torch.float32",
+          "finite": true,
+          "finite_count": 1,
+          "mean": 5.685417175292969,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 1,
+          "posinf_count": 0,
+          "shape": []
+        },
+        "parameters_after_clip": {
+          "abs_max": 4.933903694152832,
+          "finite": true,
+          "finite_count": 9787137,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 9787137,
+          "tensor_count": 42
+        },
+        "parameters_after_optimizer": {
+          "abs_max": 4.933903694152832,
+          "finite": true,
+          "finite_count": 9787137,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 9787137,
+          "tensor_count": 42
+        },
+        "step": 2,
+        "targets": {
+          "abs_max": 119.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 75.57421875,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        }
+      }
+    ],
+    "tokenizer": {
+      "name": "byte_level",
+      "vocab_size": 257
+    },
+    "torch_version": "2.12.1+rocm7.2"
+  },
+  "notes": "Dense training step-level finite-state debug probe recording inputs, logits, loss, gradients, parameters, and first nonfinite phase.",
+  "recorded_at_unix": 1781955437.1935947,
+  "seed": 123,
+  "status": "completed"
+}

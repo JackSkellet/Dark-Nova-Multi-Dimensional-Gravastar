@@ -1,0 +1,395 @@
+{
+  "command": "uv run python scripts/debug_dense_step_stability.py --repo-path data/raw/public/kilo --repo-path data/raw/public/markupsafe --repo-path data/raw/public/ds4 --device rocm --seq-len 128 --hidden-dim 512 --layers 4 --heads 8 --batch-size 2 --steps 2 --mixed-precision fp32 --learning-rate 0.0 --optimizer-name sgd --attention-mask-mode additive_causal --max-documents 100 --experiment-id T3_dense_step_stability_10m_sgd_lr0 --output results/T3_dense_step_stability_10m_sgd_lr0.json",
+  "experiment_id": "T3_dense_step_stability_10m_sgd_lr0",
+  "git_commit": "7378ad688029eaf92aa770bcbda297157a9e400c",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_step_two_nonfinite_origin",
+  "metrics": {
+    "accelerator_backend": "rocm",
+    "benchmark_label": "dense_step_stability_debug",
+    "device": "cuda",
+    "first_nonfinite_phase": "step_1_gradients",
+    "initial_parameters": {
+      "abs_max": 4.933903694152832,
+      "finite": true,
+      "finite_count": 12939521,
+      "nonfinite_count": 0,
+      "nonfinite_tensors": [],
+      "numel": 12939521,
+      "tensor_count": 54
+    },
+    "limitations": [
+      "debug_probe_only",
+      "short_two_step_window",
+      "not_training_quality_evaluation"
+    ],
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "attention_mask_mode": "additive_causal",
+        "batch_size": 2,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 512,
+        "layers": 4,
+        "learning_rate": 0.0,
+        "mixed_precision": "fp32",
+        "optimizer_name": "sgd",
+        "seq_len": 128,
+        "steps": 2,
+        "validation_batches": 1
+      },
+      "parameter_count": 12939521
+    },
+    "requested_device": "rocm",
+    "rocm_available": true,
+    "rocm_runtime_version": "7.2.53211",
+    "step_results": [
+      {
+        "gradients": {
+          "abs_max": 5.438693523406982,
+          "finite": false,
+          "finite_count": 12937929,
+          "nonfinite_count": 1592,
+          "nonfinite_tensors": [
+            {
+              "abs_max": 0.018846997991204262,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 498,
+              "mean": 9.698246867628768e-05,
+              "name": "blocks.layers.1.norm2.weight",
+              "nan_count": 0,
+              "neginf_count": 14,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.021620599552989006,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 506,
+              "mean": 0.0001506180124124512,
+              "name": "blocks.layers.1.norm2.bias",
+              "nan_count": 0,
+              "neginf_count": 6,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.022921161726117134,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 450,
+              "mean": 9.95449154288508e-05,
+              "name": "blocks.layers.2.norm1.weight",
+              "nan_count": 0,
+              "neginf_count": 62,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.017980890348553658,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 458,
+              "mean": 0.00017976504750549793,
+              "name": "blocks.layers.2.norm1.bias",
+              "nan_count": 0,
+              "neginf_count": 54,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.02698712795972824,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 394,
+              "mean": 0.00013988491264171898,
+              "name": "blocks.layers.2.norm2.weight",
+              "nan_count": 0,
+              "neginf_count": 118,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.018936816602945328,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 402,
+              "mean": 0.00010138042853213847,
+              "name": "blocks.layers.2.norm2.bias",
+              "nan_count": 0,
+              "neginf_count": 110,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.03144703432917595,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 346,
+              "mean": 0.00015087045903783292,
+              "name": "blocks.layers.3.norm1.weight",
+              "nan_count": 0,
+              "neginf_count": 166,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.019620157778263092,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 354,
+              "mean": 0.00011092348722741008,
+              "name": "blocks.layers.3.norm1.bias",
+              "nan_count": 0,
+              "neginf_count": 158,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            }
+          ],
+          "numel": 12939521,
+          "tensor_count": 54
+        },
+        "input_ids": {
+          "abs_max": 122.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 72.5859375,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        },
+        "logits": {
+          "abs_max": 2.479081153869629,
+          "dtype": "torch.float32",
+          "finite": true,
+          "finite_count": 65792,
+          "mean": 0.01791362464427948,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 65792,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128,
+            257
+          ]
+        },
+        "loss": {
+          "abs_max": 5.6322479248046875,
+          "dtype": "torch.float32",
+          "finite": true,
+          "finite_count": 1,
+          "mean": 5.6322479248046875,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 1,
+          "posinf_count": 0,
+          "shape": []
+        },
+        "parameters_after_clip": {
+          "abs_max": 4.933903694152832,
+          "finite": true,
+          "finite_count": 12939521,
+          "nonfinite_count": 0,
+          "nonfinite_tensors": [],
+          "numel": 12939521,
+          "tensor_count": 54
+        },
+        "parameters_after_optimizer": {
+          "abs_max": 4.933903694152832,
+          "finite": false,
+          "finite_count": 12937929,
+          "nonfinite_count": 1592,
+          "nonfinite_tensors": [
+            {
+              "abs_max": 1.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 498,
+              "mean": 0.9999999403953552,
+              "name": "blocks.layers.1.norm2.weight",
+              "nan_count": 14,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 506,
+              "mean": 0.0,
+              "name": "blocks.layers.1.norm2.bias",
+              "nan_count": 6,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 1.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 450,
+              "mean": 1.0,
+              "name": "blocks.layers.2.norm1.weight",
+              "nan_count": 62,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 458,
+              "mean": 0.0,
+              "name": "blocks.layers.2.norm1.bias",
+              "nan_count": 54,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 1.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 394,
+              "mean": 1.0,
+              "name": "blocks.layers.2.norm2.weight",
+              "nan_count": 118,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 402,
+              "mean": 0.0,
+              "name": "blocks.layers.2.norm2.bias",
+              "nan_count": 110,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 1.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 346,
+              "mean": 1.0,
+              "name": "blocks.layers.3.norm1.weight",
+              "nan_count": 166,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            },
+            {
+              "abs_max": 0.0,
+              "dtype": "torch.float32",
+              "finite": false,
+              "finite_count": 354,
+              "mean": 0.0,
+              "name": "blocks.layers.3.norm1.bias",
+              "nan_count": 158,
+              "neginf_count": 0,
+              "numel": 512,
+              "posinf_count": 0,
+              "shape": [
+                512
+              ]
+            }
+          ],
+          "numel": 12939521,
+          "tensor_count": 54
+        },
+        "step": 1,
+        "targets": {
+          "abs_max": 122.0,
+          "dtype": "torch.int64",
+          "finite": true,
+          "finite_count": 256,
+          "mean": 73.16796875,
+          "nan_count": 0,
+          "neginf_count": 0,
+          "numel": 256,
+          "posinf_count": 0,
+          "shape": [
+            2,
+            128
+          ]
+        }
+      }
+    ],
+    "tokenizer": {
+      "name": "byte_level",
+      "vocab_size": 257
+    },
+    "torch_version": "2.12.1+rocm7.2"
+  },
+  "notes": "Dense training step-level finite-state debug probe recording inputs, logits, loss, gradients, parameters, and first nonfinite phase.",
+  "recorded_at_unix": 1781955383.076531,
+  "seed": 123,
+  "status": "failed"
+}

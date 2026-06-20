@@ -946,6 +946,149 @@
       "outcome": "training_failed",
       "primary_reason": "dense_decoder_training_smoke_failed",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "step_1_gradients",
+        "first_nonfinite_tensor": "blocks.layers.1.norm2.weight",
+        "gradient_nonfinite_count": 1592,
+        "hidden_dim": 512,
+        "layers": 4,
+        "parameter_count": 12939521
+      },
+      "experiment_id": "T3_dense_step_stability_10m_sgd_lr0",
+      "hypothesis": "dense_step_two_nonfinite_origin",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_failed",
+      "primary_reason": "dense_step_debug_found_nonfinite_phase",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 544,
+        "layers": 3,
+        "parameter_count": 11025505
+      },
+      "experiment_id": "T3e_dense_step_stability_544x3_sgd_lr0",
+      "hypothesis": "dense_step_two_nonfinite_origin",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_positive",
+      "primary_reason": "dense_step_debug_window_remained_finite",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "failure": "",
+        "parameter_count": 11025505,
+        "status": "completed",
+        "train_steps": 200,
+        "train_tokens": 51200,
+        "validation_loss": 5.783808588981628
+      },
+      "experiment_id": "T4_rocm_dense_decoder_11m_sgd_200step",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "training_smoke_only",
+        "not_10m_parameter_model",
+        "not_50m_token_run",
+        "no_functional_coding_evaluation_yet"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 512,
+        "layers": 1,
+        "parameter_count": 3482369
+      },
+      "experiment_id": "T3a_dense_step_stability_512x1_sgd_lr0",
+      "hypothesis": "dense_step_two_nonfinite_origin",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_positive",
+      "primary_reason": "dense_step_debug_window_remained_finite",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 512,
+        "layers": 2,
+        "parameter_count": 6634753
+      },
+      "experiment_id": "T3b_dense_step_stability_512x2_sgd_lr0",
+      "hypothesis": "dense_step_two_nonfinite_origin",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_positive",
+      "primary_reason": "dense_step_debug_window_remained_finite",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 512,
+        "layers": 3,
+        "parameter_count": 9787137
+      },
+      "experiment_id": "T3c_dense_step_stability_512x3_sgd_lr0",
+      "hypothesis": "dense_step_two_nonfinite_origin",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_positive",
+      "primary_reason": "dense_step_debug_window_remained_finite",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "first_nonfinite_phase": "",
+        "first_nonfinite_tensor": "",
+        "gradient_nonfinite_count": 0,
+        "hidden_dim": 256,
+        "layers": 4,
+        "parameter_count": 3324161
+      },
+      "experiment_id": "T3d_dense_step_stability_256x4_sgd_lr0",
+      "hypothesis": "dense_step_two_nonfinite_origin",
+      "limitations": [
+        "debug_probe_only",
+        "short_two_step_window",
+        "not_training_quality_evaluation"
+      ],
+      "outcome": "dense_step_debug_positive",
+      "primary_reason": "dense_step_debug_window_remained_finite",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -961,6 +1104,8 @@
   "outcome_counts": {
     "codegen_proxy_positive": 3,
     "corpus_prepared_insufficient_tokens": 1,
+    "dense_step_debug_failed": 1,
+    "dense_step_debug_positive": 5,
     "doc_drift_positive_control": 1,
     "docgen_proxy_positive": 1,
     "exploration_positive": 1,
@@ -976,9 +1121,9 @@
     "smoke_pass": 1,
     "training_failed": 6,
     "training_readiness_positive": 1,
-    "training_smoke_positive": 2,
+    "training_smoke_positive": 3,
     "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 55
+  "record_count": 62
 }
