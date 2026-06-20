@@ -2115,8 +2115,89 @@
       "outcome": "recorded",
       "primary_reason": "not_classified_by_current_assessment_layer",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11_recomputed_summary",
+      "hypothesis": "t11_artifact_recompute_and_frontier_accounting",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
+        "adapter_final_test_loss": 1.0450384634314105,
+        "adapter_final_validation_loss": 1.0387521978118457,
+        "adapter_functional_scores": {
+          "causal_span_reconstruction": {
+            "exact_match_rate": 0.06,
+            "token_accuracy_mean": 0.29875
+          },
+          "comment_anchored_source_completion": {
+            "exact_match_rate": 0.03125,
+            "token_accuracy_mean": 0.248046875
+          },
+          "prefix_completion": {
+            "exact_match_rate": 0.04,
+            "token_accuracy_mean": 0.246875
+          }
+        },
+        "adapter_max_recorded_grad_norm": 18.785385131835938,
+        "adapter_model_only_bytes": 42442331,
+        "adapter_optimizer_state_bytes": 84895583,
+        "adapter_peak_vram_bytes": 469542400,
+        "adapter_throughput_relative_to_dense": 0.928256681607898,
+        "adapter_train_tokens_per_second": 20532.41263900038,
+        "dense_experiment_id": "T11a_dense544_adamw_fp32_50m",
+        "dense_final_test_loss": 1.074529936129693,
+        "dense_final_validation_loss": 1.1141934367478825,
+        "dense_functional_scores": {
+          "causal_span_reconstruction": {
+            "exact_match_rate": 0.04,
+            "token_accuracy_mean": 0.286875
+          },
+          "comment_anchored_source_completion": {
+            "exact_match_rate": 0.0,
+            "token_accuracy_mean": 0.1708984375
+          },
+          "prefix_completion": {
+            "exact_match_rate": 0.04,
+            "token_accuracy_mean": 0.238125
+          }
+        },
+        "dense_max_recorded_grad_norm": 405092.5625,
+        "dense_model_only_bytes": 44118725,
+        "dense_optimizer_state_bytes": 88245677,
+        "dense_peak_vram_bytes": 481580544,
+        "dense_train_tokens_per_second": 22119.326524463857,
+        "dominates_dense_baseline": false,
+        "expands_measured_frontier": true,
+        "functional_tasks_won_by_adapter": [
+          "causal_span_reconstruction",
+          "comment_anchored_source_completion",
+          "prefix_completion"
+        ]
+      },
+      "experiment_id": "T11_dense_adapter_50m_paired_assessment",
+      "hypothesis": "residual_adapter_candidate_can_expand_measured_frontier",
+      "limitations": [
+        "does_not_dominate_dense_baseline_on_training_throughput",
+        "d4_javascript_source_local_only",
+        "no_paired_documentation_source_consistency_benchmark",
+        "no_executable_javascript_benchmark",
+        "no_packed_quantized_kernel_measurement",
+        "single_seed_paired_run"
+      ],
+      "outcome": "t11_adapter_frontier_expansion",
+      "primary_reason": "t11b_improves_quality_storage_memory_and_functional_scores_but_loses_throughput",
+      "supports_pareto_improvement": true
     }
   ],
+  "frontier_expansion_found": true,
   "next_research_options": [
     "larger_task_sensitive_model_tensors",
     "upstream_test_suite_patch_mining",
@@ -2144,15 +2225,17 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
-    "recorded": 59,
+    "recorded": 60,
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
+    "t11_adapter_frontier_expansion": 1,
     "training_failed": 6,
     "training_readiness_positive": 1,
     "training_smoke_positive": 11,
     "transformer_stability_failed": 1
   },
-  "pareto_improvement_found": false,
-  "record_count": 113
+  "pareto_dominance_found": false,
+  "pareto_improvement_found": true,
+  "record_count": 114
 }

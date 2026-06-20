@@ -1,6 +1,6 @@
 # Final Assessment
 
-Status: initial generated assessment from seed 123 reduced experiments.
+Status: initial generated assessment from seed 123 reduced experiments; superseded by later T11 split-correct training evidence.
 
 ## Plain-Language Summary
 
@@ -63,7 +63,7 @@ Useful-scale language models, larger-model natural-language selective precision,
 
 ## Limitation-Aware Assessment
 
-`results/research_assessment.json` summarizes the current 44-record manifest without treating green runs as architecture success. It classifies one rejected result, one mixed result, one no-signal result, one runtime-positive result, one measurement-positive result, one limited-positive result, one exploration-positive result, two real-repo-measurement-positive results, one real-repo-doc-measurement-positive result, one doc-drift-positive-control result, three codegen-proxy-positive results, one docgen-proxy-positive result, one smoke-pass security result, and 28 recorded-but-unclassified records. The summary reports `pareto_improvement_found=false`.
+At this reduced-experiment snapshot, `results/research_assessment.json` summarized a 44-record manifest without treating green runs as architecture success. It classified one rejected result, one mixed result, one no-signal result, one runtime-positive result, one measurement-positive result, one limited-positive result, one exploration-positive result, two real-repo-measurement-positive results, one real-repo-doc-measurement-positive result, one doc-drift-positive-control result, three codegen-proxy-positive results, one docgen-proxy-positive result, one smoke-pass security result, and 28 recorded-but-unclassified records. The later current assessment is superseding evidence: T11b expands the measured frontier versus T11a, but does not dominate the dense baseline on training throughput.
 
 Classified records:
 

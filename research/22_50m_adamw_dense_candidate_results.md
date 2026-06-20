@@ -37,9 +37,9 @@ The model is causal, so the span task is a left-to-right span reconstruction pro
 
 ## Interpretation
 
-T11b is the stronger validation-loss model and has better lightweight functional scores, smaller storage, lower VRAM, and much smoother recorded gradients. T11a slightly wins final held-out test loss and throughput. The result is therefore mixed: the residual-adapter candidate improves several meaningful dimensions, but it does not dominate the dense baseline on held-out test loss or speed.
+T11b is the stronger validation-loss and final held-out test-loss model. It also has better lightweight functional scores, smaller storage, lower VRAM, and much smoother recorded gradients. T11a wins training throughput. The result is therefore a measured frontier expansion rather than baseline dominance: the residual-adapter candidate improves quality/resource/function dimensions, but it does not dominate the dense baseline because it is slower.
 
-The current assessment remains `pareto_improvement_found=false` until a candidate improves a primary quality metric without giving up the key deployment/runtime dimensions, or until the project explicitly treats the validation/functionality/storage tradeoff as the target Pareto point.
+The current assessment records `pareto_improvement_found=true` through `T11_dense_adapter_50m_paired_assessment`, with `expands_measured_frontier=true` and `dominates_dense_baseline=false`. This should not be read as a speed win or a deployable compression win.
 
 ## Source Artifacts
 

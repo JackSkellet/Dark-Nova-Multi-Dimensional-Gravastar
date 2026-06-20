@@ -21,7 +21,7 @@ uv run python scripts/run_experiments.py --seed 123
 uv run python scripts/run_experiments.py --seed 123 --config configs/smoke.yaml
 ```
 
-Generated metrics are written to `results/manifest.json`, one JSON file per experiment, and `results/summary.csv`. The current manifest preserves explicit standalone runs and contains 44 records. The current core run includes E1, E1b, E2, E3, E3b, E3c, E3d, E3e, E3f, E3g, E4, E4b, E4c, E4d, E5, E5b, E5c, E5d, E5e, E6a, E6b, E6c, E6d, E6e, E6f, E6g, E6h, E6i, and S1/S2 security checks.
+Generated metrics are written to `results/manifest.json`, one JSON file per experiment, and `results/summary.csv`. The current manifest preserves explicit standalone runs and contains 114 records, including real-training, split-correct evaluation, held-out functional probes, and trained-checkpoint quantization records. The current assessment records T11b as a measured frontier expansion over T11a because it improves validation/test loss, storage, VRAM, gradient stability, and source-local functional probes, while T11a remains faster in training throughput.
 
 `configs/smoke.yaml` requests `accelerator.backend: rocm`. The project routes Linux PyTorch resolution to the ROCm 7.2 wheel index and adds `triton-rocm`; E4c and E4d map ROCm to PyTorch HIP and report the logical ROCm backend separately from PyTorch's internal `cuda` device type.
 

@@ -452,6 +452,30 @@ def test_assessment_manifest_includes_new_research_options_for_current_limits():
     assert summary["outcome_counts"]["rejected"] >= 1
     assert summary["outcome_counts"]["no_signal"] >= 1
     assert summary["outcome_counts"]["smoke_pass"] >= 1
+    assert summary["outcome_counts"]["t11_adapter_frontier_expansion"] == 1
+    assert summary["pareto_improvement_found"] is True
+    assert summary["pareto_dominance_found"] is False
+    assert summary["frontier_expansion_found"] is True
+    t11 = next(
+        row
+        for row in summary["assessments"]
+        if row["experiment_id"] == "T11_dense_adapter_50m_paired_assessment"
+    )
+    assert t11["supports_pareto_improvement"] is True
+    assert t11["evidence"]["dominates_dense_baseline"] is False
+    assert t11["evidence"]["expands_measured_frontier"] is True
+    assert (
+        t11["evidence"]["adapter_final_validation_loss"]
+        < t11["evidence"]["dense_final_validation_loss"]
+    )
+    assert (
+        t11["evidence"]["adapter_final_test_loss"]
+        < t11["evidence"]["dense_final_test_loss"]
+    )
+    assert (
+        t11["evidence"]["adapter_train_tokens_per_second"]
+        < t11["evidence"]["dense_train_tokens_per_second"]
+    )
     assert "activation_residual_cache" in summary["next_research_options"]
     assert "upstream_test_suite_patch_mining" in summary["next_research_options"]
     assert "structured_external_repository_memory" in summary["next_research_options"]

@@ -83,13 +83,26 @@ def assess_manifest(results_dir: Path) -> Assessment:
     manifest = json.loads((results_dir / "manifest.json").read_text())
     records = [_load_manifest_record(results_dir, row) for row in manifest]
     assessments = [assess_record(record) for record in records]
+    t11_comparison = _assess_t11_dense_adapter_comparison(records)
+    if t11_comparison:
+        assessments.append(t11_comparison)
     outcome_counts = Counter(str(row["outcome"]) for row in assessments)
+    pareto_dominance_found = any(
+        bool(row.get("evidence", {}).get("dominates_dense_baseline"))
+        for row in assessments
+    )
+    frontier_expansion_found = any(
+        bool(row.get("evidence", {}).get("expands_measured_frontier"))
+        for row in assessments
+    )
     return {
         "record_count": len(records),
         "outcome_counts": dict(sorted(outcome_counts.items())),
         "pareto_improvement_found": any(
             bool(row["supports_pareto_improvement"]) for row in assessments
         ),
+        "pareto_dominance_found": pareto_dominance_found,
+        "frontier_expansion_found": frontier_expansion_found,
         "assessments": assessments,
         "next_research_options": NEXT_RESEARCH_OPTIONS,
     }
@@ -99,6 +112,147 @@ def _load_manifest_record(results_dir: Path, row: dict[str, Any]) -> dict[str, A
     if "path" in row:
         return json.loads((results_dir / row["path"]).read_text())
     return row
+
+
+def _assess_t11_dense_adapter_comparison(
+    records: list[dict[str, Any]],
+) -> Assessment | None:
+    by_id = {str(record.get("experiment_id", "")): record for record in records}
+    required_ids = {
+        "dense_train": "T11a_dense544_adamw_fp32_50m",
+        "adapter_train": "T11b_adapter528_adamw_fp32_50m",
+        "dense_validation": "T11a_dense544_adamw_fp32_50m_final_validation_eval",
+        "adapter_validation": "T11b_adapter528_adamw_fp32_50m_final_validation_eval",
+        "dense_test": "T11a_dense544_adamw_fp32_50m_final_test_eval",
+        "adapter_test": "T11b_adapter528_adamw_fp32_50m_final_test_eval",
+        "dense_functional": "T11a_dense544_adamw_fp32_50m_final_test_functional",
+        "adapter_functional": "T11b_adapter528_adamw_fp32_50m_final_test_functional",
+    }
+    if any(experiment_id not in by_id for experiment_id in required_ids.values()):
+        return None
+
+    dense_train = by_id[required_ids["dense_train"]]["metrics"]
+    adapter_train = by_id[required_ids["adapter_train"]]["metrics"]
+    dense_validation = by_id[required_ids["dense_validation"]]["metrics"]
+    adapter_validation = by_id[required_ids["adapter_validation"]]["metrics"]
+    dense_test = by_id[required_ids["dense_test"]]["metrics"]
+    adapter_test = by_id[required_ids["adapter_test"]]["metrics"]
+    dense_functional = by_id[required_ids["dense_functional"]]["metrics"]["tasks"]
+    adapter_functional = by_id[required_ids["adapter_functional"]]["metrics"]["tasks"]
+
+    dense_throughput = float(dense_train["training"]["tokens_per_second"])
+    adapter_throughput = float(adapter_train["training"]["tokens_per_second"])
+    dense_model_bytes = int(dense_train["checkpoint"]["model_only_bytes"])
+    adapter_model_bytes = int(adapter_train["checkpoint"]["model_only_bytes"])
+    dense_state_bytes = int(dense_train["checkpoint"]["optimizer_state_bytes"])
+    adapter_state_bytes = int(adapter_train["checkpoint"]["optimizer_state_bytes"])
+    dense_peak_vram = int(dense_train["memory"]["peak_allocated_bytes"])
+    adapter_peak_vram = int(adapter_train["memory"]["peak_allocated_bytes"])
+    dense_grad = dense_train["training"]["gradient_norms"]["summary"]
+    adapter_grad = adapter_train["training"]["gradient_norms"]["summary"]
+
+    dense_functional_scores = {
+        name: {
+            "token_accuracy_mean": float(task.get("token_accuracy_mean", 0.0)),
+            "exact_match_rate": float(task.get("exact_match_rate", 0.0)),
+        }
+        for name, task in dense_functional.items()
+        if isinstance(task, dict) and "token_accuracy_mean" in task
+    }
+    adapter_functional_scores = {
+        name: {
+            "token_accuracy_mean": float(task.get("token_accuracy_mean", 0.0)),
+            "exact_match_rate": float(task.get("exact_match_rate", 0.0)),
+        }
+        for name, task in adapter_functional.items()
+        if isinstance(task, dict) and "token_accuracy_mean" in task
+    }
+    functional_tasks_won = [
+        name
+        for name, adapter_scores in adapter_functional_scores.items()
+        if adapter_scores["token_accuracy_mean"]
+        > dense_functional_scores.get(name, {}).get("token_accuracy_mean", 0.0)
+    ]
+
+    adapter_quality_wins = bool(
+        float(adapter_validation["loss"]) < float(dense_validation["loss"])
+        and float(adapter_test["loss"]) < float(dense_test["loss"])
+    )
+    adapter_resource_wins = bool(
+        adapter_model_bytes < dense_model_bytes
+        and adapter_state_bytes < dense_state_bytes
+        and adapter_peak_vram < dense_peak_vram
+    )
+    adapter_stability_win = bool(
+        float(adapter_grad["max"]) < float(dense_grad["max"])
+        and int(adapter_grad["nonfinite_count"]) == 0
+        and int(dense_grad["nonfinite_count"]) == 0
+    )
+    adapter_runtime_loss = adapter_throughput < dense_throughput
+    dominates_dense_baseline = bool(
+        adapter_quality_wins
+        and adapter_resource_wins
+        and adapter_stability_win
+        and not adapter_runtime_loss
+    )
+    expands_measured_frontier = bool(
+        adapter_quality_wins
+        and adapter_resource_wins
+        and functional_tasks_won
+        and adapter_runtime_loss
+    )
+
+    return {
+        "experiment_id": "T11_dense_adapter_50m_paired_assessment",
+        "hypothesis": "residual_adapter_candidate_can_expand_measured_frontier",
+        "outcome": (
+            "t11_adapter_dominates_dense_baseline"
+            if dominates_dense_baseline
+            else (
+                "t11_adapter_frontier_expansion"
+                if expands_measured_frontier
+                else "t11_adapter_mixed"
+            )
+        ),
+        "supports_pareto_improvement": expands_measured_frontier
+        or dominates_dense_baseline,
+        "primary_reason": (
+            "t11b_improves_quality_storage_memory_and_functional_scores_but_loses_throughput"
+        ),
+        "limitations": [
+            "does_not_dominate_dense_baseline_on_training_throughput",
+            "d4_javascript_source_local_only",
+            "no_paired_documentation_source_consistency_benchmark",
+            "no_executable_javascript_benchmark",
+            "no_packed_quantized_kernel_measurement",
+            "single_seed_paired_run",
+        ],
+        "evidence": {
+            "dense_experiment_id": required_ids["dense_train"],
+            "adapter_experiment_id": required_ids["adapter_train"],
+            "dominates_dense_baseline": dominates_dense_baseline,
+            "expands_measured_frontier": expands_measured_frontier,
+            "dense_final_validation_loss": float(dense_validation["loss"]),
+            "adapter_final_validation_loss": float(adapter_validation["loss"]),
+            "dense_final_test_loss": float(dense_test["loss"]),
+            "adapter_final_test_loss": float(adapter_test["loss"]),
+            "dense_train_tokens_per_second": dense_throughput,
+            "adapter_train_tokens_per_second": adapter_throughput,
+            "adapter_throughput_relative_to_dense": adapter_throughput
+            / dense_throughput,
+            "dense_model_only_bytes": dense_model_bytes,
+            "adapter_model_only_bytes": adapter_model_bytes,
+            "dense_optimizer_state_bytes": dense_state_bytes,
+            "adapter_optimizer_state_bytes": adapter_state_bytes,
+            "dense_peak_vram_bytes": dense_peak_vram,
+            "adapter_peak_vram_bytes": adapter_peak_vram,
+            "dense_max_recorded_grad_norm": float(dense_grad["max"]),
+            "adapter_max_recorded_grad_norm": float(adapter_grad["max"]),
+            "functional_tasks_won_by_adapter": functional_tasks_won,
+            "dense_functional_scores": dense_functional_scores,
+            "adapter_functional_scores": adapter_functional_scores,
+        },
+    }
 
 
 def _assess_e2(record: dict[str, Any]) -> Assessment:

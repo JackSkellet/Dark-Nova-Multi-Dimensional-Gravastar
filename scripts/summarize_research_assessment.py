@@ -27,6 +27,8 @@ def main() -> None:
         f" {args.output}"
         f" records={summary['record_count']}"
         f" pareto_improvement_found={summary['pareto_improvement_found']}"
+        f" pareto_dominance_found={summary['pareto_dominance_found']}"
+        f" frontier_expansion_found={summary['frontier_expansion_found']}"
     )
 
 

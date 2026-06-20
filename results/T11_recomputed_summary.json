@@ -1,0 +1,113 @@
+{
+  "command": "uv run python scripts/recompute_t11_summary.py --results-dir results --output results/T11_recomputed_summary.json --experiment-id T11_recomputed_summary",
+  "experiment_id": "T11_recomputed_summary",
+  "git_commit": "d062ab29bd02fca3ea0edd1ed0be455a0ceaf527",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/16_integrated_results.md\n M research/17_final_assessment.md\n M research/22_50m_adamw_dense_candidate_results.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? results/T11_recomputed_summary.json\n?? scripts/recompute_t11_summary.py\n?? src/weightlab/t11_analysis.py\n?? tests/test_t11_analysis.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "t11_artifact_recompute_and_frontier_accounting",
+  "metrics": {
+    "benchmark_label": "t11_recomputed_pareto_frontier",
+    "pairwise": {
+      "baseline": "T11a",
+      "candidate": "T11b",
+      "candidate_losses": [
+        "tokens_per_second"
+      ],
+      "candidate_wins": [
+        "prefix_token_accuracy",
+        "span_token_accuracy",
+        "comment_token_accuracy",
+        "final_validation_loss",
+        "final_test_loss",
+        "parameters",
+        "model_only_bytes",
+        "optimizer_state_bytes",
+        "peak_vram_bytes",
+        "max_gradient_norm"
+      ],
+      "frontier_expansion": true,
+      "pareto_dominates_baseline": false,
+      "primary_validation_loss_winner": "T11b",
+      "reported_test_loss_winner": "T11b",
+      "throughput_winner": "T11a",
+      "ties": []
+    },
+    "resolved_config": {
+      "experiment_id": "T11_recomputed_summary",
+      "output": "results/T11_recomputed_summary.json",
+      "results_dir": "results"
+    },
+    "runs": {
+      "T11a": {
+        "active_parameters": 11025505,
+        "adapter_dim": 0,
+        "architecture": "dense",
+        "best_test_loss": 1.0788767997873947,
+        "best_validation_loss": 1.1190997470694128,
+        "comment_token_accuracy": 0.1708984375,
+        "experiment_id": "T11a_dense544_adamw_fp32_50m",
+        "final_test_loss": 1.074529936129693,
+        "final_validation_loss": 1.1141934367478825,
+        "hidden_dim": 544,
+        "max_gradient_norm": 405092.5625,
+        "model_only_bytes": 44118725,
+        "nonfinite_gradient_records": 0,
+        "optimizer_state_bytes": 88245677,
+        "parameters": 11025505,
+        "peak_vram_bytes": 481580544,
+        "prefix_token_accuracy": 0.238125,
+        "runtime_s": 2260.4724400039995,
+        "span_token_accuracy": 0.286875,
+        "tokens_per_second": 22119.326524463857,
+        "train_tokens": 50000128
+      },
+      "T11b": {
+        "active_parameters": 10604801,
+        "adapter_dim": 64,
+        "architecture": "adapter",
+        "best_test_loss": 1.052616473985836,
+        "best_validation_loss": 1.049464229727164,
+        "comment_token_accuracy": 0.248046875,
+        "experiment_id": "T11b_adapter528_adamw_fp32_50m",
+        "final_test_loss": 1.0450384634314105,
+        "final_validation_loss": 1.0387521978118457,
+        "hidden_dim": 528,
+        "max_gradient_norm": 18.785385131835938,
+        "model_only_bytes": 42442331,
+        "nonfinite_gradient_records": 0,
+        "optimizer_state_bytes": 84895583,
+        "parameters": 10604801,
+        "peak_vram_bytes": 469542400,
+        "prefix_token_accuracy": 0.246875,
+        "runtime_s": 2435.180359907001,
+        "span_token_accuracy": 0.29875,
+        "tokens_per_second": 20532.41263900038,
+        "train_tokens": 50000128
+      }
+    },
+    "selection_policy": {
+      "checkpoint_selection": "validation_only",
+      "reason": "Final checkpoints have lower validation loss than the best periodic checkpoints because final step 195313 is not an interval checkpoint.",
+      "selected_checkpoints": {
+        "T11a": "final",
+        "T11b": "final"
+      },
+      "test_loss_used_for_selection": false
+    }
+  },
+  "notes": "Recomputes T11 comparison from existing committed artifacts. Test loss is reported for evaluation only and is not used for checkpoint selection.",
+  "recorded_at_unix": 1781990253.8439844,
+  "resolved_config": {
+    "experiment_id": "T11_recomputed_summary",
+    "output": "results/T11_recomputed_summary.json",
+    "results_dir": "results"
+  },
+  "seed": 123,
+  "status": "completed"
+}
