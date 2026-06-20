@@ -2239,6 +2239,37 @@
     },
     {
       "evidence": {
+        "corpus_use": "exploratory-research-only",
+        "dataset_config_counts": {
+          "CodedotAI/code_clippy_github::JavaScript-all": 2486,
+          "CodedotAI/code_clippy_github::all-apache-2.0": 4448,
+          "CodedotAI/code_clippy_github::all-mit": 2662,
+          "codeparrot/github-code-clean::JavaScript-all": 7176,
+          "codeparrot/github-code-clean::Python-all": 5399,
+          "codeparrot/github-code-clean::all-mit": 5744
+        },
+        "meets_50m_token_requirement": true,
+        "output_sha256": "34dce9e9127a68362f79be53d81692bbb90b254a43fd8f86f155542e49f9680c",
+        "rows_accepted": 27915,
+        "rows_excluded": 15600,
+        "rows_seen": 43515,
+        "target_train_tokens": 200000000,
+        "train_tokens": 200000495
+      },
+      "experiment_id": "D5_hf_balanced_200m_materialization",
+      "hypothesis": "real_training_data",
+      "limitations": [
+        "exploratory_research_only_not_production_approved",
+        "not_training_run",
+        "near_duplicate_filter_pending",
+        "mixed_license_metadata_not_blocking_exploratory_use"
+      ],
+      "outcome": "hf_corpus_materialized",
+      "primary_reason": "filtered_hf_corpus_mirror_reached_required_train_tokens",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -2373,7 +2404,7 @@
     "docgen_proxy_positive": 1,
     "exploration_positive": 1,
     "hf_corpus_manifest_positive": 1,
-    "hf_corpus_materialized": 1,
+    "hf_corpus_materialized": 2,
     "limited_positive": 1,
     "measurement_positive": 1,
     "mixed": 1,
@@ -2393,5 +2424,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 121
+  "record_count": 122
 }
