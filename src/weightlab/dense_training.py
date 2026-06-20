@@ -85,6 +85,7 @@ def train_dense_decoder(
     config: DenseTrainingConfig,
     output_dir: Path,
     seed: int = 123,
+    resume_checkpoint: Path | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     tokenizer = ByteTokenizer()
@@ -107,10 +108,20 @@ def train_dense_decoder(
     optimizer = _make_optimizer(model, config)
     dtype = _autocast_dtype(config.mixed_precision)
     use_autocast = device.type == "cuda" and dtype is not None
+    start_step = 0
+    resumed_from = ""
+    if resume_checkpoint is not None:
+        payload = torch.load(resume_checkpoint, map_location=device)
+        model.load_state_dict(payload["model"])
+        optimizer.load_state_dict(payload["optimizer"])
+        if "generator_state" in payload:
+            generator.set_state(payload["generator_state"].cpu())
+        start_step = int(payload.get("step", 0))
+        resumed_from = str(resume_checkpoint)
 
     loss_curve: list[dict[str, float]] = []
     progress_path = output_dir / "training_progress.jsonl"
-    if config.progress_interval > 0 and progress_path.exists():
+    if config.progress_interval > 0 and progress_path.exists() and resume_checkpoint is None:
         progress_path.unlink()
     latest_checkpoint_path = output_dir / "dense_decoder_latest.pt"
     checkpoint_flushes: list[dict[str, Any]] = []
@@ -119,7 +130,7 @@ def train_dense_decoder(
     failure = ""
     model.train()
     optimizer.zero_grad(set_to_none=True)
-    for step in range(1, config.steps + 1):
+    for step in range(start_step + 1, config.steps + 1):
         step_loss = 0.0
         for _ in range(config.gradient_accumulation_steps):
             batch = _sample_batch(tokens, config.batch_size, config.seq_len, generator).to(device)
@@ -178,6 +189,7 @@ def train_dense_decoder(
                 config,
                 step=step,
                 latest_loss=step_loss_value,
+                generator=generator,
             )
             checkpoint_flushes.append(
                 {
@@ -208,6 +220,7 @@ def train_dense_decoder(
             "optimizer": optimizer.state_dict(),
             "config": asdict(config),
             "step": config.steps,
+            "generator_state": generator.get_state(),
         },
         checkpoint_path,
     )
@@ -228,6 +241,9 @@ def train_dense_decoder(
         "training": {
             "train_tokens": train_tokens,
             "steps": config.steps,
+            "start_step": start_step,
+            "completed_steps_this_invocation": len(loss_curve),
+            "resumed_from": resumed_from,
             "gradient_accumulation_steps": config.gradient_accumulation_steps,
             "elapsed_s": elapsed,
             "tokens_per_second": train_tokens / elapsed,
@@ -473,6 +489,7 @@ def _save_training_checkpoint(
     *,
     step: int,
     latest_loss: float,
+    generator: torch.Generator,
 ) -> None:
     torch.save(
         {
@@ -481,6 +498,7 @@ def _save_training_checkpoint(
             "config": asdict(config),
             "step": step,
             "latest_loss": latest_loss,
+            "generator_state": generator.get_state(),
         },
         checkpoint_path,
     )

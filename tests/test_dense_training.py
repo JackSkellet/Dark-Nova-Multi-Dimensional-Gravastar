@@ -54,6 +54,31 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert result["progress"]["latest_checkpoint"]["exists"] is True
     assert (tmp_path / "dense_decoder_latest.pt").exists()
 
+    resumed = train_dense_decoder(
+        texts=texts,
+        config=DenseTrainingConfig(
+            device="cpu",
+            seq_len=16,
+            hidden_dim=32,
+            layers=1,
+            heads=4,
+            batch_size=2,
+            steps=3,
+            validation_batches=1,
+            mixed_precision="fp32",
+            progress_interval=1,
+            checkpoint_interval=1,
+        ),
+        output_dir=tmp_path,
+        seed=123,
+        resume_checkpoint=tmp_path / "dense_decoder_latest.pt",
+    )
+
+    assert resumed["status"] == "completed"
+    assert resumed["training"]["start_step"] == 2
+    assert resumed["training"]["completed_steps_this_invocation"] == 1
+    assert resumed["training"]["resumed_from"].endswith("dense_decoder_latest.pt")
+
 
 def test_dense_step_debug_probe_records_phase_tensor_health():
     texts = [

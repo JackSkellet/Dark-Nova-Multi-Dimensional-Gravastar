@@ -26,6 +26,8 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-path", action="append", type=Path, default=[])
     parser.add_argument("--corpus-jsonl", type=Path)
+    parser.add_argument("--corpus-record", type=Path)
+    parser.add_argument("--resume-checkpoint", type=Path)
     parser.add_argument("--device", default="rocm")
     parser.add_argument("--seq-len", type=int, default=128)
     parser.add_argument("--hidden-dim", type=int, default=256)
@@ -58,15 +60,30 @@ def main() -> None:
     max_documents = None if args.max_documents <= 0 else args.max_documents
     if args.corpus_jsonl is not None:
         texts = load_jsonl_texts(args.corpus_jsonl, max_documents=max_documents)
+        corpus_record = (
+            json.loads(args.corpus_record.read_text(encoding="utf-8"))
+            if args.corpus_record is not None
+            else {}
+        )
+        corpus_metrics = corpus_record.get("metrics", {})
         corpus = {
             "source": "hf_jsonl_mirror",
             "jsonl_path": str(args.corpus_jsonl),
             "document_count": len(texts),
             "total_tokens": sum(len(text.encode("utf-8", errors="ignore")) + 1 for text in texts),
             "repo_count": 0,
-            "license_counts": {},
-            "languages": {},
+            "license_counts": corpus_metrics.get("licenses", {}),
+            "languages": corpus_metrics.get("languages", {}),
             "file_roles": {},
+            "record": {
+                "experiment_id": corpus_record.get("experiment_id", ""),
+                "git_commit": corpus_record.get("git_commit", ""),
+                "output_sha256": corpus_metrics.get("output", {}).get("sha256", ""),
+                "corpus_use": corpus_metrics.get("corpus_use", ""),
+                "source_manifest": corpus_metrics.get("source_manifest", {}),
+                "dataset_config_counts": corpus_metrics.get("dataset_config_counts", {}),
+                "tokens": corpus_metrics.get("tokens", {}),
+            },
         }
     else:
         corpus = prepare_repository_corpus(
@@ -96,7 +113,13 @@ def main() -> None:
         progress_interval=args.progress_interval,
         checkpoint_interval=args.checkpoint_interval,
     )
-    metrics = train_dense_decoder(texts, config, args.output_dir, seed=args.seed)
+    metrics = train_dense_decoder(
+        texts,
+        config,
+        args.output_dir,
+        seed=args.seed,
+        resume_checkpoint=args.resume_checkpoint,
+    )
     metrics["corpus"] = {
         "source": corpus.get("source", "local_repositories"),
         "jsonl_path": corpus.get("jsonl_path", ""),
@@ -107,16 +130,22 @@ def main() -> None:
         "licenses": corpus["license_counts"],
         "languages": corpus["languages"],
         "file_roles": corpus["file_roles"],
+        "record": corpus.get("record", {}),
     }
     command_repos = " ".join(f"--repo-path {path}" for path in args.repo_path)
     command_corpus = f"--corpus-jsonl {args.corpus_jsonl} " if args.corpus_jsonl else ""
+    command_corpus_record = f"--corpus-record {args.corpus_record} " if args.corpus_record else ""
+    command_resume = (
+        f"--resume-checkpoint {args.resume_checkpoint} " if args.resume_checkpoint else ""
+    )
     record = ExperimentRecord(
         experiment_id=args.experiment_id,
         hypothesis="dense_baseline_training",
         seed=args.seed,
         command=(
             "uv run python scripts/train_dense_decoder.py "
-            f"{command_corpus}{command_repos} --device {args.device} --seq-len {args.seq_len} "
+            f"{command_corpus}{command_corpus_record}{command_resume}{command_repos} "
+            f"--device {args.device} --seq-len {args.seq_len} "
             f"--hidden-dim {args.hidden_dim} --layers {args.layers} --heads {args.heads} "
             f"--batch-size {args.batch_size} --steps {args.steps} "
             f"--validation-batches {args.validation_batches} "
