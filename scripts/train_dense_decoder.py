@@ -43,6 +43,7 @@ def _resolved_config(args: argparse.Namespace) -> dict[str, object]:
         "checkpoint_interval": args.checkpoint_interval,
         "architecture_variant": args.architecture_variant,
         "adapter_dim": args.adapter_dim,
+        "validation_seed": args.validation_seed,
         "max_documents": args.max_documents,
         "max_documents_resolved": None if args.max_documents <= 0 else args.max_documents,
         "max_file_bytes": args.max_file_bytes,
@@ -83,6 +84,7 @@ def _command_from_resolved(config: dict[str, object]) -> str:
         ("--checkpoint-interval", "checkpoint_interval"),
         ("--architecture-variant", "architecture_variant"),
         ("--adapter-dim", "adapter_dim"),
+        ("--validation-seed", "validation_seed"),
         ("--max-documents", "max_documents"),
         ("--max-file-bytes", "max_file_bytes"),
         ("--output-dir", "output_dir"),
@@ -133,6 +135,7 @@ def main() -> None:
     parser.add_argument("--checkpoint-interval", type=int, default=0)
     parser.add_argument("--architecture-variant", choices=["dense", "adapter"], default="dense")
     parser.add_argument("--adapter-dim", type=int, default=0)
+    parser.add_argument("--validation-seed", type=int, default=424242)
     parser.add_argument("--max-documents", type=int, default=128)
     parser.add_argument("--max-file-bytes", type=int, default=256_000)
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/dense_decoder_smoke"))
@@ -219,6 +222,7 @@ def main() -> None:
         checkpoint_interval=args.checkpoint_interval,
         architecture_variant=args.architecture_variant,
         adapter_dim=args.adapter_dim,
+        validation_seed=args.validation_seed,
     )
     metrics = train_dense_decoder(
         texts,

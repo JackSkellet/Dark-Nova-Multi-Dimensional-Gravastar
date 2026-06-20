@@ -32,6 +32,7 @@ class DenseTrainingConfig:
     checkpoint_interval: int = 0
     architecture_variant: str = "dense"
     adapter_dim: int = 0
+    validation_seed: int = 424242
 
 
 class ByteTokenizer:
@@ -78,6 +79,8 @@ class DenseDecoder(torch.nn.Module):
                 for _ in range(layers)
             ]
         )
+        self.norm = torch.nn.LayerNorm(hidden_dim)
+        self.head = torch.nn.Linear(hidden_dim, vocab_size)
         if architecture_variant == "dense":
             if adapter_dim != 0:
                 raise ValueError("dense architecture requires adapter_dim=0")
@@ -90,8 +93,6 @@ class DenseDecoder(torch.nn.Module):
             )
         else:
             raise ValueError(f"unknown architecture_variant: {architecture_variant}")
-        self.norm = torch.nn.LayerNorm(hidden_dim)
-        self.head = torch.nn.Linear(hidden_dim, vocab_size)
 
     def forward(self, input_ids: torch.Tensor) -> torch.Tensor:
         batch, seq_len = input_ids.shape
@@ -150,6 +151,7 @@ def train_dense_decoder(
     device = accelerator.device
     torch.manual_seed(seed)
     generator = torch.Generator(device="cpu").manual_seed(seed)
+    _reset_peak_memory_stats(device)
     model = DenseDecoder(
         tokenizer.vocab_size,
         config.seq_len,
@@ -179,7 +181,12 @@ def train_dense_decoder(
     if config.progress_interval > 0 and progress_path.exists() and resume_checkpoint is None:
         progress_path.unlink()
     latest_checkpoint_path = output_dir / "dense_decoder_latest.pt"
+    best_checkpoint_path = output_dir / "dense_decoder_best.pt"
+    best_model_only_path = output_dir / "dense_decoder_best_model_only.pt"
     checkpoint_flushes: list[dict[str, Any]] = []
+    checkpoint_validations: list[dict[str, Any]] = []
+    best_checkpoint: dict[str, Any] = {}
+    gradient_norms: list[dict[str, Any]] = []
     train_start = time.perf_counter()
     status = "completed"
     failure = ""
@@ -209,7 +216,21 @@ def train_dense_decoder(
             step_loss += float(loss.detach().cpu())
         if status != "completed":
             break
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        grad_norm_tensor = torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        grad_norm = float(grad_norm_tensor.detach().cpu())
+        grad_norm_finite = math.isfinite(grad_norm)
+        gradient_norms.append(
+            {
+                "step": step,
+                "global_norm_before_clip": grad_norm,
+                "finite": grad_norm_finite,
+            }
+        )
+        if not grad_norm_finite:
+            status = "failed_nonfinite_gradient_norm"
+            failure = f"nonfinite_gradient_norm_at_step_{step}"
+            failure_step = step
+            break
         optimizer.step()
         optimizer.zero_grad(set_to_none=True)
         if device.type == "cuda":
@@ -238,9 +259,19 @@ def train_dense_decoder(
                         * config.seq_len
                     )
                     / elapsed_so_far,
+                    "gradient_norm_before_clip": grad_norm,
                 },
             )
         if _should_flush(step, config.checkpoint_interval):
+            checkpoint_validation = _fixed_validation_metrics(
+                model,
+                validation_tokens_tensor,
+                tokenizer.vocab_size,
+                config,
+                device,
+            )
+            checkpoint_validation["source"] = validation_source
+            checkpoint_validation["heldout_texts_provided"] = validation_texts is not None
             _save_training_checkpoint(
                 latest_checkpoint_path,
                 model,
@@ -249,12 +280,50 @@ def train_dense_decoder(
                 step=step,
                 latest_loss=step_loss_value,
                 generator=generator,
+                validation=checkpoint_validation,
             )
+            is_best = (
+                not best_checkpoint
+                or float(checkpoint_validation["loss"])
+                < float(best_checkpoint["validation"]["loss"])
+            )
+            if is_best:
+                _save_training_checkpoint(
+                    best_checkpoint_path,
+                    model,
+                    optimizer,
+                    config,
+                    step=step,
+                    latest_loss=step_loss_value,
+                    generator=generator,
+                    validation=checkpoint_validation,
+                )
+                _save_model_only_checkpoint(best_model_only_path, model, config, step=step)
+                best_checkpoint = {
+                    "path": str(best_checkpoint_path),
+                    "model_only_path": str(best_model_only_path),
+                    "step": step,
+                    "bytes": best_checkpoint_path.stat().st_size,
+                    "model_only_bytes": best_model_only_path.stat().st_size,
+                    "optimizer_state_bytes": (
+                        best_checkpoint_path.stat().st_size - best_model_only_path.stat().st_size
+                    ),
+                    "validation": checkpoint_validation,
+                }
+            validation_row = {
+                "step": step,
+                "path": str(latest_checkpoint_path),
+                "validation": checkpoint_validation,
+                "is_best": is_best,
+            }
+            checkpoint_validations.append(validation_row)
             checkpoint_flushes.append(
                 {
                     "step": step,
                     "path": str(latest_checkpoint_path),
                     "bytes": latest_checkpoint_path.stat().st_size,
+                    "validation_loss": checkpoint_validation["loss"],
+                    "is_best": is_best,
                 }
             )
 
@@ -269,7 +338,7 @@ def train_dense_decoder(
             validation_tokens_tensor,
             tokenizer.vocab_size,
             config,
-            generator,
+            torch.Generator(device="cpu").manual_seed(config.validation_seed),
             device,
         )
         if status == "completed"
@@ -284,7 +353,11 @@ def train_dense_decoder(
     validation["heldout_texts_provided"] = validation_texts is not None
     sample = _generate_sample(model, tokenizer, "def ", config.seq_len, device)
     checkpoint_path = output_dir / "dense_decoder_last.pt"
+    model_only_checkpoint_path = output_dir / "dense_decoder_last_model_only.pt"
     parameter_count = sum(param.numel() for param in model.parameters())
+    trainable_parameter_count = sum(
+        param.numel() for param in model.parameters() if param.requires_grad
+    )
     torch.save(
         {
             "model": model.state_dict(),
@@ -295,6 +368,35 @@ def train_dense_decoder(
         },
         checkpoint_path,
     )
+    _save_model_only_checkpoint(
+        model_only_checkpoint_path,
+        model,
+        config,
+        step=last_completed_step,
+    )
+    if status == "completed" and not best_checkpoint:
+        _save_training_checkpoint(
+            best_checkpoint_path,
+            model,
+            optimizer,
+            config,
+            step=last_completed_step,
+            latest_loss=float(loss_curve[-1]["loss"]) if loss_curve else math.nan,
+            generator=generator,
+            validation=validation,
+        )
+        _save_model_only_checkpoint(best_model_only_path, model, config, step=last_completed_step)
+        best_checkpoint = {
+            "path": str(best_checkpoint_path),
+            "model_only_path": str(best_model_only_path),
+            "step": last_completed_step,
+            "bytes": best_checkpoint_path.stat().st_size,
+            "model_only_bytes": best_model_only_path.stat().st_size,
+            "optimizer_state_bytes": (
+                best_checkpoint_path.stat().st_size - best_model_only_path.stat().st_size
+            ),
+            "validation": validation,
+        }
     resume_ok = _resume_check(
         checkpoint_path,
         tokenizer.vocab_size,
@@ -313,6 +415,8 @@ def train_dense_decoder(
         "model": {
             "architecture": "causal_transformer_decoder",
             "parameter_count": parameter_count,
+            "trainable_parameter_count": trainable_parameter_count,
+            "active_parameter_count": trainable_parameter_count,
             "config": asdict(config),
         },
         "training": {
@@ -329,12 +433,18 @@ def train_dense_decoder(
             "elapsed_s": elapsed,
             "tokens_per_second": train_tokens / elapsed if train_tokens else 0.0,
             "loss_curve": loss_curve,
+            "gradient_norms": {
+                "records": gradient_norms,
+                "summary": _gradient_norm_summary(gradient_norms),
+            },
         },
+        "memory": _memory_summary(device),
         "progress": {
             "path": str(progress_path),
             "records": _count_jsonl_records(progress_path),
             "latest": _last_jsonl_record(progress_path),
             "checkpoint_flushes": checkpoint_flushes,
+            "checkpoint_validations": checkpoint_validations,
             "latest_checkpoint": {
                 "path": str(latest_checkpoint_path),
                 "exists": latest_checkpoint_path.exists(),
@@ -344,13 +454,25 @@ def train_dense_decoder(
             },
         },
         "validation": validation,
+        "adapter": _adapter_activation_stats(
+            model,
+            validation_tokens_tensor,
+            config,
+            device,
+        ),
         "generation_samples": [{"prompt": "def ", "text": sample}],
         "checkpoint": {
             "path": str(checkpoint_path),
             "bytes": checkpoint_path.stat().st_size,
+            "model_only_path": str(model_only_checkpoint_path),
+            "model_only_bytes": model_only_checkpoint_path.stat().st_size,
+            "optimizer_state_bytes": (
+                checkpoint_path.stat().st_size - model_only_checkpoint_path.stat().st_size
+            ),
             "step": last_completed_step,
             "resume_ok": resume_ok,
         },
+        "best_checkpoint": best_checkpoint,
         "limitations": [
             "training_smoke_only",
             "byte_tokenizer_baseline",
@@ -573,6 +695,23 @@ def _tokens_per_step(config: DenseTrainingConfig) -> int:
     return config.gradient_accumulation_steps * config.batch_size * config.seq_len
 
 
+def _fixed_validation_metrics(
+    model: DenseDecoder,
+    tokens: torch.Tensor,
+    vocab_size: int,
+    config: DenseTrainingConfig,
+    device: torch.device,
+) -> dict[str, Any]:
+    return _validation_metrics(
+        model,
+        tokens,
+        vocab_size,
+        config,
+        torch.Generator(device="cpu").manual_seed(config.validation_seed),
+        device,
+    )
+
+
 def _sample_batch(
     tokens: torch.Tensor,
     batch_size: int,
@@ -682,6 +821,7 @@ def _save_training_checkpoint(
     step: int,
     latest_loss: float,
     generator: torch.Generator,
+    validation: dict[str, Any] | None = None,
 ) -> None:
     torch.save(
         {
@@ -691,9 +831,131 @@ def _save_training_checkpoint(
             "step": step,
             "latest_loss": latest_loss,
             "generator_state": generator.get_state(),
+            "validation": validation or {},
         },
         checkpoint_path,
     )
+
+
+def _save_model_only_checkpoint(
+    checkpoint_path: Path,
+    model: torch.nn.Module,
+    config: DenseTrainingConfig,
+    *,
+    step: int,
+) -> None:
+    torch.save(
+        {
+            "model": model.state_dict(),
+            "config": asdict(config),
+            "step": step,
+            "checkpoint_type": "model_only",
+        },
+        checkpoint_path,
+    )
+
+
+def _gradient_norm_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
+    finite_values = [
+        float(row["global_norm_before_clip"])
+        for row in records
+        if row.get("finite") and math.isfinite(float(row["global_norm_before_clip"]))
+    ]
+    return {
+        "count": len(records),
+        "finite_count": len(finite_values),
+        "nonfinite_count": len(records) - len(finite_values),
+        "first": finite_values[0] if finite_values else math.nan,
+        "last": finite_values[-1] if finite_values else math.nan,
+        "min": min(finite_values) if finite_values else math.nan,
+        "max": max(finite_values) if finite_values else math.nan,
+    }
+
+
+def _reset_peak_memory_stats(device: torch.device) -> None:
+    if device.type != "cuda":
+        return
+    try:
+        torch.cuda.reset_peak_memory_stats(device)
+    except Exception:
+        return
+
+
+def _memory_summary(device: torch.device) -> dict[str, Any]:
+    if device.type != "cuda":
+        return {
+            "device": str(device),
+            "peak_allocated_bytes": 0,
+            "peak_reserved_bytes": 0,
+            "allocated_bytes": 0,
+            "reserved_bytes": 0,
+            "free_bytes": 0,
+            "total_bytes": 0,
+        }
+    free_bytes = 0
+    total_bytes = 0
+    try:
+        free_bytes, total_bytes = torch.cuda.mem_get_info(device)
+    except Exception:
+        pass
+    return {
+        "device": str(device),
+        "peak_allocated_bytes": int(torch.cuda.max_memory_allocated(device)),
+        "peak_reserved_bytes": int(torch.cuda.max_memory_reserved(device)),
+        "allocated_bytes": int(torch.cuda.memory_allocated(device)),
+        "reserved_bytes": int(torch.cuda.memory_reserved(device)),
+        "free_bytes": int(free_bytes),
+        "total_bytes": int(total_bytes),
+    }
+
+
+def _adapter_activation_stats(
+    model: DenseDecoder,
+    tokens: torch.Tensor,
+    config: DenseTrainingConfig,
+    device: torch.device,
+) -> dict[str, Any]:
+    if config.architecture_variant != "adapter":
+        return {"architecture_variant": config.architecture_variant, "layers": []}
+    model.eval()
+    generator = torch.Generator(device="cpu").manual_seed(config.validation_seed)
+    batch = _sample_batch(tokens, config.batch_size, config.seq_len, generator).to(device)
+    input_ids = batch[:, :-1]
+    layers: list[dict[str, Any]] = []
+    with torch.no_grad():
+        batch_size, seq_len = input_ids.shape
+        positions = torch.arange(seq_len, device=device).unsqueeze(0).expand(batch_size, -1)
+        hidden = model.token_embedding(input_ids) + model.position_embedding(positions)
+        mask = _causal_mask(model.attention_mask_mode, seq_len, device)
+        for index, (block, adapter) in enumerate(zip(model.blocks, model.adapters, strict=True)):
+            hidden = _run_transformer_block(block, hidden, mask, device_type=input_ids.device.type)
+            if isinstance(adapter, _ResidualAdapter):
+                normalized = adapter.norm(hidden)
+                down = adapter.down(normalized)
+                activated = adapter.activation(down)
+                update = adapter.up(activated)
+                update_norm = float(update.float().norm().detach().cpu())
+                hidden_norm = float(hidden.float().norm().detach().cpu())
+                layers.append(
+                    {
+                        "layer": index,
+                        "hidden_norm": hidden_norm,
+                        "adapter_update_norm": update_norm,
+                        "adapter_to_hidden_norm_ratio": (
+                            update_norm / hidden_norm if hidden_norm else math.nan
+                        ),
+                        "down_activation": _tensor_stats(down),
+                        "up_update": _tensor_stats(update),
+                    }
+                )
+                hidden = hidden + update
+            else:
+                layers.append({"layer": index, "adapter": "identity"})
+    model.train()
+    return {
+        "architecture_variant": config.architecture_variant,
+        "layers": layers,
+    }
 
 
 def _count_jsonl_records(path: Path) -> int:

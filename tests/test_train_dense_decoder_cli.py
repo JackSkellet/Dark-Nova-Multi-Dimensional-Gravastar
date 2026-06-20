@@ -64,6 +64,8 @@ def test_train_dense_decoder_cli_accepts_attention_mask_mode(tmp_path):
             str(output_path),
             "--experiment-id",
             "cli_attention_mask_mode",
+            "--validation-seed",
+            "777",
         ],
         cwd=Path(__file__).resolve().parents[1],
         text=True,
@@ -82,11 +84,13 @@ def test_train_dense_decoder_cli_accepts_attention_mask_mode(tmp_path):
     assert "--learning-rate 0.0" in record["command"]
     assert "--max-documents 0" in record["command"]
     assert "--seed 123" in record["command"]
+    assert "--validation-seed 777" in record["command"]
     assert "--experiment-id cli_attention_mask_mode" in record["command"]
     assert record["resolved_config"]["optimizer_name"] == "sgd"
     assert record["resolved_config"]["learning_rate"] == 0.0
     assert record["resolved_config"]["max_documents"] == 0
     assert record["resolved_config"]["seed"] == 123
+    assert record["resolved_config"]["validation_seed"] == 777
     assert record["metrics"]["resolved_config"]["experiment_id"] == "cli_attention_mask_mode"
     resolved_config_path = output_dir / "resolved_config.json"
     assert resolved_config_path.exists()

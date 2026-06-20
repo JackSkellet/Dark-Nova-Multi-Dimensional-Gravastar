@@ -46,21 +46,37 @@ def test_dense_decoder_training_smoke_records_metrics_and_checkpoint(tmp_path):
     assert result["model"]["config"]["attention_mask_mode"] == "additive_causal"
     assert result["model"]["config"]["optimizer_name"] == "adamw"
     assert result["model"]["config"]["architecture_variant"] == "dense"
+    assert result["model"]["trainable_parameter_count"] == result["model"]["parameter_count"]
+    assert result["model"]["active_parameter_count"] == result["model"]["parameter_count"]
     assert result["tokenizer"]["name"] == "byte_level"
     assert result["training"]["train_tokens"] > 0
     assert len(result["training"]["loss_curve"]) == 2
+    assert result["training"]["gradient_norms"]["summary"]["count"] == 2
     assert result["validation"]["loss"] > 0.0
     assert result["validation"]["batches"] == 1
     assert result["validation"]["tokens"] == 34
     assert len(result["validation"]["sample_order_sha256"]) == 64
     assert result["generation_samples"]
     assert result["checkpoint"]["path"]
+    assert result["checkpoint"]["model_only_bytes"] < result["checkpoint"]["bytes"]
+    assert result["checkpoint"]["optimizer_state_bytes"] > 0
     assert result["checkpoint"]["resume_ok"] is True
+    assert result["best_checkpoint"]["path"].endswith("dense_decoder_best.pt")
+    assert result["best_checkpoint"]["model_only_bytes"] < result["best_checkpoint"]["bytes"]
+    assert result["best_checkpoint"]["validation"]["sample_order_sha256"] == result["validation"][
+        "sample_order_sha256"
+    ]
     assert (tmp_path / "dense_decoder_last.pt").exists()
+    assert (tmp_path / "dense_decoder_last_model_only.pt").exists()
+    assert (tmp_path / "dense_decoder_best.pt").exists()
+    assert (tmp_path / "dense_decoder_best_model_only.pt").exists()
     assert result["progress"]["records"] == 2
     assert result["progress"]["latest"]["step"] == 2
+    assert len(result["progress"]["checkpoint_validations"]) == 2
     assert result["progress"]["latest_checkpoint"]["exists"] is True
     assert (tmp_path / "dense_decoder_latest.pt").exists()
+    assert result["memory"]["peak_allocated_bytes"] == 0
+    assert result["adapter"]["architecture_variant"] == "dense"
 
     resumed = train_dense_decoder(
         texts=texts,
@@ -192,6 +208,8 @@ def test_adapter_decoder_training_smoke_records_variant(tmp_path):
     assert result["model"]["config"]["architecture_variant"] == "adapter"
     assert result["model"]["config"]["adapter_dim"] == 8
     assert result["model"]["parameter_count"] > 0
+    assert result["adapter"]["architecture_variant"] == "adapter"
+    assert result["adapter"]["layers"][0]["adapter_update_norm"] >= 0.0
 
 
 def test_adapter_decoder_starts_with_identity_residual_adapters():
