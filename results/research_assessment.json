@@ -2281,6 +2281,94 @@
     },
     {
       "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 3415
+          },
+          "experiment_id": "D4_hf_corpus_materialization",
+          "git_commit": "de86b4508a0972d970ed9115f9f2a3be546deaa4",
+          "output_sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 735566,
+            "train": 50102528,
+            "validation": 1455924
+          }
+        },
+        "failure": "",
+        "parameter_count": 10397105,
+        "status": "completed",
+        "train_steps": 195313,
+        "train_tokens": 50000128,
+        "validation_loss": 1.0451208076847252
+      },
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "dense_50m_baseline_positive",
+      "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -2408,7 +2496,7 @@
   "outcome_counts": {
     "codegen_proxy_positive": 3,
     "corpus_prepared_insufficient_tokens": 2,
-    "dense_50m_baseline_positive": 4,
+    "dense_50m_baseline_positive": 5,
     "dense_step_debug_failed": 4,
     "dense_step_debug_positive": 8,
     "doc_drift_positive_control": 1,
@@ -2422,7 +2510,7 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
-    "recorded": 67,
+    "recorded": 71,
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
@@ -2435,5 +2523,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 123
+  "record_count": 128
 }
