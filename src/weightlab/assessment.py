@@ -453,21 +453,31 @@ def _assess_t1(record: dict[str, Any]) -> Assessment:
     checkpoint = metrics.get("checkpoint", {})
     completed = bool(metrics.get("status") == "completed" and record.get("status") == "completed")
     parameter_count = int(metrics.get("model", {}).get("parameter_count", 0))
+    train_tokens = int(training.get("train_tokens", 0))
+    is_required_dense_baseline = bool(
+        completed and 10_000_000 <= parameter_count <= 50_000_000 and train_tokens >= 50_000_000
+    )
     return {
         "experiment_id": record["experiment_id"],
         "hypothesis": record.get("hypothesis"),
-        "outcome": "training_smoke_positive" if completed else "training_failed",
+        "outcome": "dense_50m_baseline_positive"
+        if is_required_dense_baseline
+        else ("training_smoke_positive" if completed else "training_failed"),
         "supports_pareto_improvement": False,
         "primary_reason": (
+            "dense_decoder_10m_plus_completed_50m_token_run"
+            if is_required_dense_baseline
+            else (
             "dense_decoder_training_pipeline_completed"
             if completed
             else "dense_decoder_training_smoke_failed"
+            )
         ),
         "limitations": [
-            "training_smoke_only",
-            "not_50m_token_run",
             "no_functional_coding_evaluation_yet",
         ]
+        + ([] if is_required_dense_baseline else ["training_smoke_only"])
+        + ([] if train_tokens >= 50_000_000 else ["not_50m_token_run"])
         + (
             ["10m_parameter_floor_reached"]
             if parameter_count >= 10_000_000
@@ -479,10 +489,11 @@ def _assess_t1(record: dict[str, Any]) -> Assessment:
             "status": metrics.get("status"),
             "failure": metrics.get("failure", ""),
             "parameter_count": parameter_count,
-            "train_tokens": training.get("train_tokens", 0),
+            "train_tokens": train_tokens,
             "train_steps": training.get("steps", 0),
             "validation_loss": metrics.get("validation", {}).get("loss", 0.0),
             "checkpoint_resume_ok": bool(checkpoint.get("resume_ok", False)),
+            "corpus_record": metrics.get("corpus", {}).get("record", {}),
         },
     }
 

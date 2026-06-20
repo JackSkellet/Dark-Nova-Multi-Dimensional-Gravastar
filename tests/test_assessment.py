@@ -158,6 +158,42 @@ def test_assessment_marks_dense_training_smoke_outcomes_without_overclaiming():
     assert bf16_failure["evidence"]["accelerator_backend"] == "rocm"
 
 
+def test_assessment_marks_required_dense_50m_baseline():
+    assessment = assess_record(
+        {
+            "experiment_id": "T6_rocm_dense_decoder_11m_hf_d4_50m_tokens",
+            "hypothesis": "dense_baseline_training",
+            "status": "completed",
+            "metrics": {
+                "benchmark_label": "dense_decoder_training_smoke",
+                "status": "completed",
+                "accelerator_backend": "rocm",
+                "failure": "",
+                "model": {"parameter_count": 11_025_505},
+                "training": {"train_tokens": 50_000_128, "steps": 195_313},
+                "validation": {"loss": 4.04},
+                "checkpoint": {"resume_ok": True},
+                "corpus": {
+                    "record": {
+                        "experiment_id": "D4_hf_corpus_materialization",
+                        "output_sha256": "abc",
+                    }
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "dense_50m_baseline_positive"
+    assert assessment["primary_reason"] == "dense_decoder_10m_plus_completed_50m_token_run"
+    assert "not_50m_token_run" not in assessment["limitations"]
+    assert "training_smoke_only" not in assessment["limitations"]
+    assert assessment["evidence"]["train_tokens"] == 50_000_128
+    assert (
+        assessment["evidence"]["corpus_record"]["experiment_id"]
+        == "D4_hf_corpus_materialization"
+    )
+
+
 def test_assessment_marks_structured_external_memory_as_reduced_exploration():
     assessment = assess_record(_record("E6a_structured_repository_memory"))
 

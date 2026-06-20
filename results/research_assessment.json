@@ -736,6 +736,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": false,
+        "corpus_record": {},
         "failure": "HW Exception by GPU node-1 reason: GPU Hang",
         "parameter_count": 0,
         "status": "failed",
@@ -746,9 +747,9 @@
       "experiment_id": "T1a_rocm_dense_decoder_bf16_training_failure",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "not_10m_parameter_model",
         "failed_training_run"
       ],
@@ -760,6 +761,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "nonfinite_loss_at_step_2",
         "parameter_count": 87361,
         "status": "failed_nonfinite_loss",
@@ -770,9 +772,9 @@
       "experiment_id": "T1_dense_decoder_training_smoke",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "not_10m_parameter_model",
         "failed_training_run"
       ],
@@ -784,6 +786,7 @@
       "evidence": {
         "accelerator_backend": "cpu",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "",
         "parameter_count": 85313,
         "status": "completed",
@@ -794,9 +797,9 @@
       "experiment_id": "T1b_cpu_dense_decoder_training_smoke",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "not_10m_parameter_model"
       ],
       "outcome": "training_smoke_positive",
@@ -832,6 +835,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "",
         "parameter_count": 87361,
         "status": "completed",
@@ -842,9 +846,9 @@
       "experiment_id": "T1c_rocm_dense_decoder_additive_mask_smoke",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "not_10m_parameter_model"
       ],
       "outcome": "training_smoke_positive",
@@ -855,6 +859,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "nonfinite_loss_at_step_2",
         "parameter_count": 12939521,
         "status": "failed_nonfinite_loss",
@@ -865,9 +870,9 @@
       "experiment_id": "T2_rocm_dense_decoder_10m_additive_probe",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "10m_parameter_floor_reached",
         "failed_training_run"
       ],
@@ -879,6 +884,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "nonfinite_loss_at_step_2",
         "parameter_count": 12939521,
         "status": "failed_nonfinite_loss",
@@ -889,9 +895,9 @@
       "experiment_id": "T2a_rocm_dense_decoder_10m_additive_lr1e6_probe",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "10m_parameter_floor_reached",
         "failed_training_run"
       ],
@@ -903,6 +909,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "nonfinite_loss_at_step_2",
         "parameter_count": 12939521,
         "status": "failed_nonfinite_loss",
@@ -913,9 +920,9 @@
       "experiment_id": "T2b_rocm_dense_decoder_10m_additive_sgd_probe",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "10m_parameter_floor_reached",
         "failed_training_run"
       ],
@@ -927,6 +934,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "nonfinite_loss_at_step_2",
         "parameter_count": 12939521,
         "status": "failed_nonfinite_loss",
@@ -937,9 +945,9 @@
       "experiment_id": "T2c_rocm_dense_decoder_10m_additive_sgd_lr0_probe",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "10m_parameter_floor_reached",
         "failed_training_run"
       ],
@@ -991,6 +999,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "",
         "parameter_count": 11025505,
         "status": "completed",
@@ -1001,9 +1010,9 @@
       "experiment_id": "T4_rocm_dense_decoder_11m_sgd_200step",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "10m_parameter_floor_reached"
       ],
       "outcome": "training_smoke_positive",
@@ -1146,6 +1155,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "",
         "parameter_count": 11025505,
         "status": "completed",
@@ -1156,9 +1166,9 @@
       "experiment_id": "T5_rocm_dense_decoder_11m_sgd_1m_tokens",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "10m_parameter_floor_reached"
       ],
       "outcome": "training_smoke_positive",
@@ -1217,6 +1227,7 @@
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
+        "corpus_record": {},
         "failure": "",
         "parameter_count": 11025505,
         "status": "completed",
@@ -1227,13 +1238,57 @@
       "experiment_id": "T6a_rocm_dense_decoder_11m_hf_d4_progress_probe",
       "hypothesis": "dense_baseline_training",
       "limitations": [
+        "no_functional_coding_evaluation_yet",
         "training_smoke_only",
         "not_50m_token_run",
-        "no_functional_coding_evaluation_yet",
         "10m_parameter_floor_reached"
       ],
       "outcome": "training_smoke_positive",
       "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 3415
+          },
+          "experiment_id": "D4_hf_corpus_materialization",
+          "git_commit": "de86b4508a0972d970ed9115f9f2a3be546deaa4",
+          "output_sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 735566,
+            "train": 50102528,
+            "validation": 1455924
+          }
+        },
+        "failure": "",
+        "parameter_count": 11025505,
+        "status": "completed",
+        "train_steps": 195313,
+        "train_tokens": 50000128,
+        "validation_loss": 4.0454936027526855
+      },
+      "experiment_id": "T6_rocm_dense_decoder_11m_hf_d4_50m_tokens",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "dense_50m_baseline_positive",
+      "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
       "supports_pareto_improvement": false
     }
   ],
@@ -1250,6 +1305,7 @@
   "outcome_counts": {
     "codegen_proxy_positive": 3,
     "corpus_prepared_insufficient_tokens": 2,
+    "dense_50m_baseline_positive": 1,
     "dense_step_debug_failed": 1,
     "dense_step_debug_positive": 5,
     "doc_drift_positive_control": 1,
@@ -1273,5 +1329,5 @@
     "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 67
+  "record_count": 68
 }

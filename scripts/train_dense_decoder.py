@@ -18,7 +18,7 @@ def _append_manifest(output: Path, record: dict[str, object]) -> None:
         records = []
     experiment_id = str(record["experiment_id"])
     records = [row for row in records if row.get("experiment_id") != experiment_id]
-    records.append(record)
+    records.append({"experiment_id": experiment_id, "path": output.name})
     write_json(manifest_path, records)
 
 
