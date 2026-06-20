@@ -11,6 +11,17 @@ from typing import Any
 
 from weightlab.hf_corpus import DATASET_COLUMN_ALIASES
 
+TIMESTAMP_COLUMN_ALIASES = [
+    "commit_date",
+    "committed_date",
+    "created_at",
+    "date",
+    "last_modified",
+    "modified_at",
+    "pushed_at",
+    "updated_at",
+]
+
 SECRET_PATTERNS = [
     re.compile(r"ghp_[A-Za-z0-9_]{20,}"),
     re.compile(r"AKIA[0-9A-Z]{16}"),
@@ -67,6 +78,8 @@ class MaterializationConfig:
     min_row_bytes: int = 20
     max_rows: int | None = None
     corpus_use: str = "exploratory-research-only"
+    near_duplicate_hamming_threshold: int | None = 3
+    near_duplicate_min_bytes: int = 200
 
 
 RowFactory = Callable[[dict[str, Any], dict[str, Any]], Iterable[dict[str, Any]]]
@@ -83,8 +96,11 @@ def materialize_hf_corpus(
     config = config or MaterializationConfig()
     output_jsonl.parent.mkdir(parents=True, exist_ok=True)
     seen_hashes: set[str] = set()
+    near_duplicate_index: dict[int, list[int]] = {}
     existing_metrics = (
-        _load_existing_rows(output_jsonl, seen_hashes) if resume else _empty_metrics()
+        _load_existing_rows(output_jsonl, seen_hashes, near_duplicate_index, config)
+        if resume
+        else _empty_metrics()
     )
     mode = "a" if resume and output_jsonl.exists() else "w"
 
@@ -117,7 +133,12 @@ def materialize_hf_corpus(
                         raw_row,
                         corpus_use=config.corpus_use,
                     )
-                    reason = _rejection_reason(candidate, seen_hashes, config)
+                    reason = _rejection_reason(
+                        candidate,
+                        seen_hashes,
+                        near_duplicate_index,
+                        config,
+                    )
                     if reason:
                         counters.excluded_reasons[reason] += 1
                         if len(excluded_examples) < 50:
@@ -132,6 +153,7 @@ def materialize_hf_corpus(
                             )
                         continue
                     seen_hashes.add(candidate["text_sha256"])
+                    _add_near_duplicate_hash(candidate, near_duplicate_index, config)
                     handle.write(json.dumps(candidate, sort_keys=True) + "\n")
                     counters.accept(candidate)
                 if _target_met(counters, config):
@@ -173,6 +195,13 @@ def materialize_hf_corpus(
         "document_count": counters.rows_accepted,
         "split_counts": dict(sorted(counters.split_counts.items())),
         "config_split_tokens": dict(sorted(counters.config_split_tokens.items())),
+        "temporal_split_counts": dict(sorted(counters.temporal_split_counts.items())),
+        "temporal_split_tokens": dict(sorted(counters.temporal_split_tokens.items())),
+        "timestamp_coverage": {
+            "rows_with_timestamp": counters.rows_with_timestamp,
+            "rows_without_timestamp": counters.rows_without_timestamp,
+            "coverage_ratio": _ratio(counters.rows_with_timestamp, counters.rows_accepted),
+        },
         "dataset_config_counts": dict(sorted(counters.dataset_config_counts.items())),
         "languages": dict(sorted(counters.languages.items())),
         "licenses": dict(sorted(counters.licenses.items())),
@@ -182,9 +211,11 @@ def materialize_hf_corpus(
             "reject technical secret/confidential patterns",
             "reject generated/vendor dependency paths",
             "reject exact duplicate normalized text",
+            "reject near-duplicate normalized text by deterministic simhash bands",
             "reject known evaluation-contamination path markers",
             "reject malicious embedded instruction markers",
             "assign repository-aware train/validation/test split by stable repo hash",
+            "record independent temporal split labels when row timestamp columns exist",
             "count byte-tokenizer tokens as utf8 bytes plus eos",
             "optionally cap accepted train tokens per dataset/config before moving on",
             "write jsonl rows with source dataset/config/revision and row checksums",
@@ -196,11 +227,26 @@ def materialize_hf_corpus(
             "contamination_path_markers": list(CONTAMINATION_PATH_MARKERS),
             "generated_markers": list(GENERATED_MARKERS),
             "malicious_instruction_markers": list(MALICIOUS_INSTRUCTION_MARKERS),
+            "near_duplicate": {
+                "algorithm": "simhash64_over_normalized_token_shingles",
+                "hamming_threshold": config.near_duplicate_hamming_threshold,
+                "min_bytes": config.near_duplicate_min_bytes,
+                "bands": "4x16-bit exact band lookup before hamming confirmation",
+            },
+            "temporal_split": {
+                "timestamp_columns": TIMESTAMP_COLUMN_ALIASES,
+                "test": "year >= 2023",
+                "validation": "year >= 2022 and year < 2023",
+                "train": "year < 2022",
+                "unknown": "timestamp missing or unparseable",
+            },
         },
         "limitations": [
             "exploratory_research_only_not_production_approved",
             "mixed_or_unclear_license_metadata_not_blocking_exploratory_training",
-            "near_duplicate_filter_pending",
+            "near_duplicate_filter_is_simhash_heuristic_not_full_minhash_lsh",
+            "primary_training_split_remains_repository_hash_split",
+            "temporal_split_depends_on_source_timestamp_column_coverage",
             "no_functional_training_run_from_this_mirror_yet",
         ],
     }
@@ -232,9 +278,13 @@ class _Counters:
     split_counts: Counter[str]
     dataset_config_counts: Counter[str]
     config_split_tokens: Counter[str]
+    temporal_split_counts: Counter[str]
+    temporal_split_tokens: Counter[str]
     languages: Counter[str]
     licenses: Counter[str]
     excluded_reasons: Counter[str]
+    rows_with_timestamp: int
+    rows_without_timestamp: int
 
     @classmethod
     def from_existing(cls, metrics: dict[str, Any]) -> _Counters:
@@ -245,19 +295,34 @@ class _Counters:
             split_counts=Counter(metrics.get("split_counts", {})),
             dataset_config_counts=Counter(metrics.get("dataset_config_counts", {})),
             config_split_tokens=Counter(metrics.get("config_split_tokens", {})),
+            temporal_split_counts=Counter(metrics.get("temporal_split_counts", {})),
+            temporal_split_tokens=Counter(metrics.get("temporal_split_tokens", {})),
             languages=Counter(metrics.get("languages", {})),
             licenses=Counter(metrics.get("licenses", {})),
             excluded_reasons=Counter(metrics.get("excluded_reasons", {})),
+            rows_with_timestamp=int(
+                metrics.get("timestamp_coverage", {}).get("rows_with_timestamp", 0)
+            ),
+            rows_without_timestamp=int(
+                metrics.get("timestamp_coverage", {}).get("rows_without_timestamp", 0)
+            ),
         )
 
     def accept(self, row: dict[str, Any]) -> None:
         split = str(row["split"])
+        temporal_split = str(row.get("temporal_split", "unknown"))
         self.rows_accepted += 1
         self.split_tokens[split] += int(row["tokens"])
         self.split_counts[split] += 1
         config_key = f"{row['dataset']}::{row['config']}"
         self.dataset_config_counts[config_key] += 1
         self.config_split_tokens[f"{config_key}::{split}"] += int(row["tokens"])
+        self.temporal_split_counts[temporal_split] += 1
+        self.temporal_split_tokens[temporal_split] += int(row["tokens"])
+        if row.get("source_timestamp"):
+            self.rows_with_timestamp += 1
+        else:
+            self.rows_without_timestamp += 1
         self.languages[str(row["language"])] += 1
         self.licenses[str(row["license"])] += 1
 
@@ -280,13 +345,19 @@ def _row_to_candidate(
     ]
     normalized = _normalize_text(text)
     text_sha256 = hashlib.sha256(normalized.encode("utf-8", errors="ignore")).hexdigest()
-    split = _repo_split(repo)
+    repo_split = _repo_split(repo)
+    source_timestamp = _first_value(raw_row, TIMESTAMP_COLUMN_ALIASES)
+    temporal_split = _temporal_split(source_timestamp)
+    simhash64 = _simhash64(normalized)
     return {
         "dataset": source["dataset"],
         "config": accepted_config["config"],
         "dataset_revision": source["resolved_revision"],
         "source_manifest_sha256": source.get("manifest_sha256", ""),
-        "split": split,
+        "split": repo_split,
+        "repo_split": repo_split,
+        "temporal_split": temporal_split,
+        "source_timestamp": source_timestamp,
         "repo": repo,
         "path": path,
         "language": language,
@@ -297,6 +368,7 @@ def _row_to_candidate(
         "tokens": _byte_tokens(text),
         "bytes": len(text.encode("utf-8", errors="ignore")),
         "text_sha256": text_sha256,
+        "near_duplicate_simhash64": f"{simhash64:016x}",
         "row_sha256": hashlib.sha256(
             json.dumps(
                 {
@@ -315,6 +387,7 @@ def _row_to_candidate(
 def _rejection_reason(
     row: dict[str, Any],
     seen_hashes: set[str],
+    near_duplicate_index: dict[int, list[int]],
     config: MaterializationConfig,
 ) -> str:
     text = row["text"]
@@ -330,6 +403,8 @@ def _rejection_reason(
         return "binary_or_corrupt"
     if row["text_sha256"] in seen_hashes:
         return "duplicate_text"
+    if _is_near_duplicate(row, near_duplicate_index, config):
+        return "near_duplicate_text"
     if any(marker in path for marker in PATH_EXCLUDES) or path.endswith(".min.js"):
         return "vendor_or_generated_path"
     if any(marker in path for marker in CONTAMINATION_PATH_MARKERS):
@@ -382,6 +457,22 @@ def _byte_tokens(text: str) -> int:
     return len(text.encode("utf-8", errors="ignore")) + 1
 
 
+def _temporal_split(timestamp: str) -> str:
+    year = _timestamp_year(timestamp)
+    if year is None:
+        return "unknown"
+    if year >= 2023:
+        return "test"
+    if year >= 2022:
+        return "validation"
+    return "train"
+
+
+def _timestamp_year(timestamp: str) -> int | None:
+    match = re.search(r"(?<!\d)(19\d{2}|20\d{2})(?!\d)", str(timestamp))
+    return int(match.group(1)) if match else None
+
+
 def _repo_split(repo: str) -> str:
     digest = hashlib.sha256(repo.encode("utf-8", errors="ignore")).digest()
     bucket = int.from_bytes(digest[:2], "big") % 100
@@ -392,7 +483,72 @@ def _repo_split(repo: str) -> str:
     return "train"
 
 
-def _load_existing_rows(output_jsonl: Path, seen_hashes: set[str]) -> dict[str, Any]:
+def _simhash64(text: str) -> int:
+    tokens = re.findall(r"[A-Za-z_][A-Za-z0-9_]*|\d+|[^\s]", text.lower())
+    if not tokens:
+        return 0
+    shingle_size = 5 if len(tokens) >= 5 else len(tokens)
+    features = [
+        " ".join(tokens[index : index + shingle_size])
+        for index in range(0, len(tokens) - shingle_size + 1)
+    ]
+    vector = [0] * 64
+    for feature in features:
+        digest = hashlib.blake2b(feature.encode("utf-8"), digest_size=8).digest()
+        value = int.from_bytes(digest, "big")
+        for bit in range(64):
+            vector[bit] += 1 if value & (1 << bit) else -1
+    simhash = 0
+    for bit, score in enumerate(vector):
+        if score >= 0:
+            simhash |= 1 << bit
+    return simhash
+
+
+def _is_near_duplicate(
+    row: dict[str, Any],
+    near_duplicate_index: dict[int, list[int]],
+    config: MaterializationConfig,
+) -> bool:
+    if config.near_duplicate_hamming_threshold is None:
+        return False
+    if int(row["bytes"]) < config.near_duplicate_min_bytes:
+        return False
+    simhash = int(str(row["near_duplicate_simhash64"]), 16)
+    candidates: set[int] = set()
+    for band in _simhash_bands(simhash):
+        candidates.update(near_duplicate_index.get(band, []))
+    return any(
+        (simhash ^ previous).bit_count() <= config.near_duplicate_hamming_threshold
+        for previous in candidates
+    )
+
+
+def _add_near_duplicate_hash(
+    row: dict[str, Any],
+    near_duplicate_index: dict[int, list[int]],
+    config: MaterializationConfig,
+) -> None:
+    if config.near_duplicate_hamming_threshold is None:
+        return
+    if int(row["bytes"]) < config.near_duplicate_min_bytes:
+        return
+    simhash = int(str(row["near_duplicate_simhash64"]), 16)
+    for band in _simhash_bands(simhash):
+        near_duplicate_index.setdefault(band, []).append(simhash)
+
+
+def _simhash_bands(simhash: int) -> tuple[int, int, int, int]:
+    mask = (1 << 16) - 1
+    return tuple(((band << 16) | ((simhash >> (band * 16)) & mask)) for band in range(4))
+
+
+def _load_existing_rows(
+    output_jsonl: Path,
+    seen_hashes: set[str],
+    near_duplicate_index: dict[int, list[int]],
+    config: MaterializationConfig,
+) -> dict[str, Any]:
     if not output_jsonl.exists():
         return _empty_metrics()
     counters = _Counters.from_existing(_empty_metrics())
@@ -400,6 +556,14 @@ def _load_existing_rows(output_jsonl: Path, seen_hashes: set[str]) -> dict[str, 
         for line in handle:
             row = json.loads(line)
             seen_hashes.add(str(row["text_sha256"]))
+            if "near_duplicate_simhash64" not in row:
+                simhash = _simhash64(_normalize_text(str(row["text"])))
+                row["near_duplicate_simhash64"] = f"{simhash:016x}"
+            _add_near_duplicate_hash(
+                row,
+                near_duplicate_index,
+                config,
+            )
             counters.accept(row)
     return {
         "rows_seen": counters.rows_accepted,
@@ -409,6 +573,13 @@ def _load_existing_rows(output_jsonl: Path, seen_hashes: set[str]) -> dict[str, 
         "dataset_config_counts": counters.dataset_config_counts,
         "languages": counters.languages,
         "licenses": counters.licenses,
+        "config_split_tokens": counters.config_split_tokens,
+        "temporal_split_counts": counters.temporal_split_counts,
+        "temporal_split_tokens": counters.temporal_split_tokens,
+        "timestamp_coverage": {
+            "rows_with_timestamp": counters.rows_with_timestamp,
+            "rows_without_timestamp": counters.rows_without_timestamp,
+        },
         "excluded_reasons": {},
     }
 
@@ -421,10 +592,17 @@ def _empty_metrics() -> dict[str, Any]:
         "split_counts": {},
         "dataset_config_counts": {},
         "config_split_tokens": {},
+        "temporal_split_counts": {},
+        "temporal_split_tokens": {},
+        "timestamp_coverage": {},
         "languages": {},
         "licenses": {},
         "excluded_reasons": {},
     }
+
+
+def _ratio(numerator: int, denominator: int) -> float:
+    return float(numerator / denominator) if denominator else 0.0
 
 
 def _file_sha256(path: Path) -> str:

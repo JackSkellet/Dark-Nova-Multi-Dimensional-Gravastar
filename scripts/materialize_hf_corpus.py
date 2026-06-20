@@ -45,6 +45,8 @@ def main() -> None:
     parser.add_argument("--max-row-bytes", type=int, default=256_000)
     parser.add_argument("--min-row-bytes", type=int, default=20)
     parser.add_argument("--max-rows", type=int, default=None)
+    parser.add_argument("--near-duplicate-hamming-threshold", type=int, default=3)
+    parser.add_argument("--near-duplicate-min-bytes", type=int, default=200)
     parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--no-resume", action="store_true")
     parser.add_argument("--child", action="store_true")
@@ -72,6 +74,10 @@ def main() -> None:
         str(args.max_row_bytes),
         "--min-row-bytes",
         str(args.min_row_bytes),
+        "--near-duplicate-hamming-threshold",
+        str(args.near_duplicate_hamming_threshold),
+        "--near-duplicate-min-bytes",
+        str(args.near_duplicate_min_bytes),
     ]
     if args.max_train_tokens_per_config is not None:
         command.extend([
@@ -101,6 +107,10 @@ def main() -> None:
         str(args.max_row_bytes),
         "--min-row-bytes",
         str(args.min_row_bytes),
+        "--near-duplicate-hamming-threshold",
+        str(args.near_duplicate_hamming_threshold),
+        "--near-duplicate-min-bytes",
+        str(args.near_duplicate_min_bytes),
         "--output",
         str(args.output),
         "--experiment-id",
@@ -143,6 +153,8 @@ def _child_main(args: argparse.Namespace) -> None:
         max_row_bytes=args.max_row_bytes,
         min_row_bytes=args.min_row_bytes,
         max_rows=args.max_rows,
+        near_duplicate_hamming_threshold=args.near_duplicate_hamming_threshold,
+        near_duplicate_min_bytes=args.near_duplicate_min_bytes,
     )
     metrics = materialize_hf_corpus(
         manifest_record,

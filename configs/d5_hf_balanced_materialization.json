@@ -9,9 +9,11 @@
   "max_train_tokens_per_config": 35000000,
   "max_row_bytes": 256000,
   "min_row_bytes": 20,
+  "near_duplicate_hamming_threshold": 3,
+  "near_duplicate_min_bytes": 200,
   "resume": false,
   "seed": 123,
-  "command": "UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/materialize_hf_corpus.py --manifest results/D3_hf_corpus_manifest.json --output-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --target-train-tokens 200000000 --max-train-tokens-per-config 35000000 --max-row-bytes 256000 --min-row-bytes 20 --output results/D5_hf_balanced_200m_materialization.json --experiment-id D5_hf_balanced_200m_materialization --seed 123 --no-resume",
+  "command": "UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/materialize_hf_corpus.py --manifest results/D3_hf_corpus_manifest.json --output-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --target-train-tokens 200000000 --max-train-tokens-per-config 35000000 --max-row-bytes 256000 --min-row-bytes 20 --near-duplicate-hamming-threshold 3 --near-duplicate-min-bytes 200 --output results/D5_hf_balanced_200m_materialization.json --experiment-id D5_hf_balanced_200m_materialization --seed 123 --no-resume",
   "intended_source_configs": [
     "CodedotAI/code_clippy_github::JavaScript-all",
     "CodedotAI/code_clippy_github::all-mit",
@@ -24,13 +26,13 @@
   "selection_policy": {
     "license_metadata": "record licenses and restrictions; do not exclude normally accessible rows solely for mixed or unclear license metadata during exploration",
     "splits": "repository-aware stable hash split already implemented by materializer",
-    "deduplication": "exact normalized-text SHA256 currently implemented; near-duplicate filtering remains pending",
+    "deduplication": "exact normalized-text SHA256 plus deterministic simhash near-duplicate filtering",
     "secrets_and_contamination": "existing materializer secret, vendor/generated, prompt-injection, and known eval path filters"
   },
   "limitations": [
     "uses existing D3 source manifest, so language breadth is bounded by currently pinned configs",
-    "temporal split metadata is not implemented yet",
-    "near-duplicate filtering remains pending",
+    "primary split remains repository-hash based; temporal split labels depend on row timestamp coverage",
+    "near-duplicate filtering is a simhash heuristic rather than full minhash LSH",
     "tokenizer comparison is not included in this materialization command"
   ]
 }
