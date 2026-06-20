@@ -2093,6 +2093,28 @@
       "outcome": "recorded",
       "primary_reason": "not_classified_by_current_assessment_layer",
       "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11a_dense544_adamw_fp32_50m_quantization_test",
+      "hypothesis": "trained_checkpoint_quantization_with_random_controls",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m_quantization_test",
+      "hypothesis": "trained_checkpoint_quantization_with_random_controls",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
     }
   ],
   "next_research_options": [
@@ -2122,7 +2144,7 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
-    "recorded": 57,
+    "recorded": 59,
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
@@ -2132,5 +2154,5 @@
     "transformer_stability_failed": 1
   },
   "pareto_improvement_found": false,
-  "record_count": 111
+  "record_count": 113
 }
