@@ -1,0 +1,111 @@
+{
+  "command": "uv run python scripts/compare_tokenizers.py --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --target-vocab-size 512 --output results/D4_tokenizer_efficiency_probe.json --experiment-id D4_tokenizer_efficiency_probe --seed 123 --max-train-texts 64 --max-eval-documents 64",
+  "experiment_id": "D4_tokenizer_efficiency_probe",
+  "git_commit": "ab6d5b2afee32b5fe9dc77b99a275d62c0abf69f",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "code_tokenizer_efficiency",
+  "metrics": {
+    "benchmark_label": "tokenizer_efficiency_comparison",
+    "corpus": {
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "max_eval_documents": 64
+    },
+    "limitations": [
+      "token_efficiency_only",
+      "no_model_training_with_bpe_yet",
+      "simple_byte_pair_trainer_not_sentencepiece_unigram"
+    ],
+    "max_train_texts": 64,
+    "resolved_config": {
+      "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "experiment_id": "D4_tokenizer_efficiency_probe",
+      "max_eval_documents": 64,
+      "max_train_texts": 64,
+      "output": "results/D4_tokenizer_efficiency_probe.json",
+      "seed": 123,
+      "target_vocab_size": 512
+    },
+    "splits": {
+      "test": {
+        "byte_level": {
+          "byte_count": 735516,
+          "bytes_per_token": 0.9999320251343863,
+          "document_count": 50,
+          "token_count": 735566
+        },
+        "byte_pair": {
+          "byte_count": 735516,
+          "bytes_per_token": 1.7651734416173486,
+          "document_count": 50,
+          "token_count": 416682
+        },
+        "token_reduction_ratio": 1.765293437201511
+      },
+      "train": {
+        "byte_level": {
+          "byte_count": 774822,
+          "bytes_per_token": 0.9999174072057051,
+          "document_count": 64,
+          "token_count": 774886
+        },
+        "byte_pair": {
+          "byte_count": 774822,
+          "bytes_per_token": 2.1798953409858206,
+          "document_count": 64,
+          "token_count": 355440
+        },
+        "token_reduction_ratio": 2.180075399504839
+      },
+      "validation": {
+        "byte_level": {
+          "byte_count": 1174420,
+          "bytes_per_token": 0.9999455079847831,
+          "document_count": 64,
+          "token_count": 1174484
+        },
+        "byte_pair": {
+          "byte_count": 1174420,
+          "bytes_per_token": 1.7124418211298658,
+          "document_count": 64,
+          "token_count": 685816
+        },
+        "token_reduction_ratio": 1.7125351406208078
+      }
+    },
+    "tokenizers": {
+      "byte_level": {
+        "eos_id": 256,
+        "type": "byte_level_utf8_plus_eos",
+        "vocab_size": 257
+      },
+      "byte_pair": {
+        "checksum": "3b6c972b3147c36cafe381ab8bb9d4de9141bc67896ea838e0ff75515999e3dc",
+        "merge_count": 255,
+        "target_vocab_size": 512,
+        "type": "byte_pair_on_utf8_bytes",
+        "vocab_size": 512
+      }
+    },
+    "train_document_count": 64
+  },
+  "notes": "Tokenizer efficiency comparison only. It does not train a language model with the byte-pair tokenizer yet.",
+  "recorded_at_unix": 1781993920.3379846,
+  "resolved_config": {
+    "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "experiment_id": "D4_tokenizer_efficiency_probe",
+    "max_eval_documents": 64,
+    "max_train_texts": 64,
+    "output": "results/D4_tokenizer_efficiency_probe.json",
+    "seed": 123,
+    "target_vocab_size": 512
+  },
+  "seed": 123,
+  "status": "completed"
+}
