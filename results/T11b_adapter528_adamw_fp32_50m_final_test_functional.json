@@ -1,9 +1,9 @@
 {
   "command": "uv run python scripts/evaluate_dense_functional.py --checkpoint artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --split test --device rocm --seed 424243 --tasks-per-kind 64 --output results/T11b_adapter528_adamw_fp32_50m_final_test_functional.json --experiment-id T11b_adapter528_adamw_fp32_50m_final_test_functional",
   "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_test_functional",
-  "git_commit": "c881d9c363042aa8aa7df86895400a3071ee4206",
-  "git_dirty": true,
-  "git_status_short": "M results/manifest.json\n?? results/T11a_dense544_adamw_fp32_50m_final_test_functional.json",
+  "git_commit": "ef4f95514c765e5bf54ffced5f2695fadd8a389c",
+  "git_dirty": false,
+  "git_status_short": "",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -23,7 +23,7 @@
     },
     "device": "cuda",
     "document_count_used": 50,
-    "elapsed_s": 12.054234533999988,
+    "elapsed_s": 8.674758905999624,
     "limitations": [
       "Greedy byte-level generation is deterministic and harsh; exact-string scores are expected to be low.",
       "The model is a causal decoder, so span reconstruction is not suffix-conditioned infilling.",
@@ -336,7 +336,7 @@
     "texts_sha256": "cba513aca907777c780209b74d83a12e33457f4a32ecd919a45d475a4254b1cc"
   },
   "notes": "Evaluation-only deterministic functional probe against a labeled D4 split loaded separately from training rows. No optimizer step or retraining is performed.",
-  "recorded_at_unix": 1781988822.7201226,
+  "recorded_at_unix": 1781988862.5764499,
   "resolved_config": {
     "checkpoint": "artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt",
     "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
