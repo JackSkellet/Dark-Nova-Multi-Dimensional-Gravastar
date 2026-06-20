@@ -34,7 +34,7 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_e4d(record)
     if experiment_id == "R1_rocm_training_validation":
         return _assess_r1(record)
-    if experiment_id == "D1_corpus_preparation":
+    if record.get("metrics", {}).get("benchmark_label") == "licensed_repository_corpus_preparation":
         return _assess_d1(record)
     if record.get("metrics", {}).get("benchmark_label") == "dense_decoder_training_smoke":
         return _assess_t1(record)

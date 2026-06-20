@@ -32,6 +32,7 @@ def main() -> None:
     parser.add_argument("--min-tokens", type=int, default=50_000_000)
     parser.add_argument("--max-file-bytes", type=int, default=256_000)
     parser.add_argument("--output", type=Path, default=Path("results/D1_corpus_preparation.json"))
+    parser.add_argument("--experiment-id", default="D1_corpus_preparation")
     parser.add_argument("--seed", type=int, default=123)
     args = parser.parse_args()
 
@@ -42,13 +43,14 @@ def main() -> None:
     )
     command_repos = " ".join(f"--repo-path {path}" for path in args.repo_path)
     record = ExperimentRecord(
-        experiment_id="D1_corpus_preparation",
+        experiment_id=args.experiment_id,
         hypothesis="real_training_data",
         seed=args.seed,
         command=(
             "uv run python scripts/prepare_training_corpus.py "
             f"{command_repos} --min-tokens {args.min_tokens} "
-            f"--max-file-bytes {args.max_file_bytes} --output {args.output}"
+            f"--max-file-bytes {args.max_file_bytes} "
+            f"--experiment-id {args.experiment_id} --output {args.output}"
         ),
         metrics=metrics,
         status=metrics["status"],

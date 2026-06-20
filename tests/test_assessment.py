@@ -89,6 +89,30 @@ def test_assessment_marks_corpus_preparation_as_insufficient_until_50m_tokens():
     assert assessment["evidence"]["meets_50m_token_requirement"] is False
 
 
+def test_assessment_classifies_any_licensed_corpus_preparation_record():
+    assessment = assess_record(
+        {
+            "experiment_id": "D2_expanded_corpus_preparation",
+            "hypothesis": "real_training_data",
+            "metrics": {
+                "benchmark_label": "licensed_repository_corpus_preparation",
+                "repo_count": 2,
+                "document_count": 10,
+                "total_tokens": 1234,
+                "target_min_tokens": 50_000_000,
+                "meets_50m_token_requirement": False,
+                "license_counts": {"MIT": 2},
+                "languages": {"Python": 10},
+                "file_roles": {"code": 10},
+                "split_counts": {"train": 10},
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "corpus_prepared_insufficient_tokens"
+    assert assessment["evidence"]["repo_count"] == 2
+
+
 def test_assessment_marks_dense_training_smoke_outcomes_without_overclaiming():
     rocm = assess_record(_record("T1_dense_decoder_training_smoke"))
     cpu = assess_record(_record("T1b_cpu_dense_decoder_training_smoke"))

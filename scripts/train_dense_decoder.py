@@ -37,6 +37,7 @@ def main() -> None:
     parser.add_argument("--learning-rate", type=float, default=3e-4)
     parser.add_argument("--optimizer-name", choices=["adamw", "sgd"], default="adamw")
     parser.add_argument("--max-documents", type=int, default=128)
+    parser.add_argument("--max-file-bytes", type=int, default=256_000)
     parser.add_argument("--output-dir", type=Path, default=Path("artifacts/dense_decoder_smoke"))
     parser.add_argument(
         "--output",
@@ -47,7 +48,11 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=123)
     args = parser.parse_args()
 
-    corpus = prepare_repository_corpus(args.repo_path, min_tokens=1)
+    corpus = prepare_repository_corpus(
+        args.repo_path,
+        min_tokens=1,
+        max_file_bytes=args.max_file_bytes,
+    )
     repo_by_name = {path.name: path for path in args.repo_path}
     texts: list[str] = []
     for doc in corpus["documents"][: args.max_documents]:
@@ -90,6 +95,7 @@ def main() -> None:
             f"--batch-size {args.batch_size} --steps {args.steps} "
             f"--validation-batches {args.validation_batches} "
             f"--gradient-accumulation-steps {args.gradient_accumulation_steps} "
+            f"--max-file-bytes {args.max_file_bytes} "
             f"--mixed-precision {args.mixed_precision} --output-dir {args.output_dir} "
             f"--output {args.output}"
         ),

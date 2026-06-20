@@ -148,12 +148,23 @@ def prepare_repository_corpus(
 
 
 def _detect_license(repo: Path) -> str:
-    for name in ["LICENSE", "LICENSE.txt", "LICENSE.rst", "COPYING"]:
+    for name in [
+        "LICENSE",
+        "LICENSE.txt",
+        "LICENSE.rst",
+        "LICENSE-MIT",
+        "LICENSE-APACHE",
+        "COPYING",
+    ]:
         path = repo / name
         if not path.exists():
             continue
         text = path.read_text(encoding="utf-8", errors="ignore").lower()
         if "mit license" in text:
+            return "MIT"
+        if "permission is hereby granted, free of charge" in text and (
+            'the "software"' in text or "the software" in text or name == "LICENSE-MIT"
+        ):
             return "MIT"
         if "apache license" in text and "version 2.0" in text:
             return "Apache-2.0"

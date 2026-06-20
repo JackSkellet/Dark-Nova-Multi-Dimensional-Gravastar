@@ -53,3 +53,43 @@ def test_repository_corpus_rejects_unknown_license(tmp_path):
     assert result["repo_count"] == 0
     assert result["total_tokens"] == 0
     assert result["rejected_repositories"][0]["reason"] == "unsupported_license"
+
+
+def test_repository_corpus_accepts_mit_text_without_mit_license_heading(tmp_path):
+    repo = tmp_path / "repo_c"
+    repo.mkdir()
+    (repo / "LICENSE").write_text(
+        "Permission is hereby granted, free of charge, to any person obtaining a copy\n"
+        "of this software and associated documentation files (the \"Software\"), to deal\n"
+        "in the Software without restriction.\n",
+        encoding="utf-8",
+    )
+    (repo / "main.py").write_text("def usable(): return True\n", encoding="utf-8")
+
+    result = prepare_repository_corpus([repo], min_tokens=1)
+
+    assert result["repo_count"] == 1
+    assert result["license_counts"]["MIT"] == 1
+
+
+def test_repository_corpus_accepts_license_mit_and_license_apache_files(tmp_path):
+    mit_repo = tmp_path / "mit_repo"
+    apache_repo = tmp_path / "apache_repo"
+    mit_repo.mkdir()
+    apache_repo.mkdir()
+    (mit_repo / "LICENSE-MIT").write_text(
+        "Permission is hereby granted, free of charge, to any person obtaining a copy\n",
+        encoding="utf-8",
+    )
+    (mit_repo / "lib.rs").write_text("pub fn usable() -> bool { true }\n", encoding="utf-8")
+    (apache_repo / "LICENSE-APACHE").write_text(
+        "Apache License\nVersion 2.0, January 2004\n",
+        encoding="utf-8",
+    )
+    (apache_repo / "lib.rs").write_text("pub fn usable() -> bool { true }\n", encoding="utf-8")
+
+    result = prepare_repository_corpus([mit_repo, apache_repo], min_tokens=1)
+
+    assert result["repo_count"] == 2
+    assert result["license_counts"]["MIT"] == 1
+    assert result["license_counts"]["Apache-2.0"] == 1
