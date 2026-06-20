@@ -328,6 +328,78 @@ def test_hf_materializer_records_temporal_split_metadata(tmp_path):
     assert all(row["repo_split"] == row["split"] for row in materialized)
 
 
+def test_hf_materializer_records_content_roles(tmp_path):
+    rows = [
+        {
+            "code_text": (
+                "describe('alpha', () => { "
+                "it('works', () => expect(true).toBe(true)); });\n"
+            ),
+            "repo_name": "repo-test-role",
+            "file_path": "tests/alpha.test.js",
+            "language": "JavaScript",
+            "license": "mit",
+        },
+        {
+            "code_text": "# Project Alpha\n\nUsage notes for the package.\n",
+            "repo_name": "repo-readme-role",
+            "file_path": "README.md",
+            "language": "Markdown",
+            "license": "mit",
+        },
+        {
+            "code_text": "API reference for install and configuration.\n",
+            "repo_name": "repo-doc-role",
+            "file_path": "docs/api.md",
+            "language": "Markdown",
+            "license": "mit",
+        },
+        {
+            "code_text": (
+                'def beta(value):\n'
+                '    """Return beta value for callers."""\n'
+                "    return value\n"
+            ),
+            "repo_name": "repo-docstring-role",
+            "file_path": "src/beta.py",
+            "language": "Python",
+            "license": "mit",
+        },
+        {
+            "code_text": "## 1.2.0\n\n- Fixed parsing regression.\n",
+            "repo_name": "repo-changelog-role",
+            "file_path": "CHANGELOG.md",
+            "language": "Markdown",
+            "license": "mit",
+        },
+    ]
+    output_jsonl = tmp_path / "corpus.jsonl"
+
+    metrics = materialize_hf_corpus(
+        _manifest(),
+        output_jsonl=output_jsonl,
+        row_factory=lambda _source, _config: iter(rows),
+        config=MaterializationConfig(target_train_tokens=1_000_000),
+    )
+
+    assert metrics["content_role_counts"]["test"] == 1
+    assert metrics["content_role_counts"]["readme"] == 1
+    assert metrics["content_role_counts"]["documentation"] == 3
+    assert metrics["content_role_counts"]["docstring"] == 1
+    assert metrics["content_role_counts"]["changelog"] == 1
+    assert metrics["content_role_tokens"]["test"] > 0
+    materialized = [
+        json.loads(line)
+        for line in output_jsonl.read_text(encoding="utf-8").splitlines()
+    ]
+    roles_by_path = {row["path"]: row["content_roles"] for row in materialized}
+    assert roles_by_path["tests/alpha.test.js"] == ["test"]
+    assert roles_by_path["README.md"] == ["readme", "documentation"]
+    assert roles_by_path["docs/api.md"] == ["documentation"]
+    assert roles_by_path["src/beta.py"] == ["docstring", "source"]
+    assert roles_by_path["CHANGELOG.md"] == ["changelog", "documentation"]
+
+
 def test_hf_materializer_resume_preserves_config_train_cap(tmp_path):
     text = "def already_materialized():\n    return 'python'\n"
     output_jsonl = tmp_path / "corpus.jsonl"

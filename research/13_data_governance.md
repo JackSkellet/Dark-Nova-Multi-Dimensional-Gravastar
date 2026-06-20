@@ -21,3 +21,5 @@ Track human-authored, model-authored, mixed, human-approved, test-validated, rej
 The exploratory D5 materializer keeps the primary training split repository-aware by stable repository hash. It also records an independent temporal split label when row-level timestamp columns such as `commit_date`, `created_at`, `updated_at`, or `last_modified` are present. Temporal labels are therefore auditable metadata until timestamp coverage is measured on the materialized corpus.
 
 Duplicate filtering has two stages: exact SHA256 over normalized text, then deterministic 64-bit SimHash over normalized token shingles with band lookup and Hamming-distance confirmation. This is a practical near-duplicate screen for the exploratory stream, not a full MinHash/LSH deduplication proof.
+
+Each accepted row also receives multi-label content-role metadata for source, tests, README, documentation, docstrings, and changelogs. D5 acceptance is not complete until the materialized record reports role counts and token counts, so gaps in tests/docs/changelogs are visible rather than hidden inside aggregate token totals.

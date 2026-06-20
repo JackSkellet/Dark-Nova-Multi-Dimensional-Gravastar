@@ -69,6 +69,49 @@ CONTAMINATION_PATH_MARKERS = (
     "mbpp",
 )
 
+TEST_PATH_MARKERS = (
+    "/test/",
+    "/tests/",
+    "/spec/",
+    "/specs/",
+    "__tests__/",
+)
+
+TEST_FILE_PATTERNS = (
+    ".test.",
+    ".spec.",
+    "_test.",
+    "_spec.",
+)
+
+DOCUMENTATION_PATH_MARKERS = (
+    "/doc/",
+    "/docs/",
+    "/documentation/",
+)
+
+README_NAMES = (
+    "readme",
+    "readme.md",
+    "readme.rst",
+    "readme.txt",
+)
+
+CHANGELOG_NAMES = (
+    "changelog",
+    "changelog.md",
+    "changes.md",
+    "history.md",
+    "release-notes.md",
+    "releasenotes.md",
+)
+
+DOCSTRING_PATTERNS = (
+    re.compile(r'(?s)"""[^"]{12,}"""'),
+    re.compile(r"(?s)'''[^']{12,}'''"),
+    re.compile(r"(?s)/\*\*.*?\*/"),
+)
+
 
 @dataclass(frozen=True)
 class MaterializationConfig:
@@ -197,6 +240,8 @@ def materialize_hf_corpus(
         "config_split_tokens": dict(sorted(counters.config_split_tokens.items())),
         "temporal_split_counts": dict(sorted(counters.temporal_split_counts.items())),
         "temporal_split_tokens": dict(sorted(counters.temporal_split_tokens.items())),
+        "content_role_counts": dict(sorted(counters.content_role_counts.items())),
+        "content_role_tokens": dict(sorted(counters.content_role_tokens.items())),
         "timestamp_coverage": {
             "rows_with_timestamp": counters.rows_with_timestamp,
             "rows_without_timestamp": counters.rows_without_timestamp,
@@ -216,6 +261,7 @@ def materialize_hf_corpus(
             "reject malicious embedded instruction markers",
             "assign repository-aware train/validation/test split by stable repo hash",
             "record independent temporal split labels when row timestamp columns exist",
+            "classify each row as source/test/readme/documentation/docstring/changelog content",
             "count byte-tokenizer tokens as utf8 bytes plus eos",
             "optionally cap accepted train tokens per dataset/config before moving on",
             "write jsonl rows with source dataset/config/revision and row checksums",
@@ -239,6 +285,20 @@ def materialize_hf_corpus(
                 "validation": "year >= 2022 and year < 2023",
                 "train": "year < 2022",
                 "unknown": "timestamp missing or unparseable",
+            },
+            "content_roles": {
+                "test": "test/spec paths or filenames",
+                "readme": "README-style basenames",
+                "documentation": (
+                    "docs/documentation paths, README files, changelogs, "
+                    "or markdown/rst docs"
+                ),
+                "docstring": "Python triple-quoted or JSDoc-style documentation blocks",
+                "changelog": "changelog/changes/history/release-notes basenames",
+                "source": (
+                    "default role when no specialized non-source role is detected, "
+                    "or when source code also contains docstrings"
+                ),
             },
         },
         "limitations": [
@@ -280,6 +340,8 @@ class _Counters:
     config_split_tokens: Counter[str]
     temporal_split_counts: Counter[str]
     temporal_split_tokens: Counter[str]
+    content_role_counts: Counter[str]
+    content_role_tokens: Counter[str]
     languages: Counter[str]
     licenses: Counter[str]
     excluded_reasons: Counter[str]
@@ -297,6 +359,8 @@ class _Counters:
             config_split_tokens=Counter(metrics.get("config_split_tokens", {})),
             temporal_split_counts=Counter(metrics.get("temporal_split_counts", {})),
             temporal_split_tokens=Counter(metrics.get("temporal_split_tokens", {})),
+            content_role_counts=Counter(metrics.get("content_role_counts", {})),
+            content_role_tokens=Counter(metrics.get("content_role_tokens", {})),
             languages=Counter(metrics.get("languages", {})),
             licenses=Counter(metrics.get("licenses", {})),
             excluded_reasons=Counter(metrics.get("excluded_reasons", {})),
@@ -319,6 +383,9 @@ class _Counters:
         self.config_split_tokens[f"{config_key}::{split}"] += int(row["tokens"])
         self.temporal_split_counts[temporal_split] += 1
         self.temporal_split_tokens[temporal_split] += int(row["tokens"])
+        for role in row.get("content_roles", ["source"]):
+            self.content_role_counts[str(role)] += 1
+            self.content_role_tokens[str(role)] += int(row["tokens"])
         if row.get("source_timestamp"):
             self.rows_with_timestamp += 1
         else:
@@ -349,6 +416,7 @@ def _row_to_candidate(
     source_timestamp = _first_value(raw_row, TIMESTAMP_COLUMN_ALIASES)
     temporal_split = _temporal_split(source_timestamp)
     simhash64 = _simhash64(normalized)
+    content_roles = _content_roles(path, text, language)
     return {
         "dataset": source["dataset"],
         "config": accepted_config["config"],
@@ -364,6 +432,7 @@ def _row_to_candidate(
         "license": license_name,
         "license_metadata_status": accepted_config.get("license_metadata_status", ""),
         "corpus_use": corpus_use,
+        "content_roles": content_roles,
         "text": text,
         "tokens": _byte_tokens(text),
         "bytes": len(text.encode("utf-8", errors="ignore")),
@@ -455,6 +524,40 @@ def _normalize_text(text: str) -> str:
 
 def _byte_tokens(text: str) -> int:
     return len(text.encode("utf-8", errors="ignore")) + 1
+
+
+def _content_roles(path: str, text: str, language: str) -> list[str]:
+    normalized_path = str(path).replace("\\", "/").lower()
+    basename = normalized_path.rsplit("/", maxsplit=1)[-1]
+    roles: list[str] = []
+    if (
+        any(marker in f"/{normalized_path}" for marker in TEST_PATH_MARKERS)
+        or any(pattern in basename for pattern in TEST_FILE_PATTERNS)
+    ):
+        roles.append("test")
+    if basename in README_NAMES or basename.startswith("readme."):
+        roles.append("readme")
+    if basename in CHANGELOG_NAMES or basename.startswith(("changelog.", "changes.")):
+        roles.append("changelog")
+    if (
+        any(marker in f"/{normalized_path}" for marker in DOCUMENTATION_PATH_MARKERS)
+        or "readme" in roles
+        or "changelog" in roles
+        or basename.endswith((".md", ".rst", ".adoc"))
+    ):
+        roles.append("documentation")
+    has_docstring = _has_docstring(text)
+    if has_docstring:
+        roles.append("docstring")
+    non_source_roles = {"test", "readme", "documentation", "changelog"}
+    if has_docstring or not any(role in non_source_roles for role in roles):
+        roles.append("source")
+    return roles
+
+
+def _has_docstring(text: str) -> bool:
+    head = text[:8192]
+    return any(pattern.search(head) for pattern in DOCSTRING_PATTERNS)
 
 
 def _temporal_split(timestamp: str) -> str:
@@ -576,6 +679,8 @@ def _load_existing_rows(
         "config_split_tokens": counters.config_split_tokens,
         "temporal_split_counts": counters.temporal_split_counts,
         "temporal_split_tokens": counters.temporal_split_tokens,
+        "content_role_counts": counters.content_role_counts,
+        "content_role_tokens": counters.content_role_tokens,
         "timestamp_coverage": {
             "rows_with_timestamp": counters.rows_with_timestamp,
             "rows_without_timestamp": counters.rows_without_timestamp,
@@ -594,6 +699,8 @@ def _empty_metrics() -> dict[str, Any]:
         "config_split_tokens": {},
         "temporal_split_counts": {},
         "temporal_split_tokens": {},
+        "content_role_counts": {},
+        "content_role_tokens": {},
         "timestamp_coverage": {},
         "languages": {},
         "licenses": {},

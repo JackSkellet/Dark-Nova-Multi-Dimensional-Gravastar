@@ -27,7 +27,8 @@
     "license_metadata": "record licenses and restrictions; do not exclude normally accessible rows solely for mixed or unclear license metadata during exploration",
     "splits": "repository-aware stable hash split already implemented by materializer",
     "deduplication": "exact normalized-text SHA256 plus deterministic simhash near-duplicate filtering",
-    "secrets_and_contamination": "existing materializer secret, vendor/generated, prompt-injection, and known eval path filters"
+    "secrets_and_contamination": "existing materializer secret, vendor/generated, prompt-injection, and known eval path filters",
+    "content_roles": "record multi-label source/test/readme/documentation/docstring/changelog role counts and token counts during materialization"
   },
   "limitations": [
     "uses existing D3 source manifest, so language breadth is bounded by currently pinned configs",
