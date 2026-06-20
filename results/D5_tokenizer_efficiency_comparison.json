@@ -1,0 +1,345 @@
+{
+  "command": "uv run python scripts/compare_tokenizers.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --target-vocab-size 512 --output results/D5_tokenizer_efficiency_comparison.json --experiment-id D5_tokenizer_efficiency_comparison --seed 123 --max-train-texts 64 --max-eval-documents 256 --context-lengths 128 512 1024 2048",
+  "experiment_id": "D5_tokenizer_efficiency_comparison",
+  "git_commit": "fd6fe7b5a081d92de2630e9b4d49810d51f34906",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "code_tokenizer_efficiency",
+  "metrics": {
+    "benchmark_label": "tokenizer_efficiency_comparison",
+    "context_lengths": [
+      128,
+      512,
+      1024,
+      2048
+    ],
+    "corpus": {
+      "jsonl_path": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "max_eval_documents": 256
+    },
+    "limitations": [
+      "token_efficiency_only",
+      "no_model_training_with_bpe_yet",
+      "simple_byte_pair_trainer_not_sentencepiece_unigram"
+    ],
+    "max_train_texts": 64,
+    "resolved_config": {
+      "context_lengths": [
+        128,
+        512,
+        1024,
+        2048
+      ],
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "experiment_id": "D5_tokenizer_efficiency_comparison",
+      "max_eval_documents": 256,
+      "max_train_texts": 64,
+      "output": "results/D5_tokenizer_efficiency_comparison.json",
+      "seed": 123,
+      "target_vocab_size": 512
+    },
+    "splits": {
+      "test": {
+        "byte_level": {
+          "byte_count": 2732674,
+          "bytes_per_token": 0.9999063276410299,
+          "context_coverage": {
+            "1024": {
+              "context_tokens": 1024,
+              "full_document_fit_count": 23,
+              "full_document_fit_ratio": 0.08984375,
+              "mean_bytes_covered": 987.5488117431258,
+              "mean_fraction_bytes_covered": 0.3652507568741995
+            },
+            "128": {
+              "context_tokens": 128,
+              "full_document_fit_count": 2,
+              "full_document_fit_ratio": 0.0078125,
+              "mean_bytes_covered": 127.80906166527906,
+              "mean_fraction_bytes_covered": 0.06203208472094392
+            },
+            "2048": {
+              "context_tokens": 2048,
+              "full_document_fit_count": 71,
+              "full_document_fit_ratio": 0.27734375,
+              "mean_bytes_covered": 1814.9586033689968,
+              "mean_fraction_bytes_covered": 0.5609278810031583
+            },
+            "512": {
+              "context_tokens": 512,
+              "full_document_fit_count": 8,
+              "full_document_fit_ratio": 0.03125,
+              "mean_bytes_covered": 504.9014439266221,
+              "mean_fraction_bytes_covered": 0.2079310733779186
+            }
+          },
+          "document_count": 256,
+          "throughput": {
+            "bytes_per_second": 467545750.7743062,
+            "documents_per_second": 43800.216271030644,
+            "elapsed_s": 0.005844719999004155,
+            "tokens_per_second": 467589550.9905772
+          },
+          "token_count": 2732930
+        },
+        "byte_pair": {
+          "byte_count": 2732674,
+          "bytes_per_token": 1.656801669973996,
+          "context_coverage": {
+            "1024": {
+              "context_tokens": 1024,
+              "full_document_fit_count": 58,
+              "full_document_fit_ratio": 0.2265625,
+              "mean_bytes_covered": 1617.4490625268188,
+              "mean_fraction_bytes_covered": 0.513489206018075
+            },
+            "128": {
+              "context_tokens": 128,
+              "full_document_fit_count": 4,
+              "full_document_fit_ratio": 0.015625,
+              "mean_bytes_covered": 221.11902571635738,
+              "mean_fraction_bytes_covered": 0.09906234469168526
+            },
+            "2048": {
+              "context_tokens": 2048,
+              "full_document_fit_count": 117,
+              "full_document_fit_ratio": 0.45703125,
+              "mean_bytes_covered": 2790.3524398988366,
+              "mean_fraction_bytes_covered": 0.7078167357494327
+            },
+            "512": {
+              "context_tokens": 512,
+              "full_document_fit_count": 18,
+              "full_document_fit_ratio": 0.0703125,
+              "mean_bytes_covered": 862.6201506783294,
+              "mean_fraction_bytes_covered": 0.3215410292670558
+            }
+          },
+          "document_count": 256,
+          "throughput": {
+            "bytes_per_second": 114602.8259685548,
+            "documents_per_second": 10.736122731050257,
+            "elapsed_s": 23.844734865000646,
+            "tokens_per_second": 69171.11929900065
+          },
+          "token_count": 1649367
+        },
+        "token_reduction_ratio": 1.6569568810337543
+      },
+      "train": {
+        "byte_level": {
+          "byte_count": 3196250,
+          "bytes_per_token": 0.9999199125545205,
+          "context_coverage": {
+            "1024": {
+              "context_tokens": 1024,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 1023.6965191323292,
+              "mean_fraction_bytes_covered": 0.3034808676708355
+            },
+            "128": {
+              "context_tokens": 128,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 127.96206489154115,
+              "mean_fraction_bytes_covered": 0.037935108458854436
+            },
+            "2048": {
+              "context_tokens": 2048,
+              "full_document_fit_count": 56,
+              "full_document_fit_ratio": 0.21875,
+              "mean_bytes_covered": 1924.9211374988581,
+              "mean_fraction_bytes_covered": 0.5124562511419127
+            },
+            "512": {
+              "context_tokens": 512,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 511.8482595661646,
+              "mean_fraction_bytes_covered": 0.15174043383541774
+            }
+          },
+          "document_count": 256,
+          "throughput": {
+            "bytes_per_second": 420915992.27346635,
+            "documents_per_second": 33712.78655361983,
+            "elapsed_s": 0.007593557998916367,
+            "tokens_per_second": 420949705.06001997
+          },
+          "token_count": 3196506
+        },
+        "byte_pair": {
+          "byte_count": 3196250,
+          "bytes_per_token": 1.7226307191744092,
+          "context_coverage": {
+            "1024": {
+              "context_tokens": 1024,
+              "full_document_fit_count": 37,
+              "full_document_fit_ratio": 0.14453125,
+              "mean_bytes_covered": 1766.7026593088628,
+              "mean_fraction_bytes_covered": 0.4617512121915296
+            },
+            "128": {
+              "context_tokens": 128,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 231.03570901675354,
+              "mean_fraction_bytes_covered": 0.0658292573706828
+            },
+            "2048": {
+              "context_tokens": 2048,
+              "full_document_fit_count": 104,
+              "full_document_fit_ratio": 0.40625,
+              "mean_bytes_covered": 3085.5312097007336,
+              "mean_fraction_bytes_covered": 0.6655657335430102
+            },
+            "512": {
+              "context_tokens": 512,
+              "full_document_fit_count": 3,
+              "full_document_fit_ratio": 0.01171875,
+              "mean_bytes_covered": 923.3690629122644,
+              "mean_fraction_bytes_covered": 0.2626151989720607
+            }
+          },
+          "document_count": 256,
+          "throughput": {
+            "bytes_per_second": 118984.92633598404,
+            "documents_per_second": 9.529962031133959,
+            "elapsed_s": 26.862646374000178,
+            "tokens_per_second": 69071.63851867738
+          },
+          "token_count": 1855447
+        },
+        "token_reduction_ratio": 1.7227686913180489
+      },
+      "validation": {
+        "byte_level": {
+          "byte_count": 3334394,
+          "bytes_per_token": 0.999923230324022,
+          "context_coverage": {
+            "1024": {
+              "context_tokens": 1024,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 1023.6641965315029,
+              "mean_fraction_bytes_covered": 0.3358034684971267
+            },
+            "128": {
+              "context_tokens": 128,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 127.95802456643786,
+              "mean_fraction_bytes_covered": 0.04197543356214084
+            },
+            "2048": {
+              "context_tokens": 2048,
+              "full_document_fit_count": 59,
+              "full_document_fit_ratio": 0.23046875,
+              "mean_bytes_covered": 1906.7965902105052,
+              "mean_fraction_bytes_covered": 0.5627847894946862
+            },
+            "512": {
+              "context_tokens": 512,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 511.8320982657514,
+              "mean_fraction_bytes_covered": 0.16790173424856336
+            }
+          },
+          "document_count": 256,
+          "throughput": {
+            "bytes_per_second": 468503665.90478307,
+            "documents_per_second": 35969.63600331108,
+            "elapsed_s": 0.007117114000720903,
+            "tokens_per_second": 468539635.5407864
+          },
+          "token_count": 3334650
+        },
+        "byte_pair": {
+          "byte_count": 3334394,
+          "bytes_per_token": 1.583345402501618,
+          "context_coverage": {
+            "1024": {
+              "context_tokens": 1024,
+              "full_document_fit_count": 45,
+              "full_document_fit_ratio": 0.17578125,
+              "mean_bytes_covered": 1692.3915079582277,
+              "mean_fraction_bytes_covered": 0.5092510534365734
+            },
+            "128": {
+              "context_tokens": 128,
+              "full_document_fit_count": 0,
+              "full_document_fit_ratio": 0.0,
+              "mean_bytes_covered": 220.28812902506692,
+              "mean_fraction_bytes_covered": 0.07066304703110148
+            },
+            "2048": {
+              "context_tokens": 2048,
+              "full_document_fit_count": 124,
+              "full_document_fit_ratio": 0.484375,
+              "mean_bytes_covered": 2857.33589854524,
+              "mean_fraction_bytes_covered": 0.7127048406076023
+            },
+            "512": {
+              "context_tokens": 512,
+              "full_document_fit_count": 1,
+              "full_document_fit_ratio": 0.00390625,
+              "mean_bytes_covered": 881.0567155139404,
+              "mean_fraction_bytes_covered": 0.28256642215634203
+            }
+          },
+          "document_count": 256,
+          "throughput": {
+            "bytes_per_second": 111009.70136395594,
+            "documents_per_second": 8.522833099259632,
+            "elapsed_s": 30.036960365003324,
+            "tokens_per_second": 70110.85590583416
+          },
+          "token_count": 2105917
+        },
+        "token_reduction_ratio": 1.5834669647474235
+      }
+    },
+    "tokenizers": {
+      "byte_level": {
+        "eos_id": 256,
+        "type": "byte_level_utf8_plus_eos",
+        "vocab_size": 257
+      },
+      "byte_pair": {
+        "checksum": "fea22cbb81ed72b78025708a49075efbeb2e99872edd0b1040e6bb41bea4759e",
+        "merge_count": 255,
+        "target_vocab_size": 512,
+        "type": "byte_pair_on_utf8_bytes",
+        "vocab_size": 512
+      }
+    },
+    "train_document_count": 64
+  },
+  "notes": "Tokenizer efficiency comparison only. It does not train a language model with the byte-pair tokenizer yet.",
+  "recorded_at_unix": 1781995763.3744686,
+  "resolved_config": {
+    "context_lengths": [
+      128,
+      512,
+      1024,
+      2048
+    ],
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "experiment_id": "D5_tokenizer_efficiency_comparison",
+    "max_eval_documents": 256,
+    "max_train_texts": 64,
+    "output": "results/D5_tokenizer_efficiency_comparison.json",
+    "seed": 123,
+    "target_vocab_size": 512
+  },
+  "seed": 123,
+  "status": "completed"
+}
