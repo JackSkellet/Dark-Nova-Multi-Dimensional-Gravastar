@@ -2368,6 +2368,17 @@
       "supports_pareto_improvement": false
     },
     {
+      "evidence": {},
+      "experiment_id": "D5_corpus_audit",
+      "hypothesis": "d5_corpus_audit",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
       "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
@@ -2510,7 +2521,7 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
-    "recorded": 71,
+    "recorded": 72,
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
@@ -2523,5 +2534,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 128
+  "record_count": 129
 }
