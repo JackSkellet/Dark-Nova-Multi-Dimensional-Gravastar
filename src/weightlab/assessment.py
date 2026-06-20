@@ -38,6 +38,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_d1(record)
     if record.get("metrics", {}).get("benchmark_label") == "hf_corpus_manifest":
         return _assess_hf_corpus_manifest(record)
+    if record.get("metrics", {}).get("benchmark_label") == "hf_corpus_materialization":
+        return _assess_hf_corpus_materialization(record)
     if record.get("metrics", {}).get("benchmark_label") == "dense_decoder_training_smoke":
         return _assess_t1(record)
     if record.get("metrics", {}).get("benchmark_label") == "dense_step_stability_debug":
@@ -404,6 +406,43 @@ def _assess_hf_corpus_manifest(record: dict[str, Any]) -> Assessment:
             "total_parquet_bytes": metrics.get("total_parquet_bytes", 0),
             "pinned_sources": pinned_sources,
             "token_count_status": metrics.get("token_count", {}).get("status", ""),
+        },
+    }
+
+
+def _assess_hf_corpus_materialization(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    train_tokens = int(metrics.get("tokens", {}).get("train", 0))
+    meets_50m = bool(metrics.get("meets_50m_token_requirement", False))
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "hf_corpus_materialized"
+        if meets_50m
+        else "hf_corpus_materialized_insufficient_tokens",
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "filtered_hf_corpus_mirror_reached_required_train_tokens"
+            if meets_50m
+            else "filtered_hf_corpus_mirror_below_required_train_tokens"
+        ),
+        "limitations": [
+            "exploratory_research_only_not_production_approved",
+            "not_training_run",
+            "near_duplicate_filter_pending",
+            "mixed_license_metadata_not_blocking_exploratory_use",
+        ]
+        + ([] if meets_50m else ["below_50m_token_requirement"]),
+        "evidence": {
+            "corpus_use": metrics.get("corpus_use", ""),
+            "train_tokens": train_tokens,
+            "target_train_tokens": metrics.get("target_train_tokens", 0),
+            "meets_50m_token_requirement": meets_50m,
+            "rows_seen": metrics.get("rows_seen", 0),
+            "rows_accepted": metrics.get("rows_accepted", 0),
+            "rows_excluded": metrics.get("rows_excluded", 0),
+            "output_sha256": metrics.get("output", {}).get("sha256", ""),
+            "dataset_config_counts": metrics.get("dataset_config_counts", {}),
         },
     }
 

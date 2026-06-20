@@ -113,6 +113,32 @@ def test_assessment_classifies_any_licensed_corpus_preparation_record():
     assert assessment["evidence"]["repo_count"] == 2
 
 
+def test_assessment_classifies_hf_corpus_materialization():
+    assessment = assess_record(
+        {
+            "experiment_id": "D4_hf_corpus_materialization",
+            "hypothesis": "real_training_data",
+            "metrics": {
+                "benchmark_label": "hf_corpus_materialization",
+                "corpus_use": "exploratory-research-only",
+                "target_train_tokens": 50_000_000,
+                "meets_50m_token_requirement": True,
+                "tokens": {"train": 50_000_001},
+                "rows_seen": 100,
+                "rows_accepted": 80,
+                "rows_excluded": 20,
+                "output": {"sha256": "abc"},
+                "dataset_config_counts": {"dataset::config": 80},
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "hf_corpus_materialized"
+    assert assessment["evidence"]["train_tokens"] == 50_000_001
+    assert assessment["evidence"]["meets_50m_token_requirement"] is True
+    assert "not_training_run" in assessment["limitations"]
+
+
 def test_assessment_marks_dense_training_smoke_outcomes_without_overclaiming():
     rocm = assess_record(_record("T1_dense_decoder_training_smoke"))
     cpu = assess_record(_record("T1b_cpu_dense_decoder_training_smoke"))

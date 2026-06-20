@@ -8,6 +8,10 @@ results/*.tmp
 results/cache/
 data/raw/*
 data/processed/*
+data/hf_cache/*
+data/hf_mirror/*
+!data/hf_cache/.gitkeep
+!data/hf_mirror/.gitkeep
 artifacts/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
@@ -21,4 +25,3 @@ artifacts/*
 .env
 *.key
 *.pem
-

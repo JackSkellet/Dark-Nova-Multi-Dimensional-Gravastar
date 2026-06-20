@@ -6,6 +6,7 @@ from pathlib import Path
 
 from weightlab.corpus import prepare_repository_corpus
 from weightlab.dense_training import DenseTrainingConfig, train_dense_decoder
+from weightlab.hf_materializer import load_jsonl_texts
 from weightlab.metrics import ExperimentRecord, write_json
 
 
@@ -23,7 +24,8 @@ def _append_manifest(output: Path, record: dict[str, object]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--repo-path", action="append", type=Path, required=True)
+    parser.add_argument("--repo-path", action="append", type=Path, default=[])
+    parser.add_argument("--corpus-jsonl", type=Path)
     parser.add_argument("--device", default="rocm")
     parser.add_argument("--seq-len", type=int, default=128)
     parser.add_argument("--hidden-dim", type=int, default=256)
@@ -48,16 +50,33 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=123)
     args = parser.parse_args()
 
-    corpus = prepare_repository_corpus(
-        args.repo_path,
-        min_tokens=1,
-        max_file_bytes=args.max_file_bytes,
-    )
-    repo_by_name = {path.name: path for path in args.repo_path}
-    texts: list[str] = []
-    for doc in corpus["documents"][: args.max_documents]:
-        path = repo_by_name[doc["repo"]] / doc["relative_path"]
-        texts.append(path.read_text(encoding="utf-8", errors="ignore"))
+    if not args.repo_path and args.corpus_jsonl is None:
+        parser.error("provide at least one --repo-path or --corpus-jsonl")
+
+    max_documents = None if args.max_documents <= 0 else args.max_documents
+    if args.corpus_jsonl is not None:
+        texts = load_jsonl_texts(args.corpus_jsonl, max_documents=max_documents)
+        corpus = {
+            "source": "hf_jsonl_mirror",
+            "jsonl_path": str(args.corpus_jsonl),
+            "document_count": len(texts),
+            "total_tokens": sum(len(text.encode("utf-8", errors="ignore")) + 1 for text in texts),
+            "repo_count": 0,
+            "license_counts": {},
+            "languages": {},
+            "file_roles": {},
+        }
+    else:
+        corpus = prepare_repository_corpus(
+            args.repo_path,
+            min_tokens=1,
+            max_file_bytes=args.max_file_bytes,
+        )
+        repo_by_name = {path.name: path for path in args.repo_path}
+        texts = []
+        for doc in corpus["documents"][:max_documents]:
+            path = repo_by_name[doc["repo"]] / doc["relative_path"]
+            texts.append(path.read_text(encoding="utf-8", errors="ignore"))
 
     config = DenseTrainingConfig(
         device=args.device,
@@ -75,6 +94,8 @@ def main() -> None:
     )
     metrics = train_dense_decoder(texts, config, args.output_dir, seed=args.seed)
     metrics["corpus"] = {
+        "source": corpus.get("source", "local_repositories"),
+        "jsonl_path": corpus.get("jsonl_path", ""),
         "repo_count": corpus["repo_count"],
         "document_count_used": len(texts),
         "available_documents": corpus["document_count"],
@@ -84,13 +105,14 @@ def main() -> None:
         "file_roles": corpus["file_roles"],
     }
     command_repos = " ".join(f"--repo-path {path}" for path in args.repo_path)
+    command_corpus = f"--corpus-jsonl {args.corpus_jsonl} " if args.corpus_jsonl else ""
     record = ExperimentRecord(
         experiment_id=args.experiment_id,
         hypothesis="dense_baseline_training",
         seed=args.seed,
         command=(
             "uv run python scripts/train_dense_decoder.py "
-            f"{command_repos} --device {args.device} --seq-len {args.seq_len} "
+            f"{command_corpus}{command_repos} --device {args.device} --seq-len {args.seq_len} "
             f"--hidden-dim {args.hidden_dim} --layers {args.layers} --heads {args.heads} "
             f"--batch-size {args.batch_size} --steps {args.steps} "
             f"--validation-batches {args.validation_batches} "
