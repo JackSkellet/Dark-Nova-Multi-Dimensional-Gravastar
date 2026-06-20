@@ -1,0 +1,82 @@
+{
+  "comparison_id": "D4_adamw_fp32_50m_dense_candidate_comparison",
+  "description": "Useful-scale split-correct AdamW FP32 comparison for the strong dense decoder and strongest stable residual-adapter candidate on D4.",
+  "corpus": {
+    "record": "results/D4_hf_corpus_materialization.json",
+    "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+    "source_config": "CodedotAI/code_clippy_github::JavaScript-all",
+    "source_revision": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+    "train_split": "train",
+    "validation_split": "validation",
+    "test_split": "test",
+    "train_tokens": 50102528,
+    "validation_tokens": 1455924,
+    "test_tokens": 735566,
+    "train_documents": 3280,
+    "validation_documents": 85,
+    "test_documents": 50
+  },
+  "tokenizer": {
+    "type": "byte_level",
+    "vocab_size": 257,
+    "eos_id": 256
+  },
+  "data_order": {
+    "train_sampler": "torch.randint windows over concatenated train-only token tensor",
+    "train_seed": 123,
+    "validation_sampler": "fixed torch.randint windows over validation-only token tensor",
+    "validation_seed": 424242,
+    "test_sampler": "fixed torch.randint windows over test-only token tensor",
+    "test_seed": 424243,
+    "training_examples_can_enter_validation": false,
+    "checkpoint_selection": "lowest validation loss only; test loss is never used for selection"
+  },
+  "training_protocol": {
+    "device": "rocm",
+    "mixed_precision": "fp32",
+    "seq_len": 128,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 1,
+    "tokens_per_step": 256,
+    "train_tokens": 50000128,
+    "steps": 195313,
+    "optimizer_name": "adamw",
+    "learning_rate": 0.0001,
+    "scheduler": "none",
+    "gradient_clip_norm": 1.0,
+    "attention_mask_mode": "finite_causal",
+    "block_impl": "explicit_causal",
+    "layers": 3,
+    "heads": 8,
+    "dropout": 0.0,
+    "activation": "gelu",
+    "position_encoding": "learned_absolute_position_embedding",
+    "initialization": "torch manual seed 123; shared modules initialized before adapter-only modules when shapes match",
+    "progress_interval": 5000,
+    "checkpoint_interval": 5000,
+    "checkpoint_validation_batches": 512,
+    "final_eval_batches": 512,
+    "max_documents": 0
+  },
+  "runs": [
+    {
+      "label": "dense_544_50m",
+      "experiment_id": "T11a_dense544_adamw_fp32_50m",
+      "architecture_variant": "dense",
+      "hidden_dim": 544,
+      "adapter_dim": 0,
+      "output_dir": "artifacts/T11a_dense544_adamw_fp32_50m",
+      "output": "results/T11a_dense544_adamw_fp32_50m.json"
+    },
+    {
+      "label": "adapter_528_50m",
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m",
+      "architecture_variant": "adapter",
+      "hidden_dim": 528,
+      "adapter_dim": 64,
+      "output_dir": "artifacts/T11b_adapter528_adamw_fp32_50m",
+      "output": "results/T11b_adapter528_adamw_fp32_50m.json"
+    }
+  ]
+}
