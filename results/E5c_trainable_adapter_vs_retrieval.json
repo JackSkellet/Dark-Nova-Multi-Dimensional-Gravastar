@@ -1,0 +1,254 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E5c_trainable_adapter_vs_retrieval",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H5",
+  "metrics": {
+    "final": {
+      "adapter_no_replay_accuracy": 0.5,
+      "adapter_no_replay_new_accuracy": 1.0,
+      "adapter_no_replay_prior_accuracy": 0.4,
+      "adapter_with_replay_accuracy": 1.0,
+      "adapter_with_replay_new_accuracy": 1.0,
+      "adapter_with_replay_prior_accuracy": 1.0,
+      "adapter_with_replay_storage_bytes": 384.0,
+      "no_replay_update_ms": 0.015680008800700307,
+      "replay_update_ms": 0.01697198604233563,
+      "retrieval_accuracy": 1.0,
+      "retrieval_new_accuracy": 1.0,
+      "retrieval_prior_accuracy": 1.0,
+      "retrieval_storage_bytes": 235.0,
+      "step": 5.0
+    },
+    "lineage": [
+      {
+        "step": 0,
+        "symbols": [
+          "parse_config"
+        ]
+      },
+      {
+        "step": 1,
+        "symbols": [
+          "load_config_defaults"
+        ]
+      },
+      {
+        "step": 2,
+        "symbols": [
+          "render_dependency_graph"
+        ]
+      },
+      {
+        "step": 3,
+        "symbols": [
+          "find_stale_docs"
+        ]
+      },
+      {
+        "step": 4,
+        "symbols": [
+          "apply_patch_plan"
+        ]
+      },
+      {
+        "step": 5,
+        "symbols": [
+          "summarize_release_notes"
+        ]
+      }
+    ],
+    "model": {
+      "adapter_rank": 4,
+      "answer_count": 4,
+      "architecture": "one_hot_symbol_classifier_with_low_rank_adapter_delta",
+      "frozen_base_facts": 1,
+      "symbol_count": 6
+    },
+    "notes": "Toy trainable low-rank adapter delta over chronological API facts. It compares weight updates with and without replay against continuously updated retrieval. The model is not a language model.",
+    "null_hypothesis_outcome": "retrieval_not_beaten",
+    "steps": [
+      {
+        "adapter_no_replay_accuracy": 1.0,
+        "adapter_no_replay_new_accuracy": 1.0,
+        "adapter_no_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_accuracy": 1.0,
+        "adapter_with_replay_new_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_storage_bytes": 384.0,
+        "no_replay_update_ms": 0.1352420076727867,
+        "replay_update_ms": 0.04935599281452596,
+        "retrieval_accuracy": 1.0,
+        "retrieval_new_accuracy": 1.0,
+        "retrieval_prior_accuracy": 1.0,
+        "retrieval_storage_bytes": 34.0,
+        "step": 0.0
+      },
+      {
+        "adapter_no_replay_accuracy": 1.0,
+        "adapter_no_replay_new_accuracy": 1.0,
+        "adapter_no_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_accuracy": 1.0,
+        "adapter_with_replay_new_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_storage_bytes": 384.0,
+        "no_replay_update_ms": 0.02824500552378595,
+        "replay_update_ms": 0.029847986297681928,
+        "retrieval_accuracy": 1.0,
+        "retrieval_new_accuracy": 1.0,
+        "retrieval_prior_accuracy": 1.0,
+        "retrieval_storage_bytes": 76.0,
+        "step": 1.0
+      },
+      {
+        "adapter_no_replay_accuracy": 1.0,
+        "adapter_no_replay_new_accuracy": 1.0,
+        "adapter_no_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_accuracy": 1.0,
+        "adapter_with_replay_new_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_storage_bytes": 384.0,
+        "no_replay_update_ms": 0.01867598621174693,
+        "replay_update_ms": 0.017835001926869154,
+        "retrieval_accuracy": 1.0,
+        "retrieval_new_accuracy": 1.0,
+        "retrieval_prior_accuracy": 1.0,
+        "retrieval_storage_bytes": 120.0,
+        "step": 2.0
+      },
+      {
+        "adapter_no_replay_accuracy": 0.75,
+        "adapter_no_replay_new_accuracy": 1.0,
+        "adapter_no_replay_prior_accuracy": 0.6666666666666666,
+        "adapter_with_replay_accuracy": 1.0,
+        "adapter_with_replay_new_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_storage_bytes": 384.0,
+        "no_replay_update_ms": 0.01549001899547875,
+        "replay_update_ms": 0.0166520185302943,
+        "retrieval_accuracy": 1.0,
+        "retrieval_new_accuracy": 1.0,
+        "retrieval_prior_accuracy": 1.0,
+        "retrieval_storage_bytes": 155.0,
+        "step": 3.0
+      },
+      {
+        "adapter_no_replay_accuracy": 0.6,
+        "adapter_no_replay_new_accuracy": 1.0,
+        "adapter_no_replay_prior_accuracy": 0.5,
+        "adapter_with_replay_accuracy": 1.0,
+        "adapter_with_replay_new_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_storage_bytes": 384.0,
+        "no_replay_update_ms": 0.016552017768844962,
+        "replay_update_ms": 0.01729399082250893,
+        "retrieval_accuracy": 1.0,
+        "retrieval_new_accuracy": 1.0,
+        "retrieval_prior_accuracy": 1.0,
+        "retrieval_storage_bytes": 192.0,
+        "step": 4.0
+      },
+      {
+        "adapter_no_replay_accuracy": 0.5,
+        "adapter_no_replay_new_accuracy": 1.0,
+        "adapter_no_replay_prior_accuracy": 0.4,
+        "adapter_with_replay_accuracy": 1.0,
+        "adapter_with_replay_new_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_storage_bytes": 384.0,
+        "no_replay_update_ms": 0.015680008800700307,
+        "replay_update_ms": 0.01697198604233563,
+        "retrieval_accuracy": 1.0,
+        "retrieval_new_accuracy": 1.0,
+        "retrieval_prior_accuracy": 1.0,
+        "retrieval_storage_bytes": 235.0,
+        "step": 5.0
+      }
+    ],
+    "update_records": [
+      {
+        "adapter": "no_replay",
+        "step": 0.0,
+        "training_examples": 1.0,
+        "update_ms": 0.1352420076727867
+      },
+      {
+        "adapter": "with_replay",
+        "step": 0.0,
+        "training_examples": 1.0,
+        "update_ms": 0.04935599281452596
+      },
+      {
+        "adapter": "no_replay",
+        "step": 1.0,
+        "training_examples": 1.0,
+        "update_ms": 0.02824500552378595
+      },
+      {
+        "adapter": "with_replay",
+        "step": 1.0,
+        "training_examples": 2.0,
+        "update_ms": 0.029847986297681928
+      },
+      {
+        "adapter": "no_replay",
+        "step": 2.0,
+        "training_examples": 1.0,
+        "update_ms": 0.01867598621174693
+      },
+      {
+        "adapter": "with_replay",
+        "step": 2.0,
+        "training_examples": 3.0,
+        "update_ms": 0.017835001926869154
+      },
+      {
+        "adapter": "no_replay",
+        "step": 3.0,
+        "training_examples": 1.0,
+        "update_ms": 0.01549001899547875
+      },
+      {
+        "adapter": "with_replay",
+        "step": 3.0,
+        "training_examples": 4.0,
+        "update_ms": 0.0166520185302943
+      },
+      {
+        "adapter": "no_replay",
+        "step": 4.0,
+        "training_examples": 1.0,
+        "update_ms": 0.016552017768844962
+      },
+      {
+        "adapter": "with_replay",
+        "step": 4.0,
+        "training_examples": 5.0,
+        "update_ms": 0.01729399082250893
+      },
+      {
+        "adapter": "no_replay",
+        "step": 5.0,
+        "training_examples": 1.0,
+        "update_ms": 0.015680008800700307
+      },
+      {
+        "adapter": "with_replay",
+        "step": 5.0,
+        "training_examples": 6.0,
+        "update_ms": 0.01697198604233563
+      }
+    ],
+    "weight_update_count": 12
+  },
+  "notes": "Toy trainable low-rank adapter delta compared with continuously updated retrieval under chronological API-fact replay.",
+  "recorded_at_unix": 1781952213.8048527,
+  "seed": 123,
+  "status": "completed"
+}

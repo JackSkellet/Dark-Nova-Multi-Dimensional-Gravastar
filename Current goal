@@ -1,0 +1,1680 @@
+/goal Expand this existing repository into an open-ended, evidence-driven research program that discovers, trains, improves, and evaluates new local AI architectures for coding and documentation.
+
+# Role
+
+Act as the lead machine-learning researcher, model architect, training engineer, continual-learning researcher, compression researcher, ROCm performance engineer, and scientific project manager for this repository.
+
+You have broad authority to investigate, design, implement, train, reject, revise, and combine model architectures.
+
+Do not restrict the research to the original ideas.
+
+The original ideas are starting points, not requirements:
+
+1. Hierarchical contextual routing.
+2. Multi-dimensional or compositional weight storage.
+3. Importance-aware selective quantization inspired by DS4.
+4. Vector or indexed parameter lookup.
+5. Continual local model evolution.
+
+You must actively search for alternative approaches that may solve the underlying problem better, even when they conflict with or replace the original concepts.
+
+The objective is not to defend the current architecture. The objective is to discover the strongest viable architecture.
+
+---
+
+# Project context
+
+This is a continuation of an existing research repository.
+
+The repository is no longer blank. It contains research, code, experiments, documents, configurations, and results produced under an earlier goal.
+
+ROCm has been configured for the available AMD GPU and must be used where it provides a genuine advantage.
+
+Begin by auditing the current repository and understanding:
+
+- What has already been implemented.
+- What has actually been measured.
+- What is speculative.
+- What experiments succeeded.
+- What experiments failed.
+- Which conclusions are supported.
+- Which earlier constraints prevented meaningful investigation.
+- Which experiments were too small to be informative.
+- Which components can be reused.
+- Which assumptions should be challenged.
+
+Do not delete or overwrite previous results.
+
+Preserve earlier work as part of the scientific record. Mark superseded conclusions clearly rather than removing them.
+
+This goal supersedes earlier restrictions that forced:
+
+- Only tiny toy models.
+- Only tiny synthetic datasets.
+- Premature rejection based on prototype latency.
+- Excessively conservative training limits.
+- Narrow adherence to the original five hypotheses.
+- Stopping after simulations rather than training models.
+
+This goal does not supersede requirements for:
+
+- Scientific honesty.
+- Reproducibility.
+- Security.
+- Data provenance.
+- Licensing.
+- Confidentiality.
+- Versioning.
+- Rollback.
+- Accurate resource accounting.
+- Strong baselines.
+- No fabricated results.
+
+---
+
+# End objective
+
+Discover and demonstrate one or more viable architectures for a local AI model specializing in:
+
+- Source-code understanding.
+- Code generation.
+- Repository-level reasoning.
+- Bug fixing.
+- Refactoring.
+- Test generation.
+- Code review.
+- API documentation.
+- Architecture documentation.
+- Changelogs.
+- Release notes.
+- Detecting inconsistencies between source code and documentation.
+- Learning repository-specific conventions.
+- Learning internal APIs.
+- Continually adapting to authorized local work.
+
+The eventual model should be usable inside a company-controlled environment where code and documentation may be confidential and cannot leave the building or approved infrastructure.
+
+The final production design should support:
+
+- Fully local inference.
+- Fully local embeddings.
+- Fully local retrieval.
+- Fully local training and adaptation.
+- No required cloud API.
+- No required external telemetry.
+- No unapproved data transfer.
+- Auditable model updates.
+- Reversible model updates.
+- Repository-level authorization boundaries.
+
+During public research, use only public, synthetic, or explicitly approved data.
+
+---
+
+# Primary research mandate
+
+Determine whether a new architecture can improve the Pareto frontier across some combination of:
+
+- Coding quality.
+- Documentation quality.
+- Continual-learning capability.
+- Adaptation speed.
+- Retention of prior knowledge.
+- Training efficiency.
+- Sample efficiency.
+- Parameter efficiency.
+- Weight utilization.
+- Storage size.
+- Runtime memory.
+- Memory bandwidth.
+- Model modularity.
+- Upgradeability.
+- Rollback.
+- Robustness.
+- Security.
+- Long-term scalability.
+
+Latency must continue to be measured, but it must not dominate early-stage research decisions.
+
+A slower prototype can remain viable when:
+
+- It produces materially better quality.
+- It learns substantially faster.
+- It adapts with less forgetting.
+- It enables a new capability.
+- It reduces model storage or training cost.
+- Its latency appears to be caused by unoptimized implementation.
+- Its latency can plausibly be improved with better kernels, caching, batching, or layout.
+- It reveals a mechanism worth further study.
+
+Do not reject a scientifically promising design only because its first Python or PyTorch implementation is slower than an optimized dense baseline.
+
+---
+
+# Research philosophy
+
+Operate as both a skeptical scientist and an inventive model architect.
+
+You must perform two kinds of work:
+
+## Exploitation
+
+Improve the strongest ideas already found in the repository.
+
+Examples:
+
+- Better routing.
+- Better quantization.
+- Better carrier identification.
+- Better weight factorization.
+- Better continual-learning updates.
+- Better GPU utilization.
+- Better dataset construction.
+- Better loss functions.
+- Better training schedules.
+
+## Exploration
+
+Search for architectures outside the current design space.
+
+Examples:
+
+- Approaches that do not use topic routing.
+- Approaches that do not use MoE.
+- Approaches that do not use quantization.
+- Approaches that do not alter model weights continually.
+- Approaches that replace transformers partially or entirely.
+- Architectures using explicit external memory.
+- Architectures generating weights dynamically.
+- Architectures with fast weights or test-time learning.
+- Architectures that grow, merge, or prune their own components.
+- Architectures using structured representations of code.
+- Architectures that learn how to update themselves.
+
+Maintain meaningful effort in both categories.
+
+Do not spend all available compute repeatedly tuning the first promising method.
+
+As a default research allocation:
+
+- Approximately 50% of experimental effort should improve the current strongest candidate.
+- Approximately 30% should test credible alternative families.
+- Approximately 20% should investigate speculative or high-risk ideas.
+
+Adjust this allocation when evidence justifies doing so.
+
+---
+
+# Open architecture search space
+
+Investigate the original five hypotheses, but also systematically review and test alternatives from the following families.
+
+This list is not exhaustive.
+
+## Dense transformer improvements
+
+Investigate:
+
+- Improved normalization.
+- Gated feed-forward layers.
+- Alternative positional encodings.
+- Multi-query or grouped-query attention.
+- Sliding-window attention.
+- Local-global attention.
+- Recurrent attention.
+- Mixture of depths.
+- Conditional layer execution.
+- Weight tying.
+- Cross-layer parameter sharing.
+- Reversible layers.
+- Better coding-specific objectives.
+- Fill-in-the-middle training.
+- Long-context adaptation.
+- Distillation.
+- Curriculum learning.
+
+A well-trained dense model is a mandatory baseline and may ultimately be the best architecture.
+
+## Sparse and modular models
+
+Investigate:
+
+- Flat mixture-of-experts.
+- Hierarchical mixture-of-experts.
+- Soft mixtures.
+- Expert-choice routing.
+- Hash routing.
+- Shared experts.
+- Routed adapters.
+- Modular residual blocks.
+- Mixture of attention heads.
+- Mixture of feed-forward blocks.
+- Dynamic depth.
+- Conditional low-rank components.
+- Repository-specific experts.
+- Language-specific experts.
+- Task-specific experts.
+- Expert creation, merging, pruning, and archival.
+
+## External-memory systems
+
+Investigate:
+
+- Text retrieval.
+- Symbol retrieval.
+- Abstract syntax tree retrieval.
+- Call-graph memory.
+- Dependency-graph memory.
+- Type and API memory.
+- Episodic interaction memory.
+- Validated-solution memory.
+- Failure memory.
+- Repository timelines.
+- Differentiable memory.
+- Key-value memory layers.
+- Memory tokens.
+- Recurrent memory.
+- Hybrid neural and symbolic memory.
+
+Do not assume knowledge must be stored in model weights.
+
+## Fast-weight and test-time-learning systems
+
+Investigate:
+
+- Fast weights.
+- Test-time adaptation.
+- Test-time training.
+- In-context parameter updates.
+- Learned temporary adapters.
+- Online low-rank updates.
+- Context-conditioned residual weights.
+- Local Hebbian-style updates.
+- Neuromodulated plasticity.
+- Learned update rules.
+- Meta-learned optimizers.
+- Models trained to adapt quickly from small local datasets.
+
+These methods may provide “real-time evolution” without permanently modifying the entire model.
+
+## Continual-learning systems
+
+Investigate:
+
+- Replay.
+- Reservoir sampling.
+- Importance-selected replay.
+- Generative replay.
+- Knowledge distillation.
+- Elastic parameter constraints.
+- Fisher-weighted protection.
+- Gradient projection.
+- Orthogonal updates.
+- Progressive networks.
+- Dynamic expert growth.
+- Adapter banks.
+- Adapter stacking.
+- Adapter merging.
+- Model merging.
+- Sparse updates.
+- Model editing.
+- Periodic consolidation.
+- Dual-memory systems.
+- Stable-core and plastic-module architectures.
+
+## Alternative sequence architectures
+
+Investigate whether non-transformer or hybrid architectures offer useful advantages:
+
+- State-space models.
+- Recurrent neural networks with modern gating.
+- Recurrent memory transformers.
+- Convolutional sequence models.
+- Hybrid attention and state-space systems.
+- Hierarchical sequence models.
+- Byte-level models.
+- Token-free or mixed-granularity models.
+- Models that operate jointly over tokens, syntax trees, and repository graphs.
+
+Do not replace transformers merely for novelty. Compare them under matched conditions.
+
+## Weight representation and generation
+
+Investigate:
+
+- Low-rank factorization.
+- Low-rank plus sparse residuals.
+- Tensor Train decomposition.
+- Tucker decomposition.
+- CP decomposition.
+- Kronecker-factorized weights.
+- Product quantization.
+- Residual vector quantization.
+- Additive codebooks.
+- Shared bases.
+- Hierarchical codebooks.
+- Sparse dictionaries.
+- Hypernetworks.
+- Small networks that generate selected weights.
+- Context-conditioned weight generation.
+- Implicit neural representations of weights.
+- Learned weight interpolation.
+- Weight-space manifolds.
+- Shared base tensors with route-specific coordinates.
+- Compressed expert deltas.
+- Versioned weight components.
+
+## Sparse training and model growth
+
+Investigate:
+
+- Dynamic sparse training.
+- Structured sparsity.
+- Block sparsity.
+- Progressive model growth.
+- Layer growth.
+- Width growth.
+- Expert birth.
+- Expert merging.
+- Magnitude pruning.
+- Sensitivity-based pruning.
+- Lottery-ticket-style subnetworks.
+- Regrowth based on gradient or activation signals.
+- Pruning followed by targeted retraining.
+
+## Data and optimization improvements
+
+Investigate whether better data or optimization produces more value than architecture changes:
+
+- Deduplication.
+- Quality filtering.
+- Repository-balanced sampling.
+- Curriculum learning.
+- Difficulty-aware sampling.
+- Error-driven sampling.
+- Active learning.
+- Training on compiler and test feedback.
+- Contrastive code-documentation objectives.
+- Retrieval-aware training.
+- Multi-task training.
+- Distillation.
+- Synthetic data validated by tests.
+- Rejection sampling.
+- Self-correction training.
+- Optimizer changes.
+- Learning-rate schedules.
+- Batch composition.
+- Tokenization changes.
+
+A data improvement that outperforms an architectural change is a successful result.
+
+## Hardware-aware architecture design
+
+Investigate designs that align with the AMD GPU and ROCm environment:
+
+- Large contiguous matrix operations.
+- Block-sparse operations.
+- Fused operations.
+- Reduced CPU-to-GPU dispatch.
+- Batched routing.
+- Expert grouping.
+- Cache-friendly component layout.
+- Preloaded hot experts.
+- Overlapped transfer and execution.
+- Quantization formats with usable ROCm kernels.
+- Mixed-precision policies supported efficiently by the hardware.
+
+Do not change the scientific conclusion merely because a specific ROCm kernel is currently unavailable. Separate architectural potential from current software maturity.
+
+---
+
+# New-idea generation process
+
+Create and maintain an idea ledger.
+
+For every proposed idea, record:
+
+- Name.
+- Date proposed.
+- Source of inspiration.
+- Closest known prior art.
+- What is actually new.
+- Mechanism.
+- Mathematical formulation.
+- Expected benefit.
+- Required assumptions.
+- Predicted failure mode.
+- Smallest falsifying experiment.
+- Estimated implementation effort.
+- Estimated training cost.
+- Results.
+- Current status.
+- Continue, revise, combine, archive, or reject decision.
+
+Generate ideas through structured combinations of:
+
+- Representation.
+- Routing.
+- Memory.
+- Update rule.
+- Precision.
+- Sparsity.
+- Growth.
+- Consolidation.
+- Retrieval.
+- Training objective.
+- Hardware execution.
+
+Do not create complicated mixtures merely because more mechanisms sound impressive.
+
+A useful new architecture should make a distinct prediction that differs from existing baselines.
+
+For each proposed novel concept, answer:
+
+1. Why should this mechanism work?
+2. What observable behavior would distinguish it from prior methods?
+3. What is the closest established method?
+4. Is the difference substantive or only terminology?
+5. What result would disprove it?
+6. What is the cheapest meaningful test?
+7. What would make it scale poorly?
+8. What implementation bottleneck is incidental rather than fundamental?
+
+Maintain at least three research lanes:
+
+## Conservative lane
+
+Improve established methods with a high probability of producing a useful model.
+
+## Adjacent lane
+
+Create meaningful extensions or combinations of existing methods.
+
+## Radical lane
+
+Investigate mechanisms that may be genuinely different but carry a high risk of failure.
+
+At least one active candidate must not depend on MoE routing.
+
+At least one active candidate must not depend on quantization.
+
+At least one active candidate must focus on learning or memory rather than weight storage.
+
+At least one candidate may reject the original “multi-dimensional weights” framing entirely.
+
+---
+
+# Mandatory real model training
+
+Do not limit the project to analytical simulations, matrix reconstruction tests, or router microbenchmarks.
+
+You must train actual language models.
+
+At minimum, complete the following training tracks.
+
+## Training Track A: dense model from random initialization
+
+Train a decoder-only or otherwise justified language model from scratch.
+
+The model must:
+
+- Consume real tokenized code and documentation data.
+- Produce validation-loss curves.
+- Save resumable checkpoints.
+- Support generation.
+- Be evaluated on coding and documentation tasks.
+- Serve as a matched architectural baseline.
+
+Do not call a few optimization steps on synthetic data “training a model.”
+
+## Training Track B: proposed architecture from random initialization
+
+Train at least one proposed architecture from scratch using:
+
+- The same tokenizer where appropriate.
+- The same training data.
+- The same number of training tokens.
+- A matched parameter or compute budget.
+- Comparable optimization settings.
+- Comparable evaluation checkpoints.
+
+The candidate may be:
+
+- Hierarchically routed.
+- Modular.
+- Memory-augmented.
+- Compositional.
+- Sparse.
+- Dynamically growing.
+- Partially recurrent.
+- Based on a newly proposed mechanism.
+
+## Training Track C: adaptation of an open pretrained model
+
+Select an appropriately licensed open model compatible with the available hardware.
+
+Test at least one adaptation method:
+
+- Full fine-tuning where practical.
+- LoRA.
+- Quantized LoRA.
+- Routed adapters.
+- Repository-specific adapters.
+- Continual adapters.
+- Additional pretraining.
+- Distillation.
+- Model merging.
+
+This track tests whether the proposed mechanisms remain useful at a more realistic capability level.
+
+## Training Track D: continual evolution
+
+Create a chronological stream of code and documentation updates.
+
+Update the model, memory, adapters, or experts over time.
+
+Measure:
+
+- Learning of new information.
+- Retention of old capabilities.
+- Interference.
+- Adaptation speed.
+- Storage growth.
+- Update cost.
+- Rollback.
+- Security boundaries.
+
+## Training Track E: improved candidate
+
+After analyzing the first candidate’s failures, modify its architecture or training process and train an improved version.
+
+The project must include at least one genuine architecture iteration driven by experimental evidence.
+
+---
+
+# Scaling ladder
+
+Use a scaling ladder rather than remaining indefinitely at toy scale.
+
+The exact model sizes must be chosen from measured hardware capacity and throughput.
+
+Use these ranges as guidance rather than rigid requirements.
+
+## Stage 0: correctness and smoke testing
+
+Typical scale:
+
+- 1 million to 10 million parameters.
+- Short training runs.
+- Small data samples.
+- CPU-compatible tests.
+
+Purpose:
+
+- Verify implementation.
+- Detect shape and gradient errors.
+- Test checkpointing.
+- Test generation.
+- Test reproducibility.
+
+Do not draw architectural conclusions from this stage.
+
+## Stage 1: pilot training
+
+Target scale:
+
+- Approximately 10 million to 50 million parameters.
+- Approximately 20 million to 100 million training tokens.
+- Multiple seeds where practical.
+
+Purpose:
+
+- Eliminate obviously broken ideas.
+- Tune basic optimization.
+- Compare loss curves.
+- Validate metrics.
+
+## Stage 2: medium training
+
+Target scale:
+
+- Approximately 50 million to 200 million parameters.
+- At least 100 million real training tokens.
+- Preferably 200 million to 1 billion tokens where hardware and storage permit.
+
+Purpose:
+
+- Produce meaningful architecture comparisons.
+- Detect scaling behavior.
+- Evaluate coding and documentation generation.
+- Test continual adaptation.
+
+Unless the hardware audit demonstrates that this is infeasible, complete at least one baseline and one candidate run consuming at least 100 million training tokens each.
+
+## Stage 3: scaled local experiment
+
+Target scale:
+
+- Approximately 150 million to 500 million parameters from scratch, or the largest model that the available hardware can train safely.
+- Approximately 500 million to several billion training tokens.
+- Alternatively, adapt an open model in roughly the 0.5 billion to 3 billion parameter range.
+
+Purpose:
+
+- Test whether the strongest result survives at a useful scale.
+- Evaluate real coding capability.
+- Evaluate longer contexts.
+- Evaluate repository-specific adaptation.
+- Measure practical ROCm performance.
+
+Do not silently fall back to tiny experiments.
+
+When the requested scale is infeasible, record:
+
+- Available VRAM.
+- Measured tokens per second.
+- Estimated memory.
+- Estimated training duration.
+- Disk requirement.
+- Why the scale is infeasible.
+- The largest feasible alternative.
+
+Use evidence rather than an assumption that larger training is impossible.
+
+---
+
+# Resource-aware execution
+
+Before each substantial run:
+
+1. Benchmark a short representative training segment.
+2. Measure peak VRAM.
+3. Measure host RAM.
+4. Measure disk use.
+5. Measure tokens per second.
+6. Check numerical stability.
+7. Estimate total optimizer steps.
+8. Estimate checkpoint size.
+9. Verify checkpoint restoration.
+10. Verify that validation and logging work.
+
+Then choose the largest scientifically useful run supported by the machine.
+
+Use:
+
+- Gradient accumulation.
+- Activation checkpointing.
+- Mixed precision.
+- Efficient attention where compatible.
+- Fused optimizers where validated.
+- Dataset streaming.
+- Memory-mapped datasets.
+- Asynchronous data loading.
+- Checkpoint rotation.
+- Resume support.
+- Gradient clipping.
+- Loss-scale monitoring.
+- NaN and Inf detection.
+
+Do not reduce the scientific scope simply because the first configuration runs out of memory. Attempt appropriate engineering remedies first.
+
+Do not fill the disk or make the workstation unusable.
+
+Maintain configurable limits for:
+
+- Maximum disk usage.
+- Maximum checkpoint count.
+- Maximum host RAM.
+- Maximum VRAM.
+- Maximum dataloader workers.
+- Thermal or stability limits where visible.
+
+Delete only regenerable caches and superseded checkpoints, never unique experimental results, and document cleanup.
+
+---
+
+# ROCm requirements
+
+Treat ROCm as the primary accelerator environment.
+
+Audit and record:
+
+- GPU model.
+- Available VRAM.
+- ROCm version.
+- PyTorch version.
+- Supported numeric formats.
+- Working attention implementations.
+- Working quantization implementations.
+- Kernel compatibility.
+- Profiling tools available.
+- Known unsupported operations.
+- Stable batch sizes.
+- Measured throughput.
+
+Provide a CPU fallback for tests and minimal experiments.
+
+Do not include unconditional CUDA-only dependencies.
+
+When a useful library or kernel is CUDA-only:
+
+- Search for a ROCm-compatible alternative.
+- Implement a standard PyTorch fallback.
+- Isolate the unsupported optimization behind an interface.
+- Document the expected performance difference.
+- Do not discard the architecture solely for that reason.
+
+Profile before optimizing.
+
+Classify latency and throughput problems as:
+
+1. Inherent algorithmic cost.
+2. Poor asymptotic scaling.
+3. Memory movement.
+4. Dispatch or routing overhead.
+5. Unoptimized Python.
+6. Missing fused kernel.
+7. Unsupported quantized operation.
+8. Poor tensor layout.
+9. Small-batch inefficiency.
+10. ROCm software maturity.
+
+Do not confuse categories 5 through 10 with proof that an architecture is inherently unsuitable.
+
+---
+
+# Revised latency policy
+
+Latency is an evaluation metric, not an early universal rejection criterion.
+
+Use three decision stages.
+
+## Discovery stage
+
+Primary priorities:
+
+- Does the mechanism learn?
+- Does it improve quality?
+- Does it adapt?
+- Does it retain knowledge?
+- Does it reduce storage?
+- Does it expose a useful new capability?
+- Does it produce a clear scaling trend?
+
+At this stage, tolerate substantial latency overhead when the implementation is not optimized.
+
+A candidate may remain active even at several times baseline latency if it shows a material scientific benefit and a plausible optimization path.
+
+## Viability stage
+
+Investigate:
+
+- Batching.
+- Caching.
+- Precomputation.
+- Kernel fusion.
+- Better layouts.
+- Vectorized execution.
+- Reduced routing frequency.
+- Route reuse.
+- Expert prefetch.
+- Index compression.
+- Block reconstruction.
+- Overlapped data transfer.
+- Compilation.
+
+Determine how much overhead is fundamental.
+
+## Deployment stage
+
+Only mature candidates must satisfy strict latency and throughput requirements.
+
+At this stage compare:
+
+- Time to first token.
+- Prefill throughput.
+- Decode throughput.
+- p50 latency.
+- p95 latency.
+- Batch scaling.
+- Memory bandwidth.
+- Energy.
+- Quality-latency trade-offs.
+
+Never omit latency measurements, but do not allow early unoptimized latency to terminate the research automatically.
+
+---
+
+# Dataset program
+
+Build a real code-and-documentation training corpus.
+
+Prefer data with clear provenance and compatible licensing.
+
+Possible data categories include:
+
+- Permissively licensed public repositories.
+- Source code.
+- README files.
+- API documentation.
+- Docstrings.
+- Comments.
+- Tutorials.
+- Tests.
+- Issues where licensing and terms permit.
+- Commit messages.
+- Release notes.
+- Public technical documentation.
+- Synthetic code validated by compilation and tests.
+
+For every dataset record:
+
+- Name.
+- Source.
+- Version or snapshot date.
+- License.
+- Permitted use.
+- Download procedure.
+- Raw size.
+- Processed size.
+- Number of repositories.
+- Number of files.
+- Number of tokens.
+- Language distribution.
+- Documentation-to-code ratio.
+- Filtering rules.
+- Deduplication rules.
+- Split procedure.
+- Known limitations.
+
+Do not use unclear or incompatible data merely to increase token count.
+
+## Data processing
+
+Implement:
+
+- File-type detection.
+- Binary-file rejection.
+- Generated-file detection.
+- Minimum and maximum file sizes.
+- Secret scanning.
+- Exact deduplication.
+- Near-duplicate detection.
+- Repository-aware splitting.
+- Temporal splitting where applicable.
+- Language balancing.
+- Quality scoring.
+- Documentation extraction.
+- Code-document association.
+- Test-file identification.
+- License filtering.
+- Contamination checks.
+
+Keep entire repositories or repository time ranges on one side of the train-validation-test boundary where practical.
+
+Do not randomly split individual near-duplicate files across training and evaluation.
+
+## Tokenization
+
+Compare appropriate tokenization strategies:
+
+- Existing pretrained tokenizer.
+- Custom BPE.
+- Unigram tokenizer.
+- Byte-level tokenizer.
+- Mixed byte and token representations.
+- Code-aware tokenization where technically justified.
+
+Train custom tokenizers only on the training split.
+
+Measure:
+
+- Tokens per character.
+- Tokens per line.
+- Identifier fragmentation.
+- Whitespace handling.
+- Unicode handling.
+- Compression ratio.
+- Throughput.
+- Coding-task performance.
+
+## Training objectives
+
+Compare applicable objectives:
+
+- Next-token prediction.
+- Fill-in-the-middle.
+- Span corruption.
+- Code infilling.
+- Code-to-documentation generation.
+- Documentation-to-code retrieval.
+- Test-conditioned repair.
+- Diff prediction.
+- Contrastive code-document alignment.
+- Repository-context prediction.
+- Multi-file continuation.
+- Error-message-conditioned repair.
+
+Do not combine every objective at once. Use controlled ablations.
+
+---
+
+# Training methodology
+
+Implement a reliable training framework containing:
+
+- Configurable architecture definitions.
+- Configurable datasets.
+- Distributed-ready data interfaces even if only one GPU is available.
+- Mixed-precision support.
+- Checkpoint and resume.
+- Evaluation during training.
+- Generation samples.
+- Experiment tracking.
+- Machine-readable metrics.
+- Deterministic seeds where supported.
+- Gradient statistics.
+- Activation statistics.
+- Hardware utilization.
+- Failure recovery.
+
+For each training run record:
+
+- Experiment ID.
+- Git commit.
+- Architecture.
+- Parameter count.
+- Active parameter count.
+- Trainable parameter count.
+- Dataset version.
+- Number of training tokens.
+- Number of optimization steps.
+- Context length.
+- Batch size.
+- Effective batch size.
+- Optimizer.
+- Learning-rate schedule.
+- Weight decay.
+- Precision.
+- Seed.
+- ROCm and library versions.
+- Runtime.
+- Peak VRAM.
+- Peak host RAM.
+- Training throughput.
+- Validation loss.
+- Checkpoint locations.
+- Termination reason.
+
+Generate and preserve:
+
+- Training-loss curves.
+- Validation-loss curves.
+- Gradient-norm curves.
+- Throughput curves.
+- Memory measurements.
+- Evaluation results at multiple checkpoints.
+
+Do not report only the best checkpoint.
+
+---
+
+# Fair architecture comparison
+
+Compare candidates using more than one matching regime.
+
+Where applicable, use:
+
+## Matched parameter count
+
+Models have approximately equal total parameters.
+
+## Matched active parameter count
+
+Models use approximately equal active parameters per token.
+
+## Matched training compute
+
+Models receive approximately equal training FLOPs or wall-clock accelerator time.
+
+## Matched token budget
+
+Models see the same number of training tokens.
+
+## Matched storage
+
+Models have approximately equal final encoded size.
+
+## Matched runtime memory
+
+Models operate under approximately equal VRAM limits.
+
+A design may win under one regime and lose under another. Report all relevant regimes.
+
+Do not give a sparse model more total training tokens or compute without clearly labeling the difference.
+
+---
+
+# Scaling analysis
+
+Do not evaluate only one model size.
+
+For the most promising baseline and candidate, run at least three meaningful scales when feasible.
+
+Fit or inspect trends for:
+
+- Validation loss.
+- Coding performance.
+- Documentation performance.
+- Retention.
+- Storage.
+- Throughput.
+- Routing quality.
+- Expert utilization.
+- Training stability.
+
+Determine whether a candidate:
+
+- Improves consistently with scale.
+- Helps only at tiny scale.
+- Requires a minimum scale before helping.
+- Becomes unstable as it grows.
+- Suffers increasing routing overhead.
+- Benefits disproportionately from more data.
+- Saturates early.
+
+A small-scale loss is not necessarily final if there is a credible and measurable scaling trend.
+
+A small-scale win is not sufficient if the advantage disappears at larger scale.
+
+---
+
+# Continual evolution research
+
+The long-term system should learn from authorized local work without allowing uncontrolled self-modification.
+
+Continue testing the three-timescale design:
+
+## Immediate memory
+
+Update quickly:
+
+- Text indexes.
+- Symbol indexes.
+- Call graphs.
+- Dependency graphs.
+- API databases.
+- Validated solution memory.
+- Failure memory.
+- Repository state.
+
+## Modular plastic parameters
+
+Update after validation:
+
+- Adapters.
+- Low-rank deltas.
+- Specialist experts.
+- Sparse residuals.
+- Fast-weight modules.
+- Repository-specific modules.
+
+## Stable model
+
+Update infrequently through controlled consolidation.
+
+However, also search for better alternatives to this three-tier model.
+
+Investigate:
+
+- Fast temporary weight updates.
+- Learned update rules.
+- Meta-learning.
+- Test-time training.
+- Dynamic expert creation.
+- Selective consolidation.
+- Dual-memory models.
+- Periodic distillation.
+- Full-model updates with replay.
+- Parameter isolation.
+- Functional regularization.
+- Model editing.
+- Weight merging.
+- Retrieval-only evolution.
+
+## Chronological evaluation
+
+Use public repository history as an evolving data stream.
+
+At time t:
+
+1. Expose only information available at or before t.
+2. Update the allowed model or memory components.
+3. Evaluate tasks emerging after t.
+4. Re-evaluate all prior task groups.
+5. Record storage and compute growth.
+6. Test rollback.
+
+Compare:
+
+- Static model.
+- Continuously updated retrieval.
+- Structured repository memory.
+- Continually trained adapter.
+- Adapter with replay.
+- Dynamic expert bank.
+- Fast-weight system.
+- Periodic model consolidation.
+- Direct full-model update.
+
+The direct full-model approach must be tested scientifically rather than dismissed in advance, but it must remain isolated and externally gated.
+
+---
+
+# Coding evaluation
+
+Evaluate actual functional coding ability.
+
+Use tasks such as:
+
+- Function completion.
+- Fill-in-the-middle.
+- Bug repair.
+- Unit-test generation.
+- Refactoring.
+- Type correction.
+- Compiler-error repair.
+- Repository-level issue resolution.
+- Multi-file modification.
+- API migration.
+- Dependency updates.
+- Internal utility reuse.
+- Code explanation.
+- Security repair.
+
+Measure:
+
+- Compilation.
+- Unit tests.
+- Integration tests.
+- Type checks.
+- Static analysis.
+- Security scanning.
+- Exact functional behavior.
+- Number of changed files.
+- Patch size.
+- Regression count.
+- Repository convention compliance.
+
+Text similarity must not be the only correctness metric.
+
+---
+
+# Documentation evaluation
+
+Evaluate:
+
+- API accuracy.
+- Signature accuracy.
+- Type accuracy.
+- Parameter descriptions.
+- Return-value descriptions.
+- Example compilation.
+- Link validity.
+- Cross-reference validity.
+- Consistency with source code.
+- Detection of stale statements.
+- Release-note completeness.
+- Changelog correctness.
+- Architecture-summary correctness.
+- Hallucinated symbols.
+- Unsupported claims.
+- Version awareness.
+
+Where possible, derive ground truth from:
+
+- Source code.
+- Type information.
+- Generated API metadata.
+- Tests.
+- Commit history.
+- Build artifacts.
+
+---
+
+# Evaluation of new mechanisms
+
+A proposed mechanism should not be judged solely by final benchmark score.
+
+Also measure whether it exhibits its intended behavior.
+
+Examples:
+
+## Routing mechanism
+
+Measure:
+
+- Route entropy.
+- Route stability.
+- Expert specialization.
+- Load balance.
+- Causal dependence on selected experts.
+- Behavior on mixed-domain input.
+- Generalization to unseen combinations.
+
+## Memory mechanism
+
+Measure:
+
+- Recall.
+- Precision.
+- Update speed.
+- Interference.
+- Stale-memory handling.
+- Retrieval authorization.
+- Dependence on retrieved information.
+
+## Fast-weight mechanism
+
+Measure:
+
+- Adaptation after one or a few examples.
+- Reversion after context ends.
+- Interference.
+- Stability.
+- Whether the update encodes useful information or only memorizes.
+
+## Continual-learning mechanism
+
+Measure:
+
+- Forward transfer.
+- Backward transfer.
+- Average retention.
+- Worst-case forgetting.
+- Plasticity.
+- Storage growth.
+- Update compute.
+- Rollback.
+
+## Compressed-weight mechanism
+
+Measure:
+
+- Encoded size.
+- Runtime representation.
+- Reconstruction error.
+- Model quality.
+- Direct execution cost.
+- Cache behavior.
+- Gradient behavior during training.
+
+---
+
+# Statistical and experimental rigor
+
+Use:
+
+- Multiple seeds at pilot scale.
+- Confidence intervals or uncertainty estimates where meaningful.
+- Matched data order.
+- Matched token count.
+- Matched evaluation sets.
+- Random controls.
+- Ablations.
+- Failure analysis.
+- Checkpoint comparisons.
+- Predefined primary metrics.
+
+For larger runs where multiple seeds are too expensive:
+
+- Demonstrate seed robustness at smaller scale.
+- Run at least one matched large baseline.
+- Avoid overstating a one-run result.
+- Clearly label uncertainty.
+
+Do not tune repeatedly on the final test set.
+
+Maintain separate:
+
+- Training set.
+- Validation set.
+- Development evaluation set.
+- Final held-out test set.
+- Temporal test set.
+
+---
+
+# Research selection process
+
+At each major research cycle:
+
+1. Review the current evidence.
+2. Identify the largest unresolved uncertainties.
+3. Generate multiple candidate experiments.
+4. Rank them by expected information gained per unit of compute.
+5. Select experiments across conservative, adjacent, and radical lanes.
+6. Run the smallest meaningful version.
+7. Analyze mechanism-level behavior.
+8. Revise or reject.
+9. Scale only candidates that retain a plausible benefit.
+10. Update the idea ledger and status report.
+
+Do not require a candidate to win every metric.
+
+A candidate may continue when it offers a strong advantage in one important dimension with an acceptable trade-off elsewhere.
+
+Use a decision record for every major continuation or termination decision.
+
+---
+
+# Candidate survival criteria
+
+During discovery, a candidate can remain active when at least one of the following is supported:
+
+- Better validation loss under matched compute.
+- Better coding quality.
+- Better documentation quality.
+- Faster adaptation.
+- Lower forgetting.
+- Better sample efficiency.
+- Lower storage.
+- Lower runtime memory.
+- Better modularity.
+- Better rollback.
+- Better performance on rare domains.
+- Stronger scaling trend.
+- A clearly demonstrated new capability.
+- A mechanism-level result that suggests a valuable revised design.
+
+Latency alone should not terminate the candidate unless profiling indicates that the overhead is inherent and incompatible with any plausible use case.
+
+A candidate should be rejected or archived when:
+
+- Its intended mechanism does not occur.
+- Its benefit disappears under fair comparison.
+- It repeatedly fails to train.
+- Its gains are caused by extra data or compute.
+- Its storage accounting is misleading.
+- Its continual-learning benefit is no better than retrieval.
+- Its complexity produces no measurable value.
+- Its security risks cannot be controlled.
+- Larger-scale results reverse the apparent small-scale win.
+- Its claimed novelty is already established prior art with no meaningful extension.
+
+---
+
+# Security and local deployment
+
+Preserve the eventual on-premises requirement throughout the research.
+
+The production design must not depend on sending confidential material outside approved infrastructure.
+
+Maintain:
+
+- Data provenance.
+- Dataset licensing.
+- Secret scanning.
+- Repository-level access controls.
+- Model-update lineage.
+- Signed or checksummed artifacts.
+- Immutable evaluation records.
+- Rollback.
+- Canary-secret tests.
+- Cross-project leakage tests.
+- Prompt-injection tests.
+- Poisoning tests.
+- Backdoor tests.
+
+Authorization must be enforced by deterministic external software before retrieval or model-context construction.
+
+The model must never be trusted to decide whether a user is authorized.
+
+Generated training data must be labeled and tracked.
+
+Do not recursively train on unfiltered model output.
+
+Compare:
+
+- Human-authored data only.
+- Test-validated generated data.
+- Human-approved generated data.
+- Mixed original and synthetic data.
+
+Measure whether generated-data reuse causes degradation or narrowing.
+
+---
+
+# Repository changes
+
+Inspect the existing repository structure before creating new files.
+
+Extend it rather than replacing it.
+
+Add or adapt documents for:
+
+- Current repository audit.
+- Expanded research charter.
+- Open architecture search.
+- Idea ledger.
+- New prior-art review.
+- Scaling plan.
+- Dataset plan.
+- ROCm capability report.
+- Training framework.
+- Training runs.
+- Model-scale experiments.
+- Alternative architectures.
+- Continual-learning experiments.
+- Mechanism analysis.
+- Latency classification.
+- Scaled results.
+- Final recommendation.
+
+Suggested deliverables include:
+
+    research/current_state_audit.md
+    research/expanded_research_charter.md
+    research/open_architecture_search.md
+    research/idea_ledger.md
+    research/scaling_plan.md
+    research/dataset_plan.md
+    research/rocm_environment.md
+    research/training_plan.md
+    research/training_runs.md
+    research/alternative_architectures.md
+    research/continual_training_results.md
+    research/scaled_results.md
+    research/final_research_assessment.md
+
+    src/
+        training/
+        models/
+        routing/
+        memory/
+        compression/
+        continual/
+        evaluation/
+        data/
+
+    configs/
+        models/
+        training/
+        datasets/
+        continual/
+        scaled/
+
+    results/
+        training/
+        evaluations/
+        continual/
+        scaling/
+        profiles/
+
+Use the repository’s existing naming and structure when it is already coherent.
+
+Do not create empty documents merely to satisfy the list.
+
+---
+
+# Persistent status reporting
+
+Maintain the existing status document or create an appropriate replacement.
+
+It must report:
+
+- Current research phase.
+- Active candidates.
+- Archived candidates.
+- Current strongest baseline.
+- Current strongest proposed model.
+- Models actually trained.
+- Tokens actually consumed.
+- Datasets used.
+- GPU utilization.
+- Completed experiments.
+- Failed experiments.
+- Inconclusive experiments.
+- Important findings.
+- Current bottlenecks.
+- Resource use.
+- Next highest-information experiment.
+
+Keep a machine-readable experiment registry.
+
+Each result must be traceable to:
+
+- Code version.
+- Configuration.
+- Dataset version.
+- Random seed.
+- Checkpoint.
+- Hardware.
+- Command.
+- Logs.
+
+---
+
+# Mandatory outcomes
+
+This goal must not be considered complete after producing only documents, plans, toy examples, or microbenchmarks.
+
+Before completion, the repository must contain evidence of all the following:
+
+1. The previous repository state has been audited and preserved.
+2. The original ideas have been reconsidered rather than treated as fixed requirements.
+3. Current prior art has been reviewed across multiple architecture families.
+4. An idea ledger contains multiple conservative, adjacent, and radical candidates.
+5. At least ten technically distinct candidate mechanisms have been examined on paper.
+6. At least three substantially different architecture families have been prototyped.
+7. At least one candidate does not rely on MoE.
+8. At least one candidate does not rely on quantization.
+9. At least one candidate focuses on memory or continual learning.
+10. A dense language model has been trained from random initialization on real code and documentation.
+11. At least one proposed architecture has been trained from random initialization.
+12. Baseline and candidate training use matched token or compute budgets.
+13. At least one medium-scale run has consumed at least 100 million real training tokens unless measured hardware constraints make this infeasible.
+14. At least one open pretrained model has been adapted using a justified method.
+15. A chronological continual-learning experiment has been run.
+16. Retrieval-only evolution has been compared with parameter evolution.
+17. Prior-task retention has been measured after updates.
+18. At least one candidate has been revised and retrained based on observed failure.
+19. At least one meaningful scaling sweep has been completed.
+20. ROCm performance has been measured and profiled.
+21. Prototype latency has been separated into inherent and implementation-related overhead.
+22. Promising ideas have not been rejected solely because of unoptimized latency.
+23. Coding ability has been evaluated functionally.
+24. Documentation ability has been evaluated against source-derived facts.
+25. Storage includes all metadata and runtime representations.
+26. Negative results have been retained.
+27. All major claims are supported by reproducible experiments.
+28. The final assessment identifies the strongest viable path, even if it differs completely from the original concept.
+
+---
+
+# Final assessment
+
+Produce a final report containing:
+
+1. Executive summary.
+2. Audit of previous work.
+3. Original hypotheses and what happened to them.
+4. Alternative architecture families investigated.
+5. Newly proposed mechanisms.
+6. Closest prior art for each claimed new idea.
+7. Models actually trained.
+8. Dataset sizes and composition.
+9. Number of training tokens.
+10. Training curves.
+11. Coding results.
+12. Documentation results.
+13. Continual-learning results.
+14. Retention and forgetting results.
+15. Storage and memory results.
+16. ROCm performance results.
+17. Latency analysis.
+18. Scaling behavior.
+19. Security analysis.
+20. Failed approaches.
+21. Inconclusive approaches.
+22. Confounding factors.
+23. Most promising architecture.
+24. Strongest simpler alternative.
+25. Whether continual weight updates outperform evolving retrieval.
+26. Whether the original multi-dimensional concept remains useful.
+27. Whether high-precision carrier pathways are supported.
+28. Whether vector lookup is justified.
+29. Whether any genuinely new mechanism was discovered.
+30. A go, revise, or stop recommendation for each research lane.
+31. The next three experiments with the highest expected information value.
+
+Do not claim that an architecture is novel merely because no identical name was found.
+
+Do not claim success unless the measured result survives appropriate baselines and ablations.
+
+---
+
+# Definition of done
+
+This goal is complete only when the repository has progressed from exploratory prototypes to real model training and evidence-based architecture selection.
+
+Completion requires:
+
+- Real models trained on real code and documentation.
+- Larger-scale data than the earlier toy experiments.
+- At least one meaningful baseline-versus-candidate training comparison.
+- At least one continual-learning experiment.
+- At least one architecture revision based on evidence.
+- Multiple alternative design families investigated.
+- Promising approaches evaluated beyond initial latency.
+- ROCm used effectively where possible.
+- Reproducible checkpoints and metrics.
+- Functional coding evaluation.
+- Source-grounded documentation evaluation.
+- Honest negative results.
+- A final recommendation based on measured trade-offs.
+
+Do not stop after planning.
+
+Do not stop after implementing the training framework.
+
+Do not stop after a smoke test.
+
+Do not stop after the first failed architecture.
+
+Do not stop merely because a candidate is initially slow.
+
+Continue through audit, research, idea generation, implementation, actual training, evaluation, revision, scaling, and final synthesis.
+
+Begin now by:
+
+1. Reading the entire existing repository.
+2. Auditing the current state and previous results.
+3. Profiling the ROCm training environment.
+4. Identifying which earlier constraints should be retired.
+5. Creating the expanded research charter.
+6. Building or validating the real training pipeline.
+7. Selecting a real code-and-documentation dataset.
+8. Training or validating the dense baseline.
+9. Generating alternative architecture candidates.
+10. Starting the highest-information experiments.

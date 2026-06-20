@@ -1,0 +1,79 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E5d_synthetic_stale_doc_positive_control",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H5",
+  "metrics": {
+    "final": {
+      "retrieval_stale_doc_topk_accuracy": 1.0,
+      "runtime_ms": 10.827149992110208,
+      "stale_doc_issue_count": 1,
+      "steps_with_removed_symbols": 1,
+      "steps_with_stale_docs": 1,
+      "structured_stale_doc_topk_accuracy": 1.0
+    },
+    "notes": "Generated Git-history positive control for stale-doc detection. The middle commit removes parse_config while docs still mention it; the final commit fixes the docs. This is synthetic and does not replace public-repository evidence.",
+    "positive_control": {
+      "detected_stale_doc_files": [
+        "docs.md"
+      ],
+      "detected_stale_doc_issues": 1,
+      "detected_stale_symbols": [
+        "parse_config"
+      ],
+      "expected_stale_doc_file": "docs.md",
+      "expected_stale_doc_issues": 1,
+      "expected_stale_symbol": "parse_config",
+      "post_fix_stale_doc_files": [],
+      "scenario": "rename parse_config to load_config, then update docs in a later commit"
+    },
+    "repo": {
+      "commit_count_used": 3,
+      "head": "9c6358d5f789",
+      "path_name": "repo",
+      "top_k": 1
+    },
+    "steps": [
+      {
+        "current_commit": "14c52cb34721",
+        "doc_file_count": 1,
+        "previous_commit": "b5e602f451c5",
+        "removed_symbols": [
+          "parse_config"
+        ],
+        "retrieval_stale_doc_topk_hit": 1.0,
+        "stale_doc_files": [
+          "docs.md"
+        ],
+        "stale_mentions": {
+          "docs.md": [
+            "parse_config"
+          ]
+        },
+        "step": 1,
+        "structured_stale_doc_topk_hit": 1.0
+      },
+      {
+        "current_commit": "9c6358d5f789",
+        "doc_file_count": 1,
+        "previous_commit": "14c52cb34721",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 2,
+        "structured_stale_doc_topk_hit": null
+      }
+    ]
+  },
+  "notes": "Generated Git-history positive control for stale-document detection after an API rename and later documentation fix.",
+  "recorded_at_unix": 1781952213.805261,
+  "seed": 123,
+  "status": "completed"
+}

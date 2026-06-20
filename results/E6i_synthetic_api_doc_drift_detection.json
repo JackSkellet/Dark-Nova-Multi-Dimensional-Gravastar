@@ -1,0 +1,109 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E6i_synthetic_api_doc_drift_detection",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "A1_external_memory",
+  "metrics": {
+    "benchmark_label": "synthetic_api_doc_drift_detection",
+    "experiment_family": "external_memory_architecture",
+    "final": {
+      "doc_only_answer_accuracy": 0.0,
+      "repo_count_used": 1,
+      "stale_doc_issue_count": 1,
+      "structured_answer_accuracy": 1.0,
+      "structured_beats_doc_only": true,
+      "supports_model_level_claim": false
+    },
+    "limitations": [
+      "synthetic_positive_control",
+      "sphinx_directive_consistency_only",
+      "python_signature_presence_only",
+      "not_documentation_quality",
+      "not_semantic_prose_drift_detection",
+      "no_model_integration"
+    ],
+    "methods": {
+      "doc_directive_only_memory": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "covered:docs/api.rst",
+            "correct": false,
+            "expected_status": "stale_missing_source:docs/api.rst",
+            "question": "is documentation for API symbol parse_config consistent with current source?",
+            "repo": "synthetic_api_doc_drift",
+            "symbol": "parse_config"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 0.0012020173016935587,
+          "latency_ms_p95": 0.0012020173016935587
+        },
+        "question_count": 1,
+        "storage_bytes": 32
+      },
+      "frozen_parametric_proxy": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_status": "stale_missing_source:docs/api.rst",
+            "question": "is documentation for API symbol parse_config consistent with current source?",
+            "repo": "synthetic_api_doc_drift",
+            "symbol": "parse_config"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 0.000620988430455327,
+          "latency_ms_p95": 0.000620988430455327
+        },
+        "question_count": 1,
+        "storage_bytes": 96
+      },
+      "structured_source_doc_consistency_memory": {
+        "answer_accuracy": 1.0,
+        "answers": [
+          {
+            "answer": "stale_missing_source:docs/api.rst",
+            "correct": true,
+            "expected_status": "stale_missing_source:docs/api.rst",
+            "question": "is documentation for API symbol parse_config consistent with current source?",
+            "repo": "synthetic_api_doc_drift",
+            "symbol": "parse_config"
+          }
+        ],
+        "correct_count": 1,
+        "latency": {
+          "latency_ms_p50": 0.0004709872882813215,
+          "latency_ms_p95": 0.0004709872882813215
+        },
+        "question_count": 1,
+        "storage_bytes": 86
+      }
+    },
+    "question_count": 1,
+    "repos": [
+      {
+        "commit": "d48afa182701",
+        "doc_directive_symbol_count_available": 1,
+        "python_signature_count_available": 1,
+        "repo": "synthetic_api_doc_drift",
+        "stale_doc_issue_count": 1
+      }
+    ],
+    "status": "completed"
+  },
+  "notes": "Synthetic Git-history positive control for API documentation drift: a source symbol is renamed while a Sphinx autofunction directive still references the old API. Compares doc-directive-only memory with structured source/documentation consistency memory.",
+  "recorded_at_unix": 1781952213.8127162,
+  "seed": 123,
+  "status": "completed"
+}

@@ -1,0 +1,129 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E4_component_lookup",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H4",
+  "metrics": {
+    "1024": {
+      "cached_previous": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 131072.0,
+        "latency_ms_p50": 0.01654197694733739,
+        "latency_ms_p95": 0.016952988517004997,
+        "recall_at_1": 1.0
+      },
+      "dense_topk": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 131072.0,
+        "latency_ms_p50": 0.01725301262922585,
+        "latency_ms_p95": 0.017518999811727554,
+        "recall_at_1": 1.0
+      },
+      "exact_vector": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 131072.0,
+        "latency_ms_p50": 0.014588003978133202,
+        "latency_ms_p95": 0.014913995983079076,
+        "recall_at_1": 1.0
+      },
+      "hash_routing": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 9216.0,
+        "latency_ms_p50": 0.024422493879683316,
+        "latency_ms_p95": 0.025948240363504738,
+        "recall_at_1": 0.64453125
+      },
+      "tree_centroid": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 4096.0,
+        "latency_ms_p50": 0.007624999852851033,
+        "latency_ms_p95": 0.007958500646054745,
+        "recall_at_1": 0.1796875
+      }
+    },
+    "128": {
+      "cached_previous": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 16384.0,
+        "latency_ms_p50": 0.004539004294201732,
+        "latency_ms_p95": 0.0047015128075145185,
+        "recall_at_1": 1.0
+      },
+      "dense_topk": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 16384.0,
+        "latency_ms_p50": 0.0024850014597177505,
+        "latency_ms_p95": 0.0025874978746287525,
+        "recall_at_1": 1.0
+      },
+      "exact_vector": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 16384.0,
+        "latency_ms_p50": 0.0029859947971999645,
+        "latency_ms_p95": 0.003076012944802642,
+        "recall_at_1": 1.0
+      },
+      "hash_routing": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 2048.0,
+        "latency_ms_p50": 0.00818549597170204,
+        "latency_ms_p95": 0.00855624966789037,
+        "recall_at_1": 0.78515625
+      },
+      "tree_centroid": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 1408.0,
+        "latency_ms_p50": 0.004618981620296836,
+        "latency_ms_p95": 0.004739005817100406,
+        "recall_at_1": 0.640625
+      }
+    },
+    "16": {
+      "cached_previous": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 2048.0,
+        "latency_ms_p50": 0.003367022145539522,
+        "latency_ms_p95": 0.0036220080801285803,
+        "recall_at_1": 1.0
+      },
+      "dense_topk": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 2048.0,
+        "latency_ms_p50": 0.0016129924915730953,
+        "latency_ms_p95": 0.001696243998594582,
+        "recall_at_1": 1.0
+      },
+      "exact_vector": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 2048.0,
+        "latency_ms_p50": 0.001794018317013979,
+        "latency_ms_p95": 0.001936503394972533,
+        "recall_at_1": 1.0
+      },
+      "hash_routing": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 1152.0,
+        "latency_ms_p50": 0.006532995030283928,
+        "latency_ms_p95": 0.0068637600634247065,
+        "recall_at_1": 0.98046875
+      },
+      "tree_centroid": {
+        "cache_hit_rate": 0.0,
+        "index_memory_bytes": 512.0,
+        "latency_ms_p50": 0.004238012479618192,
+        "latency_ms_p95": 0.004374007403384894,
+        "recall_at_1": 0.90234375
+      }
+    }
+  },
+  "notes": "CPU isolated lookup benchmark; complete routed execution remains future work.",
+  "recorded_at_unix": 1781952213.8026755,
+  "seed": 123,
+  "status": "completed"
+}

@@ -1,0 +1,45 @@
+experiment_id,hypothesis,seed,status,notes
+E5_public_repo_chronology,H5,0,completed,Explicit local-clone public repository chronology experiment.
+E5_public_repo_symbol_qa,H5,0,completed,Explicit local-clone public repository symbol-definition QA experiment.
+E5_public_repo_stale_docs,H5,0,completed,Explicit local-clone public repository stale-document detection experiment.
+E5_markupsafe_chronology,H5,0,completed,Explicit local-clone public repository chronology experiment.
+E5_markupsafe_symbol_qa,H5,0,completed,Explicit local-clone public repository symbol-definition QA experiment.
+E5_markupsafe_stale_docs,H5,0,completed,Explicit local-clone public repository stale-document detection experiment.
+E5_markupsafe_public_patch_replay,H5,0,completed,"Explicit local-clone public historical patch replay graded by executable tests, not text similarity."
+E3h_real_open_model_matrix_precision,H3,123,completed,"Explicitly downloaded pinned Hugging Face tiny-gpt2 checkpoint and evaluated selective precision on a real open-model matrix. Measures reconstruction error, not task loss."
+E3i_real_open_model_task_precision,H3,123,completed,Pinned tiny-gpt2 checkpoint evaluated with a local minimal GPT-2 forward pass. Measures held-out next-token loss and KL on deterministic token-id sequences; not a natural-language benchmark.
+E3j_real_open_model_natural_text_precision,H3,123,completed,Pinned tiny-gpt2 checkpoint evaluated with byte-level GPT-2 BPE tokenized natural-language repository/code prose. This addresses the E3i token-id smoke-test limitation but remains a tiny-model CPU experiment.
+E5g_public_patch_replay_suite,H5,0,completed,Two-task local public historical patch replay suite covering MarkupSafe proxy exact-type behavior and Kilo saved_hl memory-leak repair. MarkupSafe uses a functional Python regression; Kilo uses an executable source-level regression.
+E3k_real_open_model_internal_tensor_precision,H3,123,completed,Pinned tiny-gpt2 checkpoint evaluated with byte-level GPT-2 BPE tokenized natural-language repository/code prose. This addresses the E3i token-id smoke-test limitation but remains a tiny-model CPU experiment.
+E1_contextual_routing,H1,123,completed,"Synthetic polysemy task with static, flat contextual, hierarchical, and random routers."
+E1b_routing_robustness,H1,123,completed,"Synthetic mixed-topic and adversarial-cue routing with single-label, explicit multi-label, and latent-centroid multi-label routers."
+E2_compositional_storage,H2,123,completed,Synthetic representative matrix; includes metadata in byte counts.
+E3_carrier_importance,H3,123,completed,Linear causal carrier task with random-protection and sparse-residual controls.
+E3b_output_error_selected_precision,H3,123,completed,Groupwise int4 and validation-output-error-selected FP32 carrier protection with random controls.
+E3c_tiny_transformer_precision,H3,123,completed,Tiny transformer-style LM output-head precision allocation evaluated on held-out prompts.
+E3d_trained_tiny_transformer_precision,H3,123,completed,Ridge-trained tiny transformer-style LM output-head precision allocation evaluated on held-out prompts.
+E3e_bf16_vs_fp32_carriers,H3,123,completed,Ridge-trained tiny transformer-style LM comparing selected BF16-like carrier rows with selected FP32 carrier rows and random controls.
+E3f_internal_matrix_precision,H3,123,completed,Ridge-trained tiny transformer-style LM with selective precision on the internal MLP output matrix rather than the output head.
+E3g_trained_internal_layer_precision,H3,123,completed,Tiny transformer-style LM with the internal MLP output matrix trained by ridge regression before selective precision is evaluated.
+E4_component_lookup,H4,123,completed,CPU isolated lookup benchmark; complete routed execution remains future work.
+E4b_routed_execution,H4,123,completed,"Larger-bank routed execution simulation with authorization, cache, transfer, reconstruction, and dispatch timing."
+E4c_torch_batched_routed_execution,H4,123,completed,"Torch-backed batched exact routed execution with authorization masking, component movement, reconstruction, and batched dispatch. Requests ROCm through PyTorch HIP and records backend and fallback status."
+E4d_rocm_transfer_scaling,H4,123,completed,"ROCm-requested Torch transfer scaling benchmark with separate host-to-device, device dispatch, and device-to-host timing. This does not measure occupancy, power, fusion, or useful model layers."
+E5_chronological_continual_learning,H5,123,completed,"Synthetic chronological API-fact replay with retrieval, adapter replay, and rollback."
+E5c_trainable_adapter_vs_retrieval,H5,123,completed,Toy trainable low-rank adapter delta compared with continuously updated retrieval under chronological API-fact replay.
+E5d_synthetic_stale_doc_positive_control,H5,123,completed,Generated Git-history positive control for stale-document detection after an API rename and later documentation fix.
+E5e_synthetic_patch_generation_functional,H5,123,completed,"Generated patch-generation positive control graded by applying unified diffs and running unit tests, not text similarity."
+S1_security_canary_access_control,security,123,completed,"Synthetic canary, authorization-before-retrieval, prompt-injection quarantine, and audit-log simulation."
+E5b_external_update_controller,H5/security,123,completed,"Synthetic external controller for versioned adapter deployment, quality/regression gates, checksum/signature tamper detection, security gates, audit logging, and rollback."
+S2_adversarial_security_suite,security/H5,123,completed,"Synthetic adversarial suite for access-control bypass prompts, canary extraction, stored prompt injection, poisoning/backdoor text, poisoned update rejection, tamper detection, and rollback."
+S2b_adversarial_extraction_corpus,security/H5,123,completed,"Synthetic adversarial corpus for obfuscated canaries, paraphrased stored instructions, poisoning text, and repeated extraction/bypass queries."
+S2c_semantic_extraction_red_team,security/H5,123,completed,"Synthetic semantic red-team corpus for sensitive aliases, trust-label quarantine, and meaning-equivalent exfiltration queries."
+E6a_structured_repository_memory,A1_external_memory,123,completed,"Reduced alternative-architecture experiment comparing frozen parametric, text-retrieval, gated text-retrieval, and structured external-memory approaches for repository convention QA."
+E6b_public_repository_memory_qa,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for symbol definition file QA, compared with text file retrieval and a frozen parametric proxy. Uses local public clones when present."
+E6c_public_repository_signature_qa,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for defining signature-line QA, compared with text signature lookup and a frozen parametric proxy. Uses local public clones when present."
+E6d_public_repository_call_stub_generation,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for canonical Python call-stub generation from signatures, compared with a name-only stub baseline and a frozen parametric proxy. Uses local public clones when present."
+E6e_public_repository_function_skeleton_generation,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for minimal Python function-skeleton generation from signatures, compared with a name-only skeleton baseline and a frozen parametric proxy. Uses local public clones when present."
+E6f_public_repository_docstring_skeleton_generation,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for minimal Python function-skeleton generation that preserves a signature and first docstring line, compared with a signature-only skeleton baseline and a frozen parametric proxy. Uses local public clones when present."
+E6g_public_repository_api_reference_generation,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for Markdown API reference generation from public Python signatures, source file paths, and first docstring lines, compared with a signature-only reference baseline and a frozen parametric proxy. Uses local public clones when present."
+E6h_public_repository_api_doc_coverage_qa,A1_external_memory,123,completed,"Public-repository structured external-memory benchmark for API documentation coverage QA from Sphinx directives, compared with a source-symbol-only memory baseline and a frozen parametric proxy. Uses local public clones when present."
+E6i_synthetic_api_doc_drift_detection,A1_external_memory,123,completed,Synthetic Git-history positive control for API documentation drift: a source symbol is renamed while a Sphinx autofunction directive still references the old API. Compares doc-directive-only memory with structured source/documentation consistency memory.

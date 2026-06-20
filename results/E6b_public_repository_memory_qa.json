@@ -1,0 +1,1769 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E6b_public_repository_memory_qa",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "A1_external_memory",
+  "metrics": {
+    "benchmark_label": "public_repository_symbol_file_qa",
+    "experiment_family": "external_memory_architecture",
+    "final": {
+      "repo_count_used": 2,
+      "structured_answer_accuracy": 1.0,
+      "structured_beats_or_matches_text_retrieval": true,
+      "supports_model_level_claim": false,
+      "text_retrieval_answer_accuracy": 0.17142857142857143
+    },
+    "limitations": [
+      "symbol_file_location_only",
+      "not_code_generation",
+      "not_natural_language_reasoning",
+      "public_repositories_only",
+      "structured_method_uses_extracted_symbol_index"
+    ],
+    "methods": {
+      "frozen_parametric_proxy": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol disableRawMode",
+            "repo": "kilo",
+            "symbol": "disableRawMode"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol editorAtExit",
+            "repo": "kilo",
+            "symbol": "editorAtExit"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol editorReadKey",
+            "repo": "kilo",
+            "symbol": "editorReadKey"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol enableRawMode",
+            "repo": "kilo",
+            "symbol": "enableRawMode"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol getCursorPosition",
+            "repo": "kilo",
+            "symbol": "getCursorPosition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol getWindowSize",
+            "repo": "kilo",
+            "symbol": "getWindowSize"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/_native.py",
+            "question": "which file defines symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/conftest.py",
+            "question": "which file defines symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/conftest.py",
+            "question": "which file defines symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_exception_custom_html.py",
+            "question": "which file defines symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_ext_init.py",
+            "question": "which file defines symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_html_interop",
+            "repo": "markupsafe",
+            "symbol": "test_html_interop"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_file": "tests/test_leak.py",
+            "question": "which file defines symbol test_markup_leaks",
+            "repo": "markupsafe",
+            "symbol": "test_markup_leaks"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 5.00003807246685e-05,
+          "latency_ms_p95": 0.00014595425454899666
+        },
+        "question_count": 70,
+        "storage_bytes": 96
+      },
+      "structured_symbol_memory": {
+        "answer_accuracy": 1.0,
+        "answers": [
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol disableRawMode",
+            "repo": "kilo",
+            "symbol": "disableRawMode"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol editorAtExit",
+            "repo": "kilo",
+            "symbol": "editorAtExit"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol editorReadKey",
+            "repo": "kilo",
+            "symbol": "editorReadKey"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol enableRawMode",
+            "repo": "kilo",
+            "symbol": "enableRawMode"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol getCursorPosition",
+            "repo": "kilo",
+            "symbol": "getCursorPosition"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol getWindowSize",
+            "repo": "kilo",
+            "symbol": "getWindowSize"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "tests/test_escape.py",
+            "correct": true,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "tests/test_escape.py",
+            "correct": true,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "src/markupsafe/_native.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/_native.py",
+            "question": "which file defines symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "tests/conftest.py",
+            "correct": true,
+            "expected_file": "tests/conftest.py",
+            "question": "which file defines symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "setup.py",
+            "correct": true,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "tests/conftest.py",
+            "correct": true,
+            "expected_file": "tests/conftest.py",
+            "question": "which file defines symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "setup.py",
+            "correct": true,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "setup.py",
+            "correct": true,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "setup.py",
+            "correct": true,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "tests/test_escape.py",
+            "correct": true,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "tests/test_exception_custom_html.py",
+            "correct": true,
+            "expected_file": "tests/test_exception_custom_html.py",
+            "question": "which file defines symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "tests/test_ext_init.py",
+            "correct": true,
+            "expected_file": "tests/test_ext_init.py",
+            "question": "which file defines symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          },
+          {
+            "answer": "tests/test_markupsafe.py",
+            "correct": true,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_html_interop",
+            "repo": "markupsafe",
+            "symbol": "test_html_interop"
+          },
+          {
+            "answer": "tests/test_leak.py",
+            "correct": true,
+            "expected_file": "tests/test_leak.py",
+            "question": "which file defines symbol test_markup_leaks",
+            "repo": "markupsafe",
+            "symbol": "test_markup_leaks"
+          }
+        ],
+        "correct_count": 70,
+        "latency": {
+          "latency_ms_p50": 0.00013000681065022945,
+          "latency_ms_p95": 0.0002010026946663856
+        },
+        "question_count": 70,
+        "storage_bytes": 3641
+      },
+      "text_file_retrieval": {
+        "answer_accuracy": 0.17142857142857143,
+        "answers": [
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol disableRawMode",
+            "repo": "kilo",
+            "symbol": "disableRawMode"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol editorAtExit",
+            "repo": "kilo",
+            "symbol": "editorAtExit"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol editorReadKey",
+            "repo": "kilo",
+            "symbol": "editorReadKey"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol enableRawMode",
+            "repo": "kilo",
+            "symbol": "enableRawMode"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol getCursorPosition",
+            "repo": "kilo",
+            "symbol": "getCursorPosition"
+          },
+          {
+            "answer": "kilo.c",
+            "correct": true,
+            "expected_file": "kilo.c",
+            "question": "which file defines symbol getWindowSize",
+            "repo": "kilo",
+            "symbol": "getWindowSize"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "tests/test_escape.py",
+            "correct": true,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "docs/formatting.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": false,
+            "expected_file": "src/markupsafe/_native.py",
+            "question": "which file defines symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/conftest.py",
+            "question": "which file defines symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "src/markupsafe/__init__.py",
+            "correct": true,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "docs/formatting.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/conftest.py",
+            "question": "which file defines symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "src/markupsafe/_native.py",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": ".github/workflows/tests.yaml",
+            "correct": false,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "setup.py",
+            "correct": true,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "setup.py",
+            "correct": true,
+            "expected_file": "setup.py",
+            "question": "which file defines symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "src/markupsafe/__init__.py",
+            "question": "which file defines symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_escape.py",
+            "question": "which file defines symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_exception_custom_html.py",
+            "question": "which file defines symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_ext_init.py",
+            "question": "which file defines symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_markupsafe.py",
+            "question": "which file defines symbol test_html_interop",
+            "repo": "markupsafe",
+            "symbol": "test_html_interop"
+          },
+          {
+            "answer": "CHANGES.rst",
+            "correct": false,
+            "expected_file": "tests/test_leak.py",
+            "question": "which file defines symbol test_markup_leaks",
+            "repo": "markupsafe",
+            "symbol": "test_markup_leaks"
+          }
+        ],
+        "correct_count": 12,
+        "latency": {
+          "latency_ms_p50": 0.022117994376458228,
+          "latency_ms_p95": 0.02328606060473248
+        },
+        "question_count": 70,
+        "storage_bytes": 1229
+      }
+    },
+    "question_count": 70,
+    "repo_count_requested": 2,
+    "repos": [
+      {
+        "commit": "323d93b29bd8",
+        "repo": "kilo",
+        "symbol_count_available": 6,
+        "symbol_count_used": 6
+      },
+      {
+        "commit": "b2e4d9c7687b",
+        "repo": "markupsafe",
+        "symbol_count_available": 79,
+        "symbol_count_used": 64
+      }
+    ],
+    "status": "completed"
+  },
+  "notes": "Public-repository structured external-memory benchmark for symbol definition file QA, compared with text file retrieval and a frozen parametric proxy. Uses local public clones when present.",
+  "recorded_at_unix": 1781952213.8091078,
+  "seed": 123,
+  "status": "completed"
+}

@@ -1,0 +1,179 @@
+{
+  "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/kilo --max-commits 12 --top-k 5 --include-symbol-qa",
+  "experiment_id": "E5_public_repo_symbol_qa",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H5",
+  "metrics": {
+    "final": {
+      "frozen_prior_symbol_topk_accuracy": 1.0,
+      "future_new_symbol_steps": 1,
+      "mean_retrieval_prior_symbol_topk_accuracy": 1.0,
+      "mean_structured_prior_symbol_topk_accuracy": 1.0,
+      "retrieval_prior_symbol_topk_accuracy": 1.0,
+      "runtime_ms": 74.04514899826609,
+      "structured_prior_symbol_topk_accuracy": 1.0
+    },
+    "notes": "Uses only symbols and files visible at exposed_commit to answer repository QA questions of the form 'which file defines symbol X'. Future symbol questions are reported separately and should not be answerable before exposure.",
+    "repo": {
+      "commit_count_used": 12,
+      "head": "323d93b29bd8",
+      "path_name": "kilo",
+      "top_k": 5
+    },
+    "steps": [
+      {
+        "exposed_commit": "62b099af00b5",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "f12546b4f3dc",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 1,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "f12546b4f3dc",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "5375e13141b7",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 2,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "5375e13141b7",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "29aa77781c5c",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 1,
+        "retrieval_future_new_symbol_topk_accuracy": 1.0,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 3,
+        "structured_future_new_symbol_topk_accuracy": 1.0,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "29aa77781c5c",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "c1a27fa340cc",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 4,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 7
+      },
+      {
+        "exposed_commit": "c1a27fa340cc",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "e10bc606f037",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 5,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "e10bc606f037",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "806d41273267",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 6,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "806d41273267",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "22cf54f31089",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 7,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "22cf54f31089",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "0099562d0e79",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 8,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "0099562d0e79",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "7709a04ae852",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 9,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "7709a04ae852",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "69c3ce609d1e",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 10,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      },
+      {
+        "exposed_commit": "69c3ce609d1e",
+        "frozen_prior_symbol_topk_accuracy": 1.0,
+        "future_commit": "323d93b29bd8",
+        "future_commit_not_in_memory": true,
+        "new_future_symbol_count": 0,
+        "retrieval_future_new_symbol_topk_accuracy": null,
+        "retrieval_prior_symbol_topk_accuracy": 1.0,
+        "step": 11,
+        "structured_future_new_symbol_topk_accuracy": null,
+        "structured_prior_symbol_topk_accuracy": 1.0,
+        "visible_symbol_count": 6
+      }
+    ]
+  },
+  "notes": "Explicit local-clone public repository symbol-definition QA experiment.",
+  "recorded_at_unix": 1781925612.5907085,
+  "seed": 0,
+  "status": "completed"
+}

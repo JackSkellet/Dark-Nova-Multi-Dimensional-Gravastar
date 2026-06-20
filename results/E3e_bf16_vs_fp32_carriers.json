@@ -1,0 +1,123 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E3e_bf16_vs_fp32_carriers",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H3",
+  "metrics": {
+    "model": {
+      "architecture": "trained_tiny_transformer_lm",
+      "d_model": 24,
+      "quantized_tensor": "lm_head_rows",
+      "sequence_length": 12,
+      "trained_component": "lm_head_ridge_regression",
+      "vocab_size": 32
+    },
+    "notes": "Fixed tiny transformer features with ridge-trained output head. Selected carrier rows are stored as simulated BF16 or FP32 and compared against random protected rows with matched byte accounting.",
+    "precision_policies": {
+      "full_fp32": {
+        "heldout_accuracy": 0.9830729166666666,
+        "heldout_kl_divergence": 0.0,
+        "heldout_logit_mse": 0.0,
+        "heldout_nll": 1.916326626492907,
+        "total_bytes": 3072.0
+      },
+      "groupwise_int4": {
+        "heldout_accuracy": 0.97265625,
+        "heldout_kl_divergence": 0.0031767386270576867,
+        "heldout_logit_mse": 0.006301740306931966,
+        "heldout_nll": 1.9109192462947162,
+        "total_bytes": 768.0
+      },
+      "output_error_bf16_protected": {
+        "heldout_accuracy": 0.9765625,
+        "heldout_kl_divergence": 0.001674658431464941,
+        "heldout_logit_mse": 0.0033540114517488944,
+        "heldout_nll": 1.9108214270018362,
+        "total_bytes": 1080.0
+      },
+      "output_error_fp32_protected": {
+        "heldout_accuracy": 0.9765625,
+        "heldout_kl_divergence": 0.0016754244230038488,
+        "heldout_logit_mse": 0.0033533918755503257,
+        "heldout_nll": 1.910719142956725,
+        "total_bytes": 1368.0
+      },
+      "random_bf16_protected_best": {
+        "heldout_logit_mse": 0.004044243686701071,
+        "total_bytes": 1080.0
+      },
+      "random_bf16_protected_mean": {
+        "heldout_logit_mse": 0.005184676365579301,
+        "total_bytes": 1080.0
+      },
+      "random_fp32_protected_best": {
+        "heldout_logit_mse": 0.004043702469124902,
+        "total_bytes": 1368.0
+      },
+      "random_fp32_protected_mean": {
+        "heldout_logit_mse": 0.0051842886717508455,
+        "total_bytes": 1368.0
+      }
+    },
+    "protected_count": 6,
+    "row_output_error_scores": [
+      0.005950666332420174,
+      0.006093168854724156,
+      0.006074175895419926,
+      0.006081180025857325,
+      0.005919337937125496,
+      0.00616151767441717,
+      0.006161517674417169,
+      0.006161517674417169,
+      0.00616151767441717,
+      0.005941256769711479,
+      0.005264792685036881,
+      0.006066490232943274,
+      0.0060685429689856995,
+      0.00598957616851145,
+      0.005832172409070865,
+      0.005895661268382899,
+      0.005572920529090225,
+      0.0058345232629913,
+      0.005838036308992634,
+      0.005989597412867028,
+      0.006056243201797136,
+      0.006009612532317957,
+      0.005932010785016599,
+      0.0059760172609979135,
+      0.0060265465551336255,
+      0.006069285284458177,
+      0.005901287341196676,
+      0.0060419846814155674,
+      0.006081091092809143,
+      0.00574750096650072,
+      0.00607357786177852,
+      0.006070170541239991
+    ],
+    "selected_rows": [
+      10,
+      14,
+      16,
+      17,
+      18,
+      29
+    ],
+    "training": {
+      "heldout_prompts": 64,
+      "target_rule": "next_token_is_current_token_plus_one_mod_vocab",
+      "train_prompts": 96,
+      "trained_heldout_accuracy": 0.9830729166666666,
+      "trained_heldout_nll": 1.916326626492907
+    }
+  },
+  "notes": "Ridge-trained tiny transformer-style LM comparing selected BF16-like carrier rows with selected FP32 carrier rows and random controls.",
+  "recorded_at_unix": 1781952213.8013906,
+  "seed": 123,
+  "status": "completed"
+}

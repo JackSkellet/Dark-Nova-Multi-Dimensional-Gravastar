@@ -1,0 +1,324 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E6g_public_repository_api_reference_generation",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "A1_external_memory",
+  "metrics": {
+    "benchmark_label": "public_repository_api_reference_generation",
+    "experiment_family": "external_memory_architecture",
+    "final": {
+      "repo_count_used": 1,
+      "signature_only_answer_accuracy": 0.0,
+      "structured_answer_accuracy": 1.0,
+      "structured_beats_signature_only_reference": true,
+      "supports_model_level_claim": false
+    },
+    "limitations": [
+      "python_signature_and_docstring_only",
+      "first_docstring_line_only",
+      "deterministic_api_reference_template",
+      "not_quality_rated_documentation",
+      "not_semantic_documentation_generation",
+      "public_repositories_only"
+    ],
+    "methods": {
+      "frozen_parametric_proxy": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### escape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape(s: t.Any, /) -> Markup:`\n- Summary: Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in",
+            "question": "generate an API reference entry for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### escape_silent\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape_silent(s: t.Any | None, /) -> Markup:`\n- Summary: Like :func:`escape` but treats ``None`` as the empty string.",
+            "question": "generate an API reference entry for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### pytest_report_header\n\n- Defined in: `tests/conftest.py`\n- Signature: `def pytest_report_header() -> list[str]:`\n- Summary: Return a list of strings to be displayed in the header of the report.",
+            "question": "generate an API reference entry for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### soft_str\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def soft_str(s: t.Any, /) -> str:`\n- Summary: Convert an object to a string if it isn't already. This preserves",
+            "question": "generate an API reference entry for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### striptags\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def striptags(self, /) -> str:`\n- Summary: :meth:`unescape` the markup, remove tags, and normalize",
+            "question": "generate an API reference entry for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### test_exception_custom_html\n\n- Defined in: `tests/test_exception_custom_html.py`\n- Signature: `def test_exception_custom_html() -> None:`\n- Summary: Checks whether exceptions in custom __html__ implementations are",
+            "question": "generate an API reference entry for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### test_ext_init\n\n- Defined in: `tests/test_ext_init.py`\n- Signature: `def test_ext_init() -> None:`\n- Summary: Test that the extension module uses multi-phase init by checking that",
+            "question": "generate an API reference entry for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### test_proxy\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_proxy() -> None:`\n- Summary: Handle a proxy object that pretends its __class__ is str.",
+            "question": "generate an API reference entry for symbol test_proxy",
+            "repo": "markupsafe",
+            "symbol": "test_proxy"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### test_subclass\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_subclass() -> None:`\n- Summary: Handle if str(o) does not return a plain str.",
+            "question": "generate an API reference entry for symbol test_subclass",
+            "repo": "markupsafe",
+            "symbol": "test_subclass"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_reference": "### unescape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def unescape(self, /) -> str:`\n- Summary: Convert escaped markup back into a text string. This replaces",
+            "question": "generate an API reference entry for symbol unescape",
+            "repo": "markupsafe",
+            "symbol": "unescape"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 6.050686351954937e-05,
+          "latency_ms_p95": 0.00029454968171194185
+        },
+        "question_count": 10,
+        "storage_bytes": 96
+      },
+      "signature_only_api_reference": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "### escape\n\n- Signature: `def escape(s: t.Any, /) -> Markup:`",
+            "correct": false,
+            "expected_reference": "### escape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape(s: t.Any, /) -> Markup:`\n- Summary: Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in",
+            "question": "generate an API reference entry for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "### escape_silent\n\n- Signature: `def escape_silent(s: t.Any | None, /) -> Markup:`",
+            "correct": false,
+            "expected_reference": "### escape_silent\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape_silent(s: t.Any | None, /) -> Markup:`\n- Summary: Like :func:`escape` but treats ``None`` as the empty string.",
+            "question": "generate an API reference entry for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "### pytest_report_header\n\n- Signature: `def pytest_report_header() -> list[str]:`",
+            "correct": false,
+            "expected_reference": "### pytest_report_header\n\n- Defined in: `tests/conftest.py`\n- Signature: `def pytest_report_header() -> list[str]:`\n- Summary: Return a list of strings to be displayed in the header of the report.",
+            "question": "generate an API reference entry for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "### soft_str\n\n- Signature: `def soft_str(s: t.Any, /) -> str:`",
+            "correct": false,
+            "expected_reference": "### soft_str\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def soft_str(s: t.Any, /) -> str:`\n- Summary: Convert an object to a string if it isn't already. This preserves",
+            "question": "generate an API reference entry for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "### striptags\n\n- Signature: `def striptags(self, /) -> str:`",
+            "correct": false,
+            "expected_reference": "### striptags\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def striptags(self, /) -> str:`\n- Summary: :meth:`unescape` the markup, remove tags, and normalize",
+            "question": "generate an API reference entry for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "### test_exception_custom_html\n\n- Signature: `def test_exception_custom_html() -> None:`",
+            "correct": false,
+            "expected_reference": "### test_exception_custom_html\n\n- Defined in: `tests/test_exception_custom_html.py`\n- Signature: `def test_exception_custom_html() -> None:`\n- Summary: Checks whether exceptions in custom __html__ implementations are",
+            "question": "generate an API reference entry for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "### test_ext_init\n\n- Signature: `def test_ext_init() -> None:`",
+            "correct": false,
+            "expected_reference": "### test_ext_init\n\n- Defined in: `tests/test_ext_init.py`\n- Signature: `def test_ext_init() -> None:`\n- Summary: Test that the extension module uses multi-phase init by checking that",
+            "question": "generate an API reference entry for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "### test_proxy\n\n- Signature: `def test_proxy() -> None:`",
+            "correct": false,
+            "expected_reference": "### test_proxy\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_proxy() -> None:`\n- Summary: Handle a proxy object that pretends its __class__ is str.",
+            "question": "generate an API reference entry for symbol test_proxy",
+            "repo": "markupsafe",
+            "symbol": "test_proxy"
+          },
+          {
+            "answer": "### test_subclass\n\n- Signature: `def test_subclass() -> None:`",
+            "correct": false,
+            "expected_reference": "### test_subclass\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_subclass() -> None:`\n- Summary: Handle if str(o) does not return a plain str.",
+            "question": "generate an API reference entry for symbol test_subclass",
+            "repo": "markupsafe",
+            "symbol": "test_subclass"
+          },
+          {
+            "answer": "### unescape\n\n- Signature: `def unescape(self, /) -> str:`",
+            "correct": false,
+            "expected_reference": "### unescape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def unescape(self, /) -> str:`\n- Summary: Convert escaped markup back into a text string. This replaces",
+            "question": "generate an API reference entry for symbol unescape",
+            "repo": "markupsafe",
+            "symbol": "unescape"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 0.00015100522432476282,
+          "latency_ms_p95": 0.00048254150897264453
+        },
+        "question_count": 10,
+        "storage_bytes": 652
+      },
+      "structured_docstring_api_reference": {
+        "answer_accuracy": 1.0,
+        "answers": [
+          {
+            "answer": "### escape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape(s: t.Any, /) -> Markup:`\n- Summary: Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in",
+            "correct": true,
+            "expected_reference": "### escape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape(s: t.Any, /) -> Markup:`\n- Summary: Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in",
+            "question": "generate an API reference entry for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "### escape_silent\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape_silent(s: t.Any | None, /) -> Markup:`\n- Summary: Like :func:`escape` but treats ``None`` as the empty string.",
+            "correct": true,
+            "expected_reference": "### escape_silent\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def escape_silent(s: t.Any | None, /) -> Markup:`\n- Summary: Like :func:`escape` but treats ``None`` as the empty string.",
+            "question": "generate an API reference entry for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "### pytest_report_header\n\n- Defined in: `tests/conftest.py`\n- Signature: `def pytest_report_header() -> list[str]:`\n- Summary: Return a list of strings to be displayed in the header of the report.",
+            "correct": true,
+            "expected_reference": "### pytest_report_header\n\n- Defined in: `tests/conftest.py`\n- Signature: `def pytest_report_header() -> list[str]:`\n- Summary: Return a list of strings to be displayed in the header of the report.",
+            "question": "generate an API reference entry for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "### soft_str\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def soft_str(s: t.Any, /) -> str:`\n- Summary: Convert an object to a string if it isn't already. This preserves",
+            "correct": true,
+            "expected_reference": "### soft_str\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def soft_str(s: t.Any, /) -> str:`\n- Summary: Convert an object to a string if it isn't already. This preserves",
+            "question": "generate an API reference entry for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "### striptags\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def striptags(self, /) -> str:`\n- Summary: :meth:`unescape` the markup, remove tags, and normalize",
+            "correct": true,
+            "expected_reference": "### striptags\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def striptags(self, /) -> str:`\n- Summary: :meth:`unescape` the markup, remove tags, and normalize",
+            "question": "generate an API reference entry for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "### test_exception_custom_html\n\n- Defined in: `tests/test_exception_custom_html.py`\n- Signature: `def test_exception_custom_html() -> None:`\n- Summary: Checks whether exceptions in custom __html__ implementations are",
+            "correct": true,
+            "expected_reference": "### test_exception_custom_html\n\n- Defined in: `tests/test_exception_custom_html.py`\n- Signature: `def test_exception_custom_html() -> None:`\n- Summary: Checks whether exceptions in custom __html__ implementations are",
+            "question": "generate an API reference entry for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "### test_ext_init\n\n- Defined in: `tests/test_ext_init.py`\n- Signature: `def test_ext_init() -> None:`\n- Summary: Test that the extension module uses multi-phase init by checking that",
+            "correct": true,
+            "expected_reference": "### test_ext_init\n\n- Defined in: `tests/test_ext_init.py`\n- Signature: `def test_ext_init() -> None:`\n- Summary: Test that the extension module uses multi-phase init by checking that",
+            "question": "generate an API reference entry for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "### test_proxy\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_proxy() -> None:`\n- Summary: Handle a proxy object that pretends its __class__ is str.",
+            "correct": true,
+            "expected_reference": "### test_proxy\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_proxy() -> None:`\n- Summary: Handle a proxy object that pretends its __class__ is str.",
+            "question": "generate an API reference entry for symbol test_proxy",
+            "repo": "markupsafe",
+            "symbol": "test_proxy"
+          },
+          {
+            "answer": "### test_subclass\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_subclass() -> None:`\n- Summary: Handle if str(o) does not return a plain str.",
+            "correct": true,
+            "expected_reference": "### test_subclass\n\n- Defined in: `tests/test_escape.py`\n- Signature: `def test_subclass() -> None:`\n- Summary: Handle if str(o) does not return a plain str.",
+            "question": "generate an API reference entry for symbol test_subclass",
+            "repo": "markupsafe",
+            "symbol": "test_subclass"
+          },
+          {
+            "answer": "### unescape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def unescape(self, /) -> str:`\n- Summary: Convert escaped markup back into a text string. This replaces",
+            "correct": true,
+            "expected_reference": "### unescape\n\n- Defined in: `src/markupsafe/__init__.py`\n- Signature: `def unescape(self, /) -> str:`\n- Summary: Convert escaped markup back into a text string. This replaces",
+            "question": "generate an API reference entry for symbol unescape",
+            "repo": "markupsafe",
+            "symbol": "unescape"
+          }
+        ],
+        "correct_count": 10,
+        "latency": {
+          "latency_ms_p50": 0.0003655150067061186,
+          "latency_ms_p95": 0.0011100433766841884
+        },
+        "question_count": 10,
+        "storage_bytes": 1504
+      }
+    },
+    "question_count": 10,
+    "repo_count_requested": 2,
+    "repos": [
+      {
+        "commit": "b2e4d9c7687b",
+        "documented_function_count_available": 10,
+        "documented_function_count_used": 10,
+        "repo": "markupsafe"
+      }
+    ],
+    "status": "completed"
+  },
+  "notes": "Public-repository structured external-memory benchmark for Markdown API reference generation from public Python signatures, source file paths, and first docstring lines, compared with a signature-only reference baseline and a frozen parametric proxy. Uses local public clones when present.",
+  "recorded_at_unix": 1781952213.8118362,
+  "seed": 123,
+  "status": "completed"
+}

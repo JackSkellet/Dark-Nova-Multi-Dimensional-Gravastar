@@ -1,0 +1,63 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "S1_security_canary_access_control",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "security",
+  "metrics": {
+    "audit_log": [
+      {
+        "decision": "allow",
+        "doc_id": "alpha-public-api",
+        "event": "retrieval",
+        "principal": "developer-alpha",
+        "reason": "authorized_clean_document"
+      },
+      {
+        "decision": "quarantine",
+        "doc_id": "alpha-secret",
+        "event": "secret_scan",
+        "principal": "developer-alpha",
+        "reason": "synthetic_canary"
+      },
+      {
+        "decision": "quarantine",
+        "doc_id": "alpha-injection",
+        "event": "prompt_injection_scan",
+        "principal": "developer-alpha",
+        "reason": "stored_instruction"
+      },
+      {
+        "decision": "deny",
+        "doc_id": "beta-private-api",
+        "event": "authorization",
+        "principal": "developer-alpha",
+        "reason": "repo_scope"
+      }
+    ],
+    "critical_failures": [],
+    "metrics": {
+      "audit_event_count": 4,
+      "blocked_secret_documents": 1,
+      "canary_leaks_in_allowed_context": 0,
+      "prompt_injection_documents_quarantined": 1,
+      "unauthorized_retrievals": 0
+    },
+    "notes": "Synthetic canary and access-control simulation. It does not use real secrets and does not prove production isolation.",
+    "retrieved_doc_ids": [
+      "alpha-public-api"
+    ],
+    "synthetic_canaries": [
+      "DN_CANARY_ALPHA_DO_NOT_LEAK_001"
+    ]
+  },
+  "notes": "Synthetic canary, authorization-before-retrieval, prompt-injection quarantine, and audit-log simulation.",
+  "recorded_at_unix": 1781952213.8060505,
+  "seed": 123,
+  "status": "completed"
+}

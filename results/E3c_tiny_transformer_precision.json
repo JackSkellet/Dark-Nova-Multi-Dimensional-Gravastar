@@ -1,0 +1,103 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E3c_tiny_transformer_precision",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H3",
+  "metrics": {
+    "calibration_prompts": 64,
+    "heldout_prompts": 64,
+    "model": {
+      "architecture": "tiny_transformer_lm",
+      "d_model": 24,
+      "quantized_tensor": "lm_head_rows",
+      "sequence_length": 12,
+      "vocab_size": 32
+    },
+    "notes": "Random initialized tiny transformer-style LM. Carrier rows are selected on calibration prompts and evaluated on disjoint held-out prompts.",
+    "precision_policies": {
+      "full_fp32": {
+        "heldout_kl_divergence": 0.0,
+        "heldout_logit_mse": 0.0,
+        "total_bytes": 3072.0
+      },
+      "groupwise_int4": {
+        "heldout_kl_divergence": 0.009953628677113703,
+        "heldout_logit_mse": 0.018951199842146094,
+        "total_bytes": 768.0
+      },
+      "output_error_fp32_protected": {
+        "heldout_kl_divergence": 0.0021430609497741283,
+        "heldout_logit_mse": 0.007661732136990565,
+        "total_bytes": 1368.0
+      },
+      "random_fp32_protected_best": {
+        "heldout_kl_divergence": 0.004597098377908755,
+        "heldout_logit_mse": 0.009485762042539113,
+        "total_bytes": 1368.0
+      },
+      "random_fp32_protected_mean": {
+        "heldout_kl_divergence": 0.008210940202980879,
+        "heldout_logit_mse": 0.015224755998433731,
+        "total_bytes": 1368.0
+      },
+      "uniform_int4": {
+        "heldout_kl_divergence": 0.03162790700581497,
+        "heldout_logit_mse": 0.08193099537300445,
+        "total_bytes": 396.0
+      }
+    },
+    "protected_count": 6,
+    "row_output_error_scores": [
+      0.01767692546541254,
+      0.017746180314141203,
+      0.017151120334633018,
+      0.014872486036960767,
+      0.016501778687271776,
+      0.017917335966389666,
+      0.01785920549994099,
+      0.018216026788269796,
+      0.018303052867562175,
+      0.01860295056450773,
+      0.018613390394843058,
+      0.018538256699012313,
+      0.018476294311051928,
+      0.018404200222411193,
+      0.018634359810210468,
+      0.01852591449299948,
+      0.01857369085846609,
+      0.018683423516568376,
+      0.018507218043493326,
+      0.018506027217722595,
+      0.018650628026723837,
+      0.018690010740916554,
+      0.0186917594513956,
+      0.018473680117948876,
+      0.018603433573103127,
+      0.018225389155263606,
+      0.018438410831227884,
+      0.018521812929422826,
+      0.018593425159869715,
+      0.018338429061069365,
+      0.01866394748498761,
+      0.018565820484675023
+    ],
+    "selected_rows": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6
+    ]
+  },
+  "notes": "Tiny transformer-style LM output-head precision allocation evaluated on held-out prompts.",
+  "recorded_at_unix": 1781952213.800498,
+  "seed": 123,
+  "status": "completed"
+}

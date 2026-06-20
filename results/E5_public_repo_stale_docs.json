@@ -1,0 +1,158 @@
+{
+  "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/kilo --max-commits 12 --top-k 5 --include-stale-docs",
+  "experiment_id": "E5_public_repo_stale_docs",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H5",
+  "metrics": {
+    "final": {
+      "retrieval_stale_doc_topk_accuracy": null,
+      "runtime_ms": 54.67101599788293,
+      "stale_doc_issue_count": 0,
+      "steps_with_removed_symbols": 1,
+      "steps_with_stale_docs": 0,
+      "structured_stale_doc_topk_accuracy": null
+    },
+    "notes": "Compares adjacent commits. A stale-doc issue is a current documentation file that still mentions a code symbol removed since the previous exposed commit.",
+    "repo": {
+      "commit_count_used": 12,
+      "head": "323d93b29bd8",
+      "path_name": "kilo",
+      "top_k": 5
+    },
+    "steps": [
+      {
+        "current_commit": "f12546b4f3dc",
+        "doc_file_count": 1,
+        "previous_commit": "62b099af00b5",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 1,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "5375e13141b7",
+        "doc_file_count": 1,
+        "previous_commit": "f12546b4f3dc",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 2,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "29aa77781c5c",
+        "doc_file_count": 1,
+        "previous_commit": "5375e13141b7",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 3,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "c1a27fa340cc",
+        "doc_file_count": 1,
+        "previous_commit": "29aa77781c5c",
+        "removed_symbols": [
+          "is_separator"
+        ],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 4,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "e10bc606f037",
+        "doc_file_count": 1,
+        "previous_commit": "c1a27fa340cc",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 5,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "806d41273267",
+        "doc_file_count": 1,
+        "previous_commit": "e10bc606f037",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 6,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "22cf54f31089",
+        "doc_file_count": 1,
+        "previous_commit": "806d41273267",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 7,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "0099562d0e79",
+        "doc_file_count": 1,
+        "previous_commit": "22cf54f31089",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 8,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "7709a04ae852",
+        "doc_file_count": 1,
+        "previous_commit": "0099562d0e79",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 9,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "69c3ce609d1e",
+        "doc_file_count": 1,
+        "previous_commit": "7709a04ae852",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 10,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "323d93b29bd8",
+        "doc_file_count": 1,
+        "previous_commit": "69c3ce609d1e",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 11,
+        "structured_stale_doc_topk_hit": null
+      }
+    ]
+  },
+  "notes": "Explicit local-clone public repository stale-document detection experiment.",
+  "recorded_at_unix": 1781925612.6489334,
+  "seed": 0,
+  "status": "completed"
+}

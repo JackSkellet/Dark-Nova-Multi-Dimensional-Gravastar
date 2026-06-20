@@ -1,0 +1,354 @@
+{
+  "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/markupsafe --max-commits 30 --top-k 5 --include-stale-docs",
+  "experiment_id": "E5_markupsafe_stale_docs",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H5",
+  "metrics": {
+    "final": {
+      "retrieval_stale_doc_topk_accuracy": null,
+      "runtime_ms": 1205.4331510153133,
+      "stale_doc_issue_count": 0,
+      "steps_with_removed_symbols": 0,
+      "steps_with_stale_docs": 0,
+      "structured_stale_doc_topk_accuracy": null
+    },
+    "notes": "Compares adjacent commits. A stale-doc issue is a current documentation file that still mentions a code symbol removed since the previous exposed commit.",
+    "repo": {
+      "commit_count_used": 30,
+      "head": "b2e4d9c7687b",
+      "path_name": "markupsafe",
+      "top_k": 5
+    },
+    "steps": [
+      {
+        "current_commit": "402311d9cc0f",
+        "doc_file_count": 23,
+        "previous_commit": "f56c1051b9ed",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 1,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "44a54cde1cd0",
+        "doc_file_count": 23,
+        "previous_commit": "402311d9cc0f",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 2,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "85813f1876e8",
+        "doc_file_count": 23,
+        "previous_commit": "44a54cde1cd0",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 3,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "2c6093042275",
+        "doc_file_count": 23,
+        "previous_commit": "85813f1876e8",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 4,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "b5291646cbab",
+        "doc_file_count": 23,
+        "previous_commit": "2c6093042275",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 5,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "54bb00bfafe5",
+        "doc_file_count": 23,
+        "previous_commit": "b5291646cbab",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 6,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "719576e059b1",
+        "doc_file_count": 23,
+        "previous_commit": "54bb00bfafe5",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 7,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "275c76905617",
+        "doc_file_count": 23,
+        "previous_commit": "719576e059b1",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 8,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "9c44ecf45141",
+        "doc_file_count": 23,
+        "previous_commit": "275c76905617",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 9,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "e85aff4d878a",
+        "doc_file_count": 23,
+        "previous_commit": "9c44ecf45141",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 10,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "1933c4be9c2c",
+        "doc_file_count": 23,
+        "previous_commit": "e85aff4d878a",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 11,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "3d8fd8cc0061",
+        "doc_file_count": 23,
+        "previous_commit": "1933c4be9c2c",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 12,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "6b51fd8f7386",
+        "doc_file_count": 23,
+        "previous_commit": "3d8fd8cc0061",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 13,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "f030667fb52d",
+        "doc_file_count": 23,
+        "previous_commit": "6b51fd8f7386",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 14,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "34db9005700e",
+        "doc_file_count": 23,
+        "previous_commit": "f030667fb52d",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 15,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "b97dda5c67c1",
+        "doc_file_count": 22,
+        "previous_commit": "34db9005700e",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 16,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "edf67f48aeda",
+        "doc_file_count": 22,
+        "previous_commit": "b97dda5c67c1",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 17,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "f651195bd5fd",
+        "doc_file_count": 22,
+        "previous_commit": "edf67f48aeda",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 18,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "620c06c919c1",
+        "doc_file_count": 23,
+        "previous_commit": "f651195bd5fd",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 19,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "738306beab66",
+        "doc_file_count": 16,
+        "previous_commit": "620c06c919c1",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 20,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "de440417ca20",
+        "doc_file_count": 16,
+        "previous_commit": "738306beab66",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 21,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "42703532bfa7",
+        "doc_file_count": 16,
+        "previous_commit": "de440417ca20",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 22,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "0c422e10b1e1",
+        "doc_file_count": 16,
+        "previous_commit": "42703532bfa7",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 23,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "dfa58162f6ba",
+        "doc_file_count": 16,
+        "previous_commit": "0c422e10b1e1",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 24,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "0494f0d95230",
+        "doc_file_count": 19,
+        "previous_commit": "dfa58162f6ba",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 25,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "be09b1cc919c",
+        "doc_file_count": 19,
+        "previous_commit": "0494f0d95230",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 26,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "d70c89acc0e0",
+        "doc_file_count": 19,
+        "previous_commit": "be09b1cc919c",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 27,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "1251593f6b0e",
+        "doc_file_count": 19,
+        "previous_commit": "d70c89acc0e0",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 28,
+        "structured_stale_doc_topk_hit": null
+      },
+      {
+        "current_commit": "b2e4d9c7687b",
+        "doc_file_count": 19,
+        "previous_commit": "1251593f6b0e",
+        "removed_symbols": [],
+        "retrieval_stale_doc_topk_hit": null,
+        "stale_doc_files": [],
+        "stale_mentions": {},
+        "step": 29,
+        "structured_stale_doc_topk_hit": null
+      }
+    ]
+  },
+  "notes": "Explicit local-clone public repository stale-document detection experiment.",
+  "recorded_at_unix": 1781925623.325714,
+  "seed": 0,
+  "status": "completed"
+}

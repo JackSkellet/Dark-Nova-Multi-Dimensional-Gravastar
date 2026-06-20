@@ -1,0 +1,135 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E3f_internal_matrix_precision",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H3",
+  "metrics": {
+    "model": {
+      "architecture": "trained_tiny_transformer_lm",
+      "d_model": 24,
+      "quantized_tensor": "w_mlp_out_rows",
+      "sequence_length": 12,
+      "trained_component": "lm_head_ridge_regression",
+      "vocab_size": 32
+    },
+    "notes": "Fixed tiny transformer features with ridge-trained output head. Precision selection quantizes the internal MLP output matrix rather than the output head, then evaluates held-out logits and targets.",
+    "precision_policies": {
+      "full_fp32": {
+        "heldout_accuracy": 0.9713541666666666,
+        "heldout_kl_divergence": 0.0,
+        "heldout_logit_mse": 0.0,
+        "heldout_nll": 1.9129527488342302,
+        "total_bytes": 4608.0
+      },
+      "groupwise_int4": {
+        "heldout_accuracy": 0.9674479166666666,
+        "heldout_kl_divergence": 0.00105098155706963,
+        "heldout_logit_mse": 0.002136560853321126,
+        "heldout_nll": 1.911449068962577,
+        "total_bytes": 1152.0
+      },
+      "output_error_fp32_protected": {
+        "heldout_accuracy": 0.9700520833333334,
+        "heldout_kl_divergence": 0.0005979646574188563,
+        "heldout_logit_mse": 0.0012142649484476768,
+        "heldout_nll": 1.9158950280943,
+        "total_bytes": 1952.0
+      },
+      "random_fp32_protected_best": {
+        "heldout_logit_mse": 0.0015309727007453645,
+        "heldout_nll": 1.908083004459712,
+        "total_bytes": 1952.0
+      },
+      "random_fp32_protected_mean": {
+        "heldout_logit_mse": 0.0018454313910860262,
+        "heldout_nll": 1.9113887975338275,
+        "total_bytes": 1952.0
+      },
+      "uniform_int4": {
+        "heldout_accuracy": 0.97265625,
+        "heldout_kl_divergence": 0.004130875171313721,
+        "heldout_logit_mse": 0.008240176332726097,
+        "heldout_nll": 1.9215876454347305,
+        "total_bytes": 588.0
+      }
+    },
+    "protected_count": 8,
+    "row_output_error_scores": [
+      0.0020438892491004726,
+      0.00208757786607387,
+      0.0022184025746526054,
+      0.002185210422582661,
+      0.0020657833653030385,
+      0.0021063335654361724,
+      0.00212370779867656,
+      0.0021644040491826384,
+      0.0021442536477563456,
+      0.002138611630323183,
+      0.002118187453279134,
+      0.002118478988566812,
+      0.002145783891941269,
+      0.00213860018047268,
+      0.0022309546885280174,
+      0.00201916227479528,
+      0.002192287642409937,
+      0.0019830693218948333,
+      0.0021695197405199426,
+      0.0021497451905322126,
+      0.0020272062528373606,
+      0.0020354451479733093,
+      0.002118098258395101,
+      0.0020393628281233055,
+      0.0020696014475947186,
+      0.0021211659957745344,
+      0.002193418735541216,
+      0.0020108680560764667,
+      0.002131805823768365,
+      0.0021276224428544415,
+      0.0020984250090377793,
+      0.0020874927680431202,
+      0.0021641207174974853,
+      0.0021491886158197665,
+      0.0020407862217180733,
+      0.00187547686693699,
+      0.0021755219295892226,
+      0.002116166856830984,
+      0.0020853708824363658,
+      0.0020965886966850264,
+      0.002107510458370986,
+      0.0021451749034502184,
+      0.002006830493203548,
+      0.0022153457985578445,
+      0.002126819536432147,
+      0.002063431950971422,
+      0.0021466464793533785,
+      0.00210562835095437
+    ],
+    "selected_rows": [
+      15,
+      17,
+      20,
+      21,
+      23,
+      27,
+      35,
+      42
+    ],
+    "training": {
+      "heldout_prompts": 64,
+      "target_rule": "next_token_is_current_token_plus_one_mod_vocab",
+      "train_prompts": 96,
+      "trained_heldout_accuracy": 0.9713541666666666,
+      "trained_heldout_nll": 1.9129527488342302
+    }
+  },
+  "notes": "Ridge-trained tiny transformer-style LM with selective precision on the internal MLP output matrix rather than the output head.",
+  "recorded_at_unix": 1781952213.8018227,
+  "seed": 123,
+  "status": "completed"
+}

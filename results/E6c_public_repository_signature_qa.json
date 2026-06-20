@@ -1,0 +1,2081 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E6c_public_repository_signature_qa",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "A1_external_memory",
+  "metrics": {
+    "benchmark_label": "public_repository_signature_qa",
+    "experiment_family": "external_memory_architecture",
+    "final": {
+      "repo_count_used": 2,
+      "structured_answer_accuracy": 1.0,
+      "structured_beats_or_matches_text_lookup": true,
+      "supports_model_level_claim": false,
+      "text_lookup_answer_accuracy": 0.8674698795180723
+    },
+    "limitations": [
+      "signature_line_only",
+      "not_code_generation",
+      "not_natural_language_reasoning",
+      "public_repositories_only",
+      "structured_method_uses_extracted_signature_index"
+    ],
+    "methods": {
+      "frozen_parametric_proxy": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void disableRawMode(int fd)",
+            "question": "what is the defining signature for symbol disableRawMode",
+            "repo": "kilo",
+            "symbol": "disableRawMode"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorAtExit(void)",
+            "question": "what is the defining signature for symbol editorAtExit",
+            "repo": "kilo",
+            "symbol": "editorAtExit"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorDelRow(int at)",
+            "question": "what is the defining signature for symbol editorDelRow",
+            "repo": "kilo",
+            "symbol": "editorDelRow"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorFreeRow(erow *row)",
+            "question": "what is the defining signature for symbol editorFreeRow",
+            "repo": "kilo",
+            "symbol": "editorFreeRow"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorInsertChar(int c)",
+            "question": "what is the defining signature for symbol editorInsertChar",
+            "repo": "kilo",
+            "symbol": "editorInsertChar"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorInsertRow(int at, char *s, size_t len)",
+            "question": "what is the defining signature for symbol editorInsertRow",
+            "repo": "kilo",
+            "symbol": "editorInsertRow"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "int editorReadKey(int fd)",
+            "question": "what is the defining signature for symbol editorReadKey",
+            "repo": "kilo",
+            "symbol": "editorReadKey"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorRowAppendString(erow *row, char *s, size_t len)",
+            "question": "what is the defining signature for symbol editorRowAppendString",
+            "repo": "kilo",
+            "symbol": "editorRowAppendString"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorRowDelChar(erow *row, int at)",
+            "question": "what is the defining signature for symbol editorRowDelChar",
+            "repo": "kilo",
+            "symbol": "editorRowDelChar"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "int editorRowHasOpenComment(erow *row)",
+            "question": "what is the defining signature for symbol editorRowHasOpenComment",
+            "repo": "kilo",
+            "symbol": "editorRowHasOpenComment"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorRowInsertChar(erow *row, int at, int c)",
+            "question": "what is the defining signature for symbol editorRowInsertChar",
+            "repo": "kilo",
+            "symbol": "editorRowInsertChar"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorSelectSyntaxHighlight(char *filename)",
+            "question": "what is the defining signature for symbol editorSelectSyntaxHighlight",
+            "repo": "kilo",
+            "symbol": "editorSelectSyntaxHighlight"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "int editorSyntaxToColor(int hl)",
+            "question": "what is the defining signature for symbol editorSyntaxToColor",
+            "repo": "kilo",
+            "symbol": "editorSyntaxToColor"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorUpdateRow(erow *row)",
+            "question": "what is the defining signature for symbol editorUpdateRow",
+            "repo": "kilo",
+            "symbol": "editorUpdateRow"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "void editorUpdateSyntax(erow *row)",
+            "question": "what is the defining signature for symbol editorUpdateSyntax",
+            "repo": "kilo",
+            "symbol": "editorUpdateSyntax"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "int enableRawMode(int fd)",
+            "question": "what is the defining signature for symbol enableRawMode",
+            "repo": "kilo",
+            "symbol": "enableRawMode"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "int getCursorPosition(int ifd, int ofd, int *rows, int *cols)",
+            "question": "what is the defining signature for symbol getCursorPosition",
+            "repo": "kilo",
+            "symbol": "getCursorPosition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "int getWindowSize(int ifd, int ofd, int *rows, int *cols)",
+            "question": "what is the defining signature for symbol getWindowSize",
+            "repo": "kilo",
+            "symbol": "getWindowSize"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "int is_separator(int c)",
+            "question": "what is the defining signature for symbol is_separator",
+            "repo": "kilo",
+            "symbol": "is_separator"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __add__(self, value: str | _HasHTML, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __call__(self, s: t.Any, /) -> Markup:",
+            "question": "what is the defining signature for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __class__(self) -> type[t.Any]:",
+            "question": "what is the defining signature for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __float__(self, /) -> float:",
+            "question": "what is the defining signature for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __html__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __html_format__(self, format_spec: str, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __init__(self, escape: _TPEscape) -> None:",
+            "question": "what is the defining signature for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __int__(self, /) -> int:",
+            "question": "what is the defining signature for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __mod__(self, value: t.Any, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:",
+            "question": "what is the defining signature for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __repr__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def __str__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def _escape_inner(s: str, /) -> str:",
+            "question": "what is the defining signature for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def _mod(request: pytest.FixtureRequest) -> None:",
+            "question": "what is the defining signature for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def build_extension(self, ext):",
+            "question": "what is the defining signature for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def capitalize(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def casefold(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def escape(s: t.Any, /) -> Markup:",
+            "question": "what is the defining signature for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def escape_silent(s: t.Any | None, /) -> Markup:",
+            "question": "what is the defining signature for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:",
+            "question": "what is the defining signature for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:",
+            "question": "what is the defining signature for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def format_field(self, value: t.Any, format_spec: str) -> str:",
+            "question": "what is the defining signature for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:",
+            "question": "what is the defining signature for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:",
+            "question": "what is the defining signature for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def lower(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def lstrip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "question": "what is the defining signature for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def pytest_report_header() -> list[str]:",
+            "question": "what is the defining signature for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def removeprefix(self, prefix: str, /) -> te.Self:",
+            "question": "what is the defining signature for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def removesuffix(self, suffix: str) -> te.Self:",
+            "question": "what is the defining signature for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:",
+            "question": "what is the defining signature for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "question": "what is the defining signature for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def rstrip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def run(self):",
+            "question": "what is the defining signature for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def run_setup(with_binary):",
+            "question": "what is the defining signature for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def show_message(*lines):",
+            "question": "what is the defining signature for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def soft_str(s: t.Any, /) -> str:",
+            "question": "what is the defining signature for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def strip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def striptags(self, /) -> str:",
+            "question": "what is the defining signature for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def swapcase(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_adding() -> None:",
+            "question": "what is the defining signature for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_complex_custom_formatting() -> None:",
+            "question": "what is the defining signature for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_custom_formatting() -> None:",
+            "question": "what is the defining signature for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_dict_interpol() -> None:",
+            "question": "what is the defining signature for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_escape(value: str, expect: str) -> None:",
+            "question": "what is the defining signature for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_escape_return_type() -> None:",
+            "question": "what is the defining signature for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_escape_silent() -> None:",
+            "question": "what is the defining signature for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_escaping() -> None:",
+            "question": "what is the defining signature for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_exception_custom_html() -> None:",
+            "question": "what is the defining signature for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_ext_init() -> None:",
+            "question": "what is the defining signature for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_format() -> None:",
+            "question": "what is the defining signature for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_format_map() -> None:",
+            "question": "what is the defining signature for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_formatting_empty() -> None:",
+            "question": "what is the defining signature for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_signature": "def test_formatting_with_objects() -> None:",
+            "question": "what is the defining signature for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 5.00003807246685e-05,
+          "latency_ms_p95": 8.901697583496562e-05
+        },
+        "question_count": 83,
+        "storage_bytes": 96
+      },
+      "structured_signature_memory": {
+        "answer_accuracy": 1.0,
+        "answers": [
+          {
+            "answer": "void disableRawMode(int fd)",
+            "correct": true,
+            "expected_signature": "void disableRawMode(int fd)",
+            "question": "what is the defining signature for symbol disableRawMode",
+            "repo": "kilo",
+            "symbol": "disableRawMode"
+          },
+          {
+            "answer": "void editorAtExit(void)",
+            "correct": true,
+            "expected_signature": "void editorAtExit(void)",
+            "question": "what is the defining signature for symbol editorAtExit",
+            "repo": "kilo",
+            "symbol": "editorAtExit"
+          },
+          {
+            "answer": "void editorDelRow(int at)",
+            "correct": true,
+            "expected_signature": "void editorDelRow(int at)",
+            "question": "what is the defining signature for symbol editorDelRow",
+            "repo": "kilo",
+            "symbol": "editorDelRow"
+          },
+          {
+            "answer": "void editorFreeRow(erow *row)",
+            "correct": true,
+            "expected_signature": "void editorFreeRow(erow *row)",
+            "question": "what is the defining signature for symbol editorFreeRow",
+            "repo": "kilo",
+            "symbol": "editorFreeRow"
+          },
+          {
+            "answer": "void editorInsertChar(int c)",
+            "correct": true,
+            "expected_signature": "void editorInsertChar(int c)",
+            "question": "what is the defining signature for symbol editorInsertChar",
+            "repo": "kilo",
+            "symbol": "editorInsertChar"
+          },
+          {
+            "answer": "void editorInsertRow(int at, char *s, size_t len)",
+            "correct": true,
+            "expected_signature": "void editorInsertRow(int at, char *s, size_t len)",
+            "question": "what is the defining signature for symbol editorInsertRow",
+            "repo": "kilo",
+            "symbol": "editorInsertRow"
+          },
+          {
+            "answer": "int editorReadKey(int fd)",
+            "correct": true,
+            "expected_signature": "int editorReadKey(int fd)",
+            "question": "what is the defining signature for symbol editorReadKey",
+            "repo": "kilo",
+            "symbol": "editorReadKey"
+          },
+          {
+            "answer": "void editorRowAppendString(erow *row, char *s, size_t len)",
+            "correct": true,
+            "expected_signature": "void editorRowAppendString(erow *row, char *s, size_t len)",
+            "question": "what is the defining signature for symbol editorRowAppendString",
+            "repo": "kilo",
+            "symbol": "editorRowAppendString"
+          },
+          {
+            "answer": "void editorRowDelChar(erow *row, int at)",
+            "correct": true,
+            "expected_signature": "void editorRowDelChar(erow *row, int at)",
+            "question": "what is the defining signature for symbol editorRowDelChar",
+            "repo": "kilo",
+            "symbol": "editorRowDelChar"
+          },
+          {
+            "answer": "int editorRowHasOpenComment(erow *row)",
+            "correct": true,
+            "expected_signature": "int editorRowHasOpenComment(erow *row)",
+            "question": "what is the defining signature for symbol editorRowHasOpenComment",
+            "repo": "kilo",
+            "symbol": "editorRowHasOpenComment"
+          },
+          {
+            "answer": "void editorRowInsertChar(erow *row, int at, int c)",
+            "correct": true,
+            "expected_signature": "void editorRowInsertChar(erow *row, int at, int c)",
+            "question": "what is the defining signature for symbol editorRowInsertChar",
+            "repo": "kilo",
+            "symbol": "editorRowInsertChar"
+          },
+          {
+            "answer": "void editorSelectSyntaxHighlight(char *filename)",
+            "correct": true,
+            "expected_signature": "void editorSelectSyntaxHighlight(char *filename)",
+            "question": "what is the defining signature for symbol editorSelectSyntaxHighlight",
+            "repo": "kilo",
+            "symbol": "editorSelectSyntaxHighlight"
+          },
+          {
+            "answer": "int editorSyntaxToColor(int hl)",
+            "correct": true,
+            "expected_signature": "int editorSyntaxToColor(int hl)",
+            "question": "what is the defining signature for symbol editorSyntaxToColor",
+            "repo": "kilo",
+            "symbol": "editorSyntaxToColor"
+          },
+          {
+            "answer": "void editorUpdateRow(erow *row)",
+            "correct": true,
+            "expected_signature": "void editorUpdateRow(erow *row)",
+            "question": "what is the defining signature for symbol editorUpdateRow",
+            "repo": "kilo",
+            "symbol": "editorUpdateRow"
+          },
+          {
+            "answer": "void editorUpdateSyntax(erow *row)",
+            "correct": true,
+            "expected_signature": "void editorUpdateSyntax(erow *row)",
+            "question": "what is the defining signature for symbol editorUpdateSyntax",
+            "repo": "kilo",
+            "symbol": "editorUpdateSyntax"
+          },
+          {
+            "answer": "int enableRawMode(int fd)",
+            "correct": true,
+            "expected_signature": "int enableRawMode(int fd)",
+            "question": "what is the defining signature for symbol enableRawMode",
+            "repo": "kilo",
+            "symbol": "enableRawMode"
+          },
+          {
+            "answer": "int getCursorPosition(int ifd, int ofd, int *rows, int *cols)",
+            "correct": true,
+            "expected_signature": "int getCursorPosition(int ifd, int ofd, int *rows, int *cols)",
+            "question": "what is the defining signature for symbol getCursorPosition",
+            "repo": "kilo",
+            "symbol": "getCursorPosition"
+          },
+          {
+            "answer": "int getWindowSize(int ifd, int ofd, int *rows, int *cols)",
+            "correct": true,
+            "expected_signature": "int getWindowSize(int ifd, int ofd, int *rows, int *cols)",
+            "question": "what is the defining signature for symbol getWindowSize",
+            "repo": "kilo",
+            "symbol": "getWindowSize"
+          },
+          {
+            "answer": "int is_separator(int c)",
+            "correct": true,
+            "expected_signature": "int is_separator(int c)",
+            "question": "what is the defining signature for symbol is_separator",
+            "repo": "kilo",
+            "symbol": "is_separator"
+          },
+          {
+            "answer": "def __add__(self, value: str | _HasHTML, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __add__(self, value: str | _HasHTML, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "def __call__(self, s: t.Any, /) -> Markup:",
+            "correct": true,
+            "expected_signature": "def __call__(self, s: t.Any, /) -> Markup:",
+            "question": "what is the defining signature for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "def __class__(self) -> type[t.Any]:",
+            "correct": true,
+            "expected_signature": "def __class__(self) -> type[t.Any]:",
+            "question": "what is the defining signature for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "def __float__(self, /) -> float:",
+            "correct": true,
+            "expected_signature": "def __float__(self, /) -> float:",
+            "question": "what is the defining signature for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "def __html__(self, /) -> str:",
+            "correct": true,
+            "expected_signature": "def __html__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "def __html_format__(self, format_spec: str, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __html_format__(self, format_spec: str, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "def __init__(self, escape: _TPEscape) -> None:",
+            "correct": true,
+            "expected_signature": "def __init__(self, escape: _TPEscape) -> None:",
+            "question": "what is the defining signature for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "def __int__(self, /) -> int:",
+            "correct": true,
+            "expected_signature": "def __int__(self, /) -> int:",
+            "question": "what is the defining signature for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "def __mod__(self, value: t.Any, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __mod__(self, value: t.Any, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:",
+            "question": "what is the defining signature for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "def __repr__(self, /) -> str:",
+            "correct": true,
+            "expected_signature": "def __repr__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "def __str__(self, /) -> str:",
+            "correct": true,
+            "expected_signature": "def __str__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "def _escape_inner(s: str, /) -> str:",
+            "correct": true,
+            "expected_signature": "def _escape_inner(s: str, /) -> str:",
+            "question": "what is the defining signature for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "def _mod(request: pytest.FixtureRequest) -> None:",
+            "correct": true,
+            "expected_signature": "def _mod(request: pytest.FixtureRequest) -> None:",
+            "question": "what is the defining signature for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "def build_extension(self, ext):",
+            "correct": true,
+            "expected_signature": "def build_extension(self, ext):",
+            "question": "what is the defining signature for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "def capitalize(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def capitalize(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "def casefold(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def casefold(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "def escape(s: t.Any, /) -> Markup:",
+            "correct": true,
+            "expected_signature": "def escape(s: t.Any, /) -> Markup:",
+            "question": "what is the defining signature for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "def escape_silent(s: t.Any | None, /) -> Markup:",
+            "correct": true,
+            "expected_signature": "def escape_silent(s: t.Any | None, /) -> Markup:",
+            "question": "what is the defining signature for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:",
+            "question": "what is the defining signature for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:",
+            "question": "what is the defining signature for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "def format_field(self, value: t.Any, format_spec: str) -> str:",
+            "correct": true,
+            "expected_signature": "def format_field(self, value: t.Any, format_spec: str) -> str:",
+            "question": "what is the defining signature for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:",
+            "question": "what is the defining signature for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:",
+            "question": "what is the defining signature for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "def lower(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def lower(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "def lstrip(self, chars: str | None = None, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def lstrip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "correct": true,
+            "expected_signature": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "question": "what is the defining signature for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "def pytest_report_header() -> list[str]:",
+            "correct": true,
+            "expected_signature": "def pytest_report_header() -> list[str]:",
+            "question": "what is the defining signature for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "def removeprefix(self, prefix: str, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def removeprefix(self, prefix: str, /) -> te.Self:",
+            "question": "what is the defining signature for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "def removesuffix(self, suffix: str) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def removesuffix(self, suffix: str) -> te.Self:",
+            "question": "what is the defining signature for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:",
+            "question": "what is the defining signature for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "correct": true,
+            "expected_signature": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "question": "what is the defining signature for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "correct": true,
+            "expected_signature": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "def rstrip(self, chars: str | None = None, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def rstrip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "def run(self):",
+            "correct": true,
+            "expected_signature": "def run(self):",
+            "question": "what is the defining signature for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "def run_setup(with_binary):",
+            "correct": true,
+            "expected_signature": "def run_setup(with_binary):",
+            "question": "what is the defining signature for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "def show_message(*lines):",
+            "correct": true,
+            "expected_signature": "def show_message(*lines):",
+            "question": "what is the defining signature for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "def soft_str(s: t.Any, /) -> str:",
+            "correct": true,
+            "expected_signature": "def soft_str(s: t.Any, /) -> str:",
+            "question": "what is the defining signature for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "correct": true,
+            "expected_signature": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:",
+            "correct": true,
+            "expected_signature": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "def strip(self, chars: str | None = None, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def strip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "def striptags(self, /) -> str:",
+            "correct": true,
+            "expected_signature": "def striptags(self, /) -> str:",
+            "question": "what is the defining signature for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "def swapcase(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def swapcase(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "def test_adding() -> None:",
+            "correct": true,
+            "expected_signature": "def test_adding() -> None:",
+            "question": "what is the defining signature for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "def test_complex_custom_formatting() -> None:",
+            "correct": true,
+            "expected_signature": "def test_complex_custom_formatting() -> None:",
+            "question": "what is the defining signature for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "def test_custom_formatting() -> None:",
+            "correct": true,
+            "expected_signature": "def test_custom_formatting() -> None:",
+            "question": "what is the defining signature for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "def test_dict_interpol() -> None:",
+            "correct": true,
+            "expected_signature": "def test_dict_interpol() -> None:",
+            "question": "what is the defining signature for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "def test_escape(value: str, expect: str) -> None:",
+            "correct": true,
+            "expected_signature": "def test_escape(value: str, expect: str) -> None:",
+            "question": "what is the defining signature for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "def test_escape_return_type() -> None:",
+            "correct": true,
+            "expected_signature": "def test_escape_return_type() -> None:",
+            "question": "what is the defining signature for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "def test_escape_silent() -> None:",
+            "correct": true,
+            "expected_signature": "def test_escape_silent() -> None:",
+            "question": "what is the defining signature for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "def test_escaping() -> None:",
+            "correct": true,
+            "expected_signature": "def test_escaping() -> None:",
+            "question": "what is the defining signature for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "def test_exception_custom_html() -> None:",
+            "correct": true,
+            "expected_signature": "def test_exception_custom_html() -> None:",
+            "question": "what is the defining signature for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "def test_ext_init() -> None:",
+            "correct": true,
+            "expected_signature": "def test_ext_init() -> None:",
+            "question": "what is the defining signature for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "def test_format() -> None:",
+            "correct": true,
+            "expected_signature": "def test_format() -> None:",
+            "question": "what is the defining signature for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "def test_format_map() -> None:",
+            "correct": true,
+            "expected_signature": "def test_format_map() -> None:",
+            "question": "what is the defining signature for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "def test_formatting_empty() -> None:",
+            "correct": true,
+            "expected_signature": "def test_formatting_empty() -> None:",
+            "question": "what is the defining signature for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "def test_formatting_with_objects() -> None:",
+            "correct": true,
+            "expected_signature": "def test_formatting_with_objects() -> None:",
+            "question": "what is the defining signature for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 83,
+        "latency": {
+          "latency_ms_p50": 0.00013000681065022945,
+          "latency_ms_p95": 0.00019709987100213742
+        },
+        "question_count": 83,
+        "storage_bytes": 6391
+      },
+      "text_signature_lookup": {
+        "answer_accuracy": 0.8674698795180723,
+        "answers": [
+          {
+            "answer": "void disableRawMode(int fd)",
+            "correct": true,
+            "expected_signature": "void disableRawMode(int fd)",
+            "question": "what is the defining signature for symbol disableRawMode",
+            "repo": "kilo",
+            "symbol": "disableRawMode"
+          },
+          {
+            "answer": "void editorAtExit(void)",
+            "correct": true,
+            "expected_signature": "void editorAtExit(void)",
+            "question": "what is the defining signature for symbol editorAtExit",
+            "repo": "kilo",
+            "symbol": "editorAtExit"
+          },
+          {
+            "answer": "void editorDelRow(int at)",
+            "correct": true,
+            "expected_signature": "void editorDelRow(int at)",
+            "question": "what is the defining signature for symbol editorDelRow",
+            "repo": "kilo",
+            "symbol": "editorDelRow"
+          },
+          {
+            "answer": "void editorFreeRow(erow *row)",
+            "correct": true,
+            "expected_signature": "void editorFreeRow(erow *row)",
+            "question": "what is the defining signature for symbol editorFreeRow",
+            "repo": "kilo",
+            "symbol": "editorFreeRow"
+          },
+          {
+            "answer": "void editorInsertChar(int c)",
+            "correct": true,
+            "expected_signature": "void editorInsertChar(int c)",
+            "question": "what is the defining signature for symbol editorInsertChar",
+            "repo": "kilo",
+            "symbol": "editorInsertChar"
+          },
+          {
+            "answer": "void editorInsertRow(int at, char *s, size_t len)",
+            "correct": true,
+            "expected_signature": "void editorInsertRow(int at, char *s, size_t len)",
+            "question": "what is the defining signature for symbol editorInsertRow",
+            "repo": "kilo",
+            "symbol": "editorInsertRow"
+          },
+          {
+            "answer": "int editorReadKey(int fd)",
+            "correct": true,
+            "expected_signature": "int editorReadKey(int fd)",
+            "question": "what is the defining signature for symbol editorReadKey",
+            "repo": "kilo",
+            "symbol": "editorReadKey"
+          },
+          {
+            "answer": "void editorRowAppendString(erow *row, char *s, size_t len)",
+            "correct": true,
+            "expected_signature": "void editorRowAppendString(erow *row, char *s, size_t len)",
+            "question": "what is the defining signature for symbol editorRowAppendString",
+            "repo": "kilo",
+            "symbol": "editorRowAppendString"
+          },
+          {
+            "answer": "void editorRowDelChar(erow *row, int at)",
+            "correct": true,
+            "expected_signature": "void editorRowDelChar(erow *row, int at)",
+            "question": "what is the defining signature for symbol editorRowDelChar",
+            "repo": "kilo",
+            "symbol": "editorRowDelChar"
+          },
+          {
+            "answer": "int editorRowHasOpenComment(erow *row)",
+            "correct": true,
+            "expected_signature": "int editorRowHasOpenComment(erow *row)",
+            "question": "what is the defining signature for symbol editorRowHasOpenComment",
+            "repo": "kilo",
+            "symbol": "editorRowHasOpenComment"
+          },
+          {
+            "answer": "void editorRowInsertChar(erow *row, int at, int c)",
+            "correct": true,
+            "expected_signature": "void editorRowInsertChar(erow *row, int at, int c)",
+            "question": "what is the defining signature for symbol editorRowInsertChar",
+            "repo": "kilo",
+            "symbol": "editorRowInsertChar"
+          },
+          {
+            "answer": "void editorSelectSyntaxHighlight(char *filename)",
+            "correct": true,
+            "expected_signature": "void editorSelectSyntaxHighlight(char *filename)",
+            "question": "what is the defining signature for symbol editorSelectSyntaxHighlight",
+            "repo": "kilo",
+            "symbol": "editorSelectSyntaxHighlight"
+          },
+          {
+            "answer": "int editorSyntaxToColor(int hl)",
+            "correct": true,
+            "expected_signature": "int editorSyntaxToColor(int hl)",
+            "question": "what is the defining signature for symbol editorSyntaxToColor",
+            "repo": "kilo",
+            "symbol": "editorSyntaxToColor"
+          },
+          {
+            "answer": "void editorUpdateRow(erow *row)",
+            "correct": true,
+            "expected_signature": "void editorUpdateRow(erow *row)",
+            "question": "what is the defining signature for symbol editorUpdateRow",
+            "repo": "kilo",
+            "symbol": "editorUpdateRow"
+          },
+          {
+            "answer": "void editorUpdateSyntax(erow *row)",
+            "correct": true,
+            "expected_signature": "void editorUpdateSyntax(erow *row)",
+            "question": "what is the defining signature for symbol editorUpdateSyntax",
+            "repo": "kilo",
+            "symbol": "editorUpdateSyntax"
+          },
+          {
+            "answer": "int enableRawMode(int fd)",
+            "correct": true,
+            "expected_signature": "int enableRawMode(int fd)",
+            "question": "what is the defining signature for symbol enableRawMode",
+            "repo": "kilo",
+            "symbol": "enableRawMode"
+          },
+          {
+            "answer": "int getCursorPosition(int ifd, int ofd, int *rows, int *cols)",
+            "correct": true,
+            "expected_signature": "int getCursorPosition(int ifd, int ofd, int *rows, int *cols)",
+            "question": "what is the defining signature for symbol getCursorPosition",
+            "repo": "kilo",
+            "symbol": "getCursorPosition"
+          },
+          {
+            "answer": "int getWindowSize(int ifd, int ofd, int *rows, int *cols)",
+            "correct": true,
+            "expected_signature": "int getWindowSize(int ifd, int ofd, int *rows, int *cols)",
+            "question": "what is the defining signature for symbol getWindowSize",
+            "repo": "kilo",
+            "symbol": "getWindowSize"
+          },
+          {
+            "answer": "int is_separator(int c)",
+            "correct": true,
+            "expected_signature": "int is_separator(int c)",
+            "question": "what is the defining signature for symbol is_separator",
+            "repo": "kilo",
+            "symbol": "is_separator"
+          },
+          {
+            "answer": "def __add__(self, value: str | _HasHTML, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __add__(self, value: str | _HasHTML, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "def __call__(self, s: t.Any, /) -> Markup: ...",
+            "correct": false,
+            "expected_signature": "def __call__(self, s: t.Any, /) -> Markup:",
+            "question": "what is the defining signature for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "return self.__class__(super().__add__(self.escape(value)))",
+            "correct": false,
+            "expected_signature": "def __class__(self) -> type[t.Any]:",
+            "question": "what is the defining signature for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "def __float__(self, /) -> float:",
+            "correct": true,
+            "expected_signature": "def __float__(self, /) -> float:",
+            "question": "what is the defining signature for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "def __html__(self, /) -> str: ...",
+            "correct": false,
+            "expected_signature": "def __html__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "def __html_format__(self, format_spec: str, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __html_format__(self, format_spec: str, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "def __init__(self, escape: _TPEscape) -> None:",
+            "correct": true,
+            "expected_signature": "def __init__(self, escape: _TPEscape) -> None:",
+            "question": "what is the defining signature for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "def __int__(self, /) -> int:",
+            "correct": true,
+            "expected_signature": "def __int__(self, /) -> int:",
+            "question": "what is the defining signature for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "def __mod__(self, value: t.Any, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __mod__(self, value: t.Any, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "def __new__(",
+            "correct": false,
+            "expected_signature": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:",
+            "question": "what is the defining signature for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "def __repr__(self, /) -> str:",
+            "correct": true,
+            "expected_signature": "def __repr__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:",
+            "question": "what is the defining signature for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "def __str__(self, /) -> str:",
+            "correct": true,
+            "expected_signature": "def __str__(self, /) -> str:",
+            "question": "what is the defining signature for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "return Markup(_escape_inner(s))",
+            "correct": false,
+            "expected_signature": "def _escape_inner(s: str, /) -> str:",
+            "question": "what is the defining signature for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "def _mod(request: pytest.FixtureRequest) -> None:",
+            "correct": true,
+            "expected_signature": "def _mod(request: pytest.FixtureRequest) -> None:",
+            "question": "what is the defining signature for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "def build_extension(self, ext):",
+            "correct": true,
+            "expected_signature": "def build_extension(self, ext):",
+            "question": "what is the defining signature for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "def capitalize(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def capitalize(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "def casefold(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def casefold(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "\"escape(s)\",",
+            "correct": false,
+            "expected_signature": "def escape(s: t.Any, /) -> Markup:",
+            "question": "what is the defining signature for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "def escape_silent(s: t.Any | None, /) -> Markup:",
+            "correct": true,
+            "expected_signature": "def escape_silent(s: t.Any | None, /) -> Markup:",
+            "question": "what is the defining signature for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:",
+            "question": "what is the defining signature for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:",
+            "question": "what is the defining signature for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "def format_field(self, value: t.Any, format_spec: str) -> str:",
+            "correct": true,
+            "expected_signature": "def format_field(self, value: t.Any, format_spec: str) -> str:",
+            "question": "what is the defining signature for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "def format_map(",
+            "correct": false,
+            "expected_signature": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:",
+            "question": "what is the defining signature for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:",
+            "question": "what is the defining signature for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "def lower(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def lower(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "def lstrip(self, chars: str | None = None, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def lstrip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "correct": true,
+            "expected_signature": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "question": "what is the defining signature for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "def pytest_report_header() -> list[str]:",
+            "correct": true,
+            "expected_signature": "def pytest_report_header() -> list[str]:",
+            "question": "what is the defining signature for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "def removeprefix(self, prefix: str, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def removeprefix(self, prefix: str, /) -> te.Self:",
+            "question": "what is the defining signature for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "def removesuffix(self, suffix: str) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def removesuffix(self, suffix: str) -> te.Self:",
+            "question": "what is the defining signature for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:",
+            "question": "what is the defining signature for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:",
+            "question": "what is the defining signature for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "correct": true,
+            "expected_signature": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:",
+            "question": "what is the defining signature for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "def rsplit(  # type: ignore[override]",
+            "correct": false,
+            "expected_signature": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "def rstrip(self, chars: str | None = None, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def rstrip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "subprocess.run(",
+            "correct": false,
+            "expected_signature": "def run(self):",
+            "question": "what is the defining signature for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "def run_setup(with_binary):",
+            "correct": true,
+            "expected_signature": "def run_setup(with_binary):",
+            "question": "what is the defining signature for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "def show_message(*lines):",
+            "correct": true,
+            "expected_signature": "def show_message(*lines):",
+            "question": "what is the defining signature for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "def soft_str(s: t.Any, /) -> str:",
+            "correct": true,
+            "expected_signature": "def soft_str(s: t.Any, /) -> str:",
+            "question": "what is the defining signature for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "def split(  # type: ignore[override]",
+            "correct": false,
+            "expected_signature": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "def splitlines(  # type: ignore[override]",
+            "correct": false,
+            "expected_signature": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:",
+            "question": "what is the defining signature for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "def strip(self, chars: str | None = None, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def strip(self, chars: str | None = None, /) -> te.Self:",
+            "question": "what is the defining signature for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "def striptags(self, /) -> str:",
+            "correct": true,
+            "expected_signature": "def striptags(self, /) -> str:",
+            "question": "what is the defining signature for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "def swapcase(self, /) -> te.Self:",
+            "correct": true,
+            "expected_signature": "def swapcase(self, /) -> te.Self:",
+            "question": "what is the defining signature for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "def test_adding() -> None:",
+            "correct": true,
+            "expected_signature": "def test_adding() -> None:",
+            "question": "what is the defining signature for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "def test_complex_custom_formatting() -> None:",
+            "correct": true,
+            "expected_signature": "def test_complex_custom_formatting() -> None:",
+            "question": "what is the defining signature for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "def test_custom_formatting() -> None:",
+            "correct": true,
+            "expected_signature": "def test_custom_formatting() -> None:",
+            "question": "what is the defining signature for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "def test_dict_interpol() -> None:",
+            "correct": true,
+            "expected_signature": "def test_dict_interpol() -> None:",
+            "question": "what is the defining signature for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "def test_escape(value: str, expect: str) -> None:",
+            "correct": true,
+            "expected_signature": "def test_escape(value: str, expect: str) -> None:",
+            "question": "what is the defining signature for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "def test_escape_return_type() -> None:",
+            "correct": true,
+            "expected_signature": "def test_escape_return_type() -> None:",
+            "question": "what is the defining signature for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "def test_escape_silent() -> None:",
+            "correct": true,
+            "expected_signature": "def test_escape_silent() -> None:",
+            "question": "what is the defining signature for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "def test_escaping() -> None:",
+            "correct": true,
+            "expected_signature": "def test_escaping() -> None:",
+            "question": "what is the defining signature for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "def test_exception_custom_html() -> None:",
+            "correct": true,
+            "expected_signature": "def test_exception_custom_html() -> None:",
+            "question": "what is the defining signature for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "def test_ext_init() -> None:",
+            "correct": true,
+            "expected_signature": "def test_ext_init() -> None:",
+            "question": "what is the defining signature for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "def test_format() -> None:",
+            "correct": true,
+            "expected_signature": "def test_format() -> None:",
+            "question": "what is the defining signature for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "def test_format_map() -> None:",
+            "correct": true,
+            "expected_signature": "def test_format_map() -> None:",
+            "question": "what is the defining signature for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "def test_formatting_empty() -> None:",
+            "correct": true,
+            "expected_signature": "def test_formatting_empty() -> None:",
+            "question": "what is the defining signature for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "def test_formatting_with_objects() -> None:",
+            "correct": true,
+            "expected_signature": "def test_formatting_with_objects() -> None:",
+            "question": "what is the defining signature for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 72,
+        "latency": {
+          "latency_ms_p50": 0.24719801149331033,
+          "latency_ms_p95": 0.6505083816591649
+        },
+        "question_count": 83,
+        "storage_bytes": 49153
+      }
+    },
+    "question_count": 83,
+    "repo_count_requested": 2,
+    "repos": [
+      {
+        "commit": "323d93b29bd8",
+        "repo": "kilo",
+        "signature_count_available": 19,
+        "signature_count_used": 19
+      },
+      {
+        "commit": "b2e4d9c7687b",
+        "repo": "markupsafe",
+        "signature_count_available": 81,
+        "signature_count_used": 64
+      }
+    ],
+    "status": "completed"
+  },
+  "notes": "Public-repository structured external-memory benchmark for defining signature-line QA, compared with text signature lookup and a frozen parametric proxy. Uses local public clones when present.",
+  "recorded_at_unix": 1781952213.8097682,
+  "seed": 123,
+  "status": "completed"
+}

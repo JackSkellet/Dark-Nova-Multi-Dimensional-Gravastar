@@ -1,0 +1,71 @@
+{
+  "command": "uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/markupsafe --include-patch-replay --patch-base-commit 54bb00b^ --patch-fix-commit 54bb00b --patch-test-code '<python regression code>'",
+  "experiment_id": "E5_markupsafe_public_patch_replay",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H5",
+  "metrics": {
+    "baseline_test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
+    "candidates": [
+      {
+        "apply_output_tail": "empty patch",
+        "method": "frozen_noop",
+        "notes": "No future commit patch is available to the exposed state.",
+        "patch_applied": true,
+        "patch_bytes": 0,
+        "test_output_tail": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/__init__.py\", line 38, in escape\n    return Markup(_escape_inner(s))\n                  ^^^^^^^^^^^^^^^^\n  File \"/tmp/weightlab-public-patch-ghyzvqay/repo/src/markupsafe/_native.py\", line 3, in _escape_inner\n    s.replace(\"&\", \"&amp;\")\n    ^^^^^^^^^\nAttributeError: 'Proxy' object has no attribute 'replace'",
+        "tests_passed": false
+      },
+      {
+        "apply_output_tail": "",
+        "method": "generated_proxy_class_patch",
+        "notes": "Deterministic generated candidate for proxy objects that spoof __class__; replaces s.__class__ exact str checks with type(s).",
+        "patch_applied": true,
+        "patch_bytes": 421,
+        "test_output_tail": "",
+        "tests_passed": true
+      },
+      {
+        "apply_output_tail": "",
+        "method": "historical_future_patch",
+        "notes": "Actual future commit diff replayed onto the exposed parent and graded by executable tests.",
+        "patch_applied": true,
+        "patch_bytes": 909,
+        "test_output_tail": "",
+        "tests_passed": true
+      }
+    ],
+    "final": {
+      "baseline_tests_passed": false,
+      "best_method": "generated_proxy_class_patch",
+      "frozen_noop_passed": false,
+      "functional_success_rate": 0.6666666666666666,
+      "generated_clamp_bounds_patch_passed": null,
+      "generated_proxy_class_patch_passed": true,
+      "historical_patch_passed": true,
+      "runtime_ms": 84.65493298717774
+    },
+    "notes": "Chronological public-patch replay harness. The exposed state is the base commit; deterministic generated candidates and the historical future diff are applied as candidates and graded only by executable tests, not by textual similarity.",
+    "repo": {
+      "base_commit": "b5291646cbab",
+      "fix_commit": "54bb00bfafe5",
+      "future_commit_not_in_memory": true,
+      "head": "b2e4d9c7687b",
+      "path_name": "markupsafe",
+      "test_command": [
+        "/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/bin/python3",
+        "-c",
+        "import sys; sys.path.insert(0, 'src'); from markupsafe import escape; Proxy = type('Proxy', (), {'__class__': property(lambda self: str), '__str__': lambda self: '<em>'}); assert str(escape(Proxy())) == '&lt;em&gt;'"
+      ]
+    }
+  },
+  "notes": "Explicit local-clone public historical patch replay graded by executable tests, not text similarity.",
+  "recorded_at_unix": 1781925623.4152007,
+  "seed": 0,
+  "status": "completed"
+}

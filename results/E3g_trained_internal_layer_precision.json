@@ -1,0 +1,149 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E3g_trained_internal_layer_precision",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H3",
+  "metrics": {
+    "model": {
+      "architecture": "trained_internal_tiny_transformer_lm",
+      "d_model": 24,
+      "quantized_tensor": "trained_w_mlp_out_rows",
+      "sequence_length": 12,
+      "trained_component": "w_mlp_out_ridge_regression",
+      "vocab_size": 32
+    },
+    "notes": "Fixed tiny transformer attention and input MLP weights with an internal MLP output matrix trained by ridge regression. Precision selection quantizes that trained internal matrix and evaluates disjoint held-out prompts against BF16, FP32, and random protected-row controls.",
+    "precision_policies": {
+      "full_fp32": {
+        "heldout_accuracy": 0.8072916666666666,
+        "heldout_kl_divergence": 0.0,
+        "heldout_logit_mse": 0.0,
+        "heldout_nll": 0.8691220831031247,
+        "total_bytes": 4608.0
+      },
+      "groupwise_int4": {
+        "heldout_accuracy": 0.8216145833333334,
+        "heldout_kl_divergence": 0.04351153006395982,
+        "heldout_logit_mse": 0.7675621976838997,
+        "heldout_nll": 0.8684206547990166,
+        "total_bytes": 1152.0
+      },
+      "output_error_bf16_protected": {
+        "heldout_accuracy": 0.8098958333333334,
+        "heldout_kl_divergence": 0.02242497626812755,
+        "heldout_logit_mse": 0.4501579577671142,
+        "heldout_nll": 0.8541727902795246,
+        "total_bytes": 1568.0
+      },
+      "output_error_fp32_protected": {
+        "heldout_accuracy": 0.80859375,
+        "heldout_kl_divergence": 0.02242939779485641,
+        "heldout_logit_mse": 0.45077738740248785,
+        "heldout_nll": 0.8540806858269171,
+        "total_bytes": 1952.0
+      },
+      "random_bf16_protected_best": {
+        "heldout_logit_mse": 0.5327425213628773,
+        "total_bytes": 1568.0
+      },
+      "random_bf16_protected_mean": {
+        "heldout_logit_mse": 0.6447474423463587,
+        "total_bytes": 1568.0
+      },
+      "random_fp32_protected_best": {
+        "heldout_logit_mse": 0.5337818351927556,
+        "total_bytes": 1952.0
+      },
+      "random_fp32_protected_mean": {
+        "heldout_logit_mse": 0.645895948600954,
+        "total_bytes": 1952.0
+      },
+      "uniform_int4": {
+        "heldout_accuracy": 0.8033854166666666,
+        "heldout_kl_divergence": 0.19243369950617784,
+        "heldout_logit_mse": 2.9860886969519345,
+        "heldout_nll": 0.9421503006039383,
+        "total_bytes": 588.0
+      }
+    },
+    "protected_count": 8,
+    "row_output_error_scores": [
+      0.7638891335890262,
+      0.734656334153318,
+      0.7777802180370812,
+      0.7816888347997252,
+      0.7862724310227894,
+      0.6936521737254591,
+      0.752070067428406,
+      0.7318511038406853,
+      0.7470191041922021,
+      0.7703047007424477,
+      0.7560645111833654,
+      0.7789338702191344,
+      0.7602579974160092,
+      0.7382476643542619,
+      0.7515311554497806,
+      0.7390524105259328,
+      0.7772935178885113,
+      0.7749806339678429,
+      0.7635612121233074,
+      0.7808054640463349,
+      0.7576169589645024,
+      0.763279706635912,
+      0.770371969831841,
+      0.7558521580738647,
+      0.7338637745917038,
+      0.7650643351609188,
+      0.7590867574181368,
+      0.7603575510742602,
+      0.7115710690476844,
+      0.7351761931114049,
+      0.7559610313090673,
+      0.7615482873936084,
+      0.7580309811746057,
+      0.7579683182029036,
+      0.8158971777096882,
+      0.7704833109046694,
+      0.7494696647599649,
+      0.7833522022180224,
+      0.7765870936196163,
+      0.6985612652611066,
+      0.7693233622184725,
+      0.8022164185217926,
+      0.7501526241609517,
+      0.7704723601855633,
+      0.7261103845580359,
+      0.7547058075689681,
+      0.7707120653686679,
+      0.7652638696581109
+    ],
+    "selected_rows": [
+      1,
+      5,
+      7,
+      24,
+      28,
+      29,
+      39,
+      44
+    ],
+    "training": {
+      "heldout_prompts": 64,
+      "target_rule": "next_token_is_current_token_plus_one_mod_vocab",
+      "train_prompts": 96,
+      "trained_internal_heldout_accuracy": 0.8072916666666666,
+      "trained_internal_heldout_nll": 0.8691220831031247,
+      "untrained_internal_heldout_nll": 9.959018375582337
+    }
+  },
+  "notes": "Tiny transformer-style LM with the internal MLP output matrix trained by ridge regression before selective precision is evaluated.",
+  "recorded_at_unix": 1781952213.802235,
+  "seed": 123,
+  "status": "completed"
+}

@@ -1,0 +1,690 @@
+{
+  "assessments": [
+    {
+      "evidence": {},
+      "experiment_id": "E5_public_repo_chronology",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_public_repo_symbol_qa",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_public_repo_stale_docs",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_chronology",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_symbol_qa",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_stale_docs",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_markupsafe_public_patch_replay",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3h_real_open_model_matrix_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3i_real_open_model_task_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "full_fp32_bytes": 402056.0,
+        "random_bf16_best_kl": 1.660081068166619e-07,
+        "random_bf16_mean_kl": 5.80204088884706e-07,
+        "selected_bf16_bytes": 653597.0,
+        "selected_bf16_kl": 1.7758168269210728e-07,
+        "selected_fp32_kl": 2.143507060736738e-07,
+        "uniform_int4_bytes": 50269.0
+      },
+      "experiment_id": "E3j_real_open_model_natural_text_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "not_pareto_improvement",
+        "storage_loss",
+        "does_not_beat_best_random",
+        "tiny_open_model_smoke_test"
+      ],
+      "outcome": "mixed",
+      "primary_reason": "selected_rows_beat_random_mean_but_lose_storage",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "baseline_failures": 2,
+        "generated_task_successes": 2,
+        "historical_patch_successes": 2,
+        "task_count": 2
+      },
+      "experiment_id": "E5g_public_patch_replay_suite",
+      "hypothesis": "H5",
+      "limitations": [
+        "hand_authored_heuristics",
+        "not_autonomous_repair",
+        "small_task_count",
+        "source_level_kilo_regression"
+      ],
+      "outcome": "limited_positive",
+      "primary_reason": "generated_candidates_passed_narrow_public_patch_replay",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "max_abs_heldout_kl": 0.0,
+        "protected_count": 1,
+        "tensor_shape": [
+          2,
+          8
+        ]
+      },
+      "experiment_id": "E3k_real_open_model_internal_tensor_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "tiny_tensor",
+        "zero_task_sensitivity",
+        "selective_precision_not_supported"
+      ],
+      "outcome": "no_signal",
+      "primary_reason": "all_precision_policies_have_zero_measurable_kl",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E1_contextual_routing",
+      "hypothesis": "H1",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E1b_routing_robustness",
+      "hypothesis": "H1",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "metadata_accounting": true,
+        "pareto_compositional_methods": [],
+        "uniform_int8_bytes": 4108,
+        "uniform_int8_mse": 0.0049917652766398365
+      },
+      "experiment_id": "E2_compositional_storage",
+      "hypothesis": "H2",
+      "limitations": [
+        "metadata_accounting_included",
+        "cpu_reduced_matrix",
+        "no_compositional_pareto_win"
+      ],
+      "outcome": "rejected",
+      "primary_reason": "uniform_int8_dominates_tested_compositional_methods",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3_carrier_importance",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3b_output_error_selected_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3c_tiny_transformer_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3d_trained_tiny_transformer_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3e_bf16_vs_fp32_carriers",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3f_internal_matrix_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E3g_trained_internal_layer_precision",
+      "hypothesis": "H3",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E4_component_lookup",
+      "hypothesis": "H4",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E4b_routed_execution",
+      "hypothesis": "H4",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "max_p95_to_p50_ratio": 56.899845227717,
+        "rocm_available": true,
+        "rocm_runtime_version": "7.2.53211",
+        "uses_cuda_transfer": false,
+        "uses_rocm_transfer": true
+      },
+      "experiment_id": "E4c_torch_batched_routed_execution",
+      "hypothesis": "H4",
+      "limitations": [
+        "not_speed_claim",
+        "small_dispatch_benchmark",
+        "no_occupancy_measurement",
+        "no_kernel_fusion",
+        "p95_outlier_present"
+      ],
+      "outcome": "runtime_positive",
+      "primary_reason": "rocm_backend_executed_torch_dispatch",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "best_device_to_host_bandwidth_gb_s_p50": 24.93444486257389,
+        "best_host_to_device_bandwidth_gb_s_p50": 20.769125038732586,
+        "payload_count": 3,
+        "rocm_runtime_version": "7.2.53211",
+        "uses_cuda_transfer": false,
+        "uses_rocm_transfer": true
+      },
+      "experiment_id": "E4d_rocm_transfer_scaling",
+      "hypothesis": "H4",
+      "limitations": [
+        "no_occupancy_measurement",
+        "no_kernel_fusion",
+        "no_power_measurement",
+        "not_model_layer_benchmark"
+      ],
+      "outcome": "measurement_positive",
+      "primary_reason": "rocm_transfer_scaling_recorded",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5_chronological_continual_learning",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5c_trainable_adapter_vs_retrieval",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5d_synthetic_stale_doc_positive_control",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5e_synthetic_patch_generation_functional",
+      "hypothesis": "H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "S1_security_canary_access_control",
+      "hypothesis": "security",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "E5b_external_update_controller",
+      "hypothesis": "H5/security",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "S2_adversarial_security_suite",
+      "hypothesis": "security/H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "S2b_adversarial_extraction_corpus",
+      "hypothesis": "security/H5",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "critical_failures": 0,
+        "semantic_exfiltration_queries_blocked": 6,
+        "sensitive_alias_leaks": 0,
+        "unauthorized_retrievals": 0
+      },
+      "experiment_id": "S2c_semantic_extraction_red_team",
+      "hypothesis": "security/H5",
+      "limitations": [
+        "deterministic_heuristic",
+        "not_production_proof",
+        "synthetic_red_team"
+      ],
+      "outcome": "smoke_pass",
+      "primary_reason": "covered_security_checks_passed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "structured_answer_accuracy": 1.0,
+        "structured_poisoned_answer_count": 0,
+        "structured_restricted_denial_accuracy": 1.0,
+        "supports_model_level_claim": false,
+        "updated_text_retrieval_answer_accuracy": 0.6,
+        "updated_text_retrieval_poisoned_answer_count": 1
+      },
+      "experiment_id": "E6a_structured_repository_memory",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "synthetic_convention_corpus",
+        "parametric_baseline_is_proxy_not_trained_lm",
+        "small_question_set",
+        "not_code_generation",
+        "not_end_to_end_model_quality"
+      ],
+      "outcome": "exploration_positive",
+      "primary_reason": "structured_external_memory_beats_poisonable_text_retrieval_in_synthetic_convention_task",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "question_count": 70,
+        "repo_count_used": 2,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 3641,
+        "supports_model_level_claim": false,
+        "text_retrieval_answer_accuracy": 0.17142857142857143,
+        "text_retrieval_storage_bytes": 1229
+      },
+      "experiment_id": "E6b_public_repository_memory_qa",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "symbol_file_location_only",
+        "not_code_generation",
+        "not_natural_language_reasoning",
+        "structured_method_uses_extracted_symbol_index",
+        "no_model_integration"
+      ],
+      "outcome": "real_repo_measurement_positive",
+      "primary_reason": "structured_symbol_memory_answers_public_repo_symbol_file_qa",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "question_count": 83,
+        "repo_count_used": 2,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 6391,
+        "supports_model_level_claim": false,
+        "text_lookup_answer_accuracy": 0.8674698795180723,
+        "text_lookup_storage_bytes": 49153
+      },
+      "experiment_id": "E6c_public_repository_signature_qa",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "signature_line_only",
+        "not_code_generation",
+        "not_natural_language_reasoning",
+        "structured_method_uses_extracted_signature_index",
+        "no_model_integration"
+      ],
+      "outcome": "real_repo_measurement_positive",
+      "primary_reason": "structured_signature_memory_answers_public_repo_signature_qa",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "name_only_answer_accuracy": 0.40625,
+        "question_count": 64,
+        "repo_count_used": 1,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 5134,
+        "supports_model_level_claim": false
+      },
+      "experiment_id": "E6d_public_repository_call_stub_generation",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "python_signature_only",
+        "canonical_call_stub_only",
+        "not_executable_argument_synthesis",
+        "not_semantic_code_generation",
+        "no_model_integration"
+      ],
+      "outcome": "codegen_proxy_positive",
+      "primary_reason": "structured_signature_memory_generates_public_repo_call_stubs",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "name_only_answer_accuracy": 0.0,
+        "question_count": 64,
+        "repo_count_used": 1,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 5134,
+        "supports_model_level_claim": false
+      },
+      "experiment_id": "E6e_public_repository_function_skeleton_generation",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "python_signature_only",
+        "deterministic_skeleton_body_only",
+        "not_executable_behavior_synthesis",
+        "not_semantic_code_generation",
+        "no_model_integration"
+      ],
+      "outcome": "codegen_proxy_positive",
+      "primary_reason": "structured_signature_memory_generates_public_repo_function_skeletons",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "question_count": 10,
+        "repo_count_used": 1,
+        "signature_only_answer_accuracy": 0.0,
+        "signature_only_storage_bytes": 652,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 1504,
+        "supports_model_level_claim": false
+      },
+      "experiment_id": "E6f_public_repository_docstring_skeleton_generation",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "python_signature_and_docstring_only",
+        "first_docstring_line_only",
+        "deterministic_skeleton_body_only",
+        "not_executable_behavior_synthesis",
+        "not_semantic_code_generation",
+        "no_model_integration"
+      ],
+      "outcome": "codegen_proxy_positive",
+      "primary_reason": "structured_docstring_memory_generates_public_repo_documented_skeletons",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "question_count": 10,
+        "repo_count_used": 1,
+        "signature_only_answer_accuracy": 0.0,
+        "signature_only_storage_bytes": 652,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 1504,
+        "supports_model_level_claim": false
+      },
+      "experiment_id": "E6g_public_repository_api_reference_generation",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "python_signature_and_docstring_only",
+        "first_docstring_line_only",
+        "deterministic_api_reference_template",
+        "not_quality_rated_documentation",
+        "not_semantic_documentation_generation",
+        "no_model_integration"
+      ],
+      "outcome": "docgen_proxy_positive",
+      "primary_reason": "structured_docstring_memory_generates_public_repo_api_reference_entries",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "question_count": 4,
+        "repo_count_used": 1,
+        "source_only_answer_accuracy": 0.0,
+        "source_only_storage_bytes": 359,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 179,
+        "supports_model_level_claim": false
+      },
+      "experiment_id": "E6h_public_repository_api_doc_coverage_qa",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "sphinx_directive_coverage_only",
+        "documented_python_functions_only",
+        "exact_doc_file_lookup_only",
+        "not_documentation_quality",
+        "not_semantic_documentation_generation",
+        "no_model_integration"
+      ],
+      "outcome": "real_repo_doc_measurement_positive",
+      "primary_reason": "structured_doc_directive_memory_answers_public_repo_api_doc_coverage_qa",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "doc_only_answer_accuracy": 0.0,
+        "doc_only_storage_bytes": 32,
+        "question_count": 1,
+        "repo_count_used": 1,
+        "stale_doc_issue_count": 1,
+        "structured_answer_accuracy": 1.0,
+        "structured_storage_bytes": 86,
+        "supports_model_level_claim": false
+      },
+      "experiment_id": "E6i_synthetic_api_doc_drift_detection",
+      "hypothesis": "A1_external_memory",
+      "limitations": [
+        "synthetic_positive_control",
+        "sphinx_directive_consistency_only",
+        "python_signature_presence_only",
+        "not_documentation_quality",
+        "not_semantic_prose_drift_detection",
+        "no_model_integration"
+      ],
+      "outcome": "doc_drift_positive_control",
+      "primary_reason": "structured_source_doc_consistency_memory_detects_synthetic_api_doc_drift",
+      "supports_pareto_improvement": false
+    }
+  ],
+  "next_research_options": [
+    "larger_task_sensitive_model_tensors",
+    "upstream_test_suite_patch_mining",
+    "retrieval_first_update_gates",
+    "multilingual_file_format_security_red_team",
+    "activation_residual_cache",
+    "ephemeral_repository_adapters",
+    "structured_external_repository_memory",
+    "documentation_drift_detection"
+  ],
+  "outcome_counts": {
+    "codegen_proxy_positive": 3,
+    "doc_drift_positive_control": 1,
+    "docgen_proxy_positive": 1,
+    "exploration_positive": 1,
+    "limited_positive": 1,
+    "measurement_positive": 1,
+    "mixed": 1,
+    "no_signal": 1,
+    "real_repo_doc_measurement_positive": 1,
+    "real_repo_measurement_positive": 2,
+    "recorded": 28,
+    "rejected": 1,
+    "runtime_positive": 1,
+    "smoke_pass": 1
+  },
+  "pareto_improvement_found": false,
+  "record_count": 44
+}

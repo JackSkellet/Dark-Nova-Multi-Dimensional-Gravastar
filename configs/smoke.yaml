@@ -1,0 +1,50 @@
+seed: 123
+accelerator:
+  backend: rocm
+  allow_cpu_fallback: true
+experiments:
+  - E1_contextual_routing
+  - E1b_routing_robustness
+  - E2_compositional_storage
+  - E3_carrier_importance
+  - E3b_output_error_selected_precision
+  - E3c_tiny_transformer_precision
+  - E3d_trained_tiny_transformer_precision
+  - E3e_bf16_vs_fp32_carriers
+  - E3f_internal_matrix_precision
+  - E3g_trained_internal_layer_precision
+  - E4_component_lookup
+  - E4b_routed_execution
+  - E4c_torch_batched_routed_execution
+  - E4d_rocm_transfer_scaling
+  - E5_chronological_continual_learning
+  - E5c_trainable_adapter_vs_retrieval
+  - E5d_synthetic_stale_doc_positive_control
+  - E5e_synthetic_patch_generation_functional
+  - S1_security_canary_access_control
+  - E5b_external_update_controller
+  - S2_adversarial_security_suite
+  - S2b_adversarial_extraction_corpus
+  - S2c_semantic_extraction_red_team
+  - E6a_structured_repository_memory
+  - E6b_public_repository_memory_qa
+  - E6c_public_repository_signature_qa
+  - E6d_public_repository_call_stub_generation
+  - E6e_public_repository_function_skeleton_generation
+  - E6f_public_repository_docstring_skeleton_generation
+  - E6g_public_repository_api_reference_generation
+  - E6h_public_repository_api_doc_coverage_qa
+  - E6i_synthetic_api_doc_drift_detection
+optional_explicit_experiments:
+  - E5_public_repo_chronology
+  - E5_public_repo_symbol_qa
+  - E5_public_repo_stale_docs
+  - E5_markupsafe_chronology
+  - E5_markupsafe_symbol_qa
+  - E5_markupsafe_stale_docs
+  - E5_markupsafe_public_patch_replay
+resource_limits:
+  max_individual_model_or_dataset_gb: 20
+  max_new_disk_gb: 100
+  cpu_compatible: true
+  network_in_reusable_code: true

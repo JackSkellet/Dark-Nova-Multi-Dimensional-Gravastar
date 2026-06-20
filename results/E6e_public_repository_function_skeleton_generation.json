@@ -1,0 +1,1619 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E6e_public_repository_function_skeleton_generation",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "A1_external_memory",
+  "metrics": {
+    "benchmark_label": "public_repository_function_skeleton_generation",
+    "experiment_family": "external_memory_architecture",
+    "final": {
+      "name_only_answer_accuracy": 0.0,
+      "repo_count_used": 1,
+      "structured_answer_accuracy": 1.0,
+      "structured_beats_name_only_skeleton": true,
+      "supports_model_level_claim": false
+    },
+    "limitations": [
+      "python_signature_only",
+      "deterministic_skeleton_body_only",
+      "not_executable_behavior_synthesis",
+      "not_semantic_code_generation",
+      "public_repositories_only"
+    ],
+    "methods": {
+      "frozen_parametric_proxy": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __add__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __call__(self, s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __class__(self) -> type[t.Any]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __float__(self, /) -> float:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __html__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __html_format__(self, format_spec: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __init__(self, escape: _TPEscape) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __int__(self, /) -> int:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __mod__(self, value: t.Any, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __repr__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def __str__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def _escape_inner(s: str, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def _mod(request: pytest.FixtureRequest) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def build_extension(self, ext):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def capitalize(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def casefold(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def escape(s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def escape_silent(s: t.Any | None, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def format_field(self, value: t.Any, format_spec: str) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def lower(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def lstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def pytest_report_header() -> list[str]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def removeprefix(self, prefix: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def removesuffix(self, suffix: str) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def rstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def run(self):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def run_setup(with_binary):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def show_message(*lines):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def soft_str(s: t.Any, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def strip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def striptags(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def swapcase(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_adding() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_complex_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_dict_interpol() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_escape(value: str, expect: str) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_escape_return_type() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_escape_silent() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_escaping() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_exception_custom_html() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_ext_init() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_format() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_format_map() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_formatting_empty() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_formatting_with_objects() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 4.0978193283081055e-05,
+          "latency_ms_p95": 8.000206435099244e-05
+        },
+        "question_count": 64,
+        "storage_bytes": 96
+      },
+      "name_only_skeleton": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "def __add__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __add__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "def __call__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __call__(self, s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "def __class__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __class__(self) -> type[t.Any]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "def __float__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __float__(self, /) -> float:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "def __getitem__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "def __html__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __html__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "def __html_format__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __html_format__(self, format_spec: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "def __init__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __init__(self, escape: _TPEscape) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "def __int__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __int__(self, /) -> int:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "def __mod__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __mod__(self, value: t.Any, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "def __mul__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "def __new__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "def __radd__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "def __repr__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __repr__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "def __rmul__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "def __str__():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def __str__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "def _escape_inner():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def _escape_inner(s: str, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "def _mod():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def _mod(request: pytest.FixtureRequest) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "def build_extension():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def build_extension(self, ext):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "def capitalize():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def capitalize(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "def casefold():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def casefold(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "def center():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "def escape():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def escape(s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "def escape_silent():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def escape_silent(s: t.Any | None, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "def expandtabs():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "def format():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "def format_field():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def format_field(self, value: t.Any, format_spec: str) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "def format_map():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "def join():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "def ljust():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "def lower():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def lower(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "def lstrip():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def lstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "def partition():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "def pytest_report_header():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def pytest_report_header() -> list[str]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "def removeprefix():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def removeprefix(self, prefix: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "def removesuffix():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def removesuffix(self, suffix: str) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "def replace():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "def rjust():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "def rpartition():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "def rsplit():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "def rstrip():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def rstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "def run():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def run(self):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "def run_setup():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def run_setup(with_binary):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "def show_message():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def show_message(*lines):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "def soft_str():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def soft_str(s: t.Any, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "def split():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "def splitlines():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "def strip():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def strip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "def striptags():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def striptags(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "def swapcase():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def swapcase(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "def test_adding():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_adding() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "def test_complex_custom_formatting():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_complex_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "def test_custom_formatting():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "def test_dict_interpol():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_dict_interpol() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "def test_escape():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_escape(value: str, expect: str) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "def test_escape_return_type():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_escape_return_type() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "def test_escape_silent():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_escape_silent() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "def test_escaping():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_escaping() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "def test_exception_custom_html():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_exception_custom_html() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "def test_ext_init():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_ext_init() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "def test_format():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_format() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "def test_format_map():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_format_map() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "def test_formatting_empty():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_formatting_empty() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "def test_formatting_with_objects():\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_formatting_with_objects() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 8.000642992556095e-05,
+          "latency_ms_p95": 0.00013866520021110768
+        },
+        "question_count": 64,
+        "storage_bytes": 96
+      },
+      "structured_signature_skeleton": {
+        "answer_accuracy": 1.0,
+        "answers": [
+          {
+            "answer": "def __add__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __add__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "def __call__(self, s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __call__(self, s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "def __class__(self) -> type[t.Any]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __class__(self) -> type[t.Any]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "def __float__(self, /) -> float:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __float__(self, /) -> float:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __getitem__(self, key: t.SupportsIndex | slice, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "def __html__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __html__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "def __html_format__(self, format_spec: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __html_format__(self, format_spec: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "def __init__(self, escape: _TPEscape) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __init__(self, escape: _TPEscape) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "def __int__(self, /) -> int:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __int__(self, /) -> int:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "def __mod__(self, value: t.Any, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __mod__(self, value: t.Any, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __mul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __new__(\n        cls, object: t.Any = \"\", encoding: str | None = None, errors: str = \"strict\"\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __radd__(self, value: str | _HasHTML, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "def __repr__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __repr__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __rmul__(self, value: t.SupportsIndex, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "def __str__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def __str__(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "def _escape_inner(s: str, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def _escape_inner(s: str, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "def _mod(request: pytest.FixtureRequest) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def _mod(request: pytest.FixtureRequest) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "def build_extension(self, ext):\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def build_extension(self, ext):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "def capitalize(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def capitalize(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "def casefold(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def casefold(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def center(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "def escape(s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def escape(s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "def escape_silent(s: t.Any | None, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def escape_silent(s: t.Any | None, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def expandtabs(self, /, tabsize: t.SupportsIndex = 8) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def format(self, *args: t.Any, **kwargs: t.Any) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "def format_field(self, value: t.Any, format_spec: str) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def format_field(self, value: t.Any, format_spec: str) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def format_map(\n        self,\n        mapping: cabc.Mapping[str, t.Any],  # type: ignore[override]\n        /,\n    ) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def join(self, iterable: cabc.Iterable[str | _HasHTML], /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def ljust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "def lower(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def lower(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "def lstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def lstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def partition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "def pytest_report_header() -> list[str]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def pytest_report_header() -> list[str]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "def removeprefix(self, prefix: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def removeprefix(self, prefix: str, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "def removesuffix(self, suffix: str) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def removesuffix(self, suffix: str) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def replace(self, old: str, new: str, count: t.SupportsIndex = -1, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def rjust(self, width: t.SupportsIndex, fillchar: str = \" \", /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def rpartition(self, sep: str, /) -> tuple[te.Self, te.Self, te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def rsplit(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "def rstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def rstrip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "def run(self):\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def run(self):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "def run_setup(with_binary):\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def run_setup(with_binary):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "def show_message(*lines):\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def show_message(*lines):\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "def soft_str(s: t.Any, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def soft_str(s: t.Any, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def split(  # type: ignore[override]\n        self, /, sep: str | None = None, maxsplit: t.SupportsIndex = -1\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def splitlines(  # type: ignore[override]\n        self, /, keepends: bool = False\n    ) -> list[te.Self]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "def strip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def strip(self, chars: str | None = None, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "def striptags(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def striptags(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "def swapcase(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def swapcase(self, /) -> te.Self:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "def test_adding() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_adding() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "def test_complex_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_complex_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "def test_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_custom_formatting() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "def test_dict_interpol() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_dict_interpol() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "def test_escape(value: str, expect: str) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_escape(value: str, expect: str) -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "def test_escape_return_type() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_escape_return_type() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "def test_escape_silent() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_escape_silent() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "def test_escaping() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_escaping() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "def test_exception_custom_html() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_exception_custom_html() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "def test_ext_init() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_ext_init() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "def test_format() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_format() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "def test_format_map() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_format_map() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "def test_formatting_empty() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_formatting_empty() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "def test_formatting_with_objects() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_formatting_with_objects() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal function skeleton for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 64,
+        "latency": {
+          "latency_ms_p50": 0.00038050347939133644,
+          "latency_ms_p95": 0.0005880123353563248
+        },
+        "question_count": 64,
+        "storage_bytes": 5134
+      }
+    },
+    "question_count": 64,
+    "repo_count_requested": 2,
+    "repos": [
+      {
+        "commit": "b2e4d9c7687b",
+        "python_signature_count_available": 81,
+        "python_signature_count_used": 64,
+        "repo": "markupsafe"
+      }
+    ],
+    "status": "completed"
+  },
+  "notes": "Public-repository structured external-memory benchmark for minimal Python function-skeleton generation from signatures, compared with a name-only skeleton baseline and a frozen parametric proxy. Uses local public clones when present.",
+  "recorded_at_unix": 1781952213.8109732,
+  "seed": 123,
+  "status": "completed"
+}

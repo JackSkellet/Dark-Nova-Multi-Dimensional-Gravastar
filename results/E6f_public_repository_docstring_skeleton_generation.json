@@ -1,0 +1,324 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E6f_public_repository_docstring_skeleton_generation",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "A1_external_memory",
+  "metrics": {
+    "benchmark_label": "public_repository_docstring_skeleton_generation",
+    "experiment_family": "external_memory_architecture",
+    "final": {
+      "repo_count_used": 1,
+      "signature_only_answer_accuracy": 0.0,
+      "structured_answer_accuracy": 1.0,
+      "structured_beats_signature_only_skeleton": true,
+      "supports_model_level_claim": false
+    },
+    "limitations": [
+      "python_signature_and_docstring_only",
+      "first_docstring_line_only",
+      "deterministic_skeleton_body_only",
+      "not_executable_behavior_synthesis",
+      "not_semantic_code_generation",
+      "public_repositories_only"
+    ],
+    "methods": {
+      "frozen_parametric_proxy": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def escape(s: t.Any, /) -> Markup:\n    \"\"\"Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def escape_silent(s: t.Any | None, /) -> Markup:\n    \"\"\"Like :func:`escape` but treats ``None`` as the empty string.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def pytest_report_header() -> list[str]:\n    \"\"\"Return a list of strings to be displayed in the header of the report.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def soft_str(s: t.Any, /) -> str:\n    \"\"\"Convert an object to a string if it isn't already. This preserves\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def striptags(self, /) -> str:\n    \"\"\":meth:`unescape` the markup, remove tags, and normalize\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_exception_custom_html() -> None:\n    \"\"\"Checks whether exceptions in custom __html__ implementations are\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_ext_init() -> None:\n    \"\"\"Test that the extension module uses multi-phase init by checking that\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_proxy() -> None:\n    \"\"\"Handle a proxy object that pretends its __class__ is str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_proxy",
+            "repo": "markupsafe",
+            "symbol": "test_proxy"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def test_subclass() -> None:\n    \"\"\"Handle if str(o) does not return a plain str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_subclass",
+            "repo": "markupsafe",
+            "symbol": "test_subclass"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_skeleton": "def unescape(self, /) -> str:\n    \"\"\"Convert escaped markup back into a text string. This replaces\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol unescape",
+            "repo": "markupsafe",
+            "symbol": "unescape"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 6.54981704428792e-05,
+          "latency_ms_p95": 0.00037505087675526716
+        },
+        "question_count": 10,
+        "storage_bytes": 96
+      },
+      "signature_only_skeleton": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "def escape(s: t.Any, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def escape(s: t.Any, /) -> Markup:\n    \"\"\"Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "def escape_silent(s: t.Any | None, /) -> Markup:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def escape_silent(s: t.Any | None, /) -> Markup:\n    \"\"\"Like :func:`escape` but treats ``None`` as the empty string.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "def pytest_report_header() -> list[str]:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def pytest_report_header() -> list[str]:\n    \"\"\"Return a list of strings to be displayed in the header of the report.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "def soft_str(s: t.Any, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def soft_str(s: t.Any, /) -> str:\n    \"\"\"Convert an object to a string if it isn't already. This preserves\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "def striptags(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def striptags(self, /) -> str:\n    \"\"\":meth:`unescape` the markup, remove tags, and normalize\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "def test_exception_custom_html() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_exception_custom_html() -> None:\n    \"\"\"Checks whether exceptions in custom __html__ implementations are\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "def test_ext_init() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_ext_init() -> None:\n    \"\"\"Test that the extension module uses multi-phase init by checking that\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "def test_proxy() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_proxy() -> None:\n    \"\"\"Handle a proxy object that pretends its __class__ is str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_proxy",
+            "repo": "markupsafe",
+            "symbol": "test_proxy"
+          },
+          {
+            "answer": "def test_subclass() -> None:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def test_subclass() -> None:\n    \"\"\"Handle if str(o) does not return a plain str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_subclass",
+            "repo": "markupsafe",
+            "symbol": "test_subclass"
+          },
+          {
+            "answer": "def unescape(self, /) -> str:\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": false,
+            "expected_skeleton": "def unescape(self, /) -> str:\n    \"\"\"Convert escaped markup back into a text string. This replaces\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol unescape",
+            "repo": "markupsafe",
+            "symbol": "unescape"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 0.0003550085239112377,
+          "latency_ms_p95": 0.001441604399587958
+        },
+        "question_count": 10,
+        "storage_bytes": 652
+      },
+      "structured_docstring_skeleton": {
+        "answer_accuracy": 1.0,
+        "answers": [
+          {
+            "answer": "def escape(s: t.Any, /) -> Markup:\n    \"\"\"Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def escape(s: t.Any, /) -> Markup:\n    \"\"\"Replace the characters ``&``, ``<``, ``>``, ``'``, and ``\"`` in\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "def escape_silent(s: t.Any | None, /) -> Markup:\n    \"\"\"Like :func:`escape` but treats ``None`` as the empty string.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def escape_silent(s: t.Any | None, /) -> Markup:\n    \"\"\"Like :func:`escape` but treats ``None`` as the empty string.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "def pytest_report_header() -> list[str]:\n    \"\"\"Return a list of strings to be displayed in the header of the report.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def pytest_report_header() -> list[str]:\n    \"\"\"Return a list of strings to be displayed in the header of the report.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "def soft_str(s: t.Any, /) -> str:\n    \"\"\"Convert an object to a string if it isn't already. This preserves\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def soft_str(s: t.Any, /) -> str:\n    \"\"\"Convert an object to a string if it isn't already. This preserves\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "def striptags(self, /) -> str:\n    \"\"\":meth:`unescape` the markup, remove tags, and normalize\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def striptags(self, /) -> str:\n    \"\"\":meth:`unescape` the markup, remove tags, and normalize\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "def test_exception_custom_html() -> None:\n    \"\"\"Checks whether exceptions in custom __html__ implementations are\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_exception_custom_html() -> None:\n    \"\"\"Checks whether exceptions in custom __html__ implementations are\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "def test_ext_init() -> None:\n    \"\"\"Test that the extension module uses multi-phase init by checking that\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_ext_init() -> None:\n    \"\"\"Test that the extension module uses multi-phase init by checking that\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "def test_proxy() -> None:\n    \"\"\"Handle a proxy object that pretends its __class__ is str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_proxy() -> None:\n    \"\"\"Handle a proxy object that pretends its __class__ is str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_proxy",
+            "repo": "markupsafe",
+            "symbol": "test_proxy"
+          },
+          {
+            "answer": "def test_subclass() -> None:\n    \"\"\"Handle if str(o) does not return a plain str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def test_subclass() -> None:\n    \"\"\"Handle if str(o) does not return a plain str.\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol test_subclass",
+            "repo": "markupsafe",
+            "symbol": "test_subclass"
+          },
+          {
+            "answer": "def unescape(self, /) -> str:\n    \"\"\"Convert escaped markup back into a text string. This replaces\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "correct": true,
+            "expected_skeleton": "def unescape(self, /) -> str:\n    \"\"\"Convert escaped markup back into a text string. This replaces\"\"\"\n    raise NotImplementedError(\"generated skeleton\")",
+            "question": "generate a minimal documented function skeleton for symbol unescape",
+            "repo": "markupsafe",
+            "symbol": "unescape"
+          }
+        ],
+        "correct_count": 10,
+        "latency": {
+          "latency_ms_p50": 0.0003759923856705427,
+          "latency_ms_p95": 0.0011396085028536611
+        },
+        "question_count": 10,
+        "storage_bytes": 1504
+      }
+    },
+    "question_count": 10,
+    "repo_count_requested": 2,
+    "repos": [
+      {
+        "commit": "b2e4d9c7687b",
+        "documented_function_count_available": 10,
+        "documented_function_count_used": 10,
+        "repo": "markupsafe"
+      }
+    ],
+    "status": "completed"
+  },
+  "notes": "Public-repository structured external-memory benchmark for minimal Python function-skeleton generation that preserves a signature and first docstring line, compared with a signature-only skeleton baseline and a frozen parametric proxy. Uses local public clones when present.",
+  "recorded_at_unix": 1781952213.8113923,
+  "seed": 123,
+  "status": "completed"
+}

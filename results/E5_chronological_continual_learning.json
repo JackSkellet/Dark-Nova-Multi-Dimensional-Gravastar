@@ -1,0 +1,91 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E5_chronological_continual_learning",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H5",
+  "metrics": {
+    "final": {
+      "adapter_no_replay_prior_accuracy": 0.6666666666666666,
+      "adapter_with_replay_prior_accuracy": 1.0,
+      "frozen_accuracy": 0.25,
+      "memory_version": 4.0,
+      "retrieval_accuracy": 1.0,
+      "step": 3.0,
+      "storage_items": 4.0
+    },
+    "lineage": [
+      {
+        "items": 0,
+        "version": 0
+      },
+      {
+        "items": 1,
+        "version": 1
+      },
+      {
+        "items": 2,
+        "version": 2
+      },
+      {
+        "items": 3,
+        "version": 3
+      },
+      {
+        "items": 4,
+        "version": 4
+      }
+    ],
+    "rollback": {
+      "accuracy_after_rollback": 1.0,
+      "restored_version": 1
+    },
+    "steps": [
+      {
+        "adapter_no_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "frozen_accuracy": 1.0,
+        "memory_version": 1.0,
+        "retrieval_accuracy": 1.0,
+        "step": 0.0,
+        "storage_items": 1.0
+      },
+      {
+        "adapter_no_replay_prior_accuracy": 1.0,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "frozen_accuracy": 0.5,
+        "memory_version": 2.0,
+        "retrieval_accuracy": 1.0,
+        "step": 1.0,
+        "storage_items": 2.0
+      },
+      {
+        "adapter_no_replay_prior_accuracy": 0.5,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "frozen_accuracy": 0.3333333333333333,
+        "memory_version": 3.0,
+        "retrieval_accuracy": 1.0,
+        "step": 2.0,
+        "storage_items": 3.0
+      },
+      {
+        "adapter_no_replay_prior_accuracy": 0.6666666666666666,
+        "adapter_with_replay_prior_accuracy": 1.0,
+        "frozen_accuracy": 0.25,
+        "memory_version": 4.0,
+        "retrieval_accuracy": 1.0,
+        "step": 3.0,
+        "storage_items": 4.0
+      }
+    ]
+  },
+  "notes": "Synthetic chronological API-fact replay with retrieval, adapter replay, and rollback.",
+  "recorded_at_unix": 1781952213.8044124,
+  "seed": 123,
+  "status": "completed"
+}

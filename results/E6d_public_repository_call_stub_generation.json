@@ -1,0 +1,1619 @@
+{
+  "command": "uv run python scripts/run_experiments.py --seed 123",
+  "experiment_id": "E6d_public_repository_call_stub_generation",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "A1_external_memory",
+  "metrics": {
+    "benchmark_label": "public_repository_call_stub_generation",
+    "experiment_family": "external_memory_architecture",
+    "final": {
+      "name_only_answer_accuracy": 0.40625,
+      "repo_count_used": 1,
+      "structured_answer_accuracy": 1.0,
+      "structured_beats_name_only_stub": true,
+      "supports_model_level_claim": false
+    },
+    "limitations": [
+      "python_signature_only",
+      "canonical_call_stub_only",
+      "not_executable_argument_synthesis",
+      "not_semantic_code_generation",
+      "public_repositories_only"
+    ],
+    "methods": {
+      "frozen_parametric_proxy": {
+        "answer_accuracy": 0.0,
+        "answers": [
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__add__(value)",
+            "question": "generate a minimal call stub for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__call__(s)",
+            "question": "generate a minimal call stub for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__class__()",
+            "question": "generate a minimal call stub for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__float__()",
+            "question": "generate a minimal call stub for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__getitem__(key)",
+            "question": "generate a minimal call stub for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__html__()",
+            "question": "generate a minimal call stub for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__html_format__(format_spec)",
+            "question": "generate a minimal call stub for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__init__(escape)",
+            "question": "generate a minimal call stub for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__int__()",
+            "question": "generate a minimal call stub for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__mod__(value)",
+            "question": "generate a minimal call stub for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__mul__(value)",
+            "question": "generate a minimal call stub for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__new__(object=..., encoding=..., errors=...)",
+            "question": "generate a minimal call stub for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__radd__(value)",
+            "question": "generate a minimal call stub for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__repr__()",
+            "question": "generate a minimal call stub for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__rmul__(value)",
+            "question": "generate a minimal call stub for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "__str__()",
+            "question": "generate a minimal call stub for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "_escape_inner(s)",
+            "question": "generate a minimal call stub for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "_mod(request)",
+            "question": "generate a minimal call stub for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "build_extension(ext)",
+            "question": "generate a minimal call stub for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "capitalize()",
+            "question": "generate a minimal call stub for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "casefold()",
+            "question": "generate a minimal call stub for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "center(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "escape(s)",
+            "question": "generate a minimal call stub for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "escape_silent(s)",
+            "question": "generate a minimal call stub for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "expandtabs(tabsize=...)",
+            "question": "generate a minimal call stub for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "format(*args, **kwargs)",
+            "question": "generate a minimal call stub for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "format_field(value, format_spec)",
+            "question": "generate a minimal call stub for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "format_map(mapping, # type)",
+            "question": "generate a minimal call stub for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "join(iterable)",
+            "question": "generate a minimal call stub for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "ljust(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "lower()",
+            "question": "generate a minimal call stub for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "lstrip(chars=...)",
+            "question": "generate a minimal call stub for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "partition(sep)",
+            "question": "generate a minimal call stub for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "pytest_report_header()",
+            "question": "generate a minimal call stub for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "removeprefix(prefix)",
+            "question": "generate a minimal call stub for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "removesuffix(suffix)",
+            "question": "generate a minimal call stub for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "replace(old, new, count=...)",
+            "question": "generate a minimal call stub for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "rjust(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "rpartition(sep)",
+            "question": "generate a minimal call stub for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "rsplit(# type, sep=..., maxsplit=...)",
+            "question": "generate a minimal call stub for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "rstrip(chars=...)",
+            "question": "generate a minimal call stub for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "run()",
+            "question": "generate a minimal call stub for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "run_setup(with_binary)",
+            "question": "generate a minimal call stub for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "show_message(*lines)",
+            "question": "generate a minimal call stub for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "soft_str(s)",
+            "question": "generate a minimal call stub for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "split(# type, sep=..., maxsplit=...)",
+            "question": "generate a minimal call stub for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "splitlines(# type, keepends=...)",
+            "question": "generate a minimal call stub for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "strip(chars=...)",
+            "question": "generate a minimal call stub for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "striptags()",
+            "question": "generate a minimal call stub for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "swapcase()",
+            "question": "generate a minimal call stub for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_adding()",
+            "question": "generate a minimal call stub for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_complex_custom_formatting()",
+            "question": "generate a minimal call stub for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_custom_formatting()",
+            "question": "generate a minimal call stub for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_dict_interpol()",
+            "question": "generate a minimal call stub for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_escape(value, expect)",
+            "question": "generate a minimal call stub for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_escape_return_type()",
+            "question": "generate a minimal call stub for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_escape_silent()",
+            "question": "generate a minimal call stub for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_escaping()",
+            "question": "generate a minimal call stub for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_exception_custom_html()",
+            "question": "generate a minimal call stub for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_ext_init()",
+            "question": "generate a minimal call stub for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_format()",
+            "question": "generate a minimal call stub for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_format_map()",
+            "question": "generate a minimal call stub for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_formatting_empty()",
+            "question": "generate a minimal call stub for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "[unknown]",
+            "correct": false,
+            "expected_call_stub": "test_formatting_with_objects()",
+            "question": "generate a minimal call stub for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 0,
+        "latency": {
+          "latency_ms_p50": 5.00003807246685e-05,
+          "latency_ms_p95": 9.697687346488227e-05
+        },
+        "question_count": 64,
+        "storage_bytes": 96
+      },
+      "name_only_call_stub": {
+        "answer_accuracy": 0.40625,
+        "answers": [
+          {
+            "answer": "__add__()",
+            "correct": false,
+            "expected_call_stub": "__add__(value)",
+            "question": "generate a minimal call stub for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "__call__()",
+            "correct": false,
+            "expected_call_stub": "__call__(s)",
+            "question": "generate a minimal call stub for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "__class__()",
+            "correct": true,
+            "expected_call_stub": "__class__()",
+            "question": "generate a minimal call stub for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "__float__()",
+            "correct": true,
+            "expected_call_stub": "__float__()",
+            "question": "generate a minimal call stub for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "__getitem__()",
+            "correct": false,
+            "expected_call_stub": "__getitem__(key)",
+            "question": "generate a minimal call stub for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "__html__()",
+            "correct": true,
+            "expected_call_stub": "__html__()",
+            "question": "generate a minimal call stub for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "__html_format__()",
+            "correct": false,
+            "expected_call_stub": "__html_format__(format_spec)",
+            "question": "generate a minimal call stub for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "__init__()",
+            "correct": false,
+            "expected_call_stub": "__init__(escape)",
+            "question": "generate a minimal call stub for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "__int__()",
+            "correct": true,
+            "expected_call_stub": "__int__()",
+            "question": "generate a minimal call stub for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "__mod__()",
+            "correct": false,
+            "expected_call_stub": "__mod__(value)",
+            "question": "generate a minimal call stub for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "__mul__()",
+            "correct": false,
+            "expected_call_stub": "__mul__(value)",
+            "question": "generate a minimal call stub for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "__new__()",
+            "correct": false,
+            "expected_call_stub": "__new__(object=..., encoding=..., errors=...)",
+            "question": "generate a minimal call stub for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "__radd__()",
+            "correct": false,
+            "expected_call_stub": "__radd__(value)",
+            "question": "generate a minimal call stub for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "__repr__()",
+            "correct": true,
+            "expected_call_stub": "__repr__()",
+            "question": "generate a minimal call stub for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "__rmul__()",
+            "correct": false,
+            "expected_call_stub": "__rmul__(value)",
+            "question": "generate a minimal call stub for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "__str__()",
+            "correct": true,
+            "expected_call_stub": "__str__()",
+            "question": "generate a minimal call stub for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "_escape_inner()",
+            "correct": false,
+            "expected_call_stub": "_escape_inner(s)",
+            "question": "generate a minimal call stub for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "_mod()",
+            "correct": false,
+            "expected_call_stub": "_mod(request)",
+            "question": "generate a minimal call stub for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "build_extension()",
+            "correct": false,
+            "expected_call_stub": "build_extension(ext)",
+            "question": "generate a minimal call stub for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "capitalize()",
+            "correct": true,
+            "expected_call_stub": "capitalize()",
+            "question": "generate a minimal call stub for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "casefold()",
+            "correct": true,
+            "expected_call_stub": "casefold()",
+            "question": "generate a minimal call stub for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "center()",
+            "correct": false,
+            "expected_call_stub": "center(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "escape()",
+            "correct": false,
+            "expected_call_stub": "escape(s)",
+            "question": "generate a minimal call stub for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "escape_silent()",
+            "correct": false,
+            "expected_call_stub": "escape_silent(s)",
+            "question": "generate a minimal call stub for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "expandtabs()",
+            "correct": false,
+            "expected_call_stub": "expandtabs(tabsize=...)",
+            "question": "generate a minimal call stub for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "format()",
+            "correct": false,
+            "expected_call_stub": "format(*args, **kwargs)",
+            "question": "generate a minimal call stub for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "format_field()",
+            "correct": false,
+            "expected_call_stub": "format_field(value, format_spec)",
+            "question": "generate a minimal call stub for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "format_map()",
+            "correct": false,
+            "expected_call_stub": "format_map(mapping, # type)",
+            "question": "generate a minimal call stub for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "join()",
+            "correct": false,
+            "expected_call_stub": "join(iterable)",
+            "question": "generate a minimal call stub for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "ljust()",
+            "correct": false,
+            "expected_call_stub": "ljust(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "lower()",
+            "correct": true,
+            "expected_call_stub": "lower()",
+            "question": "generate a minimal call stub for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "lstrip()",
+            "correct": false,
+            "expected_call_stub": "lstrip(chars=...)",
+            "question": "generate a minimal call stub for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "partition()",
+            "correct": false,
+            "expected_call_stub": "partition(sep)",
+            "question": "generate a minimal call stub for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "pytest_report_header()",
+            "correct": true,
+            "expected_call_stub": "pytest_report_header()",
+            "question": "generate a minimal call stub for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "removeprefix()",
+            "correct": false,
+            "expected_call_stub": "removeprefix(prefix)",
+            "question": "generate a minimal call stub for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "removesuffix()",
+            "correct": false,
+            "expected_call_stub": "removesuffix(suffix)",
+            "question": "generate a minimal call stub for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "replace()",
+            "correct": false,
+            "expected_call_stub": "replace(old, new, count=...)",
+            "question": "generate a minimal call stub for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "rjust()",
+            "correct": false,
+            "expected_call_stub": "rjust(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "rpartition()",
+            "correct": false,
+            "expected_call_stub": "rpartition(sep)",
+            "question": "generate a minimal call stub for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "rsplit()",
+            "correct": false,
+            "expected_call_stub": "rsplit(# type, sep=..., maxsplit=...)",
+            "question": "generate a minimal call stub for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "rstrip()",
+            "correct": false,
+            "expected_call_stub": "rstrip(chars=...)",
+            "question": "generate a minimal call stub for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "run()",
+            "correct": true,
+            "expected_call_stub": "run()",
+            "question": "generate a minimal call stub for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "run_setup()",
+            "correct": false,
+            "expected_call_stub": "run_setup(with_binary)",
+            "question": "generate a minimal call stub for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "show_message()",
+            "correct": false,
+            "expected_call_stub": "show_message(*lines)",
+            "question": "generate a minimal call stub for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "soft_str()",
+            "correct": false,
+            "expected_call_stub": "soft_str(s)",
+            "question": "generate a minimal call stub for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "split()",
+            "correct": false,
+            "expected_call_stub": "split(# type, sep=..., maxsplit=...)",
+            "question": "generate a minimal call stub for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "splitlines()",
+            "correct": false,
+            "expected_call_stub": "splitlines(# type, keepends=...)",
+            "question": "generate a minimal call stub for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "strip()",
+            "correct": false,
+            "expected_call_stub": "strip(chars=...)",
+            "question": "generate a minimal call stub for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "striptags()",
+            "correct": true,
+            "expected_call_stub": "striptags()",
+            "question": "generate a minimal call stub for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "swapcase()",
+            "correct": true,
+            "expected_call_stub": "swapcase()",
+            "question": "generate a minimal call stub for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "test_adding()",
+            "correct": true,
+            "expected_call_stub": "test_adding()",
+            "question": "generate a minimal call stub for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "test_complex_custom_formatting()",
+            "correct": true,
+            "expected_call_stub": "test_complex_custom_formatting()",
+            "question": "generate a minimal call stub for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "test_custom_formatting()",
+            "correct": true,
+            "expected_call_stub": "test_custom_formatting()",
+            "question": "generate a minimal call stub for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "test_dict_interpol()",
+            "correct": true,
+            "expected_call_stub": "test_dict_interpol()",
+            "question": "generate a minimal call stub for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "test_escape()",
+            "correct": false,
+            "expected_call_stub": "test_escape(value, expect)",
+            "question": "generate a minimal call stub for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "test_escape_return_type()",
+            "correct": true,
+            "expected_call_stub": "test_escape_return_type()",
+            "question": "generate a minimal call stub for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "test_escape_silent()",
+            "correct": true,
+            "expected_call_stub": "test_escape_silent()",
+            "question": "generate a minimal call stub for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "test_escaping()",
+            "correct": true,
+            "expected_call_stub": "test_escaping()",
+            "question": "generate a minimal call stub for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "test_exception_custom_html()",
+            "correct": true,
+            "expected_call_stub": "test_exception_custom_html()",
+            "question": "generate a minimal call stub for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "test_ext_init()",
+            "correct": true,
+            "expected_call_stub": "test_ext_init()",
+            "question": "generate a minimal call stub for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "test_format()",
+            "correct": true,
+            "expected_call_stub": "test_format()",
+            "question": "generate a minimal call stub for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "test_format_map()",
+            "correct": true,
+            "expected_call_stub": "test_format_map()",
+            "question": "generate a minimal call stub for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "test_formatting_empty()",
+            "correct": true,
+            "expected_call_stub": "test_formatting_empty()",
+            "question": "generate a minimal call stub for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "test_formatting_with_objects()",
+            "correct": true,
+            "expected_call_stub": "test_formatting_with_objects()",
+            "question": "generate a minimal call stub for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 26,
+        "latency": {
+          "latency_ms_p50": 8.000642992556095e-05,
+          "latency_ms_p95": 0.00010800285963341583
+        },
+        "question_count": 64,
+        "storage_bytes": 96
+      },
+      "structured_signature_call_stub": {
+        "answer_accuracy": 1.0,
+        "answers": [
+          {
+            "answer": "__add__(value)",
+            "correct": true,
+            "expected_call_stub": "__add__(value)",
+            "question": "generate a minimal call stub for symbol __add__",
+            "repo": "markupsafe",
+            "symbol": "__add__"
+          },
+          {
+            "answer": "__call__(s)",
+            "correct": true,
+            "expected_call_stub": "__call__(s)",
+            "question": "generate a minimal call stub for symbol __call__",
+            "repo": "markupsafe",
+            "symbol": "__call__"
+          },
+          {
+            "answer": "__class__()",
+            "correct": true,
+            "expected_call_stub": "__class__()",
+            "question": "generate a minimal call stub for symbol __class__",
+            "repo": "markupsafe",
+            "symbol": "__class__"
+          },
+          {
+            "answer": "__float__()",
+            "correct": true,
+            "expected_call_stub": "__float__()",
+            "question": "generate a minimal call stub for symbol __float__",
+            "repo": "markupsafe",
+            "symbol": "__float__"
+          },
+          {
+            "answer": "__getitem__(key)",
+            "correct": true,
+            "expected_call_stub": "__getitem__(key)",
+            "question": "generate a minimal call stub for symbol __getitem__",
+            "repo": "markupsafe",
+            "symbol": "__getitem__"
+          },
+          {
+            "answer": "__html__()",
+            "correct": true,
+            "expected_call_stub": "__html__()",
+            "question": "generate a minimal call stub for symbol __html__",
+            "repo": "markupsafe",
+            "symbol": "__html__"
+          },
+          {
+            "answer": "__html_format__(format_spec)",
+            "correct": true,
+            "expected_call_stub": "__html_format__(format_spec)",
+            "question": "generate a minimal call stub for symbol __html_format__",
+            "repo": "markupsafe",
+            "symbol": "__html_format__"
+          },
+          {
+            "answer": "__init__(escape)",
+            "correct": true,
+            "expected_call_stub": "__init__(escape)",
+            "question": "generate a minimal call stub for symbol __init__",
+            "repo": "markupsafe",
+            "symbol": "__init__"
+          },
+          {
+            "answer": "__int__()",
+            "correct": true,
+            "expected_call_stub": "__int__()",
+            "question": "generate a minimal call stub for symbol __int__",
+            "repo": "markupsafe",
+            "symbol": "__int__"
+          },
+          {
+            "answer": "__mod__(value)",
+            "correct": true,
+            "expected_call_stub": "__mod__(value)",
+            "question": "generate a minimal call stub for symbol __mod__",
+            "repo": "markupsafe",
+            "symbol": "__mod__"
+          },
+          {
+            "answer": "__mul__(value)",
+            "correct": true,
+            "expected_call_stub": "__mul__(value)",
+            "question": "generate a minimal call stub for symbol __mul__",
+            "repo": "markupsafe",
+            "symbol": "__mul__"
+          },
+          {
+            "answer": "__new__(object=..., encoding=..., errors=...)",
+            "correct": true,
+            "expected_call_stub": "__new__(object=..., encoding=..., errors=...)",
+            "question": "generate a minimal call stub for symbol __new__",
+            "repo": "markupsafe",
+            "symbol": "__new__"
+          },
+          {
+            "answer": "__radd__(value)",
+            "correct": true,
+            "expected_call_stub": "__radd__(value)",
+            "question": "generate a minimal call stub for symbol __radd__",
+            "repo": "markupsafe",
+            "symbol": "__radd__"
+          },
+          {
+            "answer": "__repr__()",
+            "correct": true,
+            "expected_call_stub": "__repr__()",
+            "question": "generate a minimal call stub for symbol __repr__",
+            "repo": "markupsafe",
+            "symbol": "__repr__"
+          },
+          {
+            "answer": "__rmul__(value)",
+            "correct": true,
+            "expected_call_stub": "__rmul__(value)",
+            "question": "generate a minimal call stub for symbol __rmul__",
+            "repo": "markupsafe",
+            "symbol": "__rmul__"
+          },
+          {
+            "answer": "__str__()",
+            "correct": true,
+            "expected_call_stub": "__str__()",
+            "question": "generate a minimal call stub for symbol __str__",
+            "repo": "markupsafe",
+            "symbol": "__str__"
+          },
+          {
+            "answer": "_escape_inner(s)",
+            "correct": true,
+            "expected_call_stub": "_escape_inner(s)",
+            "question": "generate a minimal call stub for symbol _escape_inner",
+            "repo": "markupsafe",
+            "symbol": "_escape_inner"
+          },
+          {
+            "answer": "_mod(request)",
+            "correct": true,
+            "expected_call_stub": "_mod(request)",
+            "question": "generate a minimal call stub for symbol _mod",
+            "repo": "markupsafe",
+            "symbol": "_mod"
+          },
+          {
+            "answer": "build_extension(ext)",
+            "correct": true,
+            "expected_call_stub": "build_extension(ext)",
+            "question": "generate a minimal call stub for symbol build_extension",
+            "repo": "markupsafe",
+            "symbol": "build_extension"
+          },
+          {
+            "answer": "capitalize()",
+            "correct": true,
+            "expected_call_stub": "capitalize()",
+            "question": "generate a minimal call stub for symbol capitalize",
+            "repo": "markupsafe",
+            "symbol": "capitalize"
+          },
+          {
+            "answer": "casefold()",
+            "correct": true,
+            "expected_call_stub": "casefold()",
+            "question": "generate a minimal call stub for symbol casefold",
+            "repo": "markupsafe",
+            "symbol": "casefold"
+          },
+          {
+            "answer": "center(width, fillchar=...)",
+            "correct": true,
+            "expected_call_stub": "center(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol center",
+            "repo": "markupsafe",
+            "symbol": "center"
+          },
+          {
+            "answer": "escape(s)",
+            "correct": true,
+            "expected_call_stub": "escape(s)",
+            "question": "generate a minimal call stub for symbol escape",
+            "repo": "markupsafe",
+            "symbol": "escape"
+          },
+          {
+            "answer": "escape_silent(s)",
+            "correct": true,
+            "expected_call_stub": "escape_silent(s)",
+            "question": "generate a minimal call stub for symbol escape_silent",
+            "repo": "markupsafe",
+            "symbol": "escape_silent"
+          },
+          {
+            "answer": "expandtabs(tabsize=...)",
+            "correct": true,
+            "expected_call_stub": "expandtabs(tabsize=...)",
+            "question": "generate a minimal call stub for symbol expandtabs",
+            "repo": "markupsafe",
+            "symbol": "expandtabs"
+          },
+          {
+            "answer": "format(*args, **kwargs)",
+            "correct": true,
+            "expected_call_stub": "format(*args, **kwargs)",
+            "question": "generate a minimal call stub for symbol format",
+            "repo": "markupsafe",
+            "symbol": "format"
+          },
+          {
+            "answer": "format_field(value, format_spec)",
+            "correct": true,
+            "expected_call_stub": "format_field(value, format_spec)",
+            "question": "generate a minimal call stub for symbol format_field",
+            "repo": "markupsafe",
+            "symbol": "format_field"
+          },
+          {
+            "answer": "format_map(mapping, # type)",
+            "correct": true,
+            "expected_call_stub": "format_map(mapping, # type)",
+            "question": "generate a minimal call stub for symbol format_map",
+            "repo": "markupsafe",
+            "symbol": "format_map"
+          },
+          {
+            "answer": "join(iterable)",
+            "correct": true,
+            "expected_call_stub": "join(iterable)",
+            "question": "generate a minimal call stub for symbol join",
+            "repo": "markupsafe",
+            "symbol": "join"
+          },
+          {
+            "answer": "ljust(width, fillchar=...)",
+            "correct": true,
+            "expected_call_stub": "ljust(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol ljust",
+            "repo": "markupsafe",
+            "symbol": "ljust"
+          },
+          {
+            "answer": "lower()",
+            "correct": true,
+            "expected_call_stub": "lower()",
+            "question": "generate a minimal call stub for symbol lower",
+            "repo": "markupsafe",
+            "symbol": "lower"
+          },
+          {
+            "answer": "lstrip(chars=...)",
+            "correct": true,
+            "expected_call_stub": "lstrip(chars=...)",
+            "question": "generate a minimal call stub for symbol lstrip",
+            "repo": "markupsafe",
+            "symbol": "lstrip"
+          },
+          {
+            "answer": "partition(sep)",
+            "correct": true,
+            "expected_call_stub": "partition(sep)",
+            "question": "generate a minimal call stub for symbol partition",
+            "repo": "markupsafe",
+            "symbol": "partition"
+          },
+          {
+            "answer": "pytest_report_header()",
+            "correct": true,
+            "expected_call_stub": "pytest_report_header()",
+            "question": "generate a minimal call stub for symbol pytest_report_header",
+            "repo": "markupsafe",
+            "symbol": "pytest_report_header"
+          },
+          {
+            "answer": "removeprefix(prefix)",
+            "correct": true,
+            "expected_call_stub": "removeprefix(prefix)",
+            "question": "generate a minimal call stub for symbol removeprefix",
+            "repo": "markupsafe",
+            "symbol": "removeprefix"
+          },
+          {
+            "answer": "removesuffix(suffix)",
+            "correct": true,
+            "expected_call_stub": "removesuffix(suffix)",
+            "question": "generate a minimal call stub for symbol removesuffix",
+            "repo": "markupsafe",
+            "symbol": "removesuffix"
+          },
+          {
+            "answer": "replace(old, new, count=...)",
+            "correct": true,
+            "expected_call_stub": "replace(old, new, count=...)",
+            "question": "generate a minimal call stub for symbol replace",
+            "repo": "markupsafe",
+            "symbol": "replace"
+          },
+          {
+            "answer": "rjust(width, fillchar=...)",
+            "correct": true,
+            "expected_call_stub": "rjust(width, fillchar=...)",
+            "question": "generate a minimal call stub for symbol rjust",
+            "repo": "markupsafe",
+            "symbol": "rjust"
+          },
+          {
+            "answer": "rpartition(sep)",
+            "correct": true,
+            "expected_call_stub": "rpartition(sep)",
+            "question": "generate a minimal call stub for symbol rpartition",
+            "repo": "markupsafe",
+            "symbol": "rpartition"
+          },
+          {
+            "answer": "rsplit(# type, sep=..., maxsplit=...)",
+            "correct": true,
+            "expected_call_stub": "rsplit(# type, sep=..., maxsplit=...)",
+            "question": "generate a minimal call stub for symbol rsplit",
+            "repo": "markupsafe",
+            "symbol": "rsplit"
+          },
+          {
+            "answer": "rstrip(chars=...)",
+            "correct": true,
+            "expected_call_stub": "rstrip(chars=...)",
+            "question": "generate a minimal call stub for symbol rstrip",
+            "repo": "markupsafe",
+            "symbol": "rstrip"
+          },
+          {
+            "answer": "run()",
+            "correct": true,
+            "expected_call_stub": "run()",
+            "question": "generate a minimal call stub for symbol run",
+            "repo": "markupsafe",
+            "symbol": "run"
+          },
+          {
+            "answer": "run_setup(with_binary)",
+            "correct": true,
+            "expected_call_stub": "run_setup(with_binary)",
+            "question": "generate a minimal call stub for symbol run_setup",
+            "repo": "markupsafe",
+            "symbol": "run_setup"
+          },
+          {
+            "answer": "show_message(*lines)",
+            "correct": true,
+            "expected_call_stub": "show_message(*lines)",
+            "question": "generate a minimal call stub for symbol show_message",
+            "repo": "markupsafe",
+            "symbol": "show_message"
+          },
+          {
+            "answer": "soft_str(s)",
+            "correct": true,
+            "expected_call_stub": "soft_str(s)",
+            "question": "generate a minimal call stub for symbol soft_str",
+            "repo": "markupsafe",
+            "symbol": "soft_str"
+          },
+          {
+            "answer": "split(# type, sep=..., maxsplit=...)",
+            "correct": true,
+            "expected_call_stub": "split(# type, sep=..., maxsplit=...)",
+            "question": "generate a minimal call stub for symbol split",
+            "repo": "markupsafe",
+            "symbol": "split"
+          },
+          {
+            "answer": "splitlines(# type, keepends=...)",
+            "correct": true,
+            "expected_call_stub": "splitlines(# type, keepends=...)",
+            "question": "generate a minimal call stub for symbol splitlines",
+            "repo": "markupsafe",
+            "symbol": "splitlines"
+          },
+          {
+            "answer": "strip(chars=...)",
+            "correct": true,
+            "expected_call_stub": "strip(chars=...)",
+            "question": "generate a minimal call stub for symbol strip",
+            "repo": "markupsafe",
+            "symbol": "strip"
+          },
+          {
+            "answer": "striptags()",
+            "correct": true,
+            "expected_call_stub": "striptags()",
+            "question": "generate a minimal call stub for symbol striptags",
+            "repo": "markupsafe",
+            "symbol": "striptags"
+          },
+          {
+            "answer": "swapcase()",
+            "correct": true,
+            "expected_call_stub": "swapcase()",
+            "question": "generate a minimal call stub for symbol swapcase",
+            "repo": "markupsafe",
+            "symbol": "swapcase"
+          },
+          {
+            "answer": "test_adding()",
+            "correct": true,
+            "expected_call_stub": "test_adding()",
+            "question": "generate a minimal call stub for symbol test_adding",
+            "repo": "markupsafe",
+            "symbol": "test_adding"
+          },
+          {
+            "answer": "test_complex_custom_formatting()",
+            "correct": true,
+            "expected_call_stub": "test_complex_custom_formatting()",
+            "question": "generate a minimal call stub for symbol test_complex_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_complex_custom_formatting"
+          },
+          {
+            "answer": "test_custom_formatting()",
+            "correct": true,
+            "expected_call_stub": "test_custom_formatting()",
+            "question": "generate a minimal call stub for symbol test_custom_formatting",
+            "repo": "markupsafe",
+            "symbol": "test_custom_formatting"
+          },
+          {
+            "answer": "test_dict_interpol()",
+            "correct": true,
+            "expected_call_stub": "test_dict_interpol()",
+            "question": "generate a minimal call stub for symbol test_dict_interpol",
+            "repo": "markupsafe",
+            "symbol": "test_dict_interpol"
+          },
+          {
+            "answer": "test_escape(value, expect)",
+            "correct": true,
+            "expected_call_stub": "test_escape(value, expect)",
+            "question": "generate a minimal call stub for symbol test_escape",
+            "repo": "markupsafe",
+            "symbol": "test_escape"
+          },
+          {
+            "answer": "test_escape_return_type()",
+            "correct": true,
+            "expected_call_stub": "test_escape_return_type()",
+            "question": "generate a minimal call stub for symbol test_escape_return_type",
+            "repo": "markupsafe",
+            "symbol": "test_escape_return_type"
+          },
+          {
+            "answer": "test_escape_silent()",
+            "correct": true,
+            "expected_call_stub": "test_escape_silent()",
+            "question": "generate a minimal call stub for symbol test_escape_silent",
+            "repo": "markupsafe",
+            "symbol": "test_escape_silent"
+          },
+          {
+            "answer": "test_escaping()",
+            "correct": true,
+            "expected_call_stub": "test_escaping()",
+            "question": "generate a minimal call stub for symbol test_escaping",
+            "repo": "markupsafe",
+            "symbol": "test_escaping"
+          },
+          {
+            "answer": "test_exception_custom_html()",
+            "correct": true,
+            "expected_call_stub": "test_exception_custom_html()",
+            "question": "generate a minimal call stub for symbol test_exception_custom_html",
+            "repo": "markupsafe",
+            "symbol": "test_exception_custom_html"
+          },
+          {
+            "answer": "test_ext_init()",
+            "correct": true,
+            "expected_call_stub": "test_ext_init()",
+            "question": "generate a minimal call stub for symbol test_ext_init",
+            "repo": "markupsafe",
+            "symbol": "test_ext_init"
+          },
+          {
+            "answer": "test_format()",
+            "correct": true,
+            "expected_call_stub": "test_format()",
+            "question": "generate a minimal call stub for symbol test_format",
+            "repo": "markupsafe",
+            "symbol": "test_format"
+          },
+          {
+            "answer": "test_format_map()",
+            "correct": true,
+            "expected_call_stub": "test_format_map()",
+            "question": "generate a minimal call stub for symbol test_format_map",
+            "repo": "markupsafe",
+            "symbol": "test_format_map"
+          },
+          {
+            "answer": "test_formatting_empty()",
+            "correct": true,
+            "expected_call_stub": "test_formatting_empty()",
+            "question": "generate a minimal call stub for symbol test_formatting_empty",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_empty"
+          },
+          {
+            "answer": "test_formatting_with_objects()",
+            "correct": true,
+            "expected_call_stub": "test_formatting_with_objects()",
+            "question": "generate a minimal call stub for symbol test_formatting_with_objects",
+            "repo": "markupsafe",
+            "symbol": "test_formatting_with_objects"
+          }
+        ],
+        "correct_count": 64,
+        "latency": {
+          "latency_ms_p50": 0.0015629921108484268,
+          "latency_ms_p95": 0.004853846621699629
+        },
+        "question_count": 64,
+        "storage_bytes": 5134
+      }
+    },
+    "question_count": 64,
+    "repo_count_requested": 2,
+    "repos": [
+      {
+        "commit": "b2e4d9c7687b",
+        "python_signature_count_available": 81,
+        "python_signature_count_used": 64,
+        "repo": "markupsafe"
+      }
+    ],
+    "status": "completed"
+  },
+  "notes": "Public-repository structured external-memory benchmark for canonical Python call-stub generation from signatures, compared with a name-only stub baseline and a frozen parametric proxy. Uses local public clones when present.",
+  "recorded_at_unix": 1781952213.8103719,
+  "seed": 123,
+  "status": "completed"
+}

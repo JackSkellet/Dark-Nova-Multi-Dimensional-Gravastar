@@ -1,0 +1,110 @@
+{
+  "command": "uv run python scripts/run_real_model_natural_text_precision.py --model-id sshleifer/tiny-gpt2 --model-commit 5f91d94bd9cd7190a9f3216ff93cd1dd95f2c7be --checkpoint-path data/raw/public/tiny-gpt2/pytorch_model.bin --tokenizer-vocab-path data/raw/public/tiny-gpt2/vocab.json --tokenizer-merges-path data/raw/public/tiny-gpt2/merges.txt --checkpoint-filename pytorch_model.bin --vocab-filename vocab.json --merges-filename merges.txt --tensor-name transformer.h.0.mlp.c_fc.weight --candidate-row-strategy all_rows --experiment-id E3k_real_open_model_internal_tensor_precision --seed 123 --protected-count 1 --sequence-length 24 --n-layer 2 --n-head 2",
+  "experiment_id": "E3k_real_open_model_internal_tensor_precision",
+  "git_commit": "uncommitted",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "H3",
+  "metrics": {
+    "candidate_row_ids": [
+      0,
+      1
+    ],
+    "notes": "Local tiny-GPT2 forward pass using byte-level GPT-2 BPE tokenized natural-language code/repository prose. This remains a tiny pinned checkpoint smoke test, not a useful-scale language benchmark.",
+    "precision_policies": {
+      "full_fp32": {
+        "heldout_accuracy": 0.0,
+        "heldout_kl_divergence": 0.0,
+        "heldout_nll": 10.819059371948242,
+        "total_bytes": 64.0
+      },
+      "groupwise_int4": {
+        "heldout_accuracy": 0.0,
+        "heldout_kl_divergence": 0.0,
+        "heldout_nll": 10.819062232971191,
+        "total_bytes": 32.0
+      },
+      "output_error_bf16_protected": {
+        "heldout_accuracy": 0.0,
+        "heldout_kl_divergence": 0.0,
+        "heldout_nll": 10.819062232971191,
+        "total_bytes": 52.0
+      },
+      "output_error_fp32_protected": {
+        "heldout_accuracy": 0.0,
+        "heldout_kl_divergence": 0.0,
+        "heldout_nll": 10.819062232971191,
+        "total_bytes": 68.0
+      },
+      "random_bf16_protected_best": {
+        "heldout_kl_divergence": 0.0,
+        "total_bytes": 52.0
+      },
+      "random_bf16_protected_mean": {
+        "heldout_kl_divergence": 0.0,
+        "total_bytes": 52.0
+      },
+      "random_fp32_protected_best": {
+        "heldout_kl_divergence": 0.0,
+        "total_bytes": 68.0
+      },
+      "random_fp32_protected_mean": {
+        "heldout_kl_divergence": 0.0,
+        "total_bytes": 68.0
+      },
+      "uniform_int4": {
+        "heldout_accuracy": 0.0,
+        "heldout_kl_divergence": 0.0,
+        "heldout_nll": 10.819056510925293,
+        "total_bytes": 20.0
+      }
+    },
+    "protected_count": 1,
+    "random_trials": 16,
+    "row_calibration_kl_scores": [
+      2.4507563978204416e-08,
+      3.687366856297558e-08
+    ],
+    "selected_rows": [
+      0
+    ],
+    "source": {
+      "checkpoint_path": "data/raw/public/tiny-gpt2/pytorch_model.bin",
+      "model_commit": "5f91d94bd9cd7190a9f3216ff93cd1dd95f2c7be",
+      "model_id": "sshleifer/tiny-gpt2",
+      "tokenizer_merges_path": "data/raw/public/tiny-gpt2/merges.txt",
+      "tokenizer_vocab_path": "data/raw/public/tiny-gpt2/vocab.json"
+    },
+    "task": {
+      "calibration_sequences": 6,
+      "calibration_texts": 6,
+      "candidate_row_strategy": "all_rows",
+      "candidate_rows": 2,
+      "heldout_sequences": 6,
+      "heldout_texts": 6,
+      "input_kind": "natural_language_text",
+      "metric": "next_token_cross_entropy",
+      "n_head": 2,
+      "n_layer": 2,
+      "sequence_length": 24,
+      "tokenizer": "byte_level_gpt2_bpe"
+    },
+    "tensor": {
+      "dtype": "float32",
+      "name": "transformer.h.0.mlp.c_fc.weight",
+      "parameter_count": 16,
+      "shape": [
+        2,
+        8
+      ]
+    }
+  },
+  "notes": "Pinned tiny-gpt2 checkpoint evaluated with byte-level GPT-2 BPE tokenized natural-language repository/code prose. This addresses the E3i token-id smoke-test limitation but remains a tiny-model CPU experiment.",
+  "recorded_at_unix": 1781926703.647607,
+  "seed": 123,
+  "status": "completed"
+}
