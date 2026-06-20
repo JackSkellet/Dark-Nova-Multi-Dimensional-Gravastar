@@ -1,0 +1,199 @@
+{
+  "command": "uv run python scripts/evaluate_dense_quantization.py --checkpoint artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --split test --device rocm --seed 424243 --batches 128 --output results/T11b_adapter528_adamw_fp32_50m_quantization_test.json --experiment-id T11b_adapter528_adamw_fp32_50m_quantization_test",
+  "experiment_id": "T11b_adapter528_adamw_fp32_50m_quantization_test",
+  "git_commit": "e06cf9e99db4bcd35e77b7df0ad9608943500ec9",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "trained_checkpoint_quantization_with_random_controls",
+  "metrics": {
+    "benchmark_label": "trained_dense_checkpoint_quantization",
+    "checkpoint": "artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt",
+    "config": {
+      "batches": 128,
+      "protected_fraction": 0.01,
+      "runtime_buffers_policy": "runtime_buffer_bytes counts the FP32 reconstructed tensors used by this PyTorch evaluation path; encoded_bytes excludes that runtime workspace.",
+      "sparse_fraction": 0.01
+    },
+    "corpus": {
+      "document_count_used": 50,
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "source": "hf_jsonl_mirror",
+      "split": "test",
+      "split_texts_loaded_separately": true
+    },
+    "device": "cuda",
+    "document_count_used": 50,
+    "elapsed_s": 4.217360175000067,
+    "limitations": [
+      "Quantized states are reconstructed into FP32 tensors for evaluation; no packed kernel is benchmarked.",
+      "Importance-selected protection uses weight residual magnitude, not activation-aware calibration.",
+      "Sparse residuals store FP32 residual values and 32-bit flat indexes."
+    ],
+    "model": {
+      "adapter_dim": 64,
+      "architecture_variant": "adapter",
+      "attention_mask_mode": "finite_causal",
+      "block_impl": "explicit_causal",
+      "heads": 8,
+      "hidden_dim": 528,
+      "layers": 3,
+      "seq_len": 128
+    },
+    "policies": [
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 32.0,
+        "encoded_bytes": 42419204,
+        "encoded_plus_runtime_bytes": 84838408,
+        "loss": 1.062094802968204,
+        "metadata_bytes": 0,
+        "policy": "fp32",
+        "protected_values": 0,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 16.0,
+        "encoded_bytes": 21209602,
+        "encoded_plus_runtime_bytes": 63628806,
+        "loss": 1.062006092397496,
+        "metadata_bytes": 0,
+        "policy": "bf16_all",
+        "protected_values": 0,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 8.000543150220357,
+        "encoded_bytes": 10605521,
+        "encoded_plus_runtime_bytes": 53024725,
+        "loss": 1.0646247651893646,
+        "metadata_bytes": 720,
+        "policy": "uniform_int8",
+        "protected_values": 0,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 4.000543527408011,
+        "encoded_bytes": 5303121,
+        "encoded_plus_runtime_bytes": 47722325,
+        "loss": 1.8724973928183317,
+        "metadata_bytes": 720,
+        "policy": "uniform_int4",
+        "protected_values": 0,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 4.480430325849585,
+        "encoded_bytes": 5939259,
+        "encoded_plus_runtime_bytes": 48358463,
+        "loss": 1.8230411894619465,
+        "metadata_bytes": 424812,
+        "policy": "residual_bf16_protected_int4",
+        "protected_values": 106023,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 4.6403925919967755,
+        "encoded_bytes": 6151305,
+        "encoded_plus_runtime_bytes": 48570509,
+        "loss": 1.8230905253440142,
+        "metadata_bytes": 424812,
+        "policy": "residual_fp32_protected_int4",
+        "protected_values": 106023,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 4.480430325849585,
+        "encoded_bytes": 5939259,
+        "encoded_plus_runtime_bytes": 48358463,
+        "loss": 1.8545035421848297,
+        "metadata_bytes": 424812,
+        "policy": "random_bf16_protected_int4",
+        "protected_values": 106023,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 4.6403925919967755,
+        "encoded_bytes": 6151305,
+        "encoded_plus_runtime_bytes": 48570509,
+        "loss": 1.8545071044936776,
+        "metadata_bytes": 424812,
+        "policy": "random_fp32_protected_int4",
+        "protected_values": 106023,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      },
+      {
+        "batches": 128,
+        "effective_encoded_bits_per_parameter": 4.640754692143681,
+        "encoded_bytes": 6151785,
+        "encoded_plus_runtime_bytes": 48570989,
+        "loss": 1.8230905253440142,
+        "metadata_bytes": 425292,
+        "policy": "sparse_fp32_residual_int4",
+        "protected_values": 106023,
+        "runtime_buffer_bytes": 42419204,
+        "sample_order_sha256": "0efd81fde18eb59abcecfaa92ef1e7a3a36c0a60e97284482612bcf35100c855",
+        "tokens": 33024
+      }
+    ],
+    "resolved_config": {
+      "batches": 128,
+      "checkpoint": "artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt",
+      "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "device": "rocm",
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m_quantization_test",
+      "output": "results/T11b_adapter528_adamw_fp32_50m_quantization_test.json",
+      "protected_fraction": 0.01,
+      "seed": 424243,
+      "sparse_fraction": 0.01,
+      "split": "test"
+    },
+    "seed": 424243,
+    "split": "test",
+    "state_sha256": "38e4afa92a2e3734fa4cdfa60b18b7d7c4bcc6263fe894efcce4e2f56b814338"
+  },
+  "notes": "Evaluation-only quantization probe on a trained T11 checkpoint. Quantized weights are reconstructed into FP32 tensors for PyTorch evaluation; no packed kernel is used.",
+  "recorded_at_unix": 1781989251.2057014,
+  "resolved_config": {
+    "batches": 128,
+    "checkpoint": "artifacts/T11b_adapter528_adamw_fp32_50m/dense_decoder_last.pt",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "device": "rocm",
+    "experiment_id": "T11b_adapter528_adamw_fp32_50m_quantization_test",
+    "output": "results/T11b_adapter528_adamw_fp32_50m_quantization_test.json",
+    "protected_fraction": 0.01,
+    "seed": 424243,
+    "sparse_fraction": 0.01,
+    "split": "test"
+  },
+  "seed": 424243,
+  "status": "completed"
+}
