@@ -3,6 +3,7 @@ import torch
 from weightlab.dense_training import (
     DenseDecoder,
     DenseTrainingConfig,
+    _causal_mask,
     debug_dense_step_stability,
     evaluate_dense_checkpoint,
     train_dense_decoder,
@@ -256,6 +257,32 @@ def test_adapter_decoder_starts_with_identity_residual_adapters():
     adapted = model.adapters[0](hidden)
 
     assert torch.equal(adapted, hidden)
+
+
+def test_explicit_causal_block_forward_shape():
+    model = DenseDecoder(
+        vocab_size=257,
+        seq_len=16,
+        hidden_dim=32,
+        layers=1,
+        heads=4,
+        attention_mask_mode="additive_causal",
+        block_impl="explicit_causal",
+    )
+
+    logits = model(torch.randint(0, 257, (2, 16)))
+
+    assert logits.shape == (2, 16, 257)
+    assert model.block_impl == "explicit_causal"
+
+
+def test_finite_causal_mask_uses_large_finite_negative_values():
+    mask = _causal_mask("finite_causal", 4, torch.device("cpu"))
+
+    assert mask is not None
+    assert torch.isfinite(mask).all()
+    assert mask[0, 1].item() == -1.0e4
+    assert mask[0, 0].item() == 0.0
 
 
 def test_evaluate_dense_checkpoint_uses_dedicated_texts_and_seed(tmp_path):

@@ -26,6 +26,8 @@ def test_canonical_matched_config_builds_dense_and_adapter_commands():
     for command in [dense_544, adapter_528, dense_528]:
         assert command[command.index("--optimizer-name") + 1] == "adamw"
         assert command[command.index("--mixed-precision") + 1] == "fp32"
+        assert command[command.index("--attention-mask-mode") + 1] == "finite_causal"
+        assert command[command.index("--block-impl") + 1] == "explicit_causal"
         assert command[command.index("--learning-rate") + 1] == "0.0001"
         assert command[command.index("--steps") + 1] == "10000"
         assert command[command.index("--validation-batches") + 1] == "512"

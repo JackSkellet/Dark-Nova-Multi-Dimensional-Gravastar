@@ -33,6 +33,7 @@ class DenseTrainingConfig:
     architecture_variant: str = "dense"
     adapter_dim: int = 0
     validation_seed: int = 424242
+    block_impl: str = "torch_encoder"
 
 
 class ByteTokenizer:
@@ -59,26 +60,35 @@ class DenseDecoder(torch.nn.Module):
         attention_mask_mode: str = "additive_causal",
         architecture_variant: str = "dense",
         adapter_dim: int = 0,
+        block_impl: str = "torch_encoder",
     ) -> None:
         super().__init__()
         self.seq_len = seq_len
         self.attention_mask_mode = attention_mask_mode
         self.architecture_variant = architecture_variant
+        self.block_impl = block_impl
         self.token_embedding = torch.nn.Embedding(vocab_size, hidden_dim)
         self.position_embedding = torch.nn.Embedding(seq_len, hidden_dim)
-        self.blocks = torch.nn.ModuleList(
-            [
-                torch.nn.TransformerEncoderLayer(
-                    d_model=hidden_dim,
-                    nhead=heads,
-                    dim_feedforward=hidden_dim * 4,
-                    dropout=0.0,
-                    batch_first=True,
-                    activation="gelu",
-                )
-                for _ in range(layers)
-            ]
-        )
+        if block_impl == "torch_encoder":
+            self.blocks = torch.nn.ModuleList(
+                [
+                    torch.nn.TransformerEncoderLayer(
+                        d_model=hidden_dim,
+                        nhead=heads,
+                        dim_feedforward=hidden_dim * 4,
+                        dropout=0.0,
+                        batch_first=True,
+                        activation="gelu",
+                    )
+                    for _ in range(layers)
+                ]
+            )
+        elif block_impl == "explicit_causal":
+            self.blocks = torch.nn.ModuleList(
+                [_ExplicitCausalTransformerLayer(hidden_dim, heads) for _ in range(layers)]
+            )
+        else:
+            raise ValueError(f"unknown block_impl: {block_impl}")
         self.norm = torch.nn.LayerNorm(hidden_dim)
         self.head = torch.nn.Linear(hidden_dim, vocab_size)
         if architecture_variant == "dense":
@@ -126,6 +136,51 @@ class _ResidualAdapter(torch.nn.Module):
         return hidden + self.up(self.activation(self.down(self.norm(hidden))))
 
 
+class _ExplicitCausalTransformerLayer(torch.nn.Module):
+    def __init__(self, hidden_dim: int, heads: int) -> None:
+        super().__init__()
+        if hidden_dim % heads != 0:
+            raise ValueError("hidden_dim must be divisible by heads")
+        self.hidden_dim = hidden_dim
+        self.heads = heads
+        self.head_dim = hidden_dim // heads
+        self.in_proj = torch.nn.Linear(hidden_dim, hidden_dim * 3)
+        self.out_proj = torch.nn.Linear(hidden_dim, hidden_dim)
+        self.linear1 = torch.nn.Linear(hidden_dim, hidden_dim * 4)
+        self.linear2 = torch.nn.Linear(hidden_dim * 4, hidden_dim)
+        self.norm1 = torch.nn.LayerNorm(hidden_dim)
+        self.norm2 = torch.nn.LayerNorm(hidden_dim)
+        self.activation = torch.nn.GELU()
+
+    def forward(
+        self,
+        src: torch.Tensor,
+        src_mask: torch.Tensor | None = None,
+        is_causal: bool = False,
+    ) -> torch.Tensor:
+        del is_causal
+        batch, seq_len, _hidden = src.shape
+        qkv = self.in_proj(src).view(batch, seq_len, 3, self.heads, self.head_dim)
+        qkv = qkv.permute(2, 0, 3, 1, 4)
+        query, key, value = qkv[0], qkv[1], qkv[2]
+        scores = torch.matmul(query.float(), key.float().transpose(-2, -1))
+        scores = scores / math.sqrt(self.head_dim)
+        if src_mask is not None:
+            if src_mask.dtype == torch.bool:
+                scores = scores.masked_fill(
+                    src_mask.view(1, 1, seq_len, seq_len),
+                    float("-inf"),
+                )
+            else:
+                scores = scores + src_mask.view(1, 1, seq_len, seq_len).float()
+        attention = torch.softmax(scores, dim=-1).to(value.dtype)
+        context = torch.matmul(attention, value)
+        context = context.transpose(1, 2).contiguous().view(batch, seq_len, self.hidden_dim)
+        src = self.norm1(src + self.out_proj(context))
+        feedforward = self.linear2(self.activation(self.linear1(src)))
+        return self.norm2(src + feedforward)
+
+
 def train_dense_decoder(
     texts: list[str],
     config: DenseTrainingConfig,
@@ -161,6 +216,7 @@ def train_dense_decoder(
         config.attention_mask_mode,
         config.architecture_variant,
         config.adapter_dim,
+        config.block_impl,
     ).to(device)
     optimizer = _make_optimizer(model, config)
     dtype = _autocast_dtype(config.mixed_precision)
@@ -217,15 +273,21 @@ def train_dense_decoder(
         if status != "completed":
             break
         grad_norm_tensor = torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-        grad_norm = float(grad_norm_tensor.detach().cpu())
-        grad_norm_finite = math.isfinite(grad_norm)
-        gradient_norms.append(
-            {
-                "step": step,
-                "global_norm_before_clip": grad_norm,
-                "finite": grad_norm_finite,
-            }
+        should_record_grad_norm = (
+            _should_flush(step, config.progress_interval)
+            or _should_flush(step, config.checkpoint_interval)
+            or step == config.steps
         )
+        grad_norm = math.nan
+        if should_record_grad_norm:
+            grad_norm = float(grad_norm_tensor.detach().cpu())
+            gradient_norms.append(
+                {
+                    "step": step,
+                    "global_norm_before_clip": grad_norm,
+                    "finite": math.isfinite(grad_norm),
+                }
+            )
         optimizer.step()
         optimizer.zero_grad(set_to_none=True)
         if device.type == "cuda":
@@ -506,6 +568,7 @@ def debug_dense_step_stability(
         config.attention_mask_mode,
         config.architecture_variant,
         config.adapter_dim,
+        config.block_impl,
     ).to(device)
     optimizer = _make_optimizer(model, config)
     dtype = _autocast_dtype(config.mixed_precision)
@@ -617,6 +680,7 @@ def evaluate_dense_checkpoint(
         config.attention_mask_mode,
         config.architecture_variant,
         config.adapter_dim,
+        config.block_impl,
     ).to(torch_device)
     _load_model_state(model, payload["model"])
     generator = torch.Generator(device="cpu").manual_seed(seed)
@@ -791,6 +855,7 @@ def _resume_check(
         config.attention_mask_mode,
         config.architecture_variant,
         config.adapter_dim,
+        config.block_impl,
     ).to(device)
     optimizer = _make_optimizer(model, config)
     _load_model_state(model, payload["model"])
@@ -1028,6 +1093,12 @@ def _causal_mask(
         return mask.masked_fill(
             torch.triu(torch.ones_like(mask, dtype=torch.bool), diagonal=1),
             float("-inf"),
+        )
+    if attention_mask_mode == "finite_causal":
+        mask = torch.zeros(seq_len, seq_len, dtype=torch.float32, device=device)
+        return mask.masked_fill(
+            torch.triu(torch.ones_like(mask, dtype=torch.bool), diagonal=1),
+            -1.0e4,
         )
     raise ValueError(f"unknown attention mask mode: {attention_mask_mode}")
 

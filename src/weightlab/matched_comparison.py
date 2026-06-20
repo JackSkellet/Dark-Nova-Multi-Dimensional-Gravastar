@@ -60,6 +60,8 @@ def build_train_command(config: dict[str, Any], run: dict[str, Any]) -> list[str
         protocol["optimizer_name"],
         "--attention-mask-mode",
         protocol["attention_mask_mode"],
+        "--block-impl",
+        protocol["block_impl"],
         "--progress-interval",
         str(protocol["progress_interval"]),
         "--checkpoint-interval",

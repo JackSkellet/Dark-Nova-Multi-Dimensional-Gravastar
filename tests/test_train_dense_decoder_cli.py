@@ -56,6 +56,8 @@ def test_train_dense_decoder_cli_accepts_attention_mask_mode(tmp_path):
             "0.0",
             "--attention-mask-mode",
             "bool_causal",
+            "--block-impl",
+            "explicit_causal",
             "--max-documents",
             "0",
             "--output-dir",
@@ -76,6 +78,7 @@ def test_train_dense_decoder_cli_accepts_attention_mask_mode(tmp_path):
     assert completed.returncode == 0, completed.stderr
     record = json.loads(output_path.read_text(encoding="utf-8"))
     assert record["metrics"]["model"]["config"]["attention_mask_mode"] == "bool_causal"
+    assert record["metrics"]["model"]["config"]["block_impl"] == "explicit_causal"
     assert record["metrics"]["validation"]["source"] == "provided_validation_texts"
     assert record["metrics"]["validation"]["heldout_texts_provided"] is True
     assert record["metrics"]["corpus"]["document_count_used"] == 2
@@ -85,12 +88,14 @@ def test_train_dense_decoder_cli_accepts_attention_mask_mode(tmp_path):
     assert "--max-documents 0" in record["command"]
     assert "--seed 123" in record["command"]
     assert "--validation-seed 777" in record["command"]
+    assert "--block-impl explicit_causal" in record["command"]
     assert "--experiment-id cli_attention_mask_mode" in record["command"]
     assert record["resolved_config"]["optimizer_name"] == "sgd"
     assert record["resolved_config"]["learning_rate"] == 0.0
     assert record["resolved_config"]["max_documents"] == 0
     assert record["resolved_config"]["seed"] == 123
     assert record["resolved_config"]["validation_seed"] == 777
+    assert record["resolved_config"]["block_impl"] == "explicit_causal"
     assert record["metrics"]["resolved_config"]["experiment_id"] == "cli_attention_mask_mode"
     resolved_config_path = output_dir / "resolved_config.json"
     assert resolved_config_path.exists()
