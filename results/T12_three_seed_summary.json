@@ -1,9 +1,9 @@
 {
   "command": "uv run python scripts/summarize_t12_three_seed.py --results-dir results --output results/T12_three_seed_summary.json --experiment-id T12_three_seed_summary",
   "experiment_id": "T12_three_seed_summary",
-  "git_commit": "25a48366ec5955abbc5a025a7a5b2c7ce27185bd",
-  "git_dirty": true,
-  "git_status_short": "M results/T11b_adapter528_adamw_fp32_50m_best_test_eval.json\n M results/T11b_adapter528_adamw_fp32_50m_best_validation_eval.json\n M results/T11b_adapter528_adamw_fp32_50m_final_test_eval.json\n M results/T11b_adapter528_adamw_fp32_50m_final_validation_eval.json\n M results/T11c_dense528_adamw_fp32_50m_best_test_eval.json\n M results/T11c_dense528_adamw_fp32_50m_best_validation_eval.json\n M results/T11c_dense528_adamw_fp32_50m_final_test_eval.json\n M results/T11c_dense528_adamw_fp32_50m_final_validation_eval.json\n M results/T12a_dense528_seed456_adamw_fp32_50m_best_test_eval.json\n M results/T12a_dense528_seed456_adamw_fp32_50m_best_validation_eval.json\n M results/T12a_dense528_seed456_adamw_fp32_50m_final_test_eval.json\n M results/T12a_dense528_seed456_adamw_fp32_50m_final_validation_eval.json\n M results/T12b_adapter528_seed456_adamw_fp32_50m_best_test_eval.json\n M results/T12b_adapter528_seed456_adamw_fp32_50m_best_validation_eval.json\n M results/T12b_adapter528_seed456_adamw_fp32_50m_final_test_eval.json\n M results/T12b_adapter528_seed456_adamw_fp32_50m_final_validation_eval.json\n M results/T12c_dense528_seed789_adamw_fp32_50m_best_test_eval.json\n M results/T12c_dense528_seed789_adamw_fp32_50m_best_validation_eval.json\n M results/T12c_dense528_seed789_adamw_fp32_50m_final_test_eval.json\n M results/T12c_dense528_seed789_adamw_fp32_50m_final_validation_eval.json\n M results/T12d_adapter528_seed789_adamw_fp32_50m_best_test_eval.json\n M results/T12d_adapter528_seed789_adamw_fp32_50m_best_validation_eval.json\n M results/T12d_adapter528_seed789_adamw_fp32_50m_final_test_eval.json\n M results/T12d_adapter528_seed789_adamw_fp32_50m_final_validation_eval.json\n M results/manifest.json\n M scripts/evaluate_dense_checkpoint.py\n M src/weightlab/dense_training.py\n M src/weightlab/t12_analysis.py\n M tests/test_dense_training.py\n M tests/test_t12_analysis.py",
+  "git_commit": "b2b9d903d08985118666cb4968331f0711d4ae49",
+  "git_dirty": false,
+  "git_status_short": "",
   "hardware": {
     "machine": "x86_64",
     "processor": "",
@@ -462,7 +462,7 @@
     }
   },
   "notes": "Summarizes seed 123, 456, and 789 dense-528 versus residual-adapter-528 results. Validation metrics drive selection; test losses are reported only.",
-  "recorded_at_unix": 1782025396.4091258,
+  "recorded_at_unix": 1782025888.3586354,
   "resolved_config": {
     "experiment_id": "T12_three_seed_summary",
     "output": "results/T12_three_seed_summary.json",
