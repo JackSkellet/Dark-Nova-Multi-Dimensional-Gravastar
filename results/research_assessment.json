@@ -3098,6 +3098,40 @@
     },
     {
       "evidence": {
+        "candidate_id": "IF4",
+        "commit_count_used": 30,
+        "fast_temporary_weights_future_topk_accuracy": 0.4444444444444444,
+        "fast_weights_plus_retrieval_future_topk_accuracy": 0.7777777777777778,
+        "fast_weights_plus_retrieval_paraphrase_topk_accuracy": 0.7777777777777778,
+        "future_leakage_blocked": true,
+        "mean_update_ms": 18.99259877776179,
+        "periodic_consolidation_future_topk_accuracy": 0.6666666666666666,
+        "prior_task_retention_accuracy": 0.8571428571428571,
+        "replay_adapter_proxy_future_topk_accuracy": 0.7777777777777778,
+        "repository": "markupsafe",
+        "rollback_supported": true,
+        "step_count": 9,
+        "structured_symbol_graph_memory_future_topk_accuracy": 0.7777777777777778,
+        "top_k": 5,
+        "total_storage_bytes": 87216,
+        "updated_retrieval_future_topk_accuracy": 0.6666666666666666
+      },
+      "experiment_id": "IF4_fast_repo_adaptation_markupsafe",
+      "hypothesis": "if4_fast_temporary_weights_improve_chronological_repository_adaptation",
+      "limitations": [
+        "changed_file_retrieval_proxy",
+        "not_language_model_training",
+        "replay_adapter_is_sparse_proxy",
+        "feature_hash_fast_weight_proxy",
+        "paraphrase_transfer_is_query_rewrite_proxy",
+        "no_security_or_poisoning_gate"
+      ],
+      "outcome": "repository_adaptation_probe",
+      "primary_reason": "fast_repository_adaptation_controls_measured_on_real_git_history",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -3386,6 +3420,7 @@
     "reconstruction_proxy_positive": 1,
     "recorded": 90,
     "rejected": 1,
+    "repository_adaptation_probe": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
     "synthetic_fast_weight_positive": 1,
@@ -3400,5 +3435,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 161
+  "record_count": 162
 }

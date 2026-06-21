@@ -21,7 +21,7 @@ uv run python scripts/run_experiments.py --seed 123
 uv run python scripts/run_experiments.py --seed 123 --config configs/smoke.yaml
 ```
 
-Generated metrics are written to `results/manifest.json`, one JSON file per experiment, and `results/summary.csv`. The current manifest preserves explicit standalone runs and contains 161 records, including real-training, split-correct evaluation, held-out functional probes, trained-checkpoint quantization records, the completed exploratory D5 corpus materialization and audit, exact D5 byte-vs-BPE validation-byte accounting, the repository-balanced D5 task-index scaffold, and the T12 three-seed dense-528 versus residual-adapter-528 comparison. The current assessment records T11/T12 frontier expansion without Pareto dominance: dense-528 leads mean validation loss, storage, VRAM, stability, and throughput, while residual-adapter-528 keeps a reported-only mean final-test-loss edge. T12 selects dense-528 by validation mean, with paired batch bootstrap uncertainty now recorded; the final-validation interval crosses zero, best-validation favors dense, and test loss remains reported-only.
+Generated metrics are written to `results/manifest.json`, one JSON file per experiment, and `results/summary.csv`. The current manifest preserves explicit standalone runs and contains 162 records, including real-training, split-correct evaluation, held-out functional probes, trained-checkpoint quantization records, the completed exploratory D5 corpus materialization and audit, exact D5 byte-vs-BPE validation-byte accounting, the repository-balanced D5 task-index scaffold, the IF4 real Git-history fast repository adaptation probe, and the T12 three-seed dense-528 versus residual-adapter-528 comparison. The current assessment records T11/T12 frontier expansion without Pareto dominance: dense-528 leads mean validation loss, storage, VRAM, stability, and throughput, while residual-adapter-528 keeps a reported-only mean final-test-loss edge. T12 selects dense-528 by validation mean, with paired batch bootstrap uncertainty now recorded; the final-validation interval crosses zero, best-validation favors dense, and test loss remains reported-only.
 
 `configs/smoke.yaml` requests `accelerator.backend: rocm`. The project routes Linux PyTorch resolution to the ROCm 7.2 wheel index and adds `triton-rocm`; E4c and E4d map ROCm to PyTorch HIP and report the logical ROCm backend separately from PyTorch's internal `cuda` device type.
 
@@ -37,6 +37,14 @@ A larger public sample used in the current results is:
 ```bash
 git clone https://github.com/pallets/markupsafe data/raw/public/markupsafe
 uv run python scripts/run_public_repo_chronology.py --repo-path data/raw/public/markupsafe --max-commits 30 --top-k 5 --include-symbol-qa --include-stale-docs --output results/E5_markupsafe_chronology.json --symbol-output results/E5_markupsafe_symbol_qa.json --stale-doc-output results/E5_markupsafe_stale_docs.json
+```
+
+The IF4 fast repository adaptation probe compares updated retrieval, structured
+memory, replay adapter proxy, temporary fast weights, fast weights plus retrieval,
+and periodic consolidation on the same local public MarkupSafe history:
+
+```bash
+uv run python scripts/run_if4_fast_repo_adaptation.py --repo-path data/raw/public/markupsafe --max-commits 30 --top-k 5 --output results/IF4_fast_repo_adaptation_markupsafe.json --experiment-id IF4_fast_repo_adaptation_markupsafe
 ```
 
 The current public patch task uses MarkupSafe commit `54bb00b`, which fixed proxy-object compatibility in `escape`. The exposed parent fails a small executable proxy regression; the no-op candidate fails, a deterministic generated proxy-check patch passes, and the historical future diff passes as a control:

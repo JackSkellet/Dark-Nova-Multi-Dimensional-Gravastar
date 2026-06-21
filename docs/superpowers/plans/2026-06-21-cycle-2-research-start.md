@@ -122,7 +122,7 @@ Compare untrained model, n-gram baseline, dense-528, adapter-528, byte model, an
 
 Each mechanism includes definition, primary-source prior art, difference, predicted benefit, likely failure, falsifying experiment, ROCm execution strategy, and scaling prediction.
 
-- [ ] **Step 2: Prototype fast repository adaptation**
+- [x] **Step 2: Prototype fast repository adaptation**
 
 Compare updated retrieval, structured symbol memory, replay adapters, fast temporary weights, fast weights plus retrieval, and periodic consolidation on a chronological public-repository fixture.
 
