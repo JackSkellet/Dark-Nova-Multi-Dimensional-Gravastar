@@ -89,14 +89,14 @@ def test_repository_graph_signal_probe_detects_edges_roles_and_split_integrity(t
             "text": "import { main } from '../src/main.js';\ntest('main', () => main());\n",
         },
         {
-            "repo": "org/docs",
+            "repo": "org/app",
             "path": "README.md",
-            "split": "validation",
-            "repo_split": "validation",
+            "split": "train",
+            "repo_split": "train",
             "language": "Markdown",
             "content_roles": ["documentation", "README"],
             "tokens": 8,
-            "text": "# API\nUse main from the package.\n",
+            "text": "# API\nUse main from src/main.js in the package.\n",
         },
     ]
     corpus_path.write_text(
@@ -116,6 +116,82 @@ def test_repository_graph_signal_probe_detects_edges_roles_and_split_integrity(t
     assert result["role_counts"]["README"] == 1
     assert result["repository_aware_splits_preserved"] is True
     assert result["mechanism_signal_present"] is True
+    assert result["typed_edge_counts"]["import_local"] >= 1
+    assert result["typed_edge_counts"]["test_to_source"] == 1
+    assert result["typed_edge_counts"]["doc_to_source"] == 1
+    assert result["role_link_edge_count"] == 2
+    assert result["graph_edge_count"] >= 4
+
+
+def test_repository_graph_signal_probe_resolves_absolute_and_index_imports(tmp_path):
+    corpus_path = tmp_path / "corpus.jsonl"
+    rows = [
+        {
+            "repo": "org/app",
+            "path": "client/modules/router/main.js",
+            "split": "train",
+            "repo_split": "train",
+            "language": "JavaScript",
+            "content_roles": ["source"],
+            "tokens": 20,
+            "text": "const api = require('/client/api');\nimport view from './views';\n",
+        },
+        {
+            "repo": "org/app",
+            "path": "client/api.js",
+            "split": "train",
+            "repo_split": "train",
+            "language": "JavaScript",
+            "content_roles": ["source"],
+            "tokens": 8,
+            "text": "module.exports = {};\n",
+        },
+        {
+            "repo": "org/app",
+            "path": "client/modules/router/views/index.js",
+            "split": "train",
+            "repo_split": "train",
+            "language": "JavaScript",
+            "content_roles": ["source"],
+            "tokens": 8,
+            "text": "export default {};\n",
+        },
+    ]
+    corpus_path.write_text(
+        "\n".join(json.dumps(row) for row in rows) + "\n",
+        encoding="utf-8",
+    )
+
+    result = run_repository_graph_signal_probe(corpus_path)
+
+    assert result["typed_edge_counts"]["import_absolute"] == 1
+    assert result["typed_edge_counts"]["import_local"] == 2
+    assert result["resolved_local_edge_count"] == 2
+
+
+def test_repository_graph_signal_probe_does_not_count_docstring_self_links(tmp_path):
+    corpus_path = tmp_path / "corpus.jsonl"
+    corpus_path.write_text(
+        json.dumps(
+            {
+                "repo": "org/app",
+                "path": "src/main.js",
+                "split": "train",
+                "repo_split": "train",
+                "language": "JavaScript",
+                "content_roles": ["source", "docstring"],
+                "tokens": 20,
+                "text": "/** main handles startup */\nexport function main() {}\n",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    result = run_repository_graph_signal_probe(corpus_path)
+
+    assert result["role_link_edge_count"] == 0
+    assert "doc_to_source" not in result["typed_edge_counts"]
 
 
 def test_idea_foundry_cli_writes_candidate_and_probe_records(tmp_path):

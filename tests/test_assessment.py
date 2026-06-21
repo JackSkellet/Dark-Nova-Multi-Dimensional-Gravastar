@@ -351,6 +351,13 @@ def test_assessment_marks_if1_probe_as_mechanism_signal_not_quality_win():
                 "document_count": 10,
                 "import_edge_count": 4,
                 "resolved_local_edge_count": 2,
+                "role_link_edge_count": 3,
+                "graph_edge_count": 5,
+                "typed_edge_counts": {
+                    "doc_to_source": 1,
+                    "import_local": 2,
+                    "test_to_source": 2,
+                },
                 "repositories_with_edges": 2,
                 "repository_aware_splits_preserved": True,
                 "mechanism_signal_present": True,
@@ -362,6 +369,8 @@ def test_assessment_marks_if1_probe_as_mechanism_signal_not_quality_win():
     assert assessment["supports_pareto_improvement"] is False
     assert "not_model_training" in assessment["limitations"]
     assert assessment["evidence"]["resolved_local_edge_count"] == 2
+    assert assessment["evidence"]["role_link_edge_count"] == 3
+    assert assessment["evidence"]["typed_edge_counts"]["test_to_source"] == 2
 
 
 def test_assessment_marks_public_repository_docstring_skeleton_generation_as_codegen_proxy():

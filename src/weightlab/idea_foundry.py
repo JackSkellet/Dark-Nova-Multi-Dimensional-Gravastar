@@ -372,6 +372,7 @@ def run_repository_graph_signal_probe(
     rows: list[dict[str, Any]] = []
     repo_splits: dict[str, set[str]] = defaultdict(set)
     repo_paths: dict[str, set[str]] = defaultdict(set)
+    repo_source_paths: dict[str, set[str]] = defaultdict(set)
     role_counts: Counter[str] = Counter()
     language_counts: Counter[str] = Counter()
 
@@ -386,32 +387,53 @@ def run_repository_graph_signal_probe(
             repo_splits[repo].add(str(row.get("split", "unknown")))
             repo_paths[repo].add(path)
             language_counts[str(row.get("language", "unknown"))] += 1
-            for role in _ordered_unique_roles(row.get("content_roles", ["source"])):
+            roles = _ordered_unique_roles(row.get("content_roles", ["source"]))
+            if _has_source_role(roles):
+                repo_source_paths[repo].add(path)
+            for role in roles:
                 role_counts[role] += 1
 
     edges: list[dict[str, Any]] = []
-    resolved_edges: list[dict[str, Any]] = []
+    resolved_import_edges: list[dict[str, Any]] = []
+    role_edges: list[dict[str, Any]] = []
+    typed_edge_counts: Counter[str] = Counter()
     for row in rows:
         repo = str(row.get("repo", ""))
         source_path = _normalize_path(str(row.get("path", "")))
+        split = str(row.get("split", "unknown"))
         for target in _extract_import_targets(str(row.get("text", ""))):
             edge = {
                 "repo": repo,
                 "source_path": source_path,
                 "target": target,
-                "split": str(row.get("split", "unknown")),
+                "split": split,
             }
             edges.append(edge)
-            resolved = _resolve_relative_target(source_path, target, repo_paths[repo])
+            resolved = _resolve_import_target(source_path, target, repo_paths[repo])
             if resolved is not None:
                 resolved_edge = dict(edge)
                 resolved_edge["resolved_path"] = resolved
-                resolved_edges.append(resolved_edge)
+                resolved_edge["edge_type"] = "import_local"
+                resolved_import_edges.append(resolved_edge)
+                typed_edge_counts["import_local"] += 1
+                if target.startswith("/"):
+                    typed_edge_counts["import_absolute"] += 1
+                elif target.startswith("."):
+                    typed_edge_counts["import_relative"] += 1
+        role_edges.extend(
+            _role_link_edges(
+                row,
+                source_paths=repo_source_paths[repo],
+            )
+        )
+    for edge in role_edges:
+        typed_edge_counts[edge["edge_type"]] += 1
 
     repos_with_edges = {edge["repo"] for edge in edges}
     repositories_in_multiple_splits = {
         repo: sorted(splits) for repo, splits in repo_splits.items() if len(splits) > 1
     }
+    graph_edges = resolved_import_edges + role_edges
     return {
         "benchmark_label": "idea_foundry_repository_graph_signal_probe",
         "candidate_id": "IF1",
@@ -420,15 +442,19 @@ def run_repository_graph_signal_probe(
         "language_counts": dict(sorted(language_counts.items())),
         "role_counts": dict(sorted(role_counts.items())),
         "import_edge_count": len(edges),
-        "resolved_local_edge_count": len(resolved_edges),
+        "resolved_local_edge_count": len(resolved_import_edges),
+        "role_link_edge_count": len(role_edges),
+        "graph_edge_count": len(graph_edges),
+        "typed_edge_counts": dict(sorted(typed_edge_counts.items())),
         "repositories_with_edges": len(repos_with_edges),
         "repository_aware_splits_preserved": not repositories_in_multiple_splits,
         "repositories_in_multiple_splits": len(repositories_in_multiple_splits),
-        "edge_examples": resolved_edges[:20],
-        "mechanism_signal_present": bool(edges and resolved_edges),
+        "edge_examples": graph_edges[:20],
+        "mechanism_signal_present": bool(edges and graph_edges),
         "limitations": [
-            "regex_import_extraction_only",
+            "regex_import_and_role_link_extraction_only",
             "no_ast_or_package_resolution",
+            "role_links_are_heuristic_not_semantic_ground_truth",
             "edge_presence_probe_not_model_training",
         ],
     }
@@ -441,15 +467,22 @@ def _extract_import_targets(text: str) -> list[str]:
     return targets
 
 
-def _resolve_relative_target(
+def _resolve_import_target(
     source_path: str,
     target: str,
     repo_paths: set[str],
 ) -> str | None:
-    if not target.startswith("."):
+    if target.startswith("."):
+        base = posixpath.dirname(source_path)
+        raw = _normalize_path(posixpath.normpath(posixpath.join(base, target)))
+    elif target.startswith("/"):
+        raw = _normalize_path(target)
+    else:
         return None
-    base = posixpath.dirname(source_path)
-    raw = _normalize_path(posixpath.normpath(posixpath.join(base, target)))
+    return _resolve_path_candidate(raw, repo_paths)
+
+
+def _resolve_path_candidate(raw: str, repo_paths: set[str]) -> str | None:
     candidates = [
         raw,
         f"{raw}.js",
@@ -463,6 +496,96 @@ def _resolve_relative_target(
         if candidate in repo_paths:
             return candidate
     return None
+
+
+def _role_link_edges(row: dict[str, Any], *, source_paths: set[str]) -> list[dict[str, Any]]:
+    roles = _ordered_unique_roles(row.get("content_roles", ["source"]))
+    repo = str(row.get("repo", ""))
+    path = _normalize_path(str(row.get("path", "")))
+    split = str(row.get("split", "unknown"))
+    if not source_paths:
+        return []
+    edges: list[dict[str, Any]] = []
+    if _has_test_role(roles):
+        for source_path in _matching_test_source_paths(path, source_paths):
+            edges.append(
+                {
+                    "repo": repo,
+                    "source_path": path,
+                    "resolved_path": source_path,
+                    "split": split,
+                    "edge_type": "test_to_source",
+                }
+            )
+    if _has_doc_role(roles):
+        text = str(row.get("text", ""))
+        for source_path in _mentioned_source_paths(text, source_paths):
+            if source_path == path:
+                continue
+            edges.append(
+                {
+                    "repo": repo,
+                    "source_path": path,
+                    "resolved_path": source_path,
+                    "split": split,
+                    "edge_type": "doc_to_source",
+                }
+            )
+    return edges
+
+
+def _matching_test_source_paths(test_path: str, source_paths: set[str]) -> list[str]:
+    stem = _path_stem(test_path)
+    normalized = (
+        stem.removesuffix(".test")
+        .removesuffix(".spec")
+        .removeprefix("test_")
+        .removeprefix("test-")
+        .removesuffix("_test")
+        .removesuffix("-test")
+    )
+    if not normalized or normalized == stem and "test" not in test_path.lower():
+        return []
+    return sorted(
+        source_path
+        for source_path in source_paths
+        if source_path != test_path and _path_stem(source_path) == normalized
+    )
+
+
+def _mentioned_source_paths(text: str, source_paths: set[str]) -> list[str]:
+    lowered = text.lower()
+    matches: list[str] = []
+    for source_path in sorted(source_paths):
+        if source_path.lower() in lowered:
+            matches.append(source_path)
+            continue
+        stem = _path_stem(source_path)
+        if stem and re.search(rf"\b{re.escape(stem.lower())}\b", lowered):
+            matches.append(source_path)
+    return matches[:20]
+
+
+def _path_stem(path: str) -> str:
+    base = posixpath.basename(path).lower()
+    for suffix in (".test.js", ".spec.js", ".test.ts", ".spec.ts"):
+        if base.endswith(suffix):
+            return base[: -len(suffix)]
+    if "." in base:
+        return base.rsplit(".", 1)[0]
+    return base
+
+
+def _has_source_role(roles: list[str]) -> bool:
+    return any(role.lower() == "source" for role in roles)
+
+
+def _has_test_role(roles: list[str]) -> bool:
+    return any(role.lower() in {"test", "tests"} for role in roles)
+
+
+def _has_doc_role(roles: list[str]) -> bool:
+    return any(role.lower() in {"documentation", "readme", "docstring"} for role in roles)
 
 
 def _normalize_path(path: str) -> str:

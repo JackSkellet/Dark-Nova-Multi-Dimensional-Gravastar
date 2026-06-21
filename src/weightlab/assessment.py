@@ -1580,6 +1580,12 @@ def _assess_idea_foundry_graph_probe(record: dict[str, Any]) -> Assessment:
             "document_count": metrics["document_count"],
             "import_edge_count": metrics["import_edge_count"],
             "resolved_local_edge_count": metrics["resolved_local_edge_count"],
+            "role_link_edge_count": metrics.get("role_link_edge_count", 0),
+            "graph_edge_count": metrics.get(
+                "graph_edge_count",
+                metrics["resolved_local_edge_count"],
+            ),
+            "typed_edge_counts": metrics.get("typed_edge_counts", {}),
             "repositories_with_edges": metrics["repositories_with_edges"],
             "repository_aware_splits_preserved": metrics[
                 "repository_aware_splits_preserved"
