@@ -6,10 +6,11 @@ import math
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Protocol
 
 import torch
 
+from weightlab.fast_tokenizer import FastBpeTokenizer
 from weightlab.lookup import _resolve_torch_accelerator
 
 
@@ -47,6 +48,27 @@ class ByteTokenizer:
     def decode(self, ids: list[int]) -> str:
         byte_values = bytes(token for token in ids if 0 <= token < 256)
         return byte_values.decode("utf-8", errors="ignore")
+
+    def to_jsonable(self, *, include_tokenizer_json: bool = False) -> dict[str, Any]:
+        del include_tokenizer_json
+        return {
+            "name": self.name,
+            "type": self.name,
+            "vocab_size": self.vocab_size,
+            "eos_id": self.eos_id,
+        }
+
+
+class TokenizerLike(Protocol):
+    name: str
+    vocab_size: int
+    eos_id: int
+
+    def encode(self, text: str) -> list[int]: ...
+
+    def decode(self, ids: list[int]) -> str: ...
+
+    def to_jsonable(self, *, include_tokenizer_json: bool = False) -> dict[str, Any]: ...
 
 
 class DenseDecoder(torch.nn.Module):
@@ -188,9 +210,16 @@ def train_dense_decoder(
     seed: int = 123,
     resume_checkpoint: Path | None = None,
     validation_texts: list[str] | None = None,
+    tokenizer: TokenizerLike | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
-    tokenizer = ByteTokenizer()
+    if tokenizer is None:
+        tokenizer = (
+            _tokenizer_from_checkpoint(resume_checkpoint)
+            if resume_checkpoint is not None
+            else ByteTokenizer()
+        )
+    tokenizer_metadata = tokenizer.to_jsonable(include_tokenizer_json=True)
     tokens = _tokens_from_texts(texts, tokenizer)
     if len(tokens) < config.seq_len + 2:
         raise ValueError("not enough tokens for dense decoder training")
@@ -334,6 +363,7 @@ def train_dense_decoder(
                 model,
                 optimizer,
                 config,
+                tokenizer_metadata,
                 step=step,
                 latest_loss=step_loss_value,
                 generator=generator,
@@ -350,12 +380,19 @@ def train_dense_decoder(
                     model,
                     optimizer,
                     config,
+                    tokenizer_metadata,
                     step=step,
                     latest_loss=step_loss_value,
                     generator=generator,
                     validation=checkpoint_validation,
                 )
-                _save_model_only_checkpoint(best_model_only_path, model, config, step=step)
+                _save_model_only_checkpoint(
+                    best_model_only_path,
+                    model,
+                    config,
+                    tokenizer_metadata,
+                    step=step,
+                )
                 best_checkpoint = {
                     "path": str(best_checkpoint_path),
                     "model_only_path": str(best_model_only_path),
@@ -420,6 +457,7 @@ def train_dense_decoder(
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
             "config": asdict(config),
+            "tokenizer": tokenizer_metadata,
             "step": last_completed_step,
             "generator_state": generator.get_state(),
         },
@@ -429,6 +467,7 @@ def train_dense_decoder(
         model_only_checkpoint_path,
         model,
         config,
+        tokenizer_metadata,
         step=last_completed_step,
     )
     if status == "completed" and not best_checkpoint:
@@ -437,12 +476,19 @@ def train_dense_decoder(
             model,
             optimizer,
             config,
+            tokenizer_metadata,
             step=last_completed_step,
             latest_loss=float(loss_curve[-1]["loss"]) if loss_curve else math.nan,
             generator=generator,
             validation=validation,
         )
-        _save_model_only_checkpoint(best_model_only_path, model, config, step=last_completed_step)
+        _save_model_only_checkpoint(
+            best_model_only_path,
+            model,
+            config,
+            tokenizer_metadata,
+            step=last_completed_step,
+        )
         best_checkpoint = {
             "path": str(best_checkpoint_path),
             "model_only_path": str(best_model_only_path),
@@ -456,7 +502,6 @@ def train_dense_decoder(
         }
     resume_ok = _resume_check(
         checkpoint_path,
-        tokenizer.vocab_size,
         config,
         device,
         expected_step=last_completed_step,
@@ -468,7 +513,7 @@ def train_dense_decoder(
         "accelerator_backend": accelerator.backend,
         "rocm_available": accelerator.rocm_available,
         "rocm_runtime_version": accelerator.rocm_runtime_version,
-        "tokenizer": {"name": tokenizer.name, "vocab_size": tokenizer.vocab_size},
+        "tokenizer": tokenizer.to_jsonable(),
         "model": {
             "architecture": "causal_transformer_decoder",
             "parameter_count": parameter_count,
@@ -660,11 +705,11 @@ def evaluate_dense_checkpoint(
     seed: int = 123,
     batches: int | None = None,
 ) -> dict[str, Any]:
-    tokenizer = ByteTokenizer()
-    tokens = _tokens_from_texts(texts, tokenizer)
     accelerator = _resolve_torch_accelerator(device)
     torch_device = accelerator.device
     payload = torch.load(checkpoint_path, map_location=torch_device)
+    tokenizer = _tokenizer_from_payload(payload)
+    tokens = _tokens_from_texts(texts, tokenizer)
     checkpoint_config = dict(payload["config"])
     if batches is not None:
         checkpoint_config["validation_batches"] = batches
@@ -706,7 +751,7 @@ def evaluate_dense_checkpoint(
             "parameter_count": sum(param.numel() for param in model.parameters()),
             "config": asdict(config),
         },
-        "tokenizer": {"name": tokenizer.name, "vocab_size": tokenizer.vocab_size},
+        "tokenizer": tokenizer.to_jsonable(),
         "device": {
             "requested": accelerator.requested_device,
             "resolved": str(torch_device),
@@ -718,11 +763,31 @@ def evaluate_dense_checkpoint(
     }
 
 
-def _tokens_from_texts(texts: list[str], tokenizer: ByteTokenizer) -> torch.Tensor:
+def _tokens_from_texts(texts: list[str], tokenizer: TokenizerLike) -> torch.Tensor:
     ids: list[int] = []
     for text in texts:
         ids.extend(tokenizer.encode(text))
     return torch.tensor(ids, dtype=torch.long)
+
+
+def _tokenizer_from_checkpoint(checkpoint_path: Path) -> TokenizerLike:
+    payload = torch.load(checkpoint_path, map_location="cpu")
+    return _tokenizer_from_payload(payload)
+
+
+def _tokenizer_from_payload(payload: dict[str, Any]) -> TokenizerLike:
+    metadata = payload.get("tokenizer", {})
+    name = str(metadata.get("name", metadata.get("type", "byte_level")))
+    if name == "byte_level":
+        return ByteTokenizer()
+    if name == "hf_tokenizers_bpe_bytelevel":
+        return FastBpeTokenizer(
+            tokenizer_json=str(metadata["tokenizer_json"]),
+            vocab_size=int(metadata["vocab_size"]),
+            eos_id=int(metadata["eos_id"]),
+            checksum=str(metadata["checksum"]),
+        )
+    raise ValueError(f"unsupported checkpoint tokenizer: {name}")
 
 
 def _load_model_state(model: torch.nn.Module, state_dict: dict[str, torch.Tensor]) -> None:
@@ -817,7 +882,7 @@ def _validation_metrics(
 
 def _generate_sample(
     model: DenseDecoder,
-    tokenizer: ByteTokenizer,
+    tokenizer: TokenizerLike,
     prompt: str,
     seq_len: int,
     device: torch.device,
@@ -839,15 +904,15 @@ def _generate_sample(
 
 def _resume_check(
     checkpoint_path: Path,
-    vocab_size: int,
     config: DenseTrainingConfig,
     device: torch.device,
     *,
     expected_step: int,
 ) -> bool:
     payload = torch.load(checkpoint_path, map_location=device)
+    tokenizer = _tokenizer_from_payload(payload)
     model = DenseDecoder(
-        vocab_size,
+        tokenizer.vocab_size,
         config.seq_len,
         config.hidden_dim,
         config.layers,
@@ -877,6 +942,7 @@ def _save_training_checkpoint(
     model: torch.nn.Module,
     optimizer: torch.optim.Optimizer,
     config: DenseTrainingConfig,
+    tokenizer_metadata: dict[str, Any],
     *,
     step: int,
     latest_loss: float,
@@ -888,6 +954,7 @@ def _save_training_checkpoint(
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
             "config": asdict(config),
+            "tokenizer": tokenizer_metadata,
             "step": step,
             "latest_loss": latest_loss,
             "generator_state": generator.get_state(),
@@ -901,6 +968,7 @@ def _save_model_only_checkpoint(
     checkpoint_path: Path,
     model: torch.nn.Module,
     config: DenseTrainingConfig,
+    tokenizer_metadata: dict[str, Any],
     *,
     step: int,
 ) -> None:
@@ -908,6 +976,7 @@ def _save_model_only_checkpoint(
         {
             "model": model.state_dict(),
             "config": asdict(config),
+            "tokenizer": tokenizer_metadata,
             "step": step,
             "checkpoint_type": "model_only",
         },

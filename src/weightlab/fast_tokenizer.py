@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from tokenizers import Tokenizer
@@ -21,20 +22,29 @@ class FastBpeTokenizer:
     vocab_size: int
     eos_id: int
     checksum: str
+    name: str = "hf_tokenizers_bpe_bytelevel"
 
     def encode(self, text: str) -> list[int]:
         tokenizer = Tokenizer.from_str(self.tokenizer_json)
         return tokenizer.encode(text).ids + [self.eos_id]
 
-    def to_jsonable(self) -> dict[str, Any]:
-        return {
-            "type": "hf_tokenizers_bpe_bytelevel",
+    def decode(self, ids: list[int]) -> str:
+        tokenizer = Tokenizer.from_str(self.tokenizer_json)
+        return tokenizer.decode([token for token in ids if token != self.eos_id])
+
+    def to_jsonable(self, *, include_tokenizer_json: bool = False) -> dict[str, Any]:
+        payload = {
+            "name": self.name,
+            "type": self.name,
             "library": "tokenizers",
             "vocab_size": self.vocab_size,
             "eos_token": EOS_TOKEN,
             "eos_id": self.eos_id,
             "checksum": self.checksum,
         }
+        if include_tokenizer_json:
+            payload["tokenizer_json"] = self.tokenizer_json
+        return payload
 
 
 def train_fast_bpe_tokenizer(
@@ -74,5 +84,45 @@ def train_fast_bpe_tokenizer(
         tokenizer_json=tokenizer_json,
         vocab_size=tokenizer.get_vocab_size(),
         eos_id=eos_id,
+        checksum=checksum,
+    )
+
+
+def write_fast_bpe_tokenizer(
+    path: Path,
+    tokenizer: FastBpeTokenizer,
+    *,
+    training_config: dict[str, Any] | None = None,
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = tokenizer.to_jsonable(include_tokenizer_json=True)
+    payload["training_config"] = training_config or {}
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def load_fast_bpe_tokenizer(path: Path) -> FastBpeTokenizer:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    tokenizer_json = str(payload["tokenizer_json"])
+    checksum = str(payload["checksum"])
+    training_config = payload.get("training_config", {})
+    if "vocab_size" in training_config and "min_frequency" in training_config:
+        expected = hashlib.sha256(
+            json.dumps(
+                {
+                    "type": "hf_tokenizers_bpe_bytelevel",
+                    "vocab_size": training_config["vocab_size"],
+                    "min_frequency": training_config["min_frequency"],
+                    "eos_token": EOS_TOKEN,
+                    "tokenizer_json": json.loads(tokenizer_json),
+                },
+                sort_keys=True,
+            ).encode("utf-8")
+        ).hexdigest()
+        if checksum != expected:
+            raise ValueError(f"tokenizer checksum mismatch for {path}")
+    return FastBpeTokenizer(
+        tokenizer_json=tokenizer_json,
+        vocab_size=int(payload["vocab_size"]),
+        eos_id=int(payload["eos_id"]),
         checksum=checksum,
     )

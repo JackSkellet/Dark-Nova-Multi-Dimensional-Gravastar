@@ -6,6 +6,7 @@ from pathlib import Path
 
 from weightlab.corpus import prepare_repository_corpus
 from weightlab.dense_training import DenseTrainingConfig, train_dense_decoder
+from weightlab.fast_tokenizer import load_fast_bpe_tokenizer
 from weightlab.hf_materializer import load_jsonl_texts
 from weightlab.metrics import ExperimentRecord, write_json
 
@@ -26,6 +27,7 @@ def _resolved_config(args: argparse.Namespace) -> dict[str, object]:
         "corpus_jsonl": str(args.corpus_jsonl) if args.corpus_jsonl else "",
         "corpus_record": str(args.corpus_record) if args.corpus_record else "",
         "resume_checkpoint": str(args.resume_checkpoint) if args.resume_checkpoint else "",
+        "tokenizer_json": str(args.tokenizer_json) if args.tokenizer_json else "",
         "device": args.device,
         "seq_len": args.seq_len,
         "hidden_dim": args.hidden_dim,
@@ -63,6 +65,7 @@ def _command_from_resolved(config: dict[str, object]) -> str:
         "--corpus-jsonl": config["corpus_jsonl"],
         "--corpus-record": config["corpus_record"],
         "--resume-checkpoint": config["resume_checkpoint"],
+        "--tokenizer-json": config["tokenizer_json"],
     }
     for flag, value in optional_paths.items():
         if value:
@@ -116,6 +119,7 @@ def main() -> None:
     parser.add_argument("--corpus-jsonl", type=Path)
     parser.add_argument("--corpus-record", type=Path)
     parser.add_argument("--resume-checkpoint", type=Path)
+    parser.add_argument("--tokenizer-json", type=Path)
     parser.add_argument("--device", default="rocm")
     parser.add_argument("--seq-len", type=int, default=128)
     parser.add_argument("--hidden-dim", type=int, default=256)
@@ -160,6 +164,7 @@ def main() -> None:
 
     resolved_config = _resolved_config(args)
     write_json(args.output_dir / "resolved_config.json", resolved_config)
+    tokenizer = load_fast_bpe_tokenizer(args.tokenizer_json) if args.tokenizer_json else None
     max_documents = None if args.max_documents <= 0 else args.max_documents
     validation_texts = None
     if args.corpus_jsonl is not None:
@@ -239,6 +244,7 @@ def main() -> None:
         seed=args.seed,
         resume_checkpoint=args.resume_checkpoint,
         validation_texts=validation_texts,
+        tokenizer=tokenizer,
     )
     metrics["resolved_config"] = resolved_config
     metrics["corpus"] = {
