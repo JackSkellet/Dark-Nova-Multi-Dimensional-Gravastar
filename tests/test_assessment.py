@@ -507,6 +507,38 @@ def test_assessment_marks_if3_block_codebook_validation_probe_as_loss_probe():
     assert assessment["evidence"]["learned_beats_random_loss"] is True
 
 
+def test_assessment_marks_dense_js_executable_syntax_probe():
+    assessment = assess_record(
+        {
+            "experiment_id": "T11c_dense528_adamw_fp32_50m_final_test_js_executable",
+            "hypothesis": "heldout_d4_javascript_executable_syntax_checkpoint_evaluation",
+            "metrics": {
+                "benchmark_label": "d4_dense_js_executable_checkpoint_evaluation",
+                "checkpoint": "artifacts/T11c/dense_decoder_last_model_only.pt",
+                "split": "test",
+                "node": {"available": True, "version": "v20.20.1"},
+                "tasks": {
+                    "line_completion_syntax": {
+                        "candidate_count": 100,
+                        "completed_tasks": 64,
+                        "token_accuracy_mean": 0.05,
+                        "exact_match_rate": 0.0,
+                        "edit_similarity_mean": 0.2,
+                        "oracle_node_syntax_pass_rate": 1.0,
+                        "generated_node_syntax_pass_rate": 0.25,
+                    }
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "executable_js_syntax_probe_recorded"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "syntax_only_not_unit_tests" in assessment["limitations"]
+    assert assessment["evidence"]["generated_node_syntax_pass_rate"] == 0.25
+    assert assessment["evidence"]["node_available"] is True
+
+
 def test_assessment_marks_public_repository_docstring_skeleton_generation_as_codegen_proxy():
     assessment = assess_record(
         _record("E6f_public_repository_docstring_skeleton_generation")

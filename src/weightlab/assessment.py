@@ -83,6 +83,11 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_if3_block_codebook_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_validation_probe":
         return _assess_if3_block_codebook_validation_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "d4_dense_js_executable_checkpoint_evaluation"
+    ):
+        return _assess_dense_js_executable_probe(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1754,5 +1759,38 @@ def _assess_if3_block_codebook_validation_probe(record: dict[str, Any]) -> Asses
             "encoded_plus_runtime_bytes": learned["encoded_plus_runtime_bytes"],
             "packed_kernel_evaluated": metrics["packed_kernel_evaluated"],
             "loss_evaluated": metrics["loss_evaluated"],
+        },
+    }
+
+
+def _assess_dense_js_executable_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    task = metrics["tasks"]["line_completion_syntax"]
+    node = metrics["node"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "executable_js_syntax_probe_recorded",
+        "supports_pareto_improvement": False,
+        "primary_reason": "heldout_generated_javascript_checked_with_node_syntax",
+        "limitations": [
+            "syntax_only_not_unit_tests",
+            "line_completion_context_only",
+            "not_repair_or_api_reuse",
+            "not_multilingual",
+            "not_architecture_comparison",
+        ],
+        "evidence": {
+            "checkpoint": metrics["checkpoint"],
+            "split": metrics["split"],
+            "node_available": node["available"],
+            "node_version": node["version"],
+            "candidate_count": task["candidate_count"],
+            "completed_tasks": task["completed_tasks"],
+            "token_accuracy_mean": task["token_accuracy_mean"],
+            "exact_match_rate": task["exact_match_rate"],
+            "edit_similarity_mean": task["edit_similarity_mean"],
+            "oracle_node_syntax_pass_rate": task["oracle_node_syntax_pass_rate"],
+            "generated_node_syntax_pass_rate": task["generated_node_syntax_pass_rate"],
         },
     }
