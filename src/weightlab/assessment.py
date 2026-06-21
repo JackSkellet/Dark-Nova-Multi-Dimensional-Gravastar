@@ -68,6 +68,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_e6h(record)
     if experiment_id == "E6i_synthetic_api_doc_drift_detection":
         return _assess_e6i(record)
+    if record.get("metrics", {}).get("benchmark_label") == "d5_trained_tokenizer_model_comparison":
+        return _assess_d5_tokenizer_training(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1450,5 +1452,58 @@ def _assess_e6i(record: dict[str, Any]) -> Assessment:
             "supports_model_level_claim": metrics["final"][
                 "supports_model_level_claim"
             ],
+        },
+    }
+
+
+def _assess_d5_tokenizer_training(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    conclusions = metrics["conclusions"]
+    comparisons = metrics["comparisons"]
+    runs = metrics["runs"]
+    equal_compute_win = bool(
+        conclusions["bpe_equal_compute_improves_loss_per_estimated_byte"]
+    )
+    equal_raw_win = bool(
+        conclusions["bpe_equal_raw_bytes_improves_loss_per_estimated_byte"]
+    )
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "bpe_equal_compute_positive_equal_raw_negative"
+            if equal_compute_win and not equal_raw_win
+            else "mixed"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "fast_bpe_improves_d5_loss_per_estimated_byte_only_at_equal_token_budget"
+        ),
+        "limitations": [
+            "single_seed_pilot",
+            "token_reduction_alone_not_sufficient",
+            "no_functional_quality_measurement",
+            "not_architecture_selection",
+        ],
+        "evidence": {
+            "byte_equal_compute_loss_per_estimated_byte": runs["byte_equal_compute"][
+                "validation_loss_nats_per_estimated_byte"
+            ],
+            "bpe_equal_compute_loss_per_estimated_byte": runs["bpe_equal_compute"][
+                "validation_loss_nats_per_estimated_byte"
+            ],
+            "bpe_equal_raw_bytes_loss_per_estimated_byte": runs[
+                "bpe_equal_raw_bytes"
+            ]["validation_loss_nats_per_estimated_byte"],
+            "bpe_train_token_reduction_ratio": comparisons[
+                "bpe_train_token_reduction_ratio"
+            ],
+            "equal_compute_loss_delta_per_estimated_byte": comparisons[
+                "equal_compute_bpe_minus_byte_nats_per_estimated_byte"
+            ],
+            "equal_raw_loss_delta_per_estimated_byte": comparisons[
+                "equal_raw_bpe_minus_byte_nats_per_estimated_byte"
+            ],
+            "functional_quality_measured": conclusions["functional_quality_measured"],
         },
     }

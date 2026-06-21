@@ -276,6 +276,44 @@ def test_assessment_marks_public_repository_function_skeleton_generation_as_code
     assert assessment["evidence"]["supports_model_level_claim"] is False
 
 
+def test_assessment_marks_d5_tokenizer_training_as_bounded_mixed_result():
+    assessment = assess_record(
+        {
+            "experiment_id": "D5_tokenizer_training_comparison",
+            "hypothesis": "d5_fast_bpe_must_improve_loss_per_byte",
+            "metrics": {
+                "benchmark_label": "d5_trained_tokenizer_model_comparison",
+                "conclusions": {
+                    "bpe_equal_compute_improves_loss_per_estimated_byte": True,
+                    "bpe_equal_raw_bytes_improves_loss_per_estimated_byte": False,
+                    "functional_quality_measured": False,
+                },
+                "comparisons": {
+                    "bpe_train_token_reduction_ratio": 3.0,
+                    "equal_compute_bpe_minus_byte_nats_per_estimated_byte": -0.1,
+                    "equal_raw_bpe_minus_byte_nats_per_estimated_byte": 0.2,
+                },
+                "runs": {
+                    "byte_equal_compute": {
+                        "validation_loss_nats_per_estimated_byte": 1.5,
+                    },
+                    "bpe_equal_compute": {
+                        "validation_loss_nats_per_estimated_byte": 1.4,
+                    },
+                    "bpe_equal_raw_bytes": {
+                        "validation_loss_nats_per_estimated_byte": 1.7,
+                    },
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "bpe_equal_compute_positive_equal_raw_negative"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "token_reduction_alone_not_sufficient" in assessment["limitations"]
+    assert assessment["evidence"]["equal_raw_loss_delta_per_estimated_byte"] == 0.2
+
+
 def test_assessment_marks_public_repository_docstring_skeleton_generation_as_codegen_proxy():
     assessment = assess_record(
         _record("E6f_public_repository_docstring_skeleton_generation")
