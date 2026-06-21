@@ -55,3 +55,16 @@ def test_fast_bpe_tokenizer_artifact_round_trips_with_checksum(tmp_path):
     artifact = loaded.to_jsonable(include_tokenizer_json=True)
     assert artifact["checksum"] == tokenizer.checksum
     assert "tokenizer_json" in artifact
+
+
+def test_fast_bpe_tokenizer_reuses_loaded_tokenizer_instance():
+    tokenizer = train_fast_bpe_tokenizer(
+        [
+            "function parseConfig(value) { return value.trim(); }\n",
+            "function renderConfig(value) { return value.trim(); }\n",
+        ],
+        vocab_size=320,
+        min_frequency=1,
+    )
+
+    assert tokenizer._tokenizer is tokenizer._tokenizer

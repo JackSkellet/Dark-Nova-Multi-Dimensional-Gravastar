@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass
+from functools import cached_property
 from pathlib import Path
 from typing import Any
 
@@ -24,13 +25,15 @@ class FastBpeTokenizer:
     checksum: str
     name: str = "hf_tokenizers_bpe_bytelevel"
 
+    @cached_property
+    def _tokenizer(self) -> Tokenizer:
+        return Tokenizer.from_str(self.tokenizer_json)
+
     def encode(self, text: str) -> list[int]:
-        tokenizer = Tokenizer.from_str(self.tokenizer_json)
-        return tokenizer.encode(text).ids + [self.eos_id]
+        return self._tokenizer.encode(text).ids + [self.eos_id]
 
     def decode(self, ids: list[int]) -> str:
-        tokenizer = Tokenizer.from_str(self.tokenizer_json)
-        return tokenizer.decode([token for token in ids if token != self.eos_id])
+        return self._tokenizer.decode([token for token in ids if token != self.eos_id])
 
     def to_jsonable(self, *, include_tokenizer_json: bool = False) -> dict[str, Any]:
         payload = {
