@@ -135,12 +135,14 @@ def run_if4_fast_repo_adaptation_probe(
     if not steps:
         raise ValueError("IF4 fast repository adaptation found no changed-file steps")
 
-    last_exposed = commits[: len(steps)]
-    last_corpus = _corpus_at(repo_path, last_exposed[-1])
-    final_fast_state = _build_fast_weight_state(repo_path, last_exposed, last_corpus)
-    rollback_state = _build_fast_weight_state(repo_path, last_exposed[:-1], last_corpus)
+    final_exposed_commits = commits[: int(steps[-1]["step"])]
+    last_corpus = _corpus_at(repo_path, final_exposed_commits[-1])
+    final_fast_state = _build_fast_weight_state(repo_path, final_exposed_commits, last_corpus)
+    applied_commits: list[str] = final_fast_state["applied_commits"]
+    rollback_state = _build_fast_weight_state(repo_path, applied_commits[:-1], last_corpus)
     rollback_supported = (
-        final_fast_state["update_count"] == rollback_state["update_count"] + 1
+        bool(applied_commits)
+        and final_fast_state["update_count"] == rollback_state["update_count"] + 1
         and final_fast_state["checksum"] != rollback_state["checksum"]
     )
 
@@ -242,6 +244,7 @@ def _build_fast_weight_state(
     file_to_index = {file_path: index for index, file_path in enumerate(files)}
     weights = np.zeros((FEATURE_DIM, len(files)), dtype=np.float32)
     update_count = 0
+    applied_commits: list[str] = []
     for commit in exposed_commits:
         target_files = [
             file_path
@@ -254,12 +257,14 @@ def _build_fast_weight_state(
         for file_path in target_files:
             weights[:, file_to_index[file_path]] += key
         update_count += 1
+        applied_commits.append(commit)
     return {
         "files": files,
         "file_to_index": file_to_index,
         "weights": weights,
         "parameter_bytes": int(weights.size * weights.itemsize),
         "update_count": update_count,
+        "applied_commits": applied_commits,
         "checksum": hashlib.sha256(weights.tobytes()).hexdigest(),
     }
 
