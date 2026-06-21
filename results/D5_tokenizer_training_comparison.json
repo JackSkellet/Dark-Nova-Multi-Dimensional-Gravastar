@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/summarize_d5_tokenizer_training.py --results-dir results --output results/D5_tokenizer_training_comparison.json --experiment-id D5_tokenizer_training_comparison --seed 123",
   "experiment_id": "D5_tokenizer_training_comparison",
-  "git_commit": "d54bec9276ac43870189ea3a9a56d1045d1fc31a",
+  "git_commit": "d3e2a984ecb26e04f478161e3687cdbe3add7ab4",
   "git_dirty": false,
   "git_status_short": "",
   "hardware": {
@@ -16,14 +16,19 @@
     "comparisons": {
       "bpe_train_token_reduction_ratio": 3.0846421553279124,
       "bpe_validation_token_reduction_ratio": 2.9167058286796284,
+      "equal_compute_bpe_minus_byte_exact_nats_per_raw_byte": -0.11002752686359574,
       "equal_compute_bpe_minus_byte_nats_per_estimated_byte": -0.07414785721875505,
       "equal_compute_bpe_to_byte_estimated_byte_throughput_ratio": 2.2450636914775584,
+      "equal_raw_bpe_minus_byte_exact_nats_per_raw_byte": 0.15802647720383534,
       "equal_raw_bpe_minus_byte_nats_per_estimated_byte": 0.1983796479076565,
       "equal_raw_bpe_to_byte_train_byte_budget_ratio": 1.0001555790339787
     },
     "conclusions": {
+      "bpe_equal_compute_improves_exact_nats_per_raw_byte": true,
       "bpe_equal_compute_improves_loss_per_estimated_byte": true,
+      "bpe_equal_raw_bytes_improves_exact_nats_per_raw_byte": false,
       "bpe_equal_raw_bytes_improves_loss_per_estimated_byte": false,
+      "exact_raw_byte_loss_measured": true,
       "functional_quality_measured": false,
       "token_reduction_alone_is_sufficient": false
     },
@@ -31,6 +36,7 @@
       "single_seed_pilot",
       "same_128_token_context_not_equal_attention_compute_per_raw_byte",
       "estimated_byte_loss_uses_split_level_bytes_per_token",
+      "exact_byte_loss_available_only_when_exact_validation_eval_records_exist",
       "no_executable_functional_quality_evaluation_yet",
       "bpe_tokenizer_trained_on_sampled_train_documents_only"
     ],
@@ -109,6 +115,15 @@
           "tokens_per_second": 16442.099762019545,
           "train_token_units": 5000192
         },
+        "validation_exact_byte_accounting": {
+          "evaluated_target_bytes": 388632,
+          "evaluated_target_tokens": 131072,
+          "exact_bits_per_raw_byte": 2.127264155987548,
+          "exact_nats_per_raw_byte": 1.4745071520290007,
+          "experiment_id": "D5_bpe8192_dense528_seed123_5m_equal_compute_exact_validation_eval",
+          "total_target_nll": 573040.6635073347,
+          "zero_byte_target_tokens": 57
+        },
         "validation_loss_nats_per_estimated_byte": 1.4991149059415514,
         "validation_loss_nats_per_estimated_character": 1.5072747736118535,
         "validation_loss_nats_per_token": 4.371953308349475,
@@ -182,6 +197,15 @@
           "tokens_per_second": 16018.114033067333,
           "train_token_units": 1621248
         },
+        "validation_exact_byte_accounting": {
+          "evaluated_target_bytes": 388632,
+          "evaluated_target_tokens": 131072,
+          "exact_bits_per_raw_byte": 2.5139843383460607,
+          "exact_nats_per_raw_byte": 1.7425611560964318,
+          "experiment_id": "D5_bpe8192_dense528_seed123_equal_raw_bytes_exact_validation_eval",
+          "total_target_nll": 677215.0272160685,
+          "zero_byte_target_tokens": 57
+        },
         "validation_loss_nats_per_estimated_byte": 1.771642411067963,
         "validation_loss_nats_per_estimated_character": 1.7812856796233707,
         "validation_loss_nats_per_token": 5.166740634478629,
@@ -252,6 +276,15 @@
           "tokens_per_second": 22590.893185151985,
           "train_token_units": 5000192
         },
+        "validation_exact_byte_accounting": {
+          "evaluated_target_bytes": 130124,
+          "evaluated_target_tokens": 131072,
+          "exact_bits_per_raw_byte": 2.286000323354935,
+          "exact_nats_per_raw_byte": 1.5845346788925965,
+          "experiment_id": "D5_byte_dense528_seed123_5m_equal_compute_exact_validation_eval",
+          "total_target_nll": 206185.99055622023,
+          "zero_byte_target_tokens": 948
+        },
         "validation_loss_nats_per_estimated_byte": 1.5732627631603064,
         "validation_loss_nats_per_estimated_character": 1.581826226779487,
         "validation_loss_nats_per_token": 1.573074267245829,
@@ -260,7 +293,7 @@
     }
   },
   "notes": "Summarizes matched D5 dense-528 byte-tokenizer and fast-BPE pilots. Token reduction alone is not treated as a quality win.",
-  "recorded_at_unix": 1782008861.101811,
+  "recorded_at_unix": 1782026746.9784458,
   "resolved_config": {
     "experiment_id": "D5_tokenizer_training_comparison",
     "output": "results/D5_tokenizer_training_comparison.json",
