@@ -36,9 +36,26 @@ Test loss is reported only after validation-defined selection. It is not used to
 | Peak VRAM bytes | 463684096 | 0 | 469542400 | 0 | dense | no |
 | Max recorded gradient norm | 6.539592107137044 | 4.589032173156738 | 19.23438326517741 | 1.3020763397216797 | dense | no |
 
+## Paired Batch Bootstrap Uncertainty
+
+The checkpoint evaluations were regenerated with per-batch loss records and paired sample hashes. For each metric below, dense and adapter losses use identical held-out batches within each seed. The bootstrap resamples 1,536 paired batch differences (512 batches x 3 seeds) with 2,000 deterministic resamples. Values are dense minus adapter nats per token, so negative means dense is lower loss.
+
+| Metric | Split | Mean difference | 95% CI low | 95% CI high | Selection metric |
+| --- | --- | ---: | ---: | ---: | --- |
+| Final validation loss | validation | -0.0018618176303183038 | -0.005407488429530834 | 0.0015688666026107967 | yes |
+| Best validation loss | validation | -0.006828734360169619 | -0.010028445336502045 | -0.003714245142570386 | yes |
+| Final test loss | test | 0.002686331863515079 | -0.00033073829642186564 | 0.005660857054560135 | no |
+| Best test loss | test | -0.007954925744949529 | -0.010912038114232322 | -0.005089143407531083 | no |
+
+The final-validation mean still favors dense-528, but its paired batch bootstrap interval crosses zero. Best-validation favors dense-528 with the interval below zero. Final-test remains reported-only and is not a selection metric.
+
+## Pareto Status
+
+T12 does not show Pareto dominance. Dense-528 wins validation means, throughput, model-only bytes, peak VRAM, and recorded max gradient norm, while residual-adapter-528 keeps a reported-only final-test-loss edge. The result is therefore recorded as measured frontier expansion, not dominance.
+
 ## Interpretation
 
-Dense-528 is the three-seed validation winner. It has lower mean final validation loss, lower mean best validation loss, smaller model-only checkpoint bytes, lower peak VRAM, lower recorded max gradient norm, and higher throughput. The third seed resolves the earlier two-seed uncertainty in favor of dense-528 for validation-based architecture selection.
+Dense-528 is the three-seed validation-selected winner. It has lower mean final validation loss, lower mean best validation loss, smaller model-only checkpoint bytes, lower peak VRAM, lower recorded max gradient norm, and higher throughput. The third seed resolves the earlier two-seed direction in favor of dense-528 for validation-based architecture selection, but the final-validation paired batch CI crossing zero keeps the claim narrow.
 
 Residual-adapter-528 keeps a reported-only final-test-loss edge: it wins final test on all three seeds and has mean final test loss 1.038273886796863 versus dense 1.0409602186603781. This is useful diagnostic evidence, but it is not a selection criterion under the fixed protocol. Best-test mean favors dense-528.
 

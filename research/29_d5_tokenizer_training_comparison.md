@@ -8,7 +8,7 @@ All runs use ROCm, FP32, AdamW, learning rate 0.0001, seed 123, validation seed 
 
 ## Runs
 
-| Run | Tokenizer | Protocol | Train token-units | Validation loss/token | Validation nats/byte | Validation nats/char | Token-units/s | Estimated train bytes/s | Peak VRAM | Model-only bytes |
+| Run | Tokenizer | Protocol | Train token-units | Validation loss/token | Validation estimated nats/byte | Validation estimated nats/char | Token-units/s | Estimated train bytes/s | Peak VRAM | Model-only bytes |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | `D5_byte_dense528_seed123_5m_equal_compute` | byte | 5,000,192 byte tokens | 5,000,192 | 1.573074267245829 | 1.5732627631603064 | 1.581826226779487 | 22,590.893185151985 | 22,587.88984629075 | 463,684,096 | 41,605,253 |
 | `D5_bpe8192_dense528_seed123_5m_equal_compute` | BPE-8192 | 5,000,192 BPE tokens | 5,000,192 | 4.371953308349475 | 1.4991149059415514 | 1.5072747736118535 | 16,442.099762019545 | 50,711.25136100197 | 710,005,760 | 75,370,501 |
@@ -27,7 +27,7 @@ At the same 128-token context length, estimated validation byte coverage rises f
 
 ## Interpretation
 
-The BPE-8192 equal-compute run improves validation loss per estimated byte by 0.07414785721875505 nats/byte versus the byte-tokenizer baseline and has about 2.245x estimated train-byte throughput. It uses a larger embedding/output matrix, raising model-only size from about 41.6 MB to 75.4 MB and peak allocated VRAM from about 464 MB to 710 MB.
+The BPE-8192 equal-compute run improves validation loss per estimated byte by 0.07414785721875505 nats/byte versus the byte-tokenizer baseline and has about 2.245x estimated train-byte throughput. This byte-normalized loss is estimated from split-level tokens per byte, not exact raw-byte NLL accumulated over decoded prediction spans. It uses a larger embedding/output matrix, raising model-only size from about 41.6 MB to 75.4 MB and peak allocated VRAM from about 464 MB to 710 MB.
 
 The equal-raw-byte BPE run is worse than the byte baseline by 0.1983796479076565 nats/byte. This means token reduction alone is not a win: the model also needs enough optimizer steps/token updates to use the larger tokenizer effectively.
 

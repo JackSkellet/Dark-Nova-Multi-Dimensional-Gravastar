@@ -336,6 +336,23 @@ def test_evaluate_dense_checkpoint_uses_dedicated_texts_and_seed(tmp_path):
     assert first["checkpoint"]["step"] == 1
     assert first["model"]["config"]["seq_len"] == 8
 
+    with_batch_losses = evaluate_dense_checkpoint(
+        checkpoint_path=tmp_path / "dense_decoder_last.pt",
+        texts=heldout_texts,
+        split_name="validation",
+        device="cpu",
+        seed=999,
+        batches=3,
+        include_batch_losses=True,
+    )
+
+    assert len(with_batch_losses["batch_loss_records"]) == 3
+    assert with_batch_losses["batch_loss_records"][0]["batch_index"] == 0
+    assert with_batch_losses["batch_loss_records"][0]["tokens"] == 18
+    assert with_batch_losses["batch_loss_records"][0]["sample_sha256"]
+    assert with_batch_losses["batch_loss_records"][0]["loss"] > 0.0
+    assert "batch_loss_records" not in first
+
 
 def test_evaluate_dense_checkpoint_loads_legacy_transformer_encoder_keys(tmp_path):
     train_texts = [

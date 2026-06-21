@@ -390,6 +390,8 @@ def _assess_t12_three_seed_summary(records: list[dict[str, Any]]) -> Assessment 
 
     metrics = record["metrics"]["metrics"]
     resolution = record["metrics"]["third_seed_resolution"]
+    uncertainty = record["metrics"].get("uncertainty", {})
+    pareto = record["metrics"].get("pareto", {})
     final_validation = metrics["final_validation_loss"]
     best_validation = metrics["best_validation_loss"]
     final_test = metrics["final_test_loss"]
@@ -412,11 +414,17 @@ def _assess_t12_three_seed_summary(records: list[dict[str, Any]]) -> Assessment 
     adapter_final_test_win = final_test["winner_by_mean"] == "adapter"
 
     expands_measured_frontier = bool(
-        dense_validation_selected
-        and dense_resource_wins
-        and dense_runtime_wins
-        and dense_stability_wins
-        and adapter_final_test_win
+        pareto.get("frontier_expansion", {}).get(
+            "found",
+            dense_validation_selected
+            and dense_resource_wins
+            and dense_runtime_wins
+            and dense_stability_wins
+            and adapter_final_test_win,
+        )
+    )
+    dominates_dense_baseline = bool(
+        pareto.get("pareto_dominance", {}).get("found", False)
     )
 
     return {
@@ -427,21 +435,27 @@ def _assess_t12_three_seed_summary(records: list[dict[str, Any]]) -> Assessment 
             if dense_validation_selected
             else "t12_three_seed_mixed"
         ),
-        "supports_pareto_improvement": expands_measured_frontier,
+        "supports_pareto_improvement": expands_measured_frontier
+        or dominates_dense_baseline,
         "primary_reason": (
             "dense528_wins_three_seed_validation_resource_runtime_and_stability_means"
+            "_but_does_not_pareto_dominate_adapter528"
         ),
         "limitations": [
             "test_loss_reported_only_not_selection_metric",
+            "final_validation_paired_batch_bootstrap_ci_crosses_zero",
             "d4_javascript_source_local_only",
-            "no_executable_javascript_benchmark",
+            "only_selected_dense528_has_executable_javascript_syntax_probe",
             "no_paired_documentation_source_consistency_benchmark",
             "no_packed_quantized_kernel_measurement",
             "residual_adapter_is_not_frozen_base_parameter_efficient_adapter",
         ],
         "evidence": {
             "summary_experiment_id": "T12_three_seed_summary",
+            "dominates_dense_baseline": dominates_dense_baseline,
             "expands_measured_frontier": expands_measured_frontier,
+            "pareto_dominance_found": dominates_dense_baseline,
+            "frontier_expansion_found": expands_measured_frontier,
             "selected_family_by_final_validation_mean": resolution[
                 "selected_family_by_final_validation_mean"
             ],
@@ -462,6 +476,7 @@ def _assess_t12_three_seed_summary(records: list[dict[str, Any]]) -> Assessment 
             "dense_final_test_mean": float(final_test["families"]["dense"]["mean"]),
             "adapter_final_test_mean": float(final_test["families"]["adapter"]["mean"]),
             "adapter_final_test_winner_by_mean": adapter_final_test_win,
+            "paired_batch_bootstrap": uncertainty.get("metrics", {}),
             "dense_throughput_winner_by_mean": dense_runtime_wins,
             "dense_resource_winner_by_mean": dense_resource_wins,
             "dense_stability_winner_by_mean": dense_stability_wins,

@@ -2030,50 +2030,6 @@
     },
     {
       "evidence": {},
-      "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T11b_adapter528_adamw_fp32_50m_best_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T11b_adapter528_adamw_fp32_50m_best_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
       "experiment_id": "T11a_dense544_adamw_fp32_50m_final_test_functional",
       "hypothesis": "heldout_d4_javascript_functional_checkpoint_evaluation",
       "limitations": [
@@ -2158,50 +2114,6 @@
       ],
       "outcome": "dense_50m_baseline_positive",
       "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T11c_dense528_adamw_fp32_50m_final_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T11c_dense528_adamw_fp32_50m_final_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T11c_dense528_adamw_fp32_50m_best_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T11c_dense528_adamw_fp32_50m_best_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
       "supports_pareto_improvement": false
     },
     {
@@ -2325,50 +2237,6 @@
     },
     {
       "evidence": {},
-      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_final_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_final_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_best_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_best_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
       "experiment_id": "D5_corpus_audit",
       "hypothesis": "d5_corpus_audit",
       "limitations": [
@@ -2420,50 +2288,6 @@
       ],
       "outcome": "dense_50m_baseline_positive",
       "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_final_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_final_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_best_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_best_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
       "supports_pareto_improvement": false
     },
     {
@@ -2522,50 +2346,6 @@
       "supports_pareto_improvement": false
     },
     {
-      "evidence": {},
-      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_final_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_final_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_best_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_best_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
       "evidence": {
         "accelerator_backend": "rocm",
         "checkpoint_resume_ok": true,
@@ -2607,61 +2387,6 @@
       ],
       "outcome": "dense_50m_baseline_positive",
       "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_final_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_final_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_best_validation_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_best_test_eval",
-      "hypothesis": "true_d4_split_checkpoint_evaluation",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
-      "supports_pareto_improvement": false
-    },
-    {
-      "evidence": {},
-      "experiment_id": "T12_three_seed_summary",
-      "hypothesis": "t12_three_seed_dense528_vs_adapter528",
-      "limitations": [
-        "manual_review_required"
-      ],
-      "outcome": "recorded",
-      "primary_reason": "not_classified_by_current_assessment_layer",
       "supports_pareto_improvement": false
     },
     {
@@ -3029,6 +2754,281 @@
       "supports_pareto_improvement": false
     },
     {
+      "evidence": {},
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11b_adapter528_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11c_dense528_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11c_dense528_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11c_dense528_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T11c_dense528_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12a_dense528_seed456_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12b_adapter528_seed456_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12_three_seed_summary",
+      "hypothesis": "t12_three_seed_dense528_vs_adapter528",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
       "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
@@ -3154,7 +3154,108 @@
         "dense_resource_winner_by_mean": true,
         "dense_stability_winner_by_mean": true,
         "dense_throughput_winner_by_mean": true,
+        "dominates_dense_baseline": false,
         "expands_measured_frontier": true,
+        "frontier_expansion_found": true,
+        "paired_batch_bootstrap": {
+          "best_test_loss": {
+            "adapter_mean": 1.0391344138188288,
+            "batch_pairs": 1536,
+            "batch_pairs_by_seed": {
+              "123": 512,
+              "456": 512,
+              "789": 512
+            },
+            "bootstrap_probability_dense_better": 1.0,
+            "ci95": {
+              "high": -0.005089143407531083,
+              "low": -0.010912038114232322
+            },
+            "dense_mean": 1.0311794880738792,
+            "dense_minus_adapter_mean": -0.007954925744949529,
+            "paired_split": "test",
+            "sample_order_sha256_by_seed": {
+              "123": "0f40e3d06e9e9a9f64a44f6192f41eb41143666c7506d8132e0109feb17c017d",
+              "456": "0f40e3d06e9e9a9f64a44f6192f41eb41143666c7506d8132e0109feb17c017d",
+              "789": "0f40e3d06e9e9a9f64a44f6192f41eb41143666c7506d8132e0109feb17c017d"
+            },
+            "sample_order_verified": true,
+            "selection_allowed": false
+          },
+          "best_validation_loss": {
+            "adapter_mean": 1.0440282420216438,
+            "batch_pairs": 1536,
+            "batch_pairs_by_seed": {
+              "123": 512,
+              "456": 512,
+              "789": 512
+            },
+            "bootstrap_probability_dense_better": 1.0,
+            "ci95": {
+              "high": -0.003714245142570386,
+              "low": -0.010028445336502045
+            },
+            "dense_mean": 1.0371995076614742,
+            "dense_minus_adapter_mean": -0.006828734360169619,
+            "paired_split": "validation",
+            "sample_order_sha256_by_seed": {
+              "123": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+              "456": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+              "789": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab"
+            },
+            "sample_order_verified": true,
+            "selection_allowed": true
+          },
+          "final_test_loss": {
+            "adapter_mean": 1.038273886796863,
+            "batch_pairs": 1536,
+            "batch_pairs_by_seed": {
+              "123": 512,
+              "456": 512,
+              "789": 512
+            },
+            "bootstrap_probability_dense_better": 0.042,
+            "ci95": {
+              "high": 0.005660857054560135,
+              "low": -0.00033073829642186564
+            },
+            "dense_mean": 1.0409602186603781,
+            "dense_minus_adapter_mean": 0.002686331863515079,
+            "paired_split": "test",
+            "sample_order_sha256_by_seed": {
+              "123": "0f40e3d06e9e9a9f64a44f6192f41eb41143666c7506d8132e0109feb17c017d",
+              "456": "0f40e3d06e9e9a9f64a44f6192f41eb41143666c7506d8132e0109feb17c017d",
+              "789": "0f40e3d06e9e9a9f64a44f6192f41eb41143666c7506d8132e0109feb17c017d"
+            },
+            "sample_order_verified": true,
+            "selection_allowed": false
+          },
+          "final_validation_loss": {
+            "adapter_mean": 1.0413266239629593,
+            "batch_pairs": 1536,
+            "batch_pairs_by_seed": {
+              "123": 512,
+              "456": 512,
+              "789": 512
+            },
+            "bootstrap_probability_dense_better": 0.861,
+            "ci95": {
+              "high": 0.0015688666026107967,
+              "low": -0.005407488429530834
+            },
+            "dense_mean": 1.039464806332641,
+            "dense_minus_adapter_mean": -0.0018618176303183038,
+            "paired_split": "validation",
+            "sample_order_sha256_by_seed": {
+              "123": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+              "456": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+              "789": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab"
+            },
+            "sample_order_verified": true,
+            "selection_allowed": true
+          }
+        },
+        "pareto_dominance_found": false,
         "selected_family_by_best_validation_mean": "dense",
         "selected_family_by_final_validation_mean": "dense",
         "summary_experiment_id": "T12_three_seed_summary",
@@ -3169,14 +3270,15 @@
       "hypothesis": "dense528_is_validation_selected_over_residual_adapter528",
       "limitations": [
         "test_loss_reported_only_not_selection_metric",
+        "final_validation_paired_batch_bootstrap_ci_crosses_zero",
         "d4_javascript_source_local_only",
-        "no_executable_javascript_benchmark",
+        "only_selected_dense528_has_executable_javascript_syntax_probe",
         "no_paired_documentation_source_consistency_benchmark",
         "no_packed_quantized_kernel_measurement",
         "residual_adapter_is_not_frozen_base_parameter_efficient_adapter"
       ],
       "outcome": "t12_dense528_validation_selected",
-      "primary_reason": "dense528_wins_three_seed_validation_resource_runtime_and_stability_means",
+      "primary_reason": "dense528_wins_three_seed_validation_resource_runtime_and_stability_means_but_does_not_pareto_dominate_adapter528",
       "supports_pareto_improvement": true
     }
   ],

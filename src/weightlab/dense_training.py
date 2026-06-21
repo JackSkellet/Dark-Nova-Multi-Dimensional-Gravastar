@@ -716,6 +716,7 @@ def evaluate_dense_checkpoint(
     device: str = "rocm",
     seed: int = 123,
     batches: int | None = None,
+    include_batch_losses: bool = False,
 ) -> dict[str, Any]:
     accelerator = _resolve_torch_accelerator(device)
     torch_device = accelerator.device
@@ -748,6 +749,7 @@ def evaluate_dense_checkpoint(
         config,
         generator,
         torch_device,
+        include_batch_losses=include_batch_losses,
     )
     return {
         "benchmark_label": "dense_checkpoint_evaluation",
@@ -906,16 +908,20 @@ def _validation_metrics(
     config: DenseTrainingConfig,
     generator: torch.Generator,
     device: torch.device,
+    *,
+    include_batch_losses: bool = False,
 ) -> dict[str, Any]:
     model.eval()
     losses: list[float] = []
+    batch_loss_records: list[dict[str, Any]] = []
     sample_order = hashlib.sha256()
     validation_tokens = 0
     with torch.no_grad():
-        for _ in range(config.validation_batches):
+        for batch_index in range(config.validation_batches):
             batch = _sample_batch(tokens, config.batch_size, config.seq_len, generator).to(device)
             batch_cpu = batch.detach().cpu().contiguous()
-            sample_order.update(batch_cpu.numpy().tobytes())
+            batch_bytes = batch_cpu.numpy().tobytes()
+            sample_order.update(batch_bytes)
             validation_tokens += int(batch_cpu.numel())
             logits = model(batch[:, :-1])
             loss = torch.nn.functional.cross_entropy(
@@ -923,13 +929,25 @@ def _validation_metrics(
                 batch[:, 1:].reshape(-1),
             )
             losses.append(float(loss.detach().cpu()))
+            if include_batch_losses:
+                batch_loss_records.append(
+                    {
+                        "batch_index": batch_index,
+                        "loss": float(loss.detach().cpu()),
+                        "tokens": int(batch_cpu.numel()),
+                        "sample_sha256": hashlib.sha256(batch_bytes).hexdigest(),
+                    }
+                )
     model.train()
-    return {
+    metrics: dict[str, Any] = {
         "loss": float(sum(losses) / max(len(losses), 1)),
         "batches": len(losses),
         "tokens": validation_tokens,
         "sample_order_sha256": sample_order.hexdigest(),
     }
+    if include_batch_losses:
+        metrics["batch_loss_records"] = batch_loss_records
+    return metrics
 
 
 def _generate_sample(
