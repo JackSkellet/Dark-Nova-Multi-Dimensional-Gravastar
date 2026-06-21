@@ -221,15 +221,25 @@ def train_dense_decoder(
         )
     tokenizer_metadata = tokenizer.to_jsonable(include_tokenizer_json=True)
     tokens = _tokens_from_texts(texts, tokenizer)
+    tokenization = {
+        "train": _text_tokenization_stats(texts, tokenizer, token_count=len(tokens)),
+    }
     if len(tokens) < config.seq_len + 2:
         raise ValueError("not enough tokens for dense decoder training")
     validation_source = "training_texts"
     validation_tokens_tensor = tokens
+    validation_tokenization_texts = texts
     if validation_texts is not None:
         validation_tokens_tensor = _tokens_from_texts(validation_texts, tokenizer)
+        validation_tokenization_texts = validation_texts
         validation_source = "provided_validation_texts"
         if len(validation_tokens_tensor) < config.seq_len + 2:
             raise ValueError("not enough tokens for dense decoder validation")
+    tokenization["validation"] = _text_tokenization_stats(
+        validation_tokenization_texts,
+        tokenizer,
+        token_count=len(validation_tokens_tensor),
+    )
 
     accelerator = _resolve_torch_accelerator(config.device)
     device = accelerator.device
@@ -445,6 +455,7 @@ def train_dense_decoder(
     )
     validation["source"] = validation_source
     validation["heldout_texts_provided"] = validation_texts is not None
+    _add_loss_per_byte_metrics(validation, tokenization["validation"])
     sample = _generate_sample(model, tokenizer, "def ", config.seq_len, device)
     checkpoint_path = output_dir / "dense_decoder_last.pt"
     model_only_checkpoint_path = output_dir / "dense_decoder_last_model_only.pt"
@@ -514,6 +525,7 @@ def train_dense_decoder(
         "rocm_available": accelerator.rocm_available,
         "rocm_runtime_version": accelerator.rocm_runtime_version,
         "tokenizer": tokenizer.to_jsonable(),
+        "tokenization": tokenization,
         "model": {
             "architecture": "causal_transformer_decoder",
             "parameter_count": parameter_count,
@@ -768,6 +780,46 @@ def _tokens_from_texts(texts: list[str], tokenizer: TokenizerLike) -> torch.Tens
     for text in texts:
         ids.extend(tokenizer.encode(text))
     return torch.tensor(ids, dtype=torch.long)
+
+
+def _text_tokenization_stats(
+    texts: list[str],
+    tokenizer: TokenizerLike,
+    *,
+    token_count: int | None = None,
+) -> dict[str, Any]:
+    byte_count = sum(len(text.encode("utf-8", errors="ignore")) for text in texts)
+    character_count = sum(len(text) for text in texts)
+    resolved_token_count = (
+        token_count
+        if token_count is not None
+        else sum(len(tokenizer.encode(text)) for text in texts)
+    )
+    return {
+        "document_count": len(texts),
+        "byte_count": byte_count,
+        "character_count": character_count,
+        "token_count": resolved_token_count,
+        "bytes_per_token": _ratio(byte_count, resolved_token_count),
+        "characters_per_token": _ratio(character_count, resolved_token_count),
+        "tokens_per_byte": _ratio(resolved_token_count, byte_count),
+        "tokens_per_character": _ratio(resolved_token_count, character_count),
+    }
+
+
+def _add_loss_per_byte_metrics(
+    validation: dict[str, Any],
+    tokenization: dict[str, Any],
+) -> None:
+    loss = float(validation["loss"])
+    validation["loss_nats_per_estimated_byte"] = loss * float(tokenization["tokens_per_byte"])
+    validation["loss_nats_per_estimated_character"] = loss * float(
+        tokenization["tokens_per_character"]
+    )
+
+
+def _ratio(numerator: float, denominator: float) -> float:
+    return float(numerator / denominator) if denominator else 0.0
 
 
 def _tokenizer_from_checkpoint(checkpoint_path: Path) -> TokenizerLike:

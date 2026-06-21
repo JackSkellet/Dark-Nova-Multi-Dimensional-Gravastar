@@ -85,6 +85,9 @@ def test_train_dense_decoder_cli_accepts_attention_mask_mode(tmp_path):
     assert record["metrics"]["model"]["config"]["block_impl"] == "explicit_causal"
     assert record["metrics"]["validation"]["source"] == "provided_validation_texts"
     assert record["metrics"]["validation"]["heldout_texts_provided"] is True
+    assert record["metrics"]["tokenization"]["train"]["token_count"] > 0
+    assert record["metrics"]["tokenization"]["validation"]["byte_count"] > 0
+    assert record["metrics"]["validation"]["loss_nats_per_estimated_byte"] > 0
     assert record["metrics"]["corpus"]["document_count_used"] == 2
     assert record["metrics"]["corpus"]["validation_document_count_used"] == 2
     assert "--optimizer-name sgd" in record["command"]
@@ -185,6 +188,13 @@ def test_train_dense_decoder_cli_uses_fast_bpe_tokenizer_artifact(tmp_path):
     assert record["metrics"]["tokenizer"]["name"] == "hf_tokenizers_bpe_bytelevel"
     assert record["metrics"]["tokenizer"]["checksum"] == tokenizer.checksum
     assert record["metrics"]["tokenizer"]["vocab_size"] > 257
+    assert record["metrics"]["tokenization"]["train"]["byte_count"] == len(
+        train_text.encode("utf-8")
+    )
+    assert record["metrics"]["tokenization"]["train"]["token_count"] < len(
+        train_text.encode("utf-8")
+    )
+    assert record["metrics"]["validation"]["loss_nats_per_estimated_byte"] > 0
     assert record["resolved_config"]["tokenizer_json"] == str(tokenizer_path)
     assert "--tokenizer-json" in record["command"]
     checkpoint = torch.load(
