@@ -7,7 +7,6 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-
 IDEA_FOUNDRY_CANDIDATES: list[dict[str, Any]] = [
     {
         "id": "IF1",
@@ -128,7 +127,10 @@ IDEA_FOUNDRY_CANDIDATES: list[dict[str, Any]] = [
         ],
         "closest_primary_source_prior_art": [
             {
-                "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+                "title": (
+                    "GPTQ: Accurate Post-Training Quantization for "
+                    "Generative Pre-trained Transformers"
+                ),
                 "url": "https://arxiv.org/abs/2210.17323",
                 "access_date": "2026-06-21",
                 "exact_difference": (
@@ -185,7 +187,10 @@ IDEA_FOUNDRY_CANDIDATES: list[dict[str, Any]] = [
         ],
         "closest_primary_source_prior_art": [
             {
-                "title": "CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder Models for Code Understanding and Generation",
+                "title": (
+                    "CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder "
+                    "Models for Code Understanding and Generation"
+                ),
                 "url": "https://arxiv.org/abs/2109.00859",
                 "access_date": "2026-06-21",
                 "exact_difference": (
@@ -293,7 +298,10 @@ IDEA_FOUNDRY_CANDIDATES: list[dict[str, Any]] = [
                 ),
             },
             {
-                "title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+                "title": (
+                    "Switch Transformers: Scaling to Trillion Parameter Models with "
+                    "Simple and Efficient Sparsity"
+                ),
                 "url": "https://arxiv.org/abs/2101.03961",
                 "access_date": "2026-06-21",
                 "exact_difference": (
