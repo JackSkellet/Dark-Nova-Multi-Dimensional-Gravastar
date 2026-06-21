@@ -2934,6 +2934,36 @@
     },
     {
       "evidence": {
+        "beats_random_control": true,
+        "block_count": 40640,
+        "candidate_id": "IF3",
+        "checkpoint_step": 195313,
+        "checkpoint_type": "model_only",
+        "encoded_bytes": 1297648,
+        "encoded_plus_runtime_bytes": 42913008,
+        "floating_parameter_count": 10397105,
+        "learned_mse": 0.002059607533738017,
+        "loss_evaluated": false,
+        "metadata_bytes": 619352,
+        "packed_kernel_evaluated": false,
+        "random_control_mse": 0.019161246716976166,
+        "runtime_buffer_bytes": 41615360
+      },
+      "experiment_id": "IF3_block_codebook_t11c_probe",
+      "hypothesis": "if3_block_codebook_can_beat_random_control_with_accounted_metadata",
+      "limitations": [
+        "reconstruction_proxy_only",
+        "no_language_model_loss",
+        "no_packed_kernel_speed",
+        "metadata_and_runtime_buffers_counted",
+        "not_deployment_ready_compression"
+      ],
+      "outcome": "reconstruction_proxy_positive",
+      "primary_reason": "block_codebook_reconstruction_beats_random_control",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -3115,6 +3145,7 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
+    "reconstruction_proxy_positive": 1,
     "recorded": 87,
     "rejected": 1,
     "runtime_positive": 1,
@@ -3130,5 +3161,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 154
+  "record_count": 155
 }

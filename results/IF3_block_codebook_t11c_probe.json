@@ -1,0 +1,131 @@
+{
+  "command": "uv run python scripts/run_if3_block_codebook_probe.py --checkpoint artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt --output results/IF3_block_codebook_t11c_probe.json --experiment-id IF3_block_codebook_t11c_probe --block-size 256 --codebook-size 256 --residual-fraction 0.01 --seed 123",
+  "experiment_id": "IF3_block_codebook_t11c_probe",
+  "git_commit": "3f35e2cab450253b4dd7ea11c7e30198a6e6d310",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if3_block_codebook_can_beat_random_control_with_accounted_metadata",
+  "metrics": {
+    "benchmark_label": "if3_block_codebook_checkpoint_probe",
+    "candidate_id": "IF3",
+    "checkpoint": {
+      "checkpoint_type": "model_only",
+      "path": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+      "step": 195313
+    },
+    "compression": {
+      "benchmark_label": "if3_block_codebook_state_compression",
+      "block_count": 40640,
+      "floating_parameter_count": 10397105,
+      "floating_tensor_count": 42,
+      "learned_codebook": {
+        "beats_random_control": true,
+        "block_count": 40640,
+        "block_reference_count": 40640,
+        "codebook_bytes": 262144,
+        "effective_encoded_bits_per_padded_value": 0.997822342519685,
+        "encoded_bytes": 1297648,
+        "encoded_plus_runtime_bytes": 42913008,
+        "id_bytes": 40640,
+        "max_abs_error": 0.27352720499038696,
+        "metadata_bytes": 619352,
+        "mse": 0.002059607533738017,
+        "policy": "learned_block_codebook",
+        "residual_bytes": 832304,
+        "residual_value_count": 104038,
+        "runtime_buffer_bytes": 41615360,
+        "scale_bytes": 162560
+      },
+      "limitations": [
+        "counts_padded_block_values",
+        "residuals_store_fp32_values_and_32bit_indexes",
+        "runtime_buffer_bytes_counts_fp32_reconstructed_state"
+      ],
+      "padded_value_count": 10403840,
+      "policy": {
+        "block_size": 256,
+        "codebook_size": 256,
+        "residual_fraction": 0.01,
+        "seed": 123
+      },
+      "random_codebook_control": {
+        "beats_learned_codebook": false,
+        "beats_random_control": false,
+        "block_count": 40640,
+        "block_reference_count": 40640,
+        "codebook_bytes": 262144,
+        "effective_encoded_bits_per_padded_value": 0.997822342519685,
+        "encoded_bytes": 1297648,
+        "encoded_plus_runtime_bytes": 42913008,
+        "id_bytes": 40640,
+        "max_abs_error": 0.5598403215408325,
+        "metadata_bytes": 619352,
+        "mse": 0.019161246716976166,
+        "policy": "random_block_codebook",
+        "residual_bytes": 832304,
+        "residual_value_count": 104038,
+        "runtime_buffer_bytes": 41615360,
+        "scale_bytes": 162560
+      },
+      "state_sha256": "c7df91b1306ca9537a5178cb9b51a6bc4b543068c725e5a099db9582658abb24"
+    },
+    "limitations": [
+      "reconstruction_proxy_only_no_language_model_loss",
+      "no_packed_kernel_or_runtime_speed_measurement",
+      "kmeans_runs_on_cpu_tensors",
+      "random_control_uses_same_accounting_but_random_centroids"
+    ],
+    "loss_evaluated": false,
+    "model_config": {
+      "adapter_dim": 0,
+      "architecture_variant": "dense",
+      "attention_mask_mode": "finite_causal",
+      "batch_size": 2,
+      "block_impl": "explicit_causal",
+      "checkpoint_interval": 5000,
+      "device": "rocm",
+      "gradient_accumulation_steps": 1,
+      "heads": 8,
+      "hidden_dim": 528,
+      "layers": 3,
+      "learning_rate": 0.0001,
+      "mixed_precision": "fp32",
+      "optimizer_name": "adamw",
+      "progress_interval": 5000,
+      "seq_len": 128,
+      "steps": 195313,
+      "validation_batches": 512,
+      "validation_seed": 424242
+    },
+    "packed_kernel_evaluated": false,
+    "parameter_evolution": "not_applicable",
+    "resolved_config": {
+      "block_size": 256,
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+      "codebook_size": 256,
+      "experiment_id": "IF3_block_codebook_t11c_probe",
+      "output": "results/IF3_block_codebook_t11c_probe.json",
+      "residual_fraction": 0.01,
+      "seed": 123
+    }
+  },
+  "notes": "IF3 reconstruction-only block-codebook compression proxy on a trained checkpoint. It counts metadata and runtime buffers, but does not evaluate language-model loss or packed kernels.",
+  "recorded_at_unix": 1782010933.1698847,
+  "resolved_config": {
+    "block_size": 256,
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+    "codebook_size": 256,
+    "experiment_id": "IF3_block_codebook_t11c_probe",
+    "output": "results/IF3_block_codebook_t11c_probe.json",
+    "residual_fraction": 0.01,
+    "seed": 123
+  },
+  "seed": 123,
+  "status": "completed"
+}
