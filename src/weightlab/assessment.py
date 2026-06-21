@@ -1571,7 +1571,7 @@ def _assess_idea_foundry_graph_probe(record: dict[str, Any]) -> Assessment:
         "primary_reason": "repository_graph_signal_probe_completed_for_if1",
         "limitations": [
             "not_model_training",
-            "regex_import_extraction_only",
+            "regex_import_and_heuristic_role_link_extraction",
             "no_ast_or_package_resolution",
             "does_not_prove_quality_gain",
         ],

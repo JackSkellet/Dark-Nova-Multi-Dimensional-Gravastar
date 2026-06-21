@@ -13,7 +13,7 @@ UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/run_idea_foundry.py \
   --seed 123
 ```
 
-The command records six architecture candidates and runs the first cheap falsifying probe for IF1. The records were generated from clean commit `38f7e3f33c34a8be8672637d3984db0e7a1e8da2`.
+The command records six architecture candidates and runs the first cheap falsifying probe for IF1. The current records were generated from clean commit `79dd6679833cfda0ece6d44fe0ea686c48149eec`.
 
 ## Candidate Set
 
@@ -40,13 +40,17 @@ Each candidate record includes mechanism/equations, closest primary-source prior
 
 ## IF1 Probe
 
-`IF1_repository_graph_signal_probe` scanned all 27,915 D5 rows with regex import/require/export extraction and repository-local relative path resolution.
+`IF1_repository_graph_signal_probe` scanned all 27,915 D5 rows with regex import/require/export extraction, repository-local relative path resolution, and heuristic test/doc role links. Docstring/source self-links are excluded.
 
 | Metric | Value |
 | --- | ---: |
 | Documents scanned | 27,915 |
 | Regex import/export/require edges | 18,919 |
-| Locally resolved relative edges | 12 |
+| Locally resolved import edges | 12 |
+| Heuristic role-link edges | 313 |
+| Total graph edges | 325 |
+| Doc-to-source edges | 312 |
+| Test-to-source edges | 1 |
 | Repositories with edges | 4,041 |
 | Repository-aware splits preserved | true |
 | Mechanism signal present | true |
@@ -64,9 +68,9 @@ Role counts in the scanned D5 rows:
 
 ## Interpretation
 
-IF1 has enough D5 structure to justify a better graph extractor, but not enough resolved local edges from the current regex-only probe to justify a 5-10M-token graph-conditioned model pilot yet. The key limitation is not absence of signal; it is weak extraction and package resolution.
+IF1 has enough D5 structure to justify continued graph-extraction work, but the edge mix is not yet strong enough for a 5-10M-token graph-conditioned model pilot. Import resolution remains weak at 12 resolved local import edges. The added role links raise usable graph edges to 325, but 312 are heuristic doc-to-source links and only one is test-to-source. The key limitation is still weak extraction and package resolution, not absence of repository metadata.
 
-The next smallest IF1 prototype should add AST/package-aware JavaScript import resolution and same-repository symbol/test/doc linking, then rerun this probe. A model pilot should require materially more resolved local edges and a fixed edge-bias construction that preserves repository-aware splits.
+The next smallest IF1 prototype should add AST/package-aware JavaScript import resolution and stricter same-repository symbol/test/doc linking, then rerun this probe. A model pilot should require materially more non-heuristic resolved edges and a fixed edge-bias construction that preserves repository-aware splits.
 
 ## Source Artifacts
 
