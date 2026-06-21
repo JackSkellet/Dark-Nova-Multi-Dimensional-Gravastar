@@ -2964,6 +2964,45 @@
     },
     {
       "evidence": {
+        "block_count": 40640,
+        "candidate_id": "IF3",
+        "checkpoint_step": 195313,
+        "checkpoint_type": "model_only",
+        "encoded_bytes": 1297648,
+        "encoded_plus_runtime_bytes": 42913008,
+        "floating_parameter_count": 10397105,
+        "fp32_loss": 1.0335341689933557,
+        "learned_beats_random_loss": true,
+        "learned_loss": 5.3102278262376785,
+        "learned_loss_delta_vs_fp32": 4.276693657244323,
+        "learned_loss_delta_vs_random": -33.42072035372257,
+        "learned_mse": 0.002059607533738017,
+        "learned_mse_beats_random_mse": true,
+        "loss_evaluated": true,
+        "metadata_bytes": 619352,
+        "packed_kernel_evaluated": false,
+        "random_control_loss": 38.73094817996025,
+        "random_control_mse": 0.018109813332557678,
+        "random_loss_delta_vs_fp32": 37.697414010966895,
+        "runtime_buffer_bytes": 41615360,
+        "split": "validation",
+        "tokens": 132096
+      },
+      "experiment_id": "IF3_block_codebook_t11c_validation_probe",
+      "hypothesis": "if3_block_codebook_reconstruction_preserves_heldout_loss_better_than_random",
+      "limitations": [
+        "reconstructed_fp32_runtime_buffer",
+        "no_packed_kernel_speed",
+        "metadata_and_runtime_buffers_counted",
+        "compression_candidate_not_deployment_ready",
+        "single_checkpoint_validation_probe"
+      ],
+      "outcome": "validation_loss_probe_positive",
+      "primary_reason": "learned_block_codebook_validation_loss_beats_random_control",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -3157,9 +3196,10 @@
     "training_failed": 6,
     "training_readiness_positive": 1,
     "training_smoke_positive": 14,
-    "transformer_stability_failed": 1
+    "transformer_stability_failed": 1,
+    "validation_loss_probe_positive": 1
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 155
+  "record_count": 156
 }

@@ -1,0 +1,191 @@
+{
+  "command": "uv run python scripts/evaluate_if3_block_codebook_validation.py --checkpoint artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --split validation --device rocm --seed 424242 --batches 512 --block-size 256 --codebook-size 256 --residual-fraction 0.01 --output results/IF3_block_codebook_t11c_validation_probe.json --experiment-id IF3_block_codebook_t11c_validation_probe",
+  "experiment_id": "IF3_block_codebook_t11c_validation_probe",
+  "git_commit": "cdd67ccea93cb590f17b54a75521e7ed6cddcc33",
+  "git_dirty": true,
+  "git_status_short": "M results/manifest.json\n?? results/IF3_block_codebook_t11c_validation_probe.json",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if3_block_codebook_reconstruction_preserves_heldout_loss_better_than_random",
+  "metrics": {
+    "benchmark_label": "if3_block_codebook_validation_probe",
+    "candidate_id": "IF3",
+    "checkpoint": {
+      "bytes": 41605125,
+      "checkpoint_type": "model_only",
+      "path": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+      "step": 195313
+    },
+    "comparisons": {
+      "learned_beats_random_loss": true,
+      "learned_loss_delta_vs_fp32": 4.276693657244323,
+      "learned_loss_delta_vs_random": -33.42072035372257,
+      "learned_mse_beats_random_mse": true,
+      "random_loss_delta_vs_fp32": 37.697414010966895
+    },
+    "compression": {
+      "benchmark_label": "if3_block_codebook_state_compression",
+      "block_count": 40640,
+      "floating_parameter_count": 10397105,
+      "floating_tensor_count": 42,
+      "learned_codebook": {
+        "beats_random_control": true,
+        "block_count": 40640,
+        "block_reference_count": 40640,
+        "codebook_bytes": 262144,
+        "effective_encoded_bits_per_padded_value": 0.997822342519685,
+        "encoded_bytes": 1297648,
+        "encoded_plus_runtime_bytes": 42913008,
+        "id_bytes": 40640,
+        "max_abs_error": 0.27352720499038696,
+        "metadata_bytes": 619352,
+        "mse": 0.002059607533738017,
+        "policy": "learned_block_codebook",
+        "residual_bytes": 832304,
+        "residual_value_count": 104038,
+        "runtime_buffer_bytes": 41615360,
+        "scale_bytes": 162560
+      },
+      "limitations": [
+        "counts_padded_block_values",
+        "residuals_store_fp32_values_and_32bit_indexes",
+        "runtime_buffer_bytes_counts_fp32_reconstructed_state"
+      ],
+      "padded_value_count": 10403840,
+      "policy": {
+        "block_size": 256,
+        "codebook_size": 256,
+        "residual_fraction": 0.01,
+        "seed": 424242
+      },
+      "random_codebook_control": {
+        "beats_learned_codebook": false,
+        "beats_random_control": false,
+        "block_count": 40640,
+        "block_reference_count": 40640,
+        "codebook_bytes": 262144,
+        "effective_encoded_bits_per_padded_value": 0.997822342519685,
+        "encoded_bytes": 1297648,
+        "encoded_plus_runtime_bytes": 42913008,
+        "id_bytes": 40640,
+        "max_abs_error": 0.5586174726486206,
+        "metadata_bytes": 619352,
+        "mse": 0.018109813332557678,
+        "policy": "random_block_codebook",
+        "residual_bytes": 832304,
+        "residual_value_count": 104038,
+        "runtime_buffer_bytes": 41615360,
+        "scale_bytes": 162560
+      },
+      "state_sha256": "c7df91b1306ca9537a5178cb9b51a6bc4b543068c725e5a099db9582658abb24"
+    },
+    "corpus": {
+      "document_count_used": 85,
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "source": "hf_jsonl_mirror",
+      "split": "validation",
+      "split_texts_loaded_separately": true
+    },
+    "device": {
+      "accelerator_backend": "rocm",
+      "requested": "rocm",
+      "resolved": "cuda",
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211"
+    },
+    "limitations": [
+      "reconstructed_into_fp32_pytorch_tensors_before_evaluation",
+      "no_packed_codebook_kernel_or_runtime_speed_measurement",
+      "same_fixed_validation_batches_used_for_all_policies"
+    ],
+    "loss_evaluated": true,
+    "model": {
+      "architecture": "causal_transformer_decoder",
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "finite_causal",
+        "batch_size": 2,
+        "block_impl": "explicit_causal",
+        "checkpoint_interval": 5000,
+        "device": "rocm",
+        "gradient_accumulation_steps": 1,
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "learning_rate": 0.0001,
+        "mixed_precision": "fp32",
+        "optimizer_name": "adamw",
+        "progress_interval": 5000,
+        "seq_len": 128,
+        "steps": 195313,
+        "validation_batches": 512,
+        "validation_seed": 424242
+      },
+      "parameter_count": 10397105
+    },
+    "packed_kernel_evaluated": false,
+    "policies": {
+      "fp32": {
+        "batches": 512,
+        "loss": 1.0335341689933557,
+        "sample_order_sha256": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+        "tokens": 132096
+      },
+      "learned_block_codebook": {
+        "batches": 512,
+        "loss": 5.3102278262376785,
+        "sample_order_sha256": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+        "tokens": 132096
+      },
+      "random_block_codebook": {
+        "batches": 512,
+        "loss": 38.73094817996025,
+        "sample_order_sha256": "c19190b30eb4b2ab4b3b4cd8296280064a47283f73d4de3423a889bdfc17e0ab",
+        "tokens": 132096
+      }
+    },
+    "resolved_config": {
+      "batches": 512,
+      "block_size": 256,
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+      "codebook_size": 256,
+      "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "device": "rocm",
+      "experiment_id": "IF3_block_codebook_t11c_validation_probe",
+      "output": "results/IF3_block_codebook_t11c_validation_probe.json",
+      "residual_fraction": 0.01,
+      "seed": 424242,
+      "split": "validation"
+    },
+    "seed": 424242,
+    "split": "validation",
+    "tokenizer": {
+      "eos_id": 256,
+      "name": "byte_level",
+      "type": "byte_level",
+      "vocab_size": 257
+    }
+  },
+  "notes": "IF3 validation-loss probe against a labeled held-out split. The learned and random codebook reconstructions are evaluated on the same fixed batches as the FP32 checkpoint. No packed kernel is evaluated.",
+  "recorded_at_unix": 1782011519.9927742,
+  "resolved_config": {
+    "batches": 512,
+    "block_size": 256,
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+    "codebook_size": 256,
+    "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "device": "rocm",
+    "experiment_id": "IF3_block_codebook_t11c_validation_probe",
+    "output": "results/IF3_block_codebook_t11c_validation_probe.json",
+    "residual_fraction": 0.01,
+    "seed": 424242,
+    "split": "validation"
+  },
+  "seed": 424242,
+  "status": "completed"
+}
