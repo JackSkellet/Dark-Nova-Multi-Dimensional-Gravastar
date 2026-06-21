@@ -79,6 +79,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_idea_foundry_graph_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if2_fast_weight_continual_probe":
         return _assess_if2_fast_weight_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_checkpoint_probe":
+        return _assess_if3_block_codebook_probe(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1649,5 +1651,47 @@ def _assess_if2_fast_weight_probe(record: dict[str, Any]) -> Assessment:
                 "storage_bytes"
             ],
             "parameter_evolution_adds_value_beyond_updated_memory": adds_value,
+        },
+    }
+
+
+def _assess_if3_block_codebook_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    compression = metrics["compression"]
+    learned = compression["learned_codebook"]
+    random_control = compression["random_codebook_control"]
+    beats_random = bool(learned["beats_random_control"])
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "reconstruction_proxy_positive"
+            if beats_random
+            else "random_control_not_beaten"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": "block_codebook_reconstruction_beats_random_control",
+        "limitations": [
+            "reconstruction_proxy_only",
+            "no_language_model_loss",
+            "no_packed_kernel_speed",
+            "metadata_and_runtime_buffers_counted",
+            "not_deployment_ready_compression",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "checkpoint_type": metrics["checkpoint"]["checkpoint_type"],
+            "checkpoint_step": metrics["checkpoint"]["step"],
+            "floating_parameter_count": compression["floating_parameter_count"],
+            "block_count": compression["block_count"],
+            "learned_mse": learned["mse"],
+            "random_control_mse": random_control["mse"],
+            "beats_random_control": beats_random,
+            "encoded_bytes": learned["encoded_bytes"],
+            "metadata_bytes": learned["metadata_bytes"],
+            "runtime_buffer_bytes": learned["runtime_buffer_bytes"],
+            "encoded_plus_runtime_bytes": learned["encoded_plus_runtime_bytes"],
+            "packed_kernel_evaluated": metrics["packed_kernel_evaluated"],
+            "loss_evaluated": metrics["loss_evaluated"],
         },
     }

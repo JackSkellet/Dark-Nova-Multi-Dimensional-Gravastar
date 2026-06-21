@@ -411,6 +411,48 @@ def test_assessment_marks_if2_fast_weight_probe_as_synthetic_positive():
     assert assessment["evidence"]["parameter_bytes"] == 4096
 
 
+def test_assessment_marks_if3_block_codebook_as_reconstruction_proxy():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF3_block_codebook_t11c_probe",
+            "hypothesis": "if3_block_codebook",
+            "metrics": {
+                "benchmark_label": "if3_block_codebook_checkpoint_probe",
+                "candidate_id": "IF3",
+                "checkpoint": {
+                    "path": "artifacts/T11c/dense_decoder_last_model_only.pt",
+                    "checkpoint_type": "model_only",
+                    "step": 195313,
+                },
+                "compression": {
+                    "floating_parameter_count": 10_000,
+                    "block_count": 100,
+                    "learned_codebook": {
+                        "mse": 0.01,
+                        "encoded_bytes": 9000,
+                        "metadata_bytes": 1000,
+                        "runtime_buffer_bytes": 40_000,
+                        "encoded_plus_runtime_bytes": 49_000,
+                        "beats_random_control": True,
+                    },
+                    "random_codebook_control": {
+                        "mse": 0.05,
+                        "encoded_bytes": 9000,
+                    },
+                },
+                "packed_kernel_evaluated": False,
+                "loss_evaluated": False,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "reconstruction_proxy_positive"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "no_language_model_loss" in assessment["limitations"]
+    assert assessment["evidence"]["learned_mse"] == 0.01
+    assert assessment["evidence"]["beats_random_control"] is True
+
+
 def test_assessment_marks_public_repository_docstring_skeleton_generation_as_codegen_proxy():
     assessment = assess_record(
         _record("E6f_public_repository_docstring_skeleton_generation")
