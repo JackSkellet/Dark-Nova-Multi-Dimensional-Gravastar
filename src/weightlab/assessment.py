@@ -77,6 +77,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         == "idea_foundry_repository_graph_signal_probe"
     ):
         return _assess_idea_foundry_graph_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if2_fast_weight_continual_probe":
+        return _assess_if2_fast_weight_probe(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1591,5 +1593,61 @@ def _assess_idea_foundry_graph_probe(record: dict[str, Any]) -> Assessment:
                 "repository_aware_splits_preserved"
             ],
             "mechanism_signal_present": metrics["mechanism_signal_present"],
+        },
+    }
+
+
+def _assess_if2_fast_weight_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    heldout = metrics["heldout_generalization"]
+    methods = metrics["methods"]
+    adds_value = bool(metrics["parameter_evolution_adds_value_beyond_updated_memory"])
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "synthetic_fast_weight_positive"
+            if adds_value
+            else "updated_memory_not_beaten"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": "fast_weight_proxy_adds_heldout_paraphrase_signal_beyond_memory",
+        "limitations": [
+            "synthetic_fixture_only",
+            "not_language_model_training",
+            "feature_hash_fast_weight_proxy",
+            "no_security_or_poisoning_gate",
+            "storage_cost_exceeds_structured_memory",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "timeline_steps": metrics["timeline_steps"],
+            "exact_retrieval_accuracy": final["exact_retrieval_accuracy"],
+            "structured_memory_accuracy": final["structured_memory_accuracy"],
+            "fast_weight_scratchpad_accuracy": final["fast_weight_scratchpad_accuracy"],
+            "structured_memory_plus_fast_weight_accuracy": final[
+                "structured_memory_plus_fast_weight_accuracy"
+            ],
+            "heldout_task_count": heldout["task_count"],
+            "heldout_structured_memory_correct": heldout[
+                "structured_memory_correct"
+            ],
+            "heldout_fast_weight_correct": heldout[
+                "fast_weight_scratchpad_correct"
+            ],
+            "heldout_combined_correct": heldout[
+                "structured_memory_plus_fast_weight_correct"
+            ],
+            "structured_memory_storage_bytes": methods["structured_memory"][
+                "storage_bytes"
+            ],
+            "parameter_bytes": methods["fast_weight_scratchpad"][
+                "parameter_bytes"
+            ],
+            "combined_storage_bytes": methods["structured_memory_plus_fast_weight"][
+                "storage_bytes"
+            ],
+            "parameter_evolution_adds_value_beyond_updated_memory": adds_value,
         },
     }

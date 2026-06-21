@@ -373,6 +373,44 @@ def test_assessment_marks_if1_probe_as_mechanism_signal_not_quality_win():
     assert assessment["evidence"]["typed_edge_counts"]["test_to_source"] == 2
 
 
+def test_assessment_marks_if2_fast_weight_probe_as_synthetic_positive():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF2_fast_weight_continual_probe",
+            "hypothesis": "if2_fast_weights",
+            "metrics": {
+                "benchmark_label": "if2_fast_weight_continual_probe",
+                "candidate_id": "IF2",
+                "timeline_steps": 4,
+                "final": {
+                    "exact_retrieval_accuracy": 0.2,
+                    "structured_memory_accuracy": 0.6,
+                    "fast_weight_scratchpad_accuracy": 0.95,
+                    "structured_memory_plus_fast_weight_accuracy": 0.95,
+                },
+                "heldout_generalization": {
+                    "task_count": 8,
+                    "structured_memory_correct": 0,
+                    "fast_weight_scratchpad_correct": 7,
+                    "structured_memory_plus_fast_weight_correct": 7,
+                },
+                "methods": {
+                    "structured_memory": {"storage_bytes": 596},
+                    "fast_weight_scratchpad": {"parameter_bytes": 4096},
+                    "structured_memory_plus_fast_weight": {"storage_bytes": 4692},
+                },
+                "parameter_evolution_adds_value_beyond_updated_memory": True,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "synthetic_fast_weight_positive"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "synthetic_fixture_only" in assessment["limitations"]
+    assert assessment["evidence"]["heldout_fast_weight_correct"] == 7
+    assert assessment["evidence"]["parameter_bytes"] == 4096
+
+
 def test_assessment_marks_public_repository_docstring_skeleton_generation_as_codegen_proxy():
     assessment = assess_record(
         _record("E6f_public_repository_docstring_skeleton_generation")
