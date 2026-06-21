@@ -2876,17 +2876,25 @@
       "evidence": {
         "candidate_id": "IF1",
         "document_count": 27915,
+        "graph_edge_count": 325,
         "import_edge_count": 18919,
         "mechanism_signal_present": true,
         "repositories_with_edges": 4041,
         "repository_aware_splits_preserved": true,
-        "resolved_local_edge_count": 12
+        "resolved_local_edge_count": 12,
+        "role_link_edge_count": 313,
+        "typed_edge_counts": {
+          "doc_to_source": 312,
+          "import_local": 12,
+          "import_relative": 12,
+          "test_to_source": 1
+        }
       },
       "experiment_id": "idea_foundry_repository_graph_signal_probe",
       "hypothesis": "if1_repository_graph_signal_exists_in_d5",
       "limitations": [
         "not_model_training",
-        "regex_import_extraction_only",
+        "regex_import_and_heuristic_role_link_extraction",
         "no_ast_or_package_resolution",
         "does_not_prove_quality_gain"
       ],

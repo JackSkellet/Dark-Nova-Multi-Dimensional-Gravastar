@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_idea_foundry.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --candidates-output results/idea_foundry_candidates.json --probe-output results/IF1_repository_graph_signal_probe.json --experiment-id idea_foundry --seed 123",
   "experiment_id": "idea_foundry_repository_graph_signal_probe",
-  "git_commit": "0dc3f82569141e8b380aad7330956a156a2d5449",
+  "git_commit": "eb3e67294f796a3c5d33d28c8bc83f986a8476c5",
   "git_dirty": false,
   "git_status_short": "",
   "hardware": {
@@ -18,6 +18,7 @@
     "document_count": 27915,
     "edge_examples": [
       {
+        "edge_type": "import_local",
         "repo": "mirthy/cdnjs",
         "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
         "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
@@ -25,6 +26,7 @@
         "target": "./emblem"
       },
       {
+        "edge_type": "import_local",
         "repo": "mirthy/cdnjs",
         "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
         "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
@@ -32,6 +34,7 @@
         "target": "./emblem"
       },
       {
+        "edge_type": "import_local",
         "repo": "mirthy/cdnjs",
         "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
         "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
@@ -39,6 +42,7 @@
         "target": "./emblem"
       },
       {
+        "edge_type": "import_local",
         "repo": "mirthy/cdnjs",
         "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
         "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
@@ -46,6 +50,7 @@
         "target": "./emblem"
       },
       {
+        "edge_type": "import_local",
         "repo": "ChangHoSeok/courage-portfolio-log",
         "resolved_path": "couragePortfolioLog/src/main/resources/static/vendors/gentelella-template/echarts/src/component/dataZoom/DataZoomView.js",
         "source_path": "couragePortfolioLog/src/main/resources/static/vendors/gentelella-template/echarts/src/component/dataZoom/SliderZoomView.js",
@@ -53,6 +58,7 @@
         "target": "./DataZoomView"
       },
       {
+        "edge_type": "import_local",
         "repo": "pshrmn/curi",
         "resolved_path": "website/src/pages/Guides/apollo.js",
         "source_path": "website/src/pages/Guides/apollo.js",
@@ -60,6 +66,7 @@
         "target": "./apollo"
       },
       {
+        "edge_type": "import_local",
         "repo": "dunwu/react-app",
         "resolved_path": "codes/src/view/general/setting/redux/constants.js",
         "source_path": "codes/src/view/general/setting/redux/actions.js",
@@ -67,6 +74,7 @@
         "target": "./constants"
       },
       {
+        "edge_type": "import_local",
         "repo": "firepick1/firenodejs",
         "resolved_path": "www/js/shared/XYZ.js",
         "source_path": "www/js/shared/XYZ.js",
@@ -74,6 +82,7 @@
         "target": "./XYZ"
       },
       {
+        "edge_type": "import_local",
         "repo": "cdnjs/cdnjs",
         "resolved_path": "ajax/libs/tsparticles/1.14.0-alpha.6/Core/Particle/Updater.js",
         "source_path": "ajax/libs/tsparticles/1.14.0-alpha.6/Core/Particle.js",
@@ -81,6 +90,7 @@
         "target": "./Particle/Updater"
       },
       {
+        "edge_type": "import_local",
         "repo": "zajrik/discord.js",
         "resolved_path": "src/structures/User.js",
         "source_path": "src/structures/Guild.js",
@@ -88,6 +98,7 @@
         "target": "./User"
       },
       {
+        "edge_type": "import_local",
         "repo": "sebastienros/jint",
         "resolved_path": "Jint.Tests.Test262/test/language/module-code/namespace/internals/is-extensible.js",
         "source_path": "Jint.Tests.Test262/test/language/module-code/namespace/internals/is-extensible.js",
@@ -95,13 +106,71 @@
         "target": "./is-extensible.js"
       },
       {
+        "edge_type": "import_local",
         "repo": "livepeer/protocol",
         "resolved_path": "utils/merkleTree.js",
         "source_path": "test/unit/MerkleSnapshot.js",
         "split": "train",
         "target": "../../utils/merkleTree"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "extend1994/cdnjs",
+        "resolved_path": "ajax/libs/highcharts/4.1.7/modules/treemap.js",
+        "source_path": "ajax/libs/highcharts/7.0.0/modules/boost.src.js",
+        "split": "train"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "andersem/cdnjs",
+        "resolved_path": "ajax/libs/bootstrap-tokenfield/0.11.9/package/index.html",
+        "source_path": "ajax/libs/yui/3.4.1/editor-para/editor-para-debug.js",
+        "split": "train"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "athanclark/cdnjs",
+        "resolved_path": "ajax/libs/mathjax/2.5.1/jax/input/MathML/entities/o.js",
+        "source_path": "ajax/libs/yui/3.17.2/yui-core/yui-core-debug.js",
+        "split": "train"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "cdnjs/cdnjs",
+        "resolved_path": "ajax/libs/highcharts/8.0.0/es-modules/parts/Globals.js",
+        "source_path": "ajax/libs/highcharts/6.1.3/js/es-modules/parts-map/MapLineSeries.js",
+        "split": "train"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "cdnjs/cdnjs",
+        "resolved_path": "ajax/libs/highmaps/1.0.1/modules/data.js",
+        "source_path": "ajax/libs/highcharts/6.1.3/js/es-modules/parts-map/MapLineSeries.js",
+        "split": "train"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "Jonybang/cdnjs",
+        "resolved_path": "ajax/libs/fullcalendar/2.0.1/lang/tr.js",
+        "source_path": "ajax/libs/yui/3.17.0/graphics/graphics-debug.js",
+        "split": "train"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "sajochiu/cdnjs",
+        "resolved_path": "ajax/libs/tinymce/4.3.13/plugins/emoticons/plugin.js",
+        "source_path": "ajax/libs/yui/3.5.1/button/button-debug.js",
+        "split": "train"
+      },
+      {
+        "edge_type": "doc_to_source",
+        "repo": "cdnjs/cdnjs",
+        "resolved_path": "ajax/libs/buefy/0.8.16/components/navbar/index.js",
+        "source_path": "ajax/libs/intl-tel-input/11.0.3/js/intlTelInput.js",
+        "split": "train"
       }
     ],
+    "graph_edge_count": 325,
     "import_edge_count": 18919,
     "language_counts": {
       "Assembly": 4,
@@ -142,8 +211,9 @@
       "Visual Basic": 3
     },
     "limitations": [
-      "regex_import_extraction_only",
+      "regex_import_and_role_link_extraction_only",
       "no_ast_or_package_resolution",
+      "role_links_are_heuristic_not_semantic_ground_truth",
       "edge_presence_probe_not_model_training"
     ],
     "mechanism_signal_present": true,
@@ -166,10 +236,17 @@
       "readme": 351,
       "source": 24079,
       "test": 3958
+    },
+    "role_link_edge_count": 313,
+    "typed_edge_counts": {
+      "doc_to_source": 312,
+      "import_local": 12,
+      "import_relative": 12,
+      "test_to_source": 1
     }
   },
   "notes": "Cheap falsifying probe for IF1 only. It checks whether regex-extracted repository import edges and roles exist; it is not a model-training result.",
-  "recorded_at_unix": 1782009700.711415,
+  "recorded_at_unix": 1782010113.815305,
   "resolved_config": {
     "candidates_output": "results/idea_foundry_candidates.json",
     "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",

@@ -1,7 +1,7 @@
 {
   "command": "uv run python scripts/run_idea_foundry.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --candidates-output results/idea_foundry_candidates.json --probe-output results/IF1_repository_graph_signal_probe.json --experiment-id idea_foundry --seed 123",
   "experiment_id": "idea_foundry_candidates",
-  "git_commit": "0dc3f82569141e8b380aad7330956a156a2d5449",
+  "git_commit": "eb3e67294f796a3c5d33d28c8bc83f986a8476c5",
   "git_dirty": false,
   "git_status_short": "",
   "hardware": {
@@ -233,7 +233,7 @@
     }
   },
   "notes": "Six candidate mechanisms for the next research cycle. These are not quality claims until prototyped and evaluated.",
-  "recorded_at_unix": 1782009700.7098227,
+  "recorded_at_unix": 1782010113.8138914,
   "resolved_config": {
     "candidates_output": "results/idea_foundry_candidates.json",
     "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
