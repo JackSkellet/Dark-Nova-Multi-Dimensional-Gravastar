@@ -70,6 +70,13 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_e6i(record)
     if record.get("metrics", {}).get("benchmark_label") == "d5_trained_tokenizer_model_comparison":
         return _assess_d5_tokenizer_training(record)
+    if record.get("metrics", {}).get("benchmark_label") == "idea_foundry_candidate_generation":
+        return _assess_idea_foundry_candidates(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "idea_foundry_repository_graph_signal_probe"
+    ):
+        return _assess_idea_foundry_graph_probe(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1505,5 +1512,78 @@ def _assess_d5_tokenizer_training(record: dict[str, Any]) -> Assessment:
                 "equal_raw_bpe_minus_byte_nats_per_estimated_byte"
             ],
             "functional_quality_measured": conclusions["functional_quality_measured"],
+        },
+    }
+
+
+def _assess_idea_foundry_candidates(record: dict[str, Any]) -> Assessment:
+    summary = record["metrics"]["constraint_summary"]
+    constraints_met = bool(
+        int(summary["candidate_count"]) == 6
+        and int(summary["without_adapters"]) >= 2
+        and int(summary["without_moe_or_topic_routing"]) >= 2
+        and int(summary["continual_evolution_candidates"]) >= 1
+        and int(summary["compression_candidates"]) >= 1
+        and int(summary["code_structure_candidates"]) >= 1
+        and int(summary["potentially_novel_candidates"]) >= 1
+    )
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "idea_lane_opened" if constraints_met else "idea_lane_incomplete",
+        "supports_pareto_improvement": False,
+        "primary_reason": "six_candidate_idea_foundry_constraints_recorded",
+        "limitations": [
+            "not_training_evidence",
+            "not_quality_evidence",
+            "novelty_requires_deeper_prior_art_review",
+            "three_candidate_prototypes_still_pending",
+        ],
+        "evidence": {
+            "candidate_count": summary["candidate_count"],
+            "without_adapters": summary["without_adapters"],
+            "without_moe_or_topic_routing": summary[
+                "without_moe_or_topic_routing"
+            ],
+            "continual_evolution_candidates": summary[
+                "continual_evolution_candidates"
+            ],
+            "compression_candidates": summary["compression_candidates"],
+            "code_structure_candidates": summary["code_structure_candidates"],
+            "potentially_novel_candidates": summary[
+                "potentially_novel_candidates"
+            ],
+        },
+    }
+
+
+def _assess_idea_foundry_graph_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    signal_present = bool(
+        metrics["mechanism_signal_present"]
+        and metrics["repository_aware_splits_preserved"]
+    )
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "mechanism_signal_present" if signal_present else "no_mechanism_signal",
+        "supports_pareto_improvement": False,
+        "primary_reason": "repository_graph_signal_probe_completed_for_if1",
+        "limitations": [
+            "not_model_training",
+            "regex_import_extraction_only",
+            "no_ast_or_package_resolution",
+            "does_not_prove_quality_gain",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "document_count": metrics["document_count"],
+            "import_edge_count": metrics["import_edge_count"],
+            "resolved_local_edge_count": metrics["resolved_local_edge_count"],
+            "repositories_with_edges": metrics["repositories_with_edges"],
+            "repository_aware_splits_preserved": metrics[
+                "repository_aware_splits_preserved"
+            ],
+            "mechanism_signal_present": metrics["mechanism_signal_present"],
         },
     }

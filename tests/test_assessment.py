@@ -314,6 +314,56 @@ def test_assessment_marks_d5_tokenizer_training_as_bounded_mixed_result():
     assert assessment["evidence"]["equal_raw_loss_delta_per_estimated_byte"] == 0.2
 
 
+def test_assessment_marks_idea_foundry_candidates_as_design_lane_not_result():
+    assessment = assess_record(
+        {
+            "experiment_id": "idea_foundry_candidates",
+            "hypothesis": "six_candidates",
+            "metrics": {
+                "benchmark_label": "idea_foundry_candidate_generation",
+                "constraint_summary": {
+                    "candidate_count": 6,
+                    "without_adapters": 5,
+                    "without_moe_or_topic_routing": 5,
+                    "continual_evolution_candidates": 2,
+                    "compression_candidates": 1,
+                    "code_structure_candidates": 3,
+                    "potentially_novel_candidates": 1,
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "idea_lane_opened"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "not_training_evidence" in assessment["limitations"]
+    assert assessment["evidence"]["candidate_count"] == 6
+
+
+def test_assessment_marks_if1_probe_as_mechanism_signal_not_quality_win():
+    assessment = assess_record(
+        {
+            "experiment_id": "idea_foundry_repository_graph_signal_probe",
+            "hypothesis": "if1_signal",
+            "metrics": {
+                "benchmark_label": "idea_foundry_repository_graph_signal_probe",
+                "candidate_id": "IF1",
+                "document_count": 10,
+                "import_edge_count": 4,
+                "resolved_local_edge_count": 2,
+                "repositories_with_edges": 2,
+                "repository_aware_splits_preserved": True,
+                "mechanism_signal_present": True,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "mechanism_signal_present"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "not_model_training" in assessment["limitations"]
+    assert assessment["evidence"]["resolved_local_edge_count"] == 2
+
+
 def test_assessment_marks_public_repository_docstring_skeleton_generation_as_codegen_proxy():
     assessment = assess_record(
         _record("E6f_public_repository_docstring_skeleton_generation")
