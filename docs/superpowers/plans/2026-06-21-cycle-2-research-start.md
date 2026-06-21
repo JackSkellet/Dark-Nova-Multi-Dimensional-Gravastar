@@ -97,11 +97,11 @@ UV_CACHE_DIR=/tmp/uv-cache uv run python scripts/summarize_d5_tokenizer_training
 - Create: `tests/test_executable_coding_eval.py`
 - Create: `research/34_repository_balanced_executable_benchmark.md`
 
-- [ ] **Step 1: Implement repository-first sampling**
+- [x] **Step 1: Implement repository-first sampling**
 
 Sampler order must be repository first, file second, task third. Store repository id, file path, task kind, source split, seed, and sample hash for every task.
 
-- [ ] **Step 2: Add task kinds**
+- [x] **Step 2: Add task kinds**
 
 Start with completion, causal infilling proxy, syntax, unit-test fixture, bug repair fixture, API reuse, relevant-file selection, source-grounded docs, stale-doc detection, and hallucinated-symbol checks.
 

@@ -347,6 +347,30 @@ def test_assessment_marks_idea_foundry_candidates_as_design_lane_not_result():
     assert assessment["evidence"]["candidate_count"] == 6
 
 
+def test_assessment_marks_repository_task_sample_as_benchmark_scaffold():
+    assessment = assess_record(
+        {
+            "experiment_id": "D5_repository_balanced_task_sample",
+            "hypothesis": "repository_first_sampling",
+            "metrics": {
+                "benchmark_label": "repository_balanced_task_sample",
+                "repository_count": 32,
+                "file_count": 32,
+                "task_count": 320,
+                "sampling_policy": {
+                    "order": "repository_first_file_second_task_third",
+                    "task_kinds": ["completion", "syntax"],
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "benchmark_scaffold"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "no_model_quality_measured" in assessment["limitations"]
+    assert assessment["evidence"]["task_count"] == 320
+
+
 def test_assessment_marks_if1_probe_as_mechanism_signal_not_quality_win():
     assessment = assess_record(
         {

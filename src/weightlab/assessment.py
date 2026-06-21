@@ -88,6 +88,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         == "d4_dense_js_executable_checkpoint_evaluation"
     ):
         return _assess_dense_js_executable_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "repository_balanced_task_sample":
+        return _assess_repository_task_sample(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1601,6 +1603,30 @@ def _assess_idea_foundry_candidates(record: dict[str, Any]) -> Assessment:
             "potentially_novel_candidates": summary[
                 "potentially_novel_candidates"
             ],
+        },
+    }
+
+
+def _assess_repository_task_sample(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    sampling = metrics["sampling_policy"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "benchmark_scaffold",
+        "supports_pareto_improvement": False,
+        "primary_reason": "repository_first_task_index_created_without_model_scoring",
+        "limitations": [
+            "no_model_quality_measured",
+            "no_executable_runtime_scoring_yet",
+            "task_constructors_are_metadata_only",
+        ],
+        "evidence": {
+            "repository_count": int(metrics["repository_count"]),
+            "file_count": int(metrics["file_count"]),
+            "task_count": int(metrics["task_count"]),
+            "sampling_order": sampling["order"],
+            "task_kinds": sampling["task_kinds"],
         },
     }
 
