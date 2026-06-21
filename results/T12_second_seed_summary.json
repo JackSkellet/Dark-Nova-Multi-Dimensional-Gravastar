@@ -1,0 +1,329 @@
+{
+  "command": "uv run python scripts/summarize_t12_second_seed.py --results-dir results --output results/T12_second_seed_summary.json --experiment-id T12_second_seed_summary",
+  "experiment_id": "T12_second_seed_summary",
+  "git_commit": "49274684aeb257187937c5b74c415183f0ef4c35",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "t12_second_seed_dense528_vs_adapter528",
+  "metrics": {
+    "benchmark_label": "t12_second_seed_pair_summary",
+    "interpretation": "Dense-528 has the lower mean validation loss and better resource metrics across the two available seeds, but the final-validation mean margin is small and best-validation winner changes by seed. Test loss is reported only after validation-defined selection.",
+    "metrics": {
+      "best_test_loss": {
+        "families": {
+          "adapter": {
+            "max": 1.052616473985836,
+            "mean": 1.040062686544843,
+            "min": 1.0275088991038501,
+            "spread": 0.025107574881985784,
+            "values": [
+              1.052616473985836,
+              1.0275088991038501
+            ]
+          },
+          "dense": {
+            "max": 1.0345332396682352,
+            "mean": 1.0329053212772124,
+            "min": 1.0312774028861895,
+            "spread": 0.0032558367820456624,
+            "values": [
+              1.0345332396682352,
+              1.0312774028861895
+            ]
+          }
+        },
+        "lower_is_better": true,
+        "per_seed_winners": {
+          "123": "dense",
+          "456": "adapter"
+        },
+        "selection_allowed": false,
+        "winner_by_mean": "dense"
+      },
+      "best_validation_loss": {
+        "families": {
+          "adapter": {
+            "max": 1.049464229727164,
+            "mean": 1.0420066186052281,
+            "min": 1.0345490074832924,
+            "spread": 0.01491522224387154,
+            "values": [
+              1.049464229727164,
+              1.0345490074832924
+            ]
+          },
+          "dense": {
+            "max": 1.0458653752575628,
+            "mean": 1.040673807816347,
+            "min": 1.0354822403751314,
+            "spread": 0.010383134882431477,
+            "values": [
+              1.0354822403751314,
+              1.0458653752575628
+            ]
+          }
+        },
+        "lower_is_better": true,
+        "per_seed_winners": {
+          "123": "dense",
+          "456": "adapter"
+        },
+        "selection_allowed": true,
+        "winner_by_mean": "dense"
+      },
+      "final_test_loss": {
+        "families": {
+          "adapter": {
+            "max": 1.0450384634314105,
+            "mean": 1.0404464973544236,
+            "min": 1.0358545312774368,
+            "spread": 0.009183932153973728,
+            "values": [
+              1.0450384634314105,
+              1.0358545312774368
+            ]
+          },
+          "dense": {
+            "max": 1.0488805254572071,
+            "mean": 1.0437747972318903,
+            "min": 1.0386690690065734,
+            "spread": 0.010211456450633705,
+            "values": [
+              1.0488805254572071,
+              1.0386690690065734
+            ]
+          }
+        },
+        "lower_is_better": true,
+        "per_seed_winners": {
+          "123": "adapter",
+          "456": "adapter"
+        },
+        "selection_allowed": false,
+        "winner_by_mean": "adapter"
+      },
+      "final_validation_loss": {
+        "families": {
+          "adapter": {
+            "max": 1.0420977746834978,
+            "mean": 1.0404249862476718,
+            "min": 1.0387521978118457,
+            "spread": 0.003345576871652156,
+            "values": [
+              1.0387521978118457,
+              1.0420977746834978
+            ]
+          },
+          "dense": {
+            "max": 1.0451208076847252,
+            "mean": 1.0393274883390404,
+            "min": 1.0335341689933557,
+            "spread": 0.011586638691369444,
+            "values": [
+              1.0335341689933557,
+              1.0451208076847252
+            ]
+          }
+        },
+        "lower_is_better": true,
+        "per_seed_winners": {
+          "123": "dense",
+          "456": "adapter"
+        },
+        "selection_allowed": true,
+        "winner_by_mean": "dense"
+      },
+      "max_gradient_norm": {
+        "families": {
+          "adapter": {
+            "max": 18.830303192138672,
+            "mean": 18.807844161987305,
+            "min": 18.785385131835938,
+            "spread": 0.044918060302734375,
+            "values": [
+              18.785385131835938,
+              18.830303192138672
+            ]
+          },
+          "dense": {
+            "max": 5.230952262878418,
+            "mean": 5.065174102783203,
+            "min": 4.899395942687988,
+            "spread": 0.3315563201904297,
+            "values": [
+              4.899395942687988,
+              5.230952262878418
+            ]
+          }
+        },
+        "lower_is_better": true,
+        "per_seed_winners": {
+          "123": "dense",
+          "456": "dense"
+        },
+        "selection_allowed": false,
+        "winner_by_mean": "dense"
+      },
+      "model_only_bytes": {
+        "families": {
+          "adapter": {
+            "max": 42442331,
+            "mean": 42442331.0,
+            "min": 42442331,
+            "spread": 0,
+            "values": [
+              42442331,
+              42442331
+            ]
+          },
+          "dense": {
+            "max": 41605125,
+            "mean": 41605125.0,
+            "min": 41605125,
+            "spread": 0,
+            "values": [
+              41605125,
+              41605125
+            ]
+          }
+        },
+        "lower_is_better": true,
+        "per_seed_winners": {
+          "123": "dense",
+          "456": "dense"
+        },
+        "selection_allowed": false,
+        "winner_by_mean": "dense"
+      },
+      "peak_vram_bytes": {
+        "families": {
+          "adapter": {
+            "max": 469542400,
+            "mean": 469542400.0,
+            "min": 469542400,
+            "spread": 0,
+            "values": [
+              469542400,
+              469542400
+            ]
+          },
+          "dense": {
+            "max": 463684096,
+            "mean": 463684096.0,
+            "min": 463684096,
+            "spread": 0,
+            "values": [
+              463684096,
+              463684096
+            ]
+          }
+        },
+        "lower_is_better": true,
+        "per_seed_winners": {
+          "123": "dense",
+          "456": "dense"
+        },
+        "selection_allowed": false,
+        "winner_by_mean": "dense"
+      },
+      "tokens_per_second": {
+        "families": {
+          "adapter": {
+            "max": 20532.41263900038,
+            "mean": 20524.730073889914,
+            "min": 20517.047508779448,
+            "spread": 15.36513022093277,
+            "values": [
+              20532.41263900038,
+              20517.047508779448
+            ]
+          },
+          "dense": {
+            "max": 22815.43771183141,
+            "mean": 22788.866757755677,
+            "min": 22762.295803679943,
+            "spread": 53.14190815146867,
+            "values": [
+              22762.295803679943,
+              22815.43771183141
+            ]
+          }
+        },
+        "lower_is_better": false,
+        "per_seed_winners": {
+          "123": "dense",
+          "456": "dense"
+        },
+        "selection_allowed": false,
+        "winner_by_mean": "dense"
+      }
+    },
+    "resolved_config": {
+      "experiment_id": "T12_second_seed_summary",
+      "output": "results/T12_second_seed_summary.json",
+      "results_dir": "results"
+    },
+    "runs": {
+      "adapter": {
+        "experiments": {
+          "123": "T11b_adapter528_adamw_fp32_50m",
+          "456": "T12b_adapter528_seed456_adamw_fp32_50m"
+        },
+        "seeds": [
+          123,
+          456
+        ]
+      },
+      "dense": {
+        "experiments": {
+          "123": "T11c_dense528_adamw_fp32_50m",
+          "456": "T12a_dense528_seed456_adamw_fp32_50m"
+        },
+        "seeds": [
+          123,
+          456
+        ]
+      }
+    },
+    "selection_policy": {
+      "checkpoint_selection": "validation_only",
+      "reported_only_metrics": [
+        "final_test_loss",
+        "best_test_loss"
+      ],
+      "selection_metrics": [
+        "best_validation_loss",
+        "final_validation_loss"
+      ],
+      "test_loss_used_for_selection": false
+    },
+    "third_seed_recommendation": {
+      "reasons": [
+        "validation_margin_is_small",
+        "best_validation_winner_changes_by_seed"
+      ],
+      "recommended": true,
+      "validation_mean_margin": 0.0010974979086313397,
+      "winner_changes_by_metric": [
+        "final_validation_loss",
+        "best_validation_loss",
+        "best_test_loss"
+      ]
+    }
+  },
+  "notes": "Summarizes seed 123 and seed 456 dense-528 versus residual-adapter-528 results. Validation metrics drive selection; test losses are reported only.",
+  "recorded_at_unix": 1782001333.5062838,
+  "resolved_config": {
+    "experiment_id": "T12_second_seed_summary",
+    "output": "results/T12_second_seed_summary.json",
+    "results_dir": "results"
+  },
+  "seed": 456,
+  "status": "completed"
+}
