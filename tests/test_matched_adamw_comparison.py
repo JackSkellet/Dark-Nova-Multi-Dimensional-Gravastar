@@ -109,6 +109,48 @@ def test_second_seed_pair_config_changes_train_seed_only_for_strongest_pair():
     }
 
 
+def test_third_seed_pair_config_keeps_t12_protocol_fixed_except_train_seed_and_ids():
+    second = load_comparison_config(Path("configs/d4_adamw_fp32_50m_second_seed_pair.json"))
+    third = load_comparison_config(Path("configs/d4_adamw_fp32_50m_third_seed_pair.json"))
+
+    assert third["corpus"] == second["corpus"]
+    assert third["tokenizer"] == second["tokenizer"]
+    assert third["training_protocol"] == {
+        **second["training_protocol"],
+        "initialization": (
+            "torch manual seed 789; shared modules initialized before adapter-only modules "
+            "when shapes match"
+        ),
+    }
+    assert third["data_order"] == {
+        **second["data_order"],
+        "train_seed": 789,
+    }
+    assert [run["label"] for run in third["runs"]] == [
+        "dense_528_seed789_50m",
+        "adapter_528_seed789_50m",
+    ]
+    assert [run["architecture_variant"] for run in third["runs"]] == ["dense", "adapter"]
+    assert [run["hidden_dim"] for run in third["runs"]] == [528, 528]
+    assert [run["adapter_dim"] for run in third["runs"]] == [0, 64]
+
+    for command in [build_train_command(third, run) for run in third["runs"]]:
+        assert command[command.index("--seed") + 1] == "789"
+        assert command[command.index("--validation-seed") + 1] == "424242"
+        assert command[command.index("--steps") + 1] == "195313"
+        assert command[command.index("--optimizer-name") + 1] == "adamw"
+        assert command[command.index("--mixed-precision") + 1] == "fp32"
+        assert command[command.index("--attention-mask-mode") + 1] == "finite_causal"
+        assert command[command.index("--block-impl") + 1] == "explicit_causal"
+        assert command[command.index("--max-documents") + 1] == "0"
+
+    eval_commands = build_eval_commands(third, third["runs"][0])
+    assert {command[command.index("--seed") + 1] for command in eval_commands} == {
+        "424242",
+        "424243",
+    }
+
+
 def test_cli_dry_run_selects_single_named_run():
     completed = subprocess.run(
         [
