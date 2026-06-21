@@ -1,0 +1,72 @@
+{
+  "command": "uv run python scripts/train_fast_bpe_tokenizer.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --split train --max-train-documents 4096 --vocab-size 8192 --min-frequency 2 --seed 123 --tokenizer-output artifacts/D5_fast_bpe_8192_seed123/tokenizer.json --output results/D5_fast_bpe_8192_seed123_tokenizer.json --experiment-id D5_fast_bpe_8192_seed123_tokenizer",
+  "experiment_id": "D5_fast_bpe_8192_seed123_tokenizer",
+  "git_commit": "2250a44b51f7b6c1f081711f40bd86c9f1b09ef6",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "fast_reproducible_code_bpe_tokenizer",
+  "metrics": {
+    "benchmark_label": "fast_bpe_tokenizer_training",
+    "corpus": {
+      "jsonl_path": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "sha256": "34dce9e9127a68362f79be53d81692bbb90b254a43fd8f86f155542e49f9680c"
+    },
+    "limitations": [
+      "tokenizer_training_only",
+      "no_model_training_with_bpe_in_this_record",
+      "representative_sample_depends_on_available_d5_rows"
+    ],
+    "resolved_config": {
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "corpus_sha256": "34dce9e9127a68362f79be53d81692bbb90b254a43fd8f86f155542e49f9680c",
+      "experiment_id": "D5_fast_bpe_8192_seed123_tokenizer",
+      "max_train_documents": 4096,
+      "min_frequency": 2,
+      "output": "results/D5_fast_bpe_8192_seed123_tokenizer.json",
+      "seed": 123,
+      "split": "train",
+      "tokenizer_output": "artifacts/D5_fast_bpe_8192_seed123/tokenizer.json",
+      "vocab_size": 8192
+    },
+    "sampling": {
+      "available_document_count": 26589,
+      "deterministic_seed": 123,
+      "max_train_documents": 4096,
+      "sample_bytes": 31183039,
+      "sample_text_order_sha256": "fbb3e9ff98e844853dd0988420464048143127eb3086aa6c54de6cf1103db591",
+      "sampled_document_count": 4096,
+      "split": "train"
+    },
+    "tokenizer": {
+      "checksum": "cb2f1fc59d05e6e27dde10dd17c29409a82d0a1609a2d93f9db98c4a12edc664",
+      "eos_id": 1,
+      "eos_token": "<eos>",
+      "library": "tokenizers",
+      "name": "hf_tokenizers_bpe_bytelevel",
+      "type": "hf_tokenizers_bpe_bytelevel",
+      "vocab_size": 8192
+    }
+  },
+  "notes": "Trains and records a fast Hugging Face tokenizers byte-level BPE artifact from a deterministic D5 split sample. This does not itself establish model quality.",
+  "recorded_at_unix": 1782007334.716905,
+  "resolved_config": {
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "corpus_sha256": "34dce9e9127a68362f79be53d81692bbb90b254a43fd8f86f155542e49f9680c",
+    "experiment_id": "D5_fast_bpe_8192_seed123_tokenizer",
+    "max_train_documents": 4096,
+    "min_frequency": 2,
+    "output": "results/D5_fast_bpe_8192_seed123_tokenizer.json",
+    "seed": 123,
+    "split": "train",
+    "tokenizer_output": "artifacts/D5_fast_bpe_8192_seed123/tokenizer.json",
+    "vocab_size": 8192
+  },
+  "seed": 123,
+  "status": "completed"
+}
