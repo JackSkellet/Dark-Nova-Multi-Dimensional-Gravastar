@@ -453,6 +453,60 @@ def test_assessment_marks_if3_block_codebook_as_reconstruction_proxy():
     assert assessment["evidence"]["beats_random_control"] is True
 
 
+def test_assessment_marks_if3_block_codebook_validation_probe_as_loss_probe():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF3_block_codebook_t11c_validation_probe",
+            "hypothesis": "if3_block_codebook_validation_loss",
+            "metrics": {
+                "benchmark_label": "if3_block_codebook_validation_probe",
+                "candidate_id": "IF3",
+                "checkpoint": {
+                    "path": "artifacts/T11c/dense_decoder_last_model_only.pt",
+                    "checkpoint_type": "model_only",
+                    "step": 195313,
+                },
+                "split": "validation",
+                "compression": {
+                    "floating_parameter_count": 10_000,
+                    "block_count": 100,
+                    "learned_codebook": {
+                        "mse": 0.01,
+                        "encoded_bytes": 9000,
+                        "metadata_bytes": 1000,
+                        "runtime_buffer_bytes": 40_000,
+                        "encoded_plus_runtime_bytes": 49_000,
+                    },
+                    "random_codebook_control": {
+                        "mse": 0.05,
+                        "encoded_bytes": 9000,
+                    },
+                },
+                "policies": {
+                    "fp32": {"loss": 1.0, "tokens": 1000},
+                    "learned_block_codebook": {"loss": 1.1, "tokens": 1000},
+                    "random_block_codebook": {"loss": 2.0, "tokens": 1000},
+                },
+                "comparisons": {
+                    "learned_loss_delta_vs_fp32": 0.1,
+                    "random_loss_delta_vs_fp32": 1.0,
+                    "learned_loss_delta_vs_random": -0.9,
+                    "learned_beats_random_loss": True,
+                    "learned_mse_beats_random_mse": True,
+                },
+                "packed_kernel_evaluated": False,
+                "loss_evaluated": True,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "validation_loss_probe_positive"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "no_packed_kernel_speed" in assessment["limitations"]
+    assert assessment["evidence"]["learned_loss_delta_vs_fp32"] == 0.1
+    assert assessment["evidence"]["learned_beats_random_loss"] is True
+
+
 def test_assessment_marks_public_repository_docstring_skeleton_generation_as_codegen_proxy():
     assessment = assess_record(
         _record("E6f_public_repository_docstring_skeleton_generation")

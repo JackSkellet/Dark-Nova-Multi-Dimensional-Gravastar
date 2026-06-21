@@ -7,6 +7,16 @@ from typing import Any
 
 import torch
 
+from weightlab.dense_training import (
+    DenseDecoder,
+    DenseTrainingConfig,
+    _load_model_state,
+    _tokenizer_from_payload,
+    _tokens_from_texts,
+    _validation_metrics,
+)
+from weightlab.lookup import _resolve_torch_accelerator
+
 
 def run_if3_block_codebook_probe(
     checkpoint_path: Path,
@@ -61,6 +71,185 @@ def block_codebook_compress_state(
         raise ValueError("block_size must be positive")
     if codebook_size <= 0:
         raise ValueError("codebook_size must be positive")
+    return _compression_artifacts(
+        state,
+        block_size=block_size,
+        codebook_size=codebook_size,
+        residual_fraction=residual_fraction,
+        seed=seed,
+        include_states=False,
+    )["compression"]
+
+
+def block_codebook_reconstruct_state(
+    state: dict[str, torch.Tensor],
+    *,
+    block_size: int,
+    codebook_size: int,
+    residual_fraction: float,
+    seed: int,
+) -> dict[str, Any]:
+    """Return learned and random reconstructed state dicts plus compression accounting."""
+    if block_size <= 0:
+        raise ValueError("block_size must be positive")
+    if codebook_size <= 0:
+        raise ValueError("codebook_size must be positive")
+    return _compression_artifacts(
+        state,
+        block_size=block_size,
+        codebook_size=codebook_size,
+        residual_fraction=residual_fraction,
+        seed=seed,
+        include_states=True,
+    )
+
+
+def evaluate_if3_block_codebook_checkpoint(
+    checkpoint_path: Path,
+    texts: list[str],
+    split_name: str,
+    *,
+    device: str = "rocm",
+    seed: int = 424242,
+    batches: int = 512,
+    block_size: int = 256,
+    codebook_size: int = 256,
+    residual_fraction: float = 0.01,
+) -> dict[str, Any]:
+    accelerator = _resolve_torch_accelerator(device)
+    torch_device = accelerator.device
+    payload = torch.load(checkpoint_path, map_location=torch_device)
+    tokenizer = _tokenizer_from_payload(payload)
+    tokens = _tokens_from_texts(texts, tokenizer)
+    checkpoint_config = dict(payload["config"])
+    checkpoint_config["validation_batches"] = batches
+    config = DenseTrainingConfig(**checkpoint_config)
+    if len(tokens) < config.seq_len + 2:
+        raise ValueError(f"not enough tokens for IF3 {split_name} evaluation")
+
+    reconstruction = block_codebook_reconstruct_state(
+        payload["model"],
+        block_size=block_size,
+        codebook_size=codebook_size,
+        residual_fraction=residual_fraction,
+        seed=seed,
+    )
+    fp32_metrics = _evaluate_state_dict(
+        payload["model"],
+        tokenizer.vocab_size,
+        tokens,
+        config,
+        torch_device,
+        seed,
+    )
+    learned_metrics = _evaluate_state_dict(
+        reconstruction["states"]["learned_block_codebook"],
+        tokenizer.vocab_size,
+        tokens,
+        config,
+        torch_device,
+        seed,
+    )
+    random_metrics = _evaluate_state_dict(
+        reconstruction["states"]["random_block_codebook"],
+        tokenizer.vocab_size,
+        tokens,
+        config,
+        torch_device,
+        seed,
+    )
+    return {
+        "benchmark_label": "if3_block_codebook_validation_probe",
+        "candidate_id": "IF3",
+        "checkpoint": {
+            "path": str(checkpoint_path),
+            "checkpoint_type": str(payload.get("checkpoint_type", "unknown")),
+            "step": int(payload.get("step", 0)),
+            "bytes": checkpoint_path.stat().st_size,
+        },
+        "split": split_name,
+        "seed": seed,
+        "model": {
+            "architecture": "causal_transformer_decoder",
+            "parameter_count": int(sum(value.numel() for value in payload["model"].values())),
+            "config": {**checkpoint_config},
+        },
+        "tokenizer": tokenizer.to_jsonable(),
+        "device": {
+            "requested": accelerator.requested_device,
+            "resolved": str(torch_device),
+            "accelerator_backend": accelerator.backend,
+            "rocm_available": accelerator.rocm_available,
+            "rocm_runtime_version": accelerator.rocm_runtime_version,
+        },
+        "compression": reconstruction["compression"],
+        "policies": {
+            "fp32": fp32_metrics,
+            "learned_block_codebook": learned_metrics,
+            "random_block_codebook": random_metrics,
+        },
+        "comparisons": {
+            "learned_loss_delta_vs_fp32": float(learned_metrics["loss"] - fp32_metrics["loss"]),
+            "random_loss_delta_vs_fp32": float(random_metrics["loss"] - fp32_metrics["loss"]),
+            "learned_loss_delta_vs_random": float(
+                learned_metrics["loss"] - random_metrics["loss"]
+            ),
+            "learned_beats_random_loss": learned_metrics["loss"] < random_metrics["loss"],
+            "learned_mse_beats_random_mse": reconstruction["compression"]["learned_codebook"][
+                "mse"
+            ]
+            < reconstruction["compression"]["random_codebook_control"]["mse"],
+        },
+        "loss_evaluated": True,
+        "packed_kernel_evaluated": False,
+        "limitations": [
+            "reconstructed_into_fp32_pytorch_tensors_before_evaluation",
+            "no_packed_codebook_kernel_or_runtime_speed_measurement",
+            "same_fixed_validation_batches_used_for_all_policies",
+        ],
+    }
+
+
+def _evaluate_state_dict(
+    state: dict[str, torch.Tensor],
+    vocab_size: int,
+    tokens: torch.Tensor,
+    config: DenseTrainingConfig,
+    device: torch.device,
+    seed: int,
+) -> dict[str, Any]:
+    model = DenseDecoder(
+        vocab_size,
+        config.seq_len,
+        config.hidden_dim,
+        config.layers,
+        config.heads,
+        config.attention_mask_mode,
+        config.architecture_variant,
+        config.adapter_dim,
+        config.block_impl,
+    ).to(device)
+    state_on_device = {key: value.to(device) for key, value in state.items()}
+    _load_model_state(model, state_on_device)
+    return _validation_metrics(
+        model,
+        tokens,
+        vocab_size,
+        config,
+        torch.Generator(device="cpu").manual_seed(seed),
+        device,
+    )
+
+
+def _compression_artifacts(
+    state: dict[str, torch.Tensor],
+    *,
+    block_size: int,
+    codebook_size: int,
+    residual_fraction: float,
+    seed: int,
+    include_states: bool,
+) -> dict[str, Any]:
     floating_items = {
         key: value.detach().cpu().float()
         for key, value in state.items()
@@ -79,6 +268,18 @@ def block_codebook_compress_state(
         codebook_size=min(codebook_size, blocks.shape[0]),
         seed=seed,
     )
+    learned_blocks = _reconstruct_blocks(
+        blocks,
+        learned_centroids,
+        learned_ids,
+        residual_fraction=residual_fraction,
+    )
+    random_blocks = _reconstruct_blocks(
+        blocks,
+        random_centroids,
+        random_ids,
+        residual_fraction=residual_fraction,
+    )
     learned = _policy_summary(
         blocks,
         learned_centroids,
@@ -87,6 +288,7 @@ def block_codebook_compress_state(
         block_size=block_size,
         residual_fraction=residual_fraction,
         policy_name="learned_block_codebook",
+        reconstructed=learned_blocks,
     )
     random_control = _policy_summary(
         blocks,
@@ -96,10 +298,11 @@ def block_codebook_compress_state(
         block_size=block_size,
         residual_fraction=residual_fraction,
         policy_name="random_block_codebook",
+        reconstructed=random_blocks,
     )
     learned["beats_random_control"] = learned["mse"] < random_control["mse"]
     random_control["beats_learned_codebook"] = random_control["mse"] < learned["mse"]
-    return {
+    compression = {
         "benchmark_label": "if3_block_codebook_state_compression",
         "policy": {
             "block_size": block_size,
@@ -120,6 +323,23 @@ def block_codebook_compress_state(
             "runtime_buffer_bytes_counts_fp32_reconstructed_state",
         ],
     }
+    result: dict[str, Any] = {"compression": compression}
+    if include_states:
+        result["states"] = {
+            "learned_block_codebook": _blocks_to_state(
+                state,
+                floating_items,
+                block_slices,
+                learned_blocks,
+            ),
+            "random_block_codebook": _blocks_to_state(
+                state,
+                floating_items,
+                block_slices,
+                random_blocks,
+            ),
+        }
+    return result
 
 
 def _state_to_blocks(
@@ -207,15 +427,16 @@ def _policy_summary(
     block_size: int,
     residual_fraction: float,
     policy_name: str,
+    reconstructed: torch.Tensor | None = None,
 ) -> dict[str, Any]:
-    reconstructed = centroids[ids].clone()
-    residual = blocks - reconstructed
+    if reconstructed is None:
+        reconstructed = _reconstruct_blocks(
+            blocks,
+            centroids,
+            ids,
+            residual_fraction=residual_fraction,
+        )
     residual_values = _residual_count(blocks.numel(), residual_fraction)
-    if residual_values:
-        indexes = torch.topk(residual.reshape(-1).abs(), k=residual_values).indices
-        flat_reconstructed = reconstructed.reshape(-1)
-        flat_blocks = blocks.reshape(-1)
-        flat_reconstructed[indexes] = flat_blocks[indexes]
     mse = float(torch.mean((blocks - reconstructed) ** 2).item())
     max_abs = float(torch.max((blocks - reconstructed).abs()).item())
     codebook_bytes = int(centroids.numel() * 4)
@@ -246,6 +467,48 @@ def _policy_summary(
         "block_reference_count": len(block_slices),
         "beats_random_control": False,
     }
+
+
+def _reconstruct_blocks(
+    blocks: torch.Tensor,
+    centroids: torch.Tensor,
+    ids: torch.Tensor,
+    *,
+    residual_fraction: float,
+) -> torch.Tensor:
+    reconstructed = centroids[ids].clone()
+    residual_values = _residual_count(blocks.numel(), residual_fraction)
+    if residual_values:
+        residual = blocks - reconstructed
+        indexes = torch.topk(residual.reshape(-1).abs(), k=residual_values).indices
+        flat_reconstructed = reconstructed.reshape(-1)
+        flat_blocks = blocks.reshape(-1)
+        flat_reconstructed[indexes] = flat_blocks[indexes]
+    return reconstructed
+
+
+def _blocks_to_state(
+    original_state: dict[str, torch.Tensor],
+    floating_items: dict[str, torch.Tensor],
+    block_slices: list[tuple[str, int, int]],
+    reconstructed_blocks: torch.Tensor,
+) -> dict[str, torch.Tensor]:
+    reconstructed_flats = {
+        key: torch.empty(value.numel(), dtype=torch.float32)
+        for key, value in floating_items.items()
+    }
+    for block_index, (key, start, end) in enumerate(block_slices):
+        reconstructed_flats[key][start:end] = reconstructed_blocks[block_index, : end - start]
+    reconstructed_state = {
+        key: value.detach().cpu().clone()
+        for key, value in original_state.items()
+        if not torch.is_floating_point(value)
+    }
+    for key, flat in reconstructed_flats.items():
+        reconstructed_state[key] = flat.reshape(original_state[key].shape).to(
+            dtype=original_state[key].dtype
+        )
+    return reconstructed_state
 
 
 def _residual_count(numel: int, fraction: float) -> int:

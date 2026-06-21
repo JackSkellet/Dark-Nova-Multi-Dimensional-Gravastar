@@ -81,6 +81,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_if2_fast_weight_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_checkpoint_probe":
         return _assess_if3_block_codebook_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_validation_probe":
+        return _assess_if3_block_codebook_validation_probe(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1687,6 +1689,65 @@ def _assess_if3_block_codebook_probe(record: dict[str, Any]) -> Assessment:
             "learned_mse": learned["mse"],
             "random_control_mse": random_control["mse"],
             "beats_random_control": beats_random,
+            "encoded_bytes": learned["encoded_bytes"],
+            "metadata_bytes": learned["metadata_bytes"],
+            "runtime_buffer_bytes": learned["runtime_buffer_bytes"],
+            "encoded_plus_runtime_bytes": learned["encoded_plus_runtime_bytes"],
+            "packed_kernel_evaluated": metrics["packed_kernel_evaluated"],
+            "loss_evaluated": metrics["loss_evaluated"],
+        },
+    }
+
+
+def _assess_if3_block_codebook_validation_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    compression = metrics["compression"]
+    learned = compression["learned_codebook"]
+    random_control = compression["random_codebook_control"]
+    policies = metrics["policies"]
+    comparisons = metrics["comparisons"]
+    learned_beats_random_loss = bool(comparisons["learned_beats_random_loss"])
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "validation_loss_probe_positive"
+            if learned_beats_random_loss
+            else "validation_loss_random_control_not_beaten"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "learned_block_codebook_validation_loss_beats_random_control"
+            if learned_beats_random_loss
+            else "learned_block_codebook_validation_loss_does_not_beat_random_control"
+        ),
+        "limitations": [
+            "reconstructed_fp32_runtime_buffer",
+            "no_packed_kernel_speed",
+            "metadata_and_runtime_buffers_counted",
+            "compression_candidate_not_deployment_ready",
+            "single_checkpoint_validation_probe",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "checkpoint_type": metrics["checkpoint"]["checkpoint_type"],
+            "checkpoint_step": metrics["checkpoint"]["step"],
+            "split": metrics["split"],
+            "floating_parameter_count": compression["floating_parameter_count"],
+            "block_count": compression["block_count"],
+            "fp32_loss": policies["fp32"]["loss"],
+            "learned_loss": policies["learned_block_codebook"]["loss"],
+            "random_control_loss": policies["random_block_codebook"]["loss"],
+            "tokens": policies["fp32"]["tokens"],
+            "learned_loss_delta_vs_fp32": comparisons["learned_loss_delta_vs_fp32"],
+            "random_loss_delta_vs_fp32": comparisons["random_loss_delta_vs_fp32"],
+            "learned_loss_delta_vs_random": comparisons["learned_loss_delta_vs_random"],
+            "learned_beats_random_loss": learned_beats_random_loss,
+            "learned_mse": learned["mse"],
+            "random_control_mse": random_control["mse"],
+            "learned_mse_beats_random_mse": comparisons[
+                "learned_mse_beats_random_mse"
+            ],
             "encoded_bytes": learned["encoded_bytes"],
             "metadata_bytes": learned["metadata_bytes"],
             "runtime_buffer_bytes": learned["runtime_buffer_bytes"],
