@@ -8,10 +8,12 @@ RUNS = {
     "dense": {
         123: "T11c_dense528_adamw_fp32_50m",
         456: "T12a_dense528_seed456_adamw_fp32_50m",
+        789: "T12c_dense528_seed789_adamw_fp32_50m",
     },
     "adapter": {
         123: "T11b_adapter528_adamw_fp32_50m",
         456: "T12b_adapter528_seed456_adamw_fp32_50m",
+        789: "T12d_adapter528_seed789_adamw_fp32_50m",
     },
 }
 
@@ -30,33 +32,92 @@ SELECTION_METRICS = {"final_validation_loss", "best_validation_loss"}
 
 
 def summarize_t12_second_seed_pair(results_dir: Path) -> dict[str, Any]:
-    runs = {
-        family: {
-            seed: _load_run(results_dir, experiment_id)
-            for seed, experiment_id in seed_to_experiment.items()
-        }
-        for family, seed_to_experiment in RUNS.items()
-    }
-    metric_summary = {
-        metric: _metric_summary(runs, metric, lower_is_better=lower_is_better)
-        for metric, lower_is_better in LOWER_IS_BETTER.items()
-    }
-    final_validation_margin = abs(
-        metric_summary["final_validation_loss"]["families"]["dense"]["mean"]
-        - metric_summary["final_validation_loss"]["families"]["adapter"]["mean"]
+    runs = _load_runs(results_dir, seeds=(123, 456))
+    summary = _summarize_runs(
+        runs,
+        benchmark_label="t12_second_seed_pair_summary",
+        interpretation=(
+            "Dense-528 has the lower mean validation loss and better resource metrics "
+            "across the two available seeds, but the final-validation mean margin is "
+            "small and best-validation winner changes by seed. Test loss is reported "
+            "only after validation-defined selection."
+        ),
     )
-    winner_changes = [
-        metric
-        for metric, summary in metric_summary.items()
-        if summary["per_seed_winners"].get("123") != summary["per_seed_winners"].get("456")
-    ]
+    final_validation_margin = abs(
+        summary["metrics"]["final_validation_loss"]["families"]["dense"]["mean"]
+        - summary["metrics"]["final_validation_loss"]["families"]["adapter"]["mean"]
+    )
+    winner_changes = _winner_changes(summary["metrics"])
     third_seed_reasons = []
     if final_validation_margin < 0.005:
         third_seed_reasons.append("validation_margin_is_small")
     if "best_validation_loss" in winner_changes:
         third_seed_reasons.append("best_validation_winner_changes_by_seed")
+    summary["third_seed_recommendation"] = {
+        "recommended": bool(third_seed_reasons),
+        "reasons": third_seed_reasons,
+        "validation_mean_margin": final_validation_margin,
+        "winner_changes_by_metric": winner_changes,
+    }
+    return summary
+
+
+def summarize_t12_three_seed_pair(results_dir: Path) -> dict[str, Any]:
+    runs = _load_runs(results_dir, seeds=(123, 456, 789))
+    summary = _summarize_runs(
+        runs,
+        benchmark_label="t12_three_seed_pair_summary",
+        interpretation=(
+            "Dense-528 remains the mean validation-loss, resource, and throughput "
+            "winner across three matched seeds. Residual-adapter-528 keeps a "
+            "reported-only final-test-loss edge, but test loss is not used for "
+            "checkpoint or architecture selection."
+        ),
+    )
+    final_validation = summary["metrics"]["final_validation_loss"]
+    best_validation = summary["metrics"]["best_validation_loss"]
+    summary["third_seed_resolution"] = {
+        "third_seed_completed": True,
+        "selected_family_by_final_validation_mean": final_validation["winner_by_mean"],
+        "selected_family_by_best_validation_mean": best_validation["winner_by_mean"],
+        "test_loss_used_for_selection": False,
+        "winner_changes_by_metric": _winner_changes(summary["metrics"]),
+    }
+    return summary
+
+
+def _load_runs(
+    results_dir: Path,
+    *,
+    seeds: tuple[int, ...],
+) -> dict[str, dict[int, dict[str, Any]]]:
+    runs = {
+        family: {
+            seed: _load_run(results_dir, experiment_id)
+            for seed, experiment_id in seed_to_experiment.items()
+            if seed in seeds
+        }
+        for family, seed_to_experiment in RUNS.items()
+    }
+    for family, seed_to_run in runs.items():
+        missing = set(seeds) - set(seed_to_run)
+        if missing:
+            raise ValueError(f"missing T12 {family} run mapping for seeds: {sorted(missing)}")
+    return runs
+
+
+def _summarize_runs(
+    runs: dict[str, dict[int, dict[str, Any]]],
+    *,
+    benchmark_label: str,
+    interpretation: str,
+) -> dict[str, Any]:
+    metric_summary = {
+        metric: _metric_summary(runs, metric, lower_is_better=lower_is_better)
+        for metric, lower_is_better in LOWER_IS_BETTER.items()
+    }
     return {
-        "benchmark_label": "t12_second_seed_pair_summary",
+        "benchmark_label": benchmark_label,
         "runs": {
             family: {
                 "seeds": sorted(seed_to_run),
@@ -73,19 +134,17 @@ def summarize_t12_second_seed_pair(results_dir: Path) -> dict[str, Any]:
             "selection_metrics": sorted(SELECTION_METRICS),
             "reported_only_metrics": ["final_test_loss", "best_test_loss"],
         },
-        "third_seed_recommendation": {
-            "recommended": bool(third_seed_reasons),
-            "reasons": third_seed_reasons,
-            "validation_mean_margin": final_validation_margin,
-            "winner_changes_by_metric": winner_changes,
-        },
-        "interpretation": (
-            "Dense-528 has the lower mean validation loss and better resource metrics "
-            "across the two available seeds, but the final-validation mean margin is "
-            "small and best-validation winner changes by seed. Test loss is reported "
-            "only after validation-defined selection."
-        ),
+        "interpretation": interpretation,
     }
+
+
+def _winner_changes(metric_summary: dict[str, Any]) -> list[str]:
+    changed = []
+    for metric, summary in metric_summary.items():
+        winners = set(summary["per_seed_winners"].values())
+        if len(winners) > 1:
+            changed.append(metric)
+    return changed
 
 
 def _load_run(results_dir: Path, experiment_id: str) -> dict[str, Any]:

@@ -2479,6 +2479,193 @@
     },
     {
       "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 3415
+          },
+          "experiment_id": "D4_hf_corpus_materialization",
+          "git_commit": "de86b4508a0972d970ed9115f9f2a3be546deaa4",
+          "output_sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 735566,
+            "train": 50102528,
+            "validation": 1455924
+          }
+        },
+        "failure": "",
+        "parameter_count": 10397105,
+        "status": "completed",
+        "train_steps": 195313,
+        "train_tokens": 50000128,
+        "validation_loss": 1.039739442319842
+      },
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "dense_50m_baseline_positive",
+      "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12c_dense528_seed789_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 3415
+          },
+          "experiment_id": "D4_hf_corpus_materialization",
+          "git_commit": "de86b4508a0972d970ed9115f9f2a3be546deaa4",
+          "output_sha256": "547b2ff1d9eedd61f4791d6cffb256ec844e8312513ec529b953952511f3a2bc",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 735566,
+            "train": 50102528,
+            "validation": 1455924
+          }
+        },
+        "failure": "",
+        "parameter_count": 10604801,
+        "status": "completed",
+        "train_steps": 195313,
+        "train_tokens": 50000128,
+        "validation_loss": 1.0431298993935343
+      },
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "dense_50m_baseline_positive",
+      "primary_reason": "dense_decoder_10m_plus_completed_50m_token_run",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_final_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_final_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_best_validation_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12d_adapter528_seed789_adamw_fp32_50m_best_test_eval",
+      "hypothesis": "true_d4_split_checkpoint_evaluation",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {},
+      "experiment_id": "T12_three_seed_summary",
+      "hypothesis": "t12_three_seed_dense528_vs_adapter528",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -2590,6 +2777,43 @@
       "outcome": "t11_dense528_width_control_frontier_expansion",
       "primary_reason": "dense528_beats_dense544_and_adapter528_on_validation_resource_and_throughput",
       "supports_pareto_improvement": true
+    },
+    {
+      "evidence": {
+        "adapter_best_validation_mean": 1.0440282420216438,
+        "adapter_final_test_mean": 1.038273886796863,
+        "adapter_final_test_winner_by_mean": true,
+        "adapter_final_validation_mean": 1.0413266239629593,
+        "dense_best_validation_mean": 1.0371995076614742,
+        "dense_final_test_mean": 1.0409602186603781,
+        "dense_final_validation_mean": 1.039464806332641,
+        "dense_resource_winner_by_mean": true,
+        "dense_stability_winner_by_mean": true,
+        "dense_throughput_winner_by_mean": true,
+        "expands_measured_frontier": true,
+        "selected_family_by_best_validation_mean": "dense",
+        "selected_family_by_final_validation_mean": "dense",
+        "summary_experiment_id": "T12_three_seed_summary",
+        "test_loss_used_for_selection": false,
+        "winner_changes_by_metric": [
+          "final_validation_loss",
+          "best_validation_loss",
+          "best_test_loss"
+        ]
+      },
+      "experiment_id": "T12_three_seed_dense_adapter_assessment",
+      "hypothesis": "dense528_is_validation_selected_over_residual_adapter528",
+      "limitations": [
+        "test_loss_reported_only_not_selection_metric",
+        "d4_javascript_source_local_only",
+        "no_executable_javascript_benchmark",
+        "no_paired_documentation_source_consistency_benchmark",
+        "no_packed_quantized_kernel_measurement",
+        "residual_adapter_is_not_frozen_base_parameter_efficient_adapter"
+      ],
+      "outcome": "t12_dense528_validation_selected",
+      "primary_reason": "dense528_wins_three_seed_validation_resource_runtime_and_stability_means",
+      "supports_pareto_improvement": true
     }
   ],
   "frontier_expansion_found": true,
@@ -2606,7 +2830,7 @@
   "outcome_counts": {
     "codegen_proxy_positive": 3,
     "corpus_prepared_insufficient_tokens": 2,
-    "dense_50m_baseline_positive": 6,
+    "dense_50m_baseline_positive": 8,
     "dense_step_debug_failed": 4,
     "dense_step_debug_positive": 8,
     "doc_drift_positive_control": 1,
@@ -2620,12 +2844,13 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
-    "recorded": 77,
+    "recorded": 86,
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
     "t11_adapter_frontier_expansion": 1,
     "t11_dense528_width_control_frontier_expansion": 1,
+    "t12_dense528_validation_selected": 1,
     "training_failed": 6,
     "training_readiness_positive": 1,
     "training_smoke_positive": 11,
@@ -2633,5 +2858,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 135
+  "record_count": 146
 }

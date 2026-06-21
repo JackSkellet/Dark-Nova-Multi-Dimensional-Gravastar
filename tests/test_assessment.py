@@ -454,6 +454,7 @@ def test_assessment_manifest_includes_new_research_options_for_current_limits():
     assert summary["outcome_counts"]["smoke_pass"] >= 1
     assert summary["outcome_counts"]["t11_adapter_frontier_expansion"] == 1
     assert summary["outcome_counts"]["t11_dense528_width_control_frontier_expansion"] == 1
+    assert summary["outcome_counts"]["t12_dense528_validation_selected"] == 1
     assert summary["pareto_improvement_found"] is True
     assert summary["pareto_dominance_found"] is False
     assert summary["frontier_expansion_found"] is True
@@ -487,6 +488,17 @@ def test_assessment_manifest_includes_new_research_options_for_current_limits():
     assert t11c["evidence"]["dense528_resource_wins"] is True
     assert t11c["evidence"]["dense528_throughput_wins"] is True
     assert t11c["evidence"]["adapter528_final_test_win"] is True
+    t12 = next(
+        row
+        for row in summary["assessments"]
+        if row["experiment_id"] == "T12_three_seed_dense_adapter_assessment"
+    )
+    assert t12["supports_pareto_improvement"] is True
+    assert t12["evidence"]["selected_family_by_final_validation_mean"] == "dense"
+    assert t12["evidence"]["selected_family_by_best_validation_mean"] == "dense"
+    assert t12["evidence"]["test_loss_used_for_selection"] is False
+    assert t12["evidence"]["adapter_final_test_winner_by_mean"] is True
+    assert t12["evidence"]["dense_throughput_winner_by_mean"] is True
     assert "activation_residual_cache" in summary["next_research_options"]
     assert "upstream_test_suite_patch_mining" in summary["next_research_options"]
     assert "structured_external_repository_memory" in summary["next_research_options"]

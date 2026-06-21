@@ -89,6 +89,9 @@ def assess_manifest(results_dir: Path) -> Assessment:
     t11_width_control = _assess_t11_dense528_width_control(records)
     if t11_width_control:
         assessments.append(t11_width_control)
+    t12_three_seed = _assess_t12_three_seed_summary(records)
+    if t12_three_seed:
+        assessments.append(t12_three_seed)
     outcome_counts = Counter(str(row["outcome"]) for row in assessments)
     pareto_dominance_found = any(
         bool(row.get("evidence", {}).get("dominates_dense_baseline"))
@@ -355,6 +358,94 @@ def _assess_t11_dense528_width_control(records: list[dict[str, Any]]) -> Assessm
                 for name, task in dense528_functional.items()
                 if isinstance(task, dict) and "token_accuracy_mean" in task
             },
+        },
+    }
+
+
+def _assess_t12_three_seed_summary(records: list[dict[str, Any]]) -> Assessment | None:
+    by_id = {str(record.get("experiment_id", "")): record for record in records}
+    record = by_id.get("T12_three_seed_summary")
+    if not record:
+        return None
+
+    metrics = record["metrics"]["metrics"]
+    resolution = record["metrics"]["third_seed_resolution"]
+    final_validation = metrics["final_validation_loss"]
+    best_validation = metrics["best_validation_loss"]
+    final_test = metrics["final_test_loss"]
+    throughput = metrics["tokens_per_second"]
+    model_bytes = metrics["model_only_bytes"]
+    peak_vram = metrics["peak_vram_bytes"]
+    max_gradient_norm = metrics["max_gradient_norm"]
+
+    dense_validation_selected = bool(
+        final_validation["winner_by_mean"] == "dense"
+        and best_validation["winner_by_mean"] == "dense"
+        and not resolution["test_loss_used_for_selection"]
+    )
+    dense_resource_wins = bool(
+        model_bytes["winner_by_mean"] == "dense"
+        and peak_vram["winner_by_mean"] == "dense"
+    )
+    dense_runtime_wins = throughput["winner_by_mean"] == "dense"
+    dense_stability_wins = max_gradient_norm["winner_by_mean"] == "dense"
+    adapter_final_test_win = final_test["winner_by_mean"] == "adapter"
+
+    expands_measured_frontier = bool(
+        dense_validation_selected
+        and dense_resource_wins
+        and dense_runtime_wins
+        and dense_stability_wins
+        and adapter_final_test_win
+    )
+
+    return {
+        "experiment_id": "T12_three_seed_dense_adapter_assessment",
+        "hypothesis": "dense528_is_validation_selected_over_residual_adapter528",
+        "outcome": (
+            "t12_dense528_validation_selected"
+            if dense_validation_selected
+            else "t12_three_seed_mixed"
+        ),
+        "supports_pareto_improvement": expands_measured_frontier,
+        "primary_reason": (
+            "dense528_wins_three_seed_validation_resource_runtime_and_stability_means"
+        ),
+        "limitations": [
+            "test_loss_reported_only_not_selection_metric",
+            "d4_javascript_source_local_only",
+            "no_executable_javascript_benchmark",
+            "no_paired_documentation_source_consistency_benchmark",
+            "no_packed_quantized_kernel_measurement",
+            "residual_adapter_is_not_frozen_base_parameter_efficient_adapter",
+        ],
+        "evidence": {
+            "summary_experiment_id": "T12_three_seed_summary",
+            "expands_measured_frontier": expands_measured_frontier,
+            "selected_family_by_final_validation_mean": resolution[
+                "selected_family_by_final_validation_mean"
+            ],
+            "selected_family_by_best_validation_mean": resolution[
+                "selected_family_by_best_validation_mean"
+            ],
+            "test_loss_used_for_selection": bool(resolution["test_loss_used_for_selection"]),
+            "dense_final_validation_mean": float(
+                final_validation["families"]["dense"]["mean"]
+            ),
+            "adapter_final_validation_mean": float(
+                final_validation["families"]["adapter"]["mean"]
+            ),
+            "dense_best_validation_mean": float(best_validation["families"]["dense"]["mean"]),
+            "adapter_best_validation_mean": float(
+                best_validation["families"]["adapter"]["mean"]
+            ),
+            "dense_final_test_mean": float(final_test["families"]["dense"]["mean"]),
+            "adapter_final_test_mean": float(final_test["families"]["adapter"]["mean"]),
+            "adapter_final_test_winner_by_mean": adapter_final_test_win,
+            "dense_throughput_winner_by_mean": dense_runtime_wins,
+            "dense_resource_winner_by_mean": dense_resource_wins,
+            "dense_stability_winner_by_mean": dense_stability_wins,
+            "winner_changes_by_metric": resolution["winner_changes_by_metric"],
         },
     }
 
