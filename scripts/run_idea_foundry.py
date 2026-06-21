@@ -24,6 +24,75 @@ def _append_manifest(output: Path, record: dict[str, object]) -> None:
     write_json(manifest_path, records)
 
 
+def build_idea_foundry_records(
+    *,
+    corpus_jsonl: Path,
+    candidates_output: Path,
+    probe_output: Path,
+    max_documents: int | None,
+    experiment_id: str,
+    seed: int,
+) -> tuple[dict[str, object], dict[str, object]]:
+    command = (
+        "uv run python scripts/run_idea_foundry.py "
+        f"--corpus-jsonl {corpus_jsonl} "
+        f"--candidates-output {candidates_output} "
+        f"--probe-output {probe_output} "
+        f"--experiment-id {experiment_id} "
+        f"--seed {seed}"
+    )
+    if max_documents is not None:
+        command += f" --max-documents {max_documents}"
+
+    resolved_config = {
+        "corpus_jsonl": str(corpus_jsonl),
+        "candidates_output": str(candidates_output),
+        "probe_output": str(probe_output),
+        "max_documents": max_documents,
+        "experiment_id": experiment_id,
+        "seed": seed,
+    }
+    candidate_metrics = {
+        "benchmark_label": "idea_foundry_candidate_generation",
+        "candidates": IDEA_FOUNDRY_CANDIDATES,
+        "constraint_summary": summarize_candidate_constraints(IDEA_FOUNDRY_CANDIDATES),
+        "resolved_config": resolved_config,
+    }
+    probe_metrics = run_repository_graph_signal_probe(
+        corpus_jsonl,
+        max_documents=max_documents,
+    )
+    probe_metrics["resolved_config"] = resolved_config
+
+    candidate_record = ExperimentRecord(
+        experiment_id=f"{experiment_id}_candidates",
+        hypothesis="idea_foundry_six_distinct_local_coding_architecture_candidates",
+        seed=seed,
+        command=command,
+        metrics=candidate_metrics,
+        status="completed",
+        notes=(
+            "Six candidate mechanisms for the next research cycle. These are not "
+            "quality claims until prototyped and evaluated."
+        ),
+    ).to_jsonable()
+    candidate_record["resolved_config"] = candidate_metrics["resolved_config"]
+    probe_record = ExperimentRecord(
+        experiment_id=f"{experiment_id}_repository_graph_signal_probe",
+        hypothesis="if1_repository_graph_signal_exists_in_d5",
+        seed=seed,
+        command=command,
+        metrics=probe_metrics,
+        status="completed",
+        notes=(
+            "Cheap falsifying probe for IF1 only. It checks whether regex-extracted "
+            "repository import edges and roles exist; it is not a model-training result."
+        ),
+    ).to_jsonable()
+    probe_record["resolved_config"] = probe_metrics["resolved_config"]
+    return candidate_record, probe_record
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus-jsonl", type=Path, required=True)
@@ -42,64 +111,17 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=123)
     args = parser.parse_args()
 
-    command = (
-        "uv run python scripts/run_idea_foundry.py "
-        f"--corpus-jsonl {args.corpus_jsonl} "
-        f"--candidates-output {args.candidates_output} "
-        f"--probe-output {args.probe_output} "
-        f"--experiment-id {args.experiment_id} "
-        f"--seed {args.seed}"
-    )
-    if args.max_documents is not None:
-        command += f" --max-documents {args.max_documents}"
-
-    candidate_metrics = {
-        "benchmark_label": "idea_foundry_candidate_generation",
-        "candidates": IDEA_FOUNDRY_CANDIDATES,
-        "constraint_summary": summarize_candidate_constraints(IDEA_FOUNDRY_CANDIDATES),
-        "resolved_config": {
-            "corpus_jsonl": str(args.corpus_jsonl),
-            "candidates_output": str(args.candidates_output),
-            "probe_output": str(args.probe_output),
-            "max_documents": args.max_documents,
-            "experiment_id": args.experiment_id,
-            "seed": args.seed,
-        },
-    }
-    candidate_record = ExperimentRecord(
-        experiment_id=f"{args.experiment_id}_candidates",
-        hypothesis="idea_foundry_six_distinct_local_coding_architecture_candidates",
+    candidate_record, probe_record = build_idea_foundry_records(
+        corpus_jsonl=args.corpus_jsonl,
+        candidates_output=args.candidates_output,
+        probe_output=args.probe_output,
+        max_documents=args.max_documents,
+        experiment_id=args.experiment_id,
         seed=args.seed,
-        command=command,
-        metrics=candidate_metrics,
-        status="completed",
-        notes=(
-            "Six candidate mechanisms for the next research cycle. These are not "
-            "quality claims until prototyped and evaluated."
-        ),
-    ).to_jsonable()
-    candidate_record["resolved_config"] = candidate_metrics["resolved_config"]
+    )
     write_json(args.candidates_output, candidate_record)
     _append_manifest(args.candidates_output, candidate_record)
 
-    probe_metrics = run_repository_graph_signal_probe(
-        args.corpus_jsonl,
-        max_documents=args.max_documents,
-    )
-    probe_metrics["resolved_config"] = candidate_metrics["resolved_config"]
-    probe_record = ExperimentRecord(
-        experiment_id=f"{args.experiment_id}_repository_graph_signal_probe",
-        hypothesis="if1_repository_graph_signal_exists_in_d5",
-        seed=args.seed,
-        command=command,
-        metrics=probe_metrics,
-        status="completed",
-        notes=(
-            "Cheap falsifying probe for IF1 only. It checks whether regex-extracted "
-            "repository import edges and roles exist; it is not a model-training result."
-        ),
-    ).to_jsonable()
-    probe_record["resolved_config"] = probe_metrics["resolved_config"]
     write_json(args.probe_output, probe_record)
     _append_manifest(args.probe_output, probe_record)
 

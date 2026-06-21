@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 import subprocess
 import sys
 from pathlib import Path
@@ -10,6 +11,16 @@ from weightlab.idea_foundry import (
     run_repository_graph_signal_probe,
     summarize_candidate_constraints,
 )
+
+
+def _load_run_idea_foundry_module():
+    script_path = Path(__file__).resolve().parents[1] / "scripts" / "run_idea_foundry.py"
+    spec = importlib.util.spec_from_file_location("run_idea_foundry", script_path)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_idea_foundry_records_six_distinct_candidates_with_required_constraints():
@@ -167,3 +178,43 @@ def test_idea_foundry_cli_writes_candidate_and_probe_records(tmp_path):
     assert candidates["metrics"]["constraint_summary"]["candidate_count"] == 6
     assert probe["experiment_id"] == "idea_foundry_test_repository_graph_signal_probe"
     assert probe["metrics"]["candidate_id"] == "IF1"
+
+
+def test_idea_foundry_builds_records_before_writing_to_preserve_clean_provenance(
+    tmp_path,
+    monkeypatch,
+):
+    corpus_path = tmp_path / "corpus.jsonl"
+    corpus_path.write_text(
+        json.dumps(
+            {
+                "repo": "org/app",
+                "path": "src/main.js",
+                "split": "train",
+                "repo_split": "train",
+                "language": "JavaScript",
+                "content_roles": ["source"],
+                "tokens": 12,
+                "text": "const helper = require('./helper');\nmodule.exports = helper;\n",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr("weightlab.metrics.git_commit", lambda: "cleancommit")
+    monkeypatch.setattr("weightlab.metrics.git_status_short", lambda: "")
+
+    module = _load_run_idea_foundry_module()
+    candidate_record, probe_record = module.build_idea_foundry_records(
+        corpus_jsonl=corpus_path,
+        candidates_output=tmp_path / "candidates.json",
+        probe_output=tmp_path / "probe.json",
+        max_documents=None,
+        experiment_id="idea_foundry_test",
+        seed=123,
+    )
+
+    assert candidate_record["git_commit"] == "cleancommit"
+    assert candidate_record["git_dirty"] is False
+    assert probe_record["git_commit"] == "cleancommit"
+    assert probe_record["git_dirty"] is False
