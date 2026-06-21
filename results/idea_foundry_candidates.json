@@ -1,0 +1,247 @@
+{
+  "command": "uv run python scripts/run_idea_foundry.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --candidates-output results/idea_foundry_candidates.json --probe-output results/IF1_repository_graph_signal_probe.json --experiment-id idea_foundry --seed 123",
+  "experiment_id": "idea_foundry_candidates",
+  "git_commit": "0dc3f82569141e8b380aad7330956a156a2d5449",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "idea_foundry_six_distinct_local_coding_architecture_candidates",
+  "metrics": {
+    "benchmark_label": "idea_foundry_candidate_generation",
+    "candidates": [
+      {
+        "addresses": [
+          "code_structure",
+          "functional_evaluation"
+        ],
+        "cheapest_falsifying_test": "Scan D5 for import/test/doc edges, split leakage, and local edge resolution. Reject the pilot if resolvable edges are too sparse or cross split boundaries.",
+        "closest_primary_source_prior_art": [
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "GraphCodeBERT uses data-flow structure in encoder pre-training; IF1 tests repository-level import/test/doc edges inside a small causal decoder and keeps split-aware evaluation fixed.",
+            "title": "GraphCodeBERT: Pre-training Code Representations with Data Flow",
+            "url": "https://arxiv.org/abs/2009.08366"
+          }
+        ],
+        "equations": [
+          "A_ij = (Q_i K_j^T / sqrt(d)) + causal_ij + b_type(edge(i,j))",
+          "L = L_lm + lambda_edge * CE(edge_type_hat, edge_type)"
+        ],
+        "expected_scaling": "Bias lookup is O(edges in window) and should be negligible versus dense attention at 128-token context; preprocessing scales linearly with files.",
+        "family": "code_structure",
+        "id": "IF1",
+        "likely_failure": "D5 rows may not expose enough resolvable repository graph structure, and file-level edges may not land inside short 128-token windows often enough.",
+        "mechanism": "Add typed repository-edge bias and optional edge prediction losses to a dense causal decoder. Edges are imports, exports, tests, docs, and same-symbol file links resolved inside a repository-aware split.",
+        "mechanism_occurrence_evidence": "D5 rows contain repo, path, split, role, and source text fields that can support import/test/doc edge extraction without fetching external data.",
+        "name": "Repository graph conditioned decoder",
+        "novelty_label": "adjacent",
+        "rocm_plan": "Start with additive attention bias tensors in the existing explicit causal block; keep FP32 AdamW and finite masks before any fused-kernel work.",
+        "uses_adapters": false,
+        "uses_moe_or_topic_routing": false
+      },
+      {
+        "addresses": [
+          "continual_evolution"
+        ],
+        "cheapest_falsifying_test": "Chronological API-rename fixture: compare retrieval-only, fast-weight-only, and retrieval-plus-fast-weight answers after one verified update.",
+        "closest_primary_source_prior_art": [
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "Fast weights store recent sequence memories; IF2 makes the memory repository-scoped, signed, security-gated, and explicitly compared against retrieval and replay.",
+            "title": "Using Fast Weights to Attend to the Recent Past",
+            "url": "https://arxiv.org/abs/1610.06258"
+          }
+        ],
+        "equations": [
+          "F_t = decay * F_{t-1} + eta * phi(k_t) phi(v_t)^T",
+          "h'_t = h_t + gate(h_t) * F_t phi(q_t)"
+        ],
+        "expected_scaling": "Associative matrix cost is O(d*r) per step for rank r; storage is bounded by explicit eviction and signed promotion policies.",
+        "family": "continual_evolution",
+        "id": "IF2",
+        "likely_failure": "Fast weights may memorize surface tokens without improving held-out repair or API reuse, and poisoning gates may reject most useful updates.",
+        "mechanism": "Keep base weights fixed during a session and update a small associative fast-weight matrix from verified local examples. Promotion to persistent state requires regression and security gates.",
+        "mechanism_occurrence_evidence": "Earlier E5 chronology fixtures already contain controlled update events and stale-document failures suitable for a one-update fast-weight proxy.",
+        "name": "Signed fast-weight evolution scratchpad",
+        "novelty_label": "adjacent",
+        "rocm_plan": "Prototype as small FP32/BF16 matrix multiplies beside the dense block, then benchmark whether HIP GEMM overhead beats retrieval latency.",
+        "uses_adapters": false,
+        "uses_moe_or_topic_routing": false
+      },
+      {
+        "addresses": [
+          "weight_storage_compression"
+        ],
+        "cheapest_falsifying_test": "Apply block-codebook reconstruction to T11c/T12 dense checkpoints and compare loss, bytes, and random-codebook controls.",
+        "closest_primary_source_prior_art": [
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "GPTQ quantizes existing weights; IF3 tests reconstructible block generation plus residual accounting and random-control codebooks.",
+            "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+            "url": "https://arxiv.org/abs/2210.17323"
+          },
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "Tensor train layers factorize tensors; IF3 uses audited learned block codebooks plus sparse/low-rank residuals for trained decoders.",
+            "title": "Tensorizing Neural Networks",
+            "url": "https://arxiv.org/abs/1509.06569"
+          }
+        ],
+        "equations": [
+          "W_l,b ~= s_l,b * C[z_l,b] + U_l,b V_l,b^T + Sparse(R_l,b)",
+          "bytes = bytes(C) + bytes(z,s,U,V,R,indexes,reconstruction_cache)"
+        ],
+        "expected_scaling": "Storage can fall below per-channel int8 only if codebook ids and residuals stay small; reconstruction adds O(block_size) unless cached.",
+        "family": "compression",
+        "id": "IF3",
+        "likely_failure": "Metadata and reconstruction caches may erase storage gains, or random codebook controls may match learned codebooks.",
+        "mechanism": "Represent each trained weight block by a compact codebook id, scale, and small sparse residual. A deterministic generator reconstructs blocks from layer id, block coordinates, and codebook entries; all metadata is counted.",
+        "mechanism_occurrence_evidence": "Existing quantization records already show uniform int8 is strong and int4 is weak, creating a clear compression baseline to beat.",
+        "name": "Audited block-codebook weight generator",
+        "novelty_label": "potentially_novel",
+        "rocm_plan": "First reconstruct into dense FP32/BF16 tensors for loss checks, then test a packed lookup/dequant kernel only if metadata-inclusive storage wins.",
+        "uses_adapters": false,
+        "uses_moe_or_topic_routing": false
+      },
+      {
+        "addresses": [
+          "code_structure",
+          "documentation",
+          "functional_evaluation"
+        ],
+        "cheapest_falsifying_test": "Build a tiny public-repo fixture with source, tests, docs, and API drift; verify file selection and signature accuracy beat source-only scoring.",
+        "closest_primary_source_prior_art": [
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "CodeT5 uses identifier-aware code/text objectives; IF4 requires executable test traces and source-doc drift negatives as paired signals.",
+            "title": "CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder Models for Code Understanding and Generation",
+            "url": "https://arxiv.org/abs/2109.00859"
+          }
+        ],
+        "equations": [
+          "L = L_lm + lambda * InfoNCE(e_source, e_test_or_doc, negatives)",
+          "score(file, task) = dot(pool(source), pool(trace_or_doc))"
+        ],
+        "expected_scaling": "Auxiliary pooling is linear in sampled paired spans; executable trace collection is the expensive offline step.",
+        "family": "code_document_objective",
+        "id": "IF4",
+        "likely_failure": "D5 may not include runnable environments, and weak filename/docstring pairs may add noise rather than useful task signal.",
+        "mechanism": "Train with ordinary language modeling plus contrastive alignment between source spans, tests, docs, signatures, and observed executable traces.",
+        "mechanism_occurrence_evidence": "D5 role labels include source, tests, README, documentation, docstrings, and changelogs, although roles overlap and timestamps are mostly absent.",
+        "name": "Executable trace contrastive objective",
+        "novelty_label": "adjacent",
+        "rocm_plan": "Share the dense-528 trunk, add small projection heads, and keep the auxiliary loss in FP32 until the baseline loss path is unchanged.",
+        "uses_adapters": false,
+        "uses_moe_or_topic_routing": false
+      },
+      {
+        "addresses": [
+          "long_context",
+          "code_structure"
+        ],
+        "cheapest_falsifying_test": "Measure bracket/comment/string-state prediction and causal span recovery on D5 before any full 50M-token training.",
+        "closest_primary_source_prior_art": [
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "Mamba makes SSM parameters input-selective; IF5 adds explicit code-syntax state features and tests source/span tasks rather than generic long-context claims.",
+            "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+            "url": "https://arxiv.org/abs/2312.00752"
+          }
+        ],
+        "equations": [
+          "s_t = A(x_t, syntax_t) s_{t-1} + B(x_t, syntax_t) x_t",
+          "h_t = h_t + C(x_t, syntax_t) s_t"
+        ],
+        "expected_scaling": "Linear in sequence length for the mixer block; total model remains mostly transformer cost until more blocks are replaced.",
+        "family": "state_space_hybrid",
+        "id": "IF5",
+        "likely_failure": "At 128-token context the recurrent state may add overhead without enough long-range structure benefit.",
+        "mechanism": "Replace one transformer block with a selective recurrent mixer whose state is explicitly modulated by indentation, bracket depth, comment state, and string-literal state.",
+        "mechanism_occurrence_evidence": "D5 source files include syntax delimiters, comments, minified files, tests, and docs where explicit lexical state can be computed without labels.",
+        "name": "Syntax-state recurrent mixer",
+        "novelty_label": "adjacent",
+        "rocm_plan": "Start with eager PyTorch recurrent scan for correctness, then port the scan to a HIP-friendly chunked kernel only if the pilot beats dense loss/function.",
+        "uses_adapters": false,
+        "uses_moe_or_topic_routing": false
+      },
+      {
+        "addresses": [
+          "continual_evolution",
+          "repository_specialization"
+        ],
+        "cheapest_falsifying_test": "Chronological multi-repo API reuse fixture with retrieval-only, dense, adapter, and specialist-lattice controls.",
+        "closest_primary_source_prior_art": [
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "LoRA trains low-rank adapters; IF6 adds repository-aware specialist lattices, consolidation gates, rollback, and retrieval/memory controls.",
+            "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+            "url": "https://arxiv.org/abs/2106.09685"
+          },
+          {
+            "access_date": "2026-06-21",
+            "exact_difference": "Switch routes tokens to experts; IF6 routes signed local deltas by repository/task and requires chronological continual-learning tests.",
+            "title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity",
+            "url": "https://arxiv.org/abs/2101.03961"
+          }
+        ],
+        "equations": [
+          "h' = h + sum_{k in topK(g(repo, task))} alpha_k Delta_k(h)",
+          "Delta_shared = argmin_D sum_k ||Delta_k - D c_k||_2 + beta * regressions"
+        ],
+        "expected_scaling": "Training scales with active specialists; inference overhead depends on top-k deltas and consolidation frequency.",
+        "family": "continual_specialization",
+        "id": "IF6",
+        "likely_failure": "Specialists may overfit repository identities, and routing/consolidation metadata may exceed any quality or storage gain.",
+        "mechanism": "Keep a stable dense core and train small repository/language specialists, then periodically consolidate specialists into shared deltas only when held-out validation, security, and regression gates pass.",
+        "mechanism_occurrence_evidence": "D5 has repository IDs, language labels, and role labels needed to define specialist scopes while preserving repository-aware splits.",
+        "name": "Delta-consolidated specialist lattice",
+        "novelty_label": "adjacent",
+        "rocm_plan": "Reuse the residual-adapter branch only as a control, then test specialist delta matmuls with explicit top-k dispatch and dense fallback.",
+        "uses_adapters": true,
+        "uses_moe_or_topic_routing": true
+      }
+    ],
+    "constraint_summary": {
+      "candidate_count": 6,
+      "candidate_ids": [
+        "IF1",
+        "IF2",
+        "IF3",
+        "IF4",
+        "IF5",
+        "IF6"
+      ],
+      "code_structure_candidates": 3,
+      "compression_candidates": 1,
+      "continual_evolution_candidates": 2,
+      "potentially_novel_candidates": 1,
+      "without_adapters": 5,
+      "without_moe_or_topic_routing": 5
+    },
+    "resolved_config": {
+      "candidates_output": "results/idea_foundry_candidates.json",
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "experiment_id": "idea_foundry",
+      "max_documents": null,
+      "probe_output": "results/IF1_repository_graph_signal_probe.json",
+      "seed": 123
+    }
+  },
+  "notes": "Six candidate mechanisms for the next research cycle. These are not quality claims until prototyped and evaluated.",
+  "recorded_at_unix": 1782009700.7098227,
+  "resolved_config": {
+    "candidates_output": "results/idea_foundry_candidates.json",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "experiment_id": "idea_foundry",
+    "max_documents": null,
+    "probe_output": "results/IF1_repository_graph_signal_probe.json",
+    "seed": 123
+  },
+  "seed": 123,
+  "status": "completed"
+}

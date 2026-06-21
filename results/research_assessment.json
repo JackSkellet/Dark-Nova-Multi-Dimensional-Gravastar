@@ -2852,6 +2852,50 @@
     },
     {
       "evidence": {
+        "candidate_count": 6,
+        "code_structure_candidates": 3,
+        "compression_candidates": 1,
+        "continual_evolution_candidates": 2,
+        "potentially_novel_candidates": 1,
+        "without_adapters": 5,
+        "without_moe_or_topic_routing": 5
+      },
+      "experiment_id": "idea_foundry_candidates",
+      "hypothesis": "idea_foundry_six_distinct_local_coding_architecture_candidates",
+      "limitations": [
+        "not_training_evidence",
+        "not_quality_evidence",
+        "novelty_requires_deeper_prior_art_review",
+        "three_candidate_prototypes_still_pending"
+      ],
+      "outcome": "idea_lane_opened",
+      "primary_reason": "six_candidate_idea_foundry_constraints_recorded",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "candidate_id": "IF1",
+        "document_count": 27915,
+        "import_edge_count": 18919,
+        "mechanism_signal_present": true,
+        "repositories_with_edges": 4041,
+        "repository_aware_splits_preserved": true,
+        "resolved_local_edge_count": 12
+      },
+      "experiment_id": "idea_foundry_repository_graph_signal_probe",
+      "hypothesis": "if1_repository_graph_signal_exists_in_d5",
+      "limitations": [
+        "not_model_training",
+        "regex_import_extraction_only",
+        "no_ast_or_package_resolution",
+        "does_not_prove_quality_gain"
+      ],
+      "outcome": "mechanism_signal_present",
+      "primary_reason": "repository_graph_signal_probe_completed_for_if1",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -3025,8 +3069,10 @@
     "exploration_positive": 1,
     "hf_corpus_manifest_positive": 1,
     "hf_corpus_materialized": 2,
+    "idea_lane_opened": 1,
     "limited_positive": 1,
     "measurement_positive": 1,
+    "mechanism_signal_present": 1,
     "mixed": 1,
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
@@ -3045,5 +3091,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 151
+  "record_count": 153
 }

@@ -1,0 +1,183 @@
+{
+  "command": "uv run python scripts/run_idea_foundry.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --candidates-output results/idea_foundry_candidates.json --probe-output results/IF1_repository_graph_signal_probe.json --experiment-id idea_foundry --seed 123",
+  "experiment_id": "idea_foundry_repository_graph_signal_probe",
+  "git_commit": "0dc3f82569141e8b380aad7330956a156a2d5449",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if1_repository_graph_signal_exists_in_d5",
+  "metrics": {
+    "benchmark_label": "idea_foundry_repository_graph_signal_probe",
+    "candidate_id": "IF1",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "document_count": 27915,
+    "edge_examples": [
+      {
+        "repo": "mirthy/cdnjs",
+        "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "split": "train",
+        "target": "./emblem"
+      },
+      {
+        "repo": "mirthy/cdnjs",
+        "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "split": "train",
+        "target": "./emblem"
+      },
+      {
+        "repo": "mirthy/cdnjs",
+        "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "split": "train",
+        "target": "./emblem"
+      },
+      {
+        "repo": "mirthy/cdnjs",
+        "resolved_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "source_path": "ajax/libs/emblem/0.3.14/emblem.js",
+        "split": "train",
+        "target": "./emblem"
+      },
+      {
+        "repo": "ChangHoSeok/courage-portfolio-log",
+        "resolved_path": "couragePortfolioLog/src/main/resources/static/vendors/gentelella-template/echarts/src/component/dataZoom/DataZoomView.js",
+        "source_path": "couragePortfolioLog/src/main/resources/static/vendors/gentelella-template/echarts/src/component/dataZoom/SliderZoomView.js",
+        "split": "train",
+        "target": "./DataZoomView"
+      },
+      {
+        "repo": "pshrmn/curi",
+        "resolved_path": "website/src/pages/Guides/apollo.js",
+        "source_path": "website/src/pages/Guides/apollo.js",
+        "split": "train",
+        "target": "./apollo"
+      },
+      {
+        "repo": "dunwu/react-app",
+        "resolved_path": "codes/src/view/general/setting/redux/constants.js",
+        "source_path": "codes/src/view/general/setting/redux/actions.js",
+        "split": "train",
+        "target": "./constants"
+      },
+      {
+        "repo": "firepick1/firenodejs",
+        "resolved_path": "www/js/shared/XYZ.js",
+        "source_path": "www/js/shared/XYZ.js",
+        "split": "train",
+        "target": "./XYZ"
+      },
+      {
+        "repo": "cdnjs/cdnjs",
+        "resolved_path": "ajax/libs/tsparticles/1.14.0-alpha.6/Core/Particle/Updater.js",
+        "source_path": "ajax/libs/tsparticles/1.14.0-alpha.6/Core/Particle.js",
+        "split": "train",
+        "target": "./Particle/Updater"
+      },
+      {
+        "repo": "zajrik/discord.js",
+        "resolved_path": "src/structures/User.js",
+        "source_path": "src/structures/Guild.js",
+        "split": "train",
+        "target": "./User"
+      },
+      {
+        "repo": "sebastienros/jint",
+        "resolved_path": "Jint.Tests.Test262/test/language/module-code/namespace/internals/is-extensible.js",
+        "source_path": "Jint.Tests.Test262/test/language/module-code/namespace/internals/is-extensible.js",
+        "split": "train",
+        "target": "./is-extensible.js"
+      },
+      {
+        "repo": "livepeer/protocol",
+        "resolved_path": "utils/merkleTree.js",
+        "source_path": "test/unit/MerkleSnapshot.js",
+        "split": "train",
+        "target": "../../utils/merkleTree"
+      }
+    ],
+    "import_edge_count": 18919,
+    "language_counts": {
+      "Assembly": 4,
+      "Batchfile": 12,
+      "C": 592,
+      "C#": 1146,
+      "C++": 388,
+      "CMake": 7,
+      "CSS": 784,
+      "Dart": 5,
+      "Dockerfile": 22,
+      "FORTRAN": 2,
+      "GO": 671,
+      "HTML": 1339,
+      "Haskell": 11,
+      "Java": 2928,
+      "JavaScript": 10570,
+      "Julia": 10,
+      "Jupyter Notebooks (Python)": 10,
+      "Kotlin": 19,
+      "Lisp": 1,
+      "Lua": 25,
+      "Makefile": 23,
+      "Markdown": 751,
+      "Matlab": 113,
+      "PHP": 1226,
+      "Perl": 12,
+      "PowerShell": 18,
+      "Python": 5755,
+      "Ruby": 769,
+      "Rust": 41,
+      "SQL": 47,
+      "Scala": 30,
+      "Shell": 172,
+      "Swift": 49,
+      "TeX": 10,
+      "TypeScript": 350,
+      "Visual Basic": 3
+    },
+    "limitations": [
+      "regex_import_extraction_only",
+      "no_ast_or_package_resolution",
+      "edge_presence_probe_not_model_training"
+    ],
+    "mechanism_signal_present": true,
+    "repositories_in_multiple_splits": 0,
+    "repositories_with_edges": 4041,
+    "repository_aware_splits_preserved": true,
+    "resolved_config": {
+      "candidates_output": "results/idea_foundry_candidates.json",
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "experiment_id": "idea_foundry",
+      "max_documents": null,
+      "probe_output": "results/IF1_repository_graph_signal_probe.json",
+      "seed": 123
+    },
+    "resolved_local_edge_count": 12,
+    "role_counts": {
+      "changelog": 21,
+      "docstring": 8655,
+      "documentation": 1157,
+      "readme": 351,
+      "source": 24079,
+      "test": 3958
+    }
+  },
+  "notes": "Cheap falsifying probe for IF1 only. It checks whether regex-extracted repository import edges and roles exist; it is not a model-training result.",
+  "recorded_at_unix": 1782009700.711415,
+  "resolved_config": {
+    "candidates_output": "results/idea_foundry_candidates.json",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "experiment_id": "idea_foundry",
+    "max_documents": null,
+    "probe_output": "results/IF1_repository_graph_signal_probe.json",
+    "seed": 123
+  },
+  "seed": 123,
+  "status": "completed"
+}
