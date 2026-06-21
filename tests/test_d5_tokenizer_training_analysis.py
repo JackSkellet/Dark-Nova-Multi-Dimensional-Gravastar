@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import pytest
+
 from weightlab.d5_tokenizer_training_analysis import summarize_d5_tokenizer_training
 
 
@@ -82,6 +84,42 @@ def _record(
     }
 
 
+def _exact_eval_record(
+    experiment_id: str,
+    *,
+    exact_nats_per_raw_byte: float,
+    exact_bits_per_raw_byte: float,
+) -> dict[str, Any]:
+    return {
+        "experiment_id": experiment_id,
+        "status": "completed",
+        "git_commit": "abc123",
+        "git_dirty": False,
+        "metrics": {
+            "benchmark_label": "dense_checkpoint_evaluation",
+            "split": "validation",
+            "seed": 424242,
+            "exact_byte_accounting": {
+                "evaluated_target_tokens": 12,
+                "evaluated_target_bytes": 24,
+                "zero_byte_target_tokens": 0,
+                "total_target_nll": exact_nats_per_raw_byte * 24,
+                "exact_nats_per_raw_byte": exact_nats_per_raw_byte,
+                "exact_bits_per_raw_byte": exact_bits_per_raw_byte,
+            },
+            "token_byte_nll_records": [
+                {
+                    "target_index": index,
+                    "token_id": index,
+                    "decoded_byte_length": 2,
+                    "nll": exact_nats_per_raw_byte * 2,
+                }
+                for index in range(12)
+            ],
+        },
+    }
+
+
 def test_summarize_d5_tokenizer_training_compares_byte_normalized_runs(tmp_path):
     records = {
         "D5_byte_dense528_seed123_5m_equal_compute.json": _record(
@@ -117,6 +155,31 @@ def test_summarize_d5_tokenizer_training_compares_byte_normalized_runs(tmp_path)
     }
     for name, record in records.items():
         (tmp_path / name).write_text(json.dumps(record), encoding="utf-8")
+    exact_records = {
+        "D5_byte_dense528_seed123_5m_equal_compute_exact_validation_eval.json": (
+            _exact_eval_record(
+                "byte_exact",
+                exact_nats_per_raw_byte=1.6,
+                exact_bits_per_raw_byte=2.3083120654223413,
+            )
+        ),
+        "D5_bpe8192_dense528_seed123_5m_equal_compute_exact_validation_eval.json": (
+            _exact_eval_record(
+                "bpe_compute_exact",
+                exact_nats_per_raw_byte=1.1,
+                exact_bits_per_raw_byte=1.586498294977859,
+            )
+        ),
+        "D5_bpe8192_dense528_seed123_equal_raw_bytes_exact_validation_eval.json": (
+            _exact_eval_record(
+                "bpe_raw_exact",
+                exact_nats_per_raw_byte=1.9,
+                exact_bits_per_raw_byte=2.7411274526890304,
+            )
+        ),
+    }
+    for name, record in exact_records.items():
+        (tmp_path / name).write_text(json.dumps(record), encoding="utf-8")
 
     summary = summarize_d5_tokenizer_training(tmp_path)
 
@@ -132,6 +195,21 @@ def test_summarize_d5_tokenizer_training_compares_byte_normalized_runs(tmp_path)
         ]
         == 320.0
     )
+    assert summary["runs"]["byte_equal_compute"]["validation_exact_byte_accounting"][
+        "exact_nats_per_raw_byte"
+    ] == 1.6
+    assert (
+        summary["runs"]["byte_equal_compute"]["validation_loss_nats_per_estimated_byte"]
+        != summary["runs"]["byte_equal_compute"]["validation_exact_byte_accounting"][
+            "exact_nats_per_raw_byte"
+        ]
+    )
+    assert summary["comparisons"]["equal_compute_bpe_minus_byte_exact_nats_per_raw_byte"] == -0.5
+    assert summary["comparisons"][
+        "equal_raw_bpe_minus_byte_exact_nats_per_raw_byte"
+    ] == pytest.approx(0.3)
+    assert summary["conclusions"]["bpe_equal_compute_improves_exact_nats_per_raw_byte"]
+    assert not summary["conclusions"]["bpe_equal_raw_bytes_improves_exact_nats_per_raw_byte"]
 
 
 def test_summarize_d5_tokenizer_training_cli_writes_record(tmp_path):

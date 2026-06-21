@@ -353,6 +353,27 @@ def test_evaluate_dense_checkpoint_uses_dedicated_texts_and_seed(tmp_path):
     assert with_batch_losses["batch_loss_records"][0]["loss"] > 0.0
     assert "batch_loss_records" not in first
 
+    with_token_bytes = evaluate_dense_checkpoint(
+        checkpoint_path=tmp_path / "dense_decoder_last.pt",
+        texts=heldout_texts,
+        split_name="validation",
+        device="cpu",
+        seed=999,
+        batches=1,
+        include_token_byte_nll=True,
+    )
+
+    exact = with_token_bytes["exact_byte_accounting"]
+    assert exact["evaluated_target_tokens"] == 16
+    assert exact["evaluated_target_bytes"] > 0
+    assert exact["total_target_nll"] > 0.0
+    assert exact["exact_nats_per_raw_byte"] > 0.0
+    assert exact["exact_bits_per_raw_byte"] > 0.0
+    assert len(with_token_bytes["token_byte_nll_records"]) == 16
+    assert with_token_bytes["token_byte_nll_records"][0]["target_index"] == 0
+    assert "decoded_byte_length" in with_token_bytes["token_byte_nll_records"][0]
+    assert "nll" in with_token_bytes["token_byte_nll_records"][0]
+
 
 def test_evaluate_dense_checkpoint_loads_legacy_transformer_encoder_keys(tmp_path):
     train_texts = [

@@ -46,6 +46,7 @@ def _command(args: argparse.Namespace) -> str:
             args.experiment_id,
         ]
         + (["--include-batch-losses"] if args.include_batch_losses else [])
+        + (["--include-token-byte-nll"] if args.include_token_byte_nll else [])
     )
 
 
@@ -60,6 +61,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--experiment-id", required=True)
     parser.add_argument("--include-batch-losses", action="store_true")
+    parser.add_argument("--include-token-byte-nll", action="store_true")
     args = parser.parse_args()
 
     texts = load_jsonl_texts(args.corpus_jsonl, split=args.split)
@@ -74,6 +76,7 @@ def main() -> None:
         seed=args.seed,
         batches=args.batches,
         include_batch_losses=args.include_batch_losses,
+        include_token_byte_nll=args.include_token_byte_nll,
     )
     metrics["corpus"] = {
         "source": "hf_jsonl_mirror",
@@ -92,6 +95,7 @@ def main() -> None:
         "output": str(args.output),
         "experiment_id": args.experiment_id,
         "include_batch_losses": args.include_batch_losses,
+        "include_token_byte_nll": args.include_token_byte_nll,
     }
 
     record = ExperimentRecord(

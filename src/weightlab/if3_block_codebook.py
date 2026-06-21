@@ -10,6 +10,7 @@ import torch
 from weightlab.dense_training import (
     DenseDecoder,
     DenseTrainingConfig,
+    TokenizerLike,
     _load_model_state,
     _tokenizer_from_payload,
     _tokens_from_texts,
@@ -136,7 +137,7 @@ def evaluate_if3_block_codebook_checkpoint(
     )
     fp32_metrics = _evaluate_state_dict(
         payload["model"],
-        tokenizer.vocab_size,
+        tokenizer,
         tokens,
         config,
         torch_device,
@@ -144,7 +145,7 @@ def evaluate_if3_block_codebook_checkpoint(
     )
     learned_metrics = _evaluate_state_dict(
         reconstruction["states"]["learned_block_codebook"],
-        tokenizer.vocab_size,
+        tokenizer,
         tokens,
         config,
         torch_device,
@@ -152,7 +153,7 @@ def evaluate_if3_block_codebook_checkpoint(
     )
     random_metrics = _evaluate_state_dict(
         reconstruction["states"]["random_block_codebook"],
-        tokenizer.vocab_size,
+        tokenizer,
         tokens,
         config,
         torch_device,
@@ -212,14 +213,14 @@ def evaluate_if3_block_codebook_checkpoint(
 
 def _evaluate_state_dict(
     state: dict[str, torch.Tensor],
-    vocab_size: int,
+    tokenizer: TokenizerLike,
     tokens: torch.Tensor,
     config: DenseTrainingConfig,
     device: torch.device,
     seed: int,
 ) -> dict[str, Any]:
     model = DenseDecoder(
-        vocab_size,
+        tokenizer.vocab_size,
         config.seq_len,
         config.hidden_dim,
         config.layers,
@@ -234,7 +235,7 @@ def _evaluate_state_dict(
     return _validation_metrics(
         model,
         tokens,
-        vocab_size,
+        tokenizer,
         config,
         torch.Generator(device="cpu").manual_seed(seed),
         device,

@@ -362,7 +362,7 @@ def train_dense_decoder(
             checkpoint_validation = _fixed_validation_metrics(
                 model,
                 validation_tokens_tensor,
-                tokenizer.vocab_size,
+                tokenizer,
                 config,
                 device,
             )
@@ -440,7 +440,7 @@ def train_dense_decoder(
         _validation_metrics(
             model,
             validation_tokens_tensor,
-            tokenizer.vocab_size,
+            tokenizer,
             config,
             torch.Generator(device="cpu").manual_seed(config.validation_seed),
             device,
@@ -717,6 +717,7 @@ def evaluate_dense_checkpoint(
     seed: int = 123,
     batches: int | None = None,
     include_batch_losses: bool = False,
+    include_token_byte_nll: bool = False,
 ) -> dict[str, Any]:
     accelerator = _resolve_torch_accelerator(device)
     torch_device = accelerator.device
@@ -745,11 +746,12 @@ def evaluate_dense_checkpoint(
     metrics = _validation_metrics(
         model,
         tokens,
-        tokenizer.vocab_size,
+        tokenizer,
         config,
         generator,
         torch_device,
         include_batch_losses=include_batch_losses,
+        include_token_byte_nll=include_token_byte_nll,
     )
     return {
         "benchmark_label": "dense_checkpoint_evaluation",
@@ -876,14 +878,14 @@ def _tokens_per_step(config: DenseTrainingConfig) -> int:
 def _fixed_validation_metrics(
     model: DenseDecoder,
     tokens: torch.Tensor,
-    vocab_size: int,
+    tokenizer: TokenizerLike,
     config: DenseTrainingConfig,
     device: torch.device,
 ) -> dict[str, Any]:
     return _validation_metrics(
         model,
         tokens,
-        vocab_size,
+        tokenizer,
         config,
         torch.Generator(device="cpu").manual_seed(config.validation_seed),
         device,
@@ -904,16 +906,25 @@ def _sample_batch(
 def _validation_metrics(
     model: DenseDecoder,
     tokens: torch.Tensor,
-    vocab_size: int,
+    tokenizer: TokenizerLike,
     config: DenseTrainingConfig,
     generator: torch.Generator,
     device: torch.device,
     *,
     include_batch_losses: bool = False,
+    include_token_byte_nll: bool = False,
 ) -> dict[str, Any]:
     model.eval()
     losses: list[float] = []
     batch_loss_records: list[dict[str, Any]] = []
+    token_byte_nll_records: list[dict[str, Any]] = []
+    token_byte_lengths = (
+        _token_decoded_byte_lengths(tokenizer) if include_token_byte_nll else []
+    )
+    total_target_nll = 0.0
+    evaluated_target_tokens = 0
+    evaluated_target_bytes = 0
+    zero_byte_target_tokens = 0
     sample_order = hashlib.sha256()
     validation_tokens = 0
     with torch.no_grad():
@@ -924,10 +935,41 @@ def _validation_metrics(
             sample_order.update(batch_bytes)
             validation_tokens += int(batch_cpu.numel())
             logits = model(batch[:, :-1])
-            loss = torch.nn.functional.cross_entropy(
-                logits.reshape(-1, vocab_size),
-                batch[:, 1:].reshape(-1),
-            )
+            targets = batch[:, 1:].reshape(-1)
+            flat_logits = logits.reshape(-1, tokenizer.vocab_size)
+            if include_token_byte_nll:
+                token_nll = torch.nn.functional.cross_entropy(
+                    flat_logits,
+                    targets,
+                    reduction="none",
+                )
+                loss = token_nll.mean()
+                target_ids = targets.detach().cpu().tolist()
+                nll_values = token_nll.detach().cpu().tolist()
+                for token_offset, (token_id, nll) in enumerate(
+                    zip(target_ids, nll_values, strict=True)
+                ):
+                    byte_length = token_byte_lengths[int(token_id)]
+                    total_target_nll += float(nll)
+                    evaluated_target_tokens += 1
+                    evaluated_target_bytes += byte_length
+                    if byte_length == 0:
+                        zero_byte_target_tokens += 1
+                    token_byte_nll_records.append(
+                        {
+                            "target_index": len(token_byte_nll_records),
+                            "batch_index": batch_index,
+                            "batch_target_offset": token_offset,
+                            "token_id": int(token_id),
+                            "decoded_byte_length": byte_length,
+                            "nll": float(nll),
+                        }
+                    )
+            else:
+                loss = torch.nn.functional.cross_entropy(
+                    flat_logits,
+                    targets,
+                )
             losses.append(float(loss.detach().cpu()))
             if include_batch_losses:
                 batch_loss_records.append(
@@ -947,7 +989,30 @@ def _validation_metrics(
     }
     if include_batch_losses:
         metrics["batch_loss_records"] = batch_loss_records
+    if include_token_byte_nll:
+        metrics["exact_byte_accounting"] = {
+            "evaluated_target_tokens": evaluated_target_tokens,
+            "evaluated_target_bytes": evaluated_target_bytes,
+            "zero_byte_target_tokens": zero_byte_target_tokens,
+            "total_target_nll": total_target_nll,
+            "exact_nats_per_raw_byte": _ratio(
+                total_target_nll,
+                evaluated_target_bytes,
+            ),
+            "exact_bits_per_raw_byte": _ratio(
+                total_target_nll,
+                evaluated_target_bytes * math.log(2),
+            ),
+        }
+        metrics["token_byte_nll_records"] = token_byte_nll_records
     return metrics
+
+
+def _token_decoded_byte_lengths(tokenizer: TokenizerLike) -> list[int]:
+    return [
+        len(tokenizer.decode([token_id]).encode("utf-8", errors="ignore"))
+        for token_id in range(tokenizer.vocab_size)
+    ]
 
 
 def _generate_sample(

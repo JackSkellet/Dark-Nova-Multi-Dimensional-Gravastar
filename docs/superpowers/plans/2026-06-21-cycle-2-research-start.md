@@ -71,15 +71,15 @@ After code and documentation are committed, rerun the 24 T12 eval commands and t
 
 Update research prose so the current metric is not represented as exact raw-byte NLL.
 
-- [ ] **Step 2: Add exact evaluated-byte accounting**
+- [x] **Step 2: Add exact evaluated-byte accounting**
 
 For each evaluated target token, record decoded byte length and token NLL. Report `total_target_nll`, `evaluated_target_bytes`, `exact_nats_per_raw_byte`, and `exact_bits_per_raw_byte`.
 
-- [ ] **Step 3: Add tests for byte and BPE accounting**
+- [x] **Step 3: Add tests for byte and BPE accounting**
 
 Use a toy tokenizer fixture where token byte spans are known. Assert exact byte-normalized loss differs from split-average estimated byte loss when token lengths vary.
 
-- [ ] **Step 4: Regenerate tokenizer comparison**
+- [x] **Step 4: Regenerate tokenizer comparison**
 
 Run:
 

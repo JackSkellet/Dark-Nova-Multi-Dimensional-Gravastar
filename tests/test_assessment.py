@@ -286,12 +286,17 @@ def test_assessment_marks_d5_tokenizer_training_as_bounded_mixed_result():
                 "conclusions": {
                     "bpe_equal_compute_improves_loss_per_estimated_byte": True,
                     "bpe_equal_raw_bytes_improves_loss_per_estimated_byte": False,
+                    "exact_raw_byte_loss_measured": True,
+                    "bpe_equal_compute_improves_exact_nats_per_raw_byte": True,
+                    "bpe_equal_raw_bytes_improves_exact_nats_per_raw_byte": False,
                     "functional_quality_measured": False,
                 },
                 "comparisons": {
                     "bpe_train_token_reduction_ratio": 3.0,
                     "equal_compute_bpe_minus_byte_nats_per_estimated_byte": -0.1,
                     "equal_raw_bpe_minus_byte_nats_per_estimated_byte": 0.2,
+                    "equal_compute_bpe_minus_byte_exact_nats_per_raw_byte": -0.15,
+                    "equal_raw_bpe_minus_byte_exact_nats_per_raw_byte": 0.25,
                 },
                 "runs": {
                     "byte_equal_compute": {
@@ -312,6 +317,8 @@ def test_assessment_marks_d5_tokenizer_training_as_bounded_mixed_result():
     assert assessment["supports_pareto_improvement"] is False
     assert "token_reduction_alone_not_sufficient" in assessment["limitations"]
     assert assessment["evidence"]["equal_raw_loss_delta_per_estimated_byte"] == 0.2
+    assert assessment["evidence"]["exact_raw_byte_loss_measured"] is True
+    assert assessment["evidence"]["equal_raw_loss_delta_exact_nats_per_raw_byte"] == 0.25
 
 
 def test_assessment_marks_idea_foundry_candidates_as_design_lane_not_result():
