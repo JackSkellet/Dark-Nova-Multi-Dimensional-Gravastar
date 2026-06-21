@@ -2665,6 +2665,192 @@
       "supports_pareto_improvement": false
     },
     {
+      "evidence": {},
+      "experiment_id": "D5_fast_bpe_8192_seed123_tokenizer",
+      "hypothesis": "fast_reproducible_code_bpe_tokenizer",
+      "limitations": [
+        "manual_review_required"
+      ],
+      "outcome": "recorded",
+      "primary_reason": "not_classified_by_current_assessment_layer",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 2486,
+            "CodedotAI/code_clippy_github::all-apache-2.0": 4448,
+            "CodedotAI/code_clippy_github::all-mit": 2662,
+            "codeparrot/github-code-clean::JavaScript-all": 7176,
+            "codeparrot/github-code-clean::Python-all": 5399,
+            "codeparrot/github-code-clean::all-mit": 5744
+          },
+          "experiment_id": "D5_hf_balanced_200m_materialization",
+          "git_commit": "e419a2482669580a7279ae64dff344eed3412d30",
+          "output_sha256": "34dce9e9127a68362f79be53d81692bbb90b254a43fd8f86f155542e49f9680c",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 3922575,
+            "train": 200000495,
+            "validation": 6802318
+          }
+        },
+        "failure": "",
+        "parameter_count": 10397105,
+        "status": "completed",
+        "train_steps": 19532,
+        "train_tokens": 5000192,
+        "validation_loss": 1.573074267245829
+      },
+      "experiment_id": "D5_byte_dense528_seed123_5m_equal_compute",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "training_smoke_only",
+        "not_50m_token_run",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 2486,
+            "CodedotAI/code_clippy_github::all-apache-2.0": 4448,
+            "CodedotAI/code_clippy_github::all-mit": 2662,
+            "codeparrot/github-code-clean::JavaScript-all": 7176,
+            "codeparrot/github-code-clean::Python-all": 5399,
+            "codeparrot/github-code-clean::all-mit": 5744
+          },
+          "experiment_id": "D5_hf_balanced_200m_materialization",
+          "git_commit": "e419a2482669580a7279ae64dff344eed3412d30",
+          "output_sha256": "34dce9e9127a68362f79be53d81692bbb90b254a43fd8f86f155542e49f9680c",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 3922575,
+            "train": 200000495,
+            "validation": 6802318
+          }
+        },
+        "failure": "",
+        "parameter_count": 18784400,
+        "status": "completed",
+        "train_steps": 19532,
+        "train_tokens": 5000192,
+        "validation_loss": 4.371953308349475
+      },
+      "experiment_id": "D5_bpe8192_dense528_seed123_5m_equal_compute",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "training_smoke_only",
+        "not_50m_token_run",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "accelerator_backend": "rocm",
+        "checkpoint_resume_ok": true,
+        "corpus_record": {
+          "corpus_use": "exploratory-research-only",
+          "dataset_config_counts": {
+            "CodedotAI/code_clippy_github::JavaScript-all": 2486,
+            "CodedotAI/code_clippy_github::all-apache-2.0": 4448,
+            "CodedotAI/code_clippy_github::all-mit": 2662,
+            "codeparrot/github-code-clean::JavaScript-all": 7176,
+            "codeparrot/github-code-clean::Python-all": 5399,
+            "codeparrot/github-code-clean::all-mit": 5744
+          },
+          "experiment_id": "D5_hf_balanced_200m_materialization",
+          "git_commit": "e419a2482669580a7279ae64dff344eed3412d30",
+          "output_sha256": "34dce9e9127a68362f79be53d81692bbb90b254a43fd8f86f155542e49f9680c",
+          "source_manifest": {
+            "dataset_revisions": {
+              "CodedotAI/code_clippy_github": "cf9f33dec640f45228f8f3f5e6a7899a37f5f83e",
+              "codeparrot/github-code-clean": "c48d40f9e70f0196f8236901ee35807f7d6c44c0"
+            },
+            "experiment_id": "D3_hf_corpus_manifest",
+            "git_commit": "39e52475eca240fead4191f16c0ad02dd35cb74d",
+            "manifest_sha256": "3958422a783d43a2e5debd9addd73f6eb179ff3951dd56d99b0d290a17a46fc3"
+          },
+          "tokens": {
+            "test": 3922575,
+            "train": 200000495,
+            "validation": 6802318
+          }
+        },
+        "failure": "",
+        "parameter_count": 18784400,
+        "status": "completed",
+        "train_steps": 6333,
+        "train_tokens": 1621248,
+        "validation_loss": 5.166740634478629
+      },
+      "experiment_id": "D5_bpe8192_dense528_seed123_equal_raw_bytes",
+      "hypothesis": "dense_baseline_training",
+      "limitations": [
+        "no_functional_coding_evaluation_yet",
+        "training_smoke_only",
+        "not_50m_token_run",
+        "10m_parameter_floor_reached"
+      ],
+      "outcome": "training_smoke_positive",
+      "primary_reason": "dense_decoder_training_pipeline_completed",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "bpe_equal_compute_loss_per_estimated_byte": 1.4991149059415514,
+        "bpe_equal_raw_bytes_loss_per_estimated_byte": 1.771642411067963,
+        "bpe_train_token_reduction_ratio": 3.0846421553279124,
+        "byte_equal_compute_loss_per_estimated_byte": 1.5732627631603064,
+        "equal_compute_loss_delta_per_estimated_byte": -0.07414785721875505,
+        "equal_raw_loss_delta_per_estimated_byte": 0.1983796479076565,
+        "functional_quality_measured": false
+      },
+      "experiment_id": "D5_tokenizer_training_comparison",
+      "hypothesis": "d5_fast_bpe_must_improve_loss_per_byte_not_only_token_count",
+      "limitations": [
+        "single_seed_pilot",
+        "token_reduction_alone_not_sufficient",
+        "no_functional_quality_measurement",
+        "not_architecture_selection"
+      ],
+      "outcome": "bpe_equal_compute_positive_equal_raw_negative",
+      "primary_reason": "fast_bpe_improves_d5_loss_per_estimated_byte_only_at_equal_token_budget",
+      "supports_pareto_improvement": false
+    },
+    {
       "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
@@ -2828,6 +3014,7 @@
     "documentation_drift_detection"
   ],
   "outcome_counts": {
+    "bpe_equal_compute_positive_equal_raw_negative": 1,
     "codegen_proxy_positive": 3,
     "corpus_prepared_insufficient_tokens": 2,
     "dense_50m_baseline_positive": 8,
@@ -2844,7 +3031,7 @@
     "no_signal": 1,
     "real_repo_doc_measurement_positive": 1,
     "real_repo_measurement_positive": 2,
-    "recorded": 86,
+    "recorded": 87,
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
@@ -2853,10 +3040,10 @@
     "t12_dense528_validation_selected": 1,
     "training_failed": 6,
     "training_readiness_positive": 1,
-    "training_smoke_positive": 11,
+    "training_smoke_positive": 14,
     "transformer_stability_failed": 1
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 146
+  "record_count": 151
 }

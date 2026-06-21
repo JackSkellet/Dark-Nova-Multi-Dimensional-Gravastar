@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-
 DEFAULT_RESULT_PATHS = {
     "byte_equal_compute": "D5_byte_dense528_seed123_5m_equal_compute.json",
     "bpe_equal_compute": "D5_bpe8192_dense528_seed123_5m_equal_compute.json",

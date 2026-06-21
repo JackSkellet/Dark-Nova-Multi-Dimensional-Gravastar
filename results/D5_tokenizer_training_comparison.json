@@ -1,0 +1,272 @@
+{
+  "command": "uv run python scripts/summarize_d5_tokenizer_training.py --results-dir results --output results/D5_tokenizer_training_comparison.json --experiment-id D5_tokenizer_training_comparison --seed 123",
+  "experiment_id": "D5_tokenizer_training_comparison",
+  "git_commit": "d54bec9276ac43870189ea3a9a56d1045d1fc31a",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "d5_fast_bpe_must_improve_loss_per_byte_not_only_token_count",
+  "metrics": {
+    "benchmark_label": "d5_trained_tokenizer_model_comparison",
+    "comparisons": {
+      "bpe_train_token_reduction_ratio": 3.0846421553279124,
+      "bpe_validation_token_reduction_ratio": 2.9167058286796284,
+      "equal_compute_bpe_minus_byte_nats_per_estimated_byte": -0.07414785721875505,
+      "equal_compute_bpe_to_byte_estimated_byte_throughput_ratio": 2.2450636914775584,
+      "equal_raw_bpe_minus_byte_nats_per_estimated_byte": 0.1983796479076565,
+      "equal_raw_bpe_to_byte_train_byte_budget_ratio": 1.0001555790339787
+    },
+    "conclusions": {
+      "bpe_equal_compute_improves_loss_per_estimated_byte": true,
+      "bpe_equal_raw_bytes_improves_loss_per_estimated_byte": false,
+      "functional_quality_measured": false,
+      "token_reduction_alone_is_sufficient": false
+    },
+    "limitations": [
+      "single_seed_pilot",
+      "same_128_token_context_not_equal_attention_compute_per_raw_byte",
+      "estimated_byte_loss_uses_split_level_bytes_per_token",
+      "no_executable_functional_quality_evaluation_yet",
+      "bpe_tokenizer_trained_on_sampled_train_documents_only"
+    ],
+    "resolved_config": {
+      "experiment_id": "D5_tokenizer_training_comparison",
+      "output": "results/D5_tokenizer_training_comparison.json",
+      "results_dir": "results",
+      "seed": 123
+    },
+    "runs": {
+      "bpe_equal_compute": {
+        "checkpoint": {
+          "model_only_bytes": 75370501,
+          "training_state_bytes": 225687346
+        },
+        "context_coverage": {
+          "train_estimated_bytes_per_context": 394.7817047797168,
+          "train_estimated_characters_per_context": 392.9008831817598,
+          "validation_estimated_bytes_per_context": 373.29361561998326,
+          "validation_estimated_characters_per_context": 371.2727322621808
+        },
+        "estimated_train_bytes_consumed": 15421752.515514856,
+        "estimated_train_bytes_per_second": 50711.25136100197,
+        "experiment_id": "D5_bpe8192_dense528_seed123_5m_equal_compute",
+        "git_commit": "aaa8d56a2745143b5b8afcf08886fab06931556a",
+        "git_dirty": false,
+        "memory": {
+          "peak_allocated_bytes": 710005760,
+          "peak_reserved_bytes": 742391808
+        },
+        "model": {
+          "architecture_variant": "dense",
+          "heads": 8,
+          "hidden_dim": 528,
+          "layers": 3,
+          "seq_len": 128,
+          "total_parameters": 18784400,
+          "trainable_parameters": 18784400
+        },
+        "protocol": "bpe_equal_compute",
+        "status": "completed",
+        "tokenization": {
+          "train": {
+            "byte_count": 199973906,
+            "bytes_per_token": 3.0842320685915374,
+            "character_count": 199021189,
+            "characters_per_token": 3.0695381498574985,
+            "document_count": 26589,
+            "token_count": 64837503,
+            "tokens_per_byte": 0.3242298172642585,
+            "tokens_per_character": 0.3257819095835067
+          },
+          "validation": {
+            "byte_count": 6801503,
+            "bytes_per_token": 2.916356372031119,
+            "character_count": 6764682,
+            "characters_per_token": 2.9005682207982875,
+            "document_count": 815,
+            "token_count": 2332192,
+            "tokens_per_byte": 0.3428936221890956,
+            "tokens_per_character": 0.34476003454412196
+          }
+        },
+        "tokenizer": {
+          "checksum": "cb2f1fc59d05e6e27dde10dd17c29409a82d0a1609a2d93f9db98c4a12edc664",
+          "eos_id": 1,
+          "eos_token": "<eos>",
+          "library": "tokenizers",
+          "name": "hf_tokenizers_bpe_bytelevel",
+          "type": "hf_tokenizers_bpe_bytelevel",
+          "vocab_size": 8192
+        },
+        "training": {
+          "elapsed_s": 304.1090902239994,
+          "last_completed_step": 19532,
+          "tokens_per_second": 16442.099762019545,
+          "train_token_units": 5000192
+        },
+        "validation_loss_nats_per_estimated_byte": 1.4991149059415514,
+        "validation_loss_nats_per_estimated_character": 1.5072747736118535,
+        "validation_loss_nats_per_token": 4.371953308349475,
+        "validation_tokens": 132096
+      },
+      "bpe_equal_raw_bytes": {
+        "checkpoint": {
+          "model_only_bytes": 75370501,
+          "training_state_bytes": 225687346
+        },
+        "context_coverage": {
+          "train_estimated_bytes_per_context": 394.7817047797168,
+          "train_estimated_characters_per_context": 392.9008831817598,
+          "validation_estimated_bytes_per_context": 373.29361561998326,
+          "validation_estimated_characters_per_context": 371.2727322621808
+        },
+        "estimated_train_bytes_consumed": 5000305.072739893,
+        "estimated_train_bytes_per_second": 49403.580979142396,
+        "experiment_id": "D5_bpe8192_dense528_seed123_equal_raw_bytes",
+        "git_commit": "cc39f382cc2f67cb47ddffbe1bbb246f011c21b6",
+        "git_dirty": false,
+        "memory": {
+          "peak_allocated_bytes": 711112704,
+          "peak_reserved_bytes": 742391808
+        },
+        "model": {
+          "architecture_variant": "dense",
+          "heads": 8,
+          "hidden_dim": 528,
+          "layers": 3,
+          "seq_len": 128,
+          "total_parameters": 18784400,
+          "trainable_parameters": 18784400
+        },
+        "protocol": "bpe_equal_raw_bytes",
+        "status": "completed",
+        "tokenization": {
+          "train": {
+            "byte_count": 199973906,
+            "bytes_per_token": 3.0842320685915374,
+            "character_count": 199021189,
+            "characters_per_token": 3.0695381498574985,
+            "document_count": 26589,
+            "token_count": 64837503,
+            "tokens_per_byte": 0.3242298172642585,
+            "tokens_per_character": 0.3257819095835067
+          },
+          "validation": {
+            "byte_count": 6801503,
+            "bytes_per_token": 2.916356372031119,
+            "character_count": 6764682,
+            "characters_per_token": 2.9005682207982875,
+            "document_count": 815,
+            "token_count": 2332192,
+            "tokens_per_byte": 0.3428936221890956,
+            "tokens_per_character": 0.34476003454412196
+          }
+        },
+        "tokenizer": {
+          "checksum": "cb2f1fc59d05e6e27dde10dd17c29409a82d0a1609a2d93f9db98c4a12edc664",
+          "eos_id": 1,
+          "eos_token": "<eos>",
+          "library": "tokenizers",
+          "name": "hf_tokenizers_bpe_bytelevel",
+          "type": "hf_tokenizers_bpe_bytelevel",
+          "vocab_size": 8192
+        },
+        "training": {
+          "elapsed_s": 101.21341355500044,
+          "last_completed_step": 6333,
+          "tokens_per_second": 16018.114033067333,
+          "train_token_units": 1621248
+        },
+        "validation_loss_nats_per_estimated_byte": 1.771642411067963,
+        "validation_loss_nats_per_estimated_character": 1.7812856796233707,
+        "validation_loss_nats_per_token": 5.166740634478629,
+        "validation_tokens": 132096
+      },
+      "byte_equal_compute": {
+        "checkpoint": {
+          "model_only_bytes": 41605253,
+          "training_state_bytes": 124823730
+        },
+        "context_coverage": {
+          "train_estimated_bytes_per_context": 127.98298308211687,
+          "train_estimated_characters_per_context": 127.37324571121687,
+          "validation_estimated_bytes_per_context": 127.9846640512837,
+          "validation_estimated_characters_per_context": 127.29179906026151
+        },
+        "estimated_train_bytes_consumed": 4999527.251119814,
+        "estimated_train_bytes_per_second": 22587.88984629075,
+        "experiment_id": "D5_byte_dense528_seed123_5m_equal_compute",
+        "git_commit": "65c9df2a1da7452f7f48118ba25504ddba5ee73e",
+        "git_dirty": false,
+        "memory": {
+          "peak_allocated_bytes": 463684096,
+          "peak_reserved_bytes": 503316480
+        },
+        "model": {
+          "architecture_variant": "dense",
+          "heads": 8,
+          "hidden_dim": 528,
+          "layers": 3,
+          "seq_len": 128,
+          "total_parameters": 10397105,
+          "trainable_parameters": 10397105
+        },
+        "protocol": "byte_equal_compute",
+        "status": "completed",
+        "tokenization": {
+          "train": {
+            "byte_count": 199973906,
+            "bytes_per_token": 0.9998670553290381,
+            "character_count": 199021189,
+            "characters_per_token": 0.9951034821188818,
+            "document_count": 26589,
+            "token_count": 200000495,
+            "tokens_per_byte": 1.0001329623475974,
+            "tokens_per_character": 1.0049206117445113
+          },
+          "validation": {
+            "byte_count": 6801503,
+            "bytes_per_token": 0.9998801879006539,
+            "character_count": 6764682,
+            "characters_per_token": 0.994467180158293,
+            "document_count": 815,
+            "token_count": 6802318,
+            "tokens_per_byte": 1.0001198264560054,
+            "tokens_per_character": 1.0055636022506305
+          }
+        },
+        "tokenizer": {
+          "eos_id": 256,
+          "name": "byte_level",
+          "type": "byte_level",
+          "vocab_size": 257
+        },
+        "training": {
+          "elapsed_s": 221.3366226390026,
+          "last_completed_step": 19532,
+          "tokens_per_second": 22590.893185151985,
+          "train_token_units": 5000192
+        },
+        "validation_loss_nats_per_estimated_byte": 1.5732627631603064,
+        "validation_loss_nats_per_estimated_character": 1.581826226779487,
+        "validation_loss_nats_per_token": 1.573074267245829,
+        "validation_tokens": 132096
+      }
+    }
+  },
+  "notes": "Summarizes matched D5 dense-528 byte-tokenizer and fast-BPE pilots. Token reduction alone is not treated as a quality win.",
+  "recorded_at_unix": 1782008861.101811,
+  "resolved_config": {
+    "experiment_id": "D5_tokenizer_training_comparison",
+    "output": "results/D5_tokenizer_training_comparison.json",
+    "results_dir": "results",
+    "seed": 123
+  },
+  "seed": 123,
+  "status": "completed"
+}
