@@ -2904,6 +2904,36 @@
     },
     {
       "evidence": {
+        "candidate_id": "IF2",
+        "combined_storage_bytes": 4692,
+        "exact_retrieval_accuracy": 0.2,
+        "fast_weight_scratchpad_accuracy": 0.95,
+        "heldout_combined_correct": 7,
+        "heldout_fast_weight_correct": 7,
+        "heldout_structured_memory_correct": 0,
+        "heldout_task_count": 8,
+        "parameter_bytes": 4096,
+        "parameter_evolution_adds_value_beyond_updated_memory": true,
+        "structured_memory_accuracy": 0.6,
+        "structured_memory_plus_fast_weight_accuracy": 0.95,
+        "structured_memory_storage_bytes": 596,
+        "timeline_steps": 4
+      },
+      "experiment_id": "IF2_fast_weight_continual_probe",
+      "hypothesis": "if2_fast_weights_add_value_beyond_updated_memory",
+      "limitations": [
+        "synthetic_fixture_only",
+        "not_language_model_training",
+        "feature_hash_fast_weight_proxy",
+        "no_security_or_poisoning_gate",
+        "storage_cost_exceeds_structured_memory"
+      ],
+      "outcome": "synthetic_fast_weight_positive",
+      "primary_reason": "fast_weight_proxy_adds_heldout_paraphrase_signal_beyond_memory",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -3089,6 +3119,7 @@
     "rejected": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
+    "synthetic_fast_weight_positive": 1,
     "t11_adapter_frontier_expansion": 1,
     "t11_dense528_width_control_frontier_expansion": 1,
     "t12_dense528_validation_selected": 1,
@@ -3099,5 +3130,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 153
+  "record_count": 154
 }

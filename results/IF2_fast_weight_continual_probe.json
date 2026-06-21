@@ -1,0 +1,702 @@
+{
+  "command": "uv run python scripts/run_if2_fast_weight_probe.py --output results/IF2_fast_weight_continual_probe.json --experiment-id IF2_fast_weight_continual_probe --seed 123",
+  "experiment_id": "IF2_fast_weight_continual_probe",
+  "git_commit": "7533c9ad4f910925e47d0a8e742aa47eadf8be66",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if2_fast_weights_add_value_beyond_updated_memory",
+  "metrics": {
+    "benchmark_label": "if2_fast_weight_continual_probe",
+    "candidate_id": "IF2",
+    "facts": [
+      {
+        "aliases": [
+          "load toml config",
+          "parse toml settings"
+        ],
+        "answer": "parse_config_api",
+        "heldout_queries": [
+          "read toml configuration",
+          "load toml settings file"
+        ],
+        "step": 0,
+        "symbol": "parse_toml_config"
+      },
+      {
+        "aliases": [
+          "draw dependency graph",
+          "render import graph"
+        ],
+        "answer": "render_graph_api",
+        "heldout_queries": [
+          "show dependency diagram",
+          "draw import graph"
+        ],
+        "step": 1,
+        "symbol": "render_dependency_graph"
+      },
+      {
+        "aliases": [
+          "detect stale documentation",
+          "find outdated docs"
+        ],
+        "answer": "doc_drift_api",
+        "heldout_queries": [
+          "locate stale docs",
+          "detect documentation drift"
+        ],
+        "step": 2,
+        "symbol": "find_stale_docs"
+      },
+      {
+        "aliases": [
+          "execute patch plan",
+          "apply ordered edits"
+        ],
+        "answer": "patch_plan_api",
+        "heldout_queries": [
+          "run patch steps",
+          "perform ordered edit plan"
+        ],
+        "step": 3,
+        "symbol": "apply_patch_plan"
+      }
+    ],
+    "final": {
+      "exact_retrieval_accuracy": 0.2,
+      "fast_weight_scratchpad_accuracy": 0.95,
+      "step": 3,
+      "structured_memory_accuracy": 0.6,
+      "structured_memory_plus_fast_weight_accuracy": 0.95,
+      "task_count": 20
+    },
+    "heldout_generalization": {
+      "exact_retrieval_correct": 0,
+      "fast_weight_scratchpad_correct": 7,
+      "structured_memory_correct": 0,
+      "structured_memory_plus_fast_weight_correct": 7,
+      "task_count": 8
+    },
+    "limitations": [
+      "synthetic_api_fact_fixture",
+      "fast_weights_are_feature_hash_proxy_not_neural_lm_weights",
+      "structured_memory_aliases_are_hand_provided",
+      "does_not_measure_security_or_poisoning_gates"
+    ],
+    "methods": {
+      "exact_retrieval": {
+        "description": "Exact updated symbol-to-answer memory.",
+        "storage_bytes": 194
+      },
+      "fast_weight_scratchpad": {
+        "description": "Dense associative matrix updated from verified symbols and aliases.",
+        "feature_dim": 256,
+        "parameter_bytes": 4096,
+        "update_count": 4
+      },
+      "structured_memory": {
+        "description": "Updated symbol plus explicit alias table.",
+        "storage_bytes": 596
+      },
+      "structured_memory_plus_fast_weight": {
+        "description": "Structured memory first, falling back to fast-weight generalization.",
+        "storage_bytes": 4692
+      }
+    },
+    "null_hypothesis_outcome": "fast_weight_adds_value_beyond_updated_memory",
+    "parameter_evolution_adds_value_beyond_updated_memory": true,
+    "resolved_config": {
+      "experiment_id": "IF2_fast_weight_continual_probe",
+      "output": "results/IF2_fast_weight_continual_probe.json",
+      "seed": 123
+    },
+    "steps": [
+      {
+        "exact_retrieval_accuracy": 0.2,
+        "fast_weight_scratchpad_accuracy": 1.0,
+        "step": 0,
+        "structured_memory_accuracy": 0.6,
+        "structured_memory_plus_fast_weight_accuracy": 1.0,
+        "task_count": 5,
+        "task_results": [
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "parse_toml_config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "load toml config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "parse toml settings",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "read toml configuration",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "load toml settings file",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          }
+        ]
+      },
+      {
+        "exact_retrieval_accuracy": 0.2,
+        "fast_weight_scratchpad_accuracy": 1.0,
+        "step": 1,
+        "structured_memory_accuracy": 0.6,
+        "structured_memory_plus_fast_weight_accuracy": 1.0,
+        "task_count": 10,
+        "task_results": [
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "parse_toml_config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "load toml config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "parse toml settings",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "read toml configuration",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "load toml settings file",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "render_dependency_graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "draw dependency graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "render import graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "show dependency diagram",
+            "step": 1,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "draw import graph",
+            "step": 1,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          }
+        ]
+      },
+      {
+        "exact_retrieval_accuracy": 0.2,
+        "fast_weight_scratchpad_accuracy": 1.0,
+        "step": 2,
+        "structured_memory_accuracy": 0.6,
+        "structured_memory_plus_fast_weight_accuracy": 1.0,
+        "task_count": 15,
+        "task_results": [
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "parse_toml_config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "load toml config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "parse toml settings",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "read toml configuration",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "load toml settings file",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "render_dependency_graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "draw dependency graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "render import graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "show dependency diagram",
+            "step": 1,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "draw import graph",
+            "step": 1,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "find_stale_docs",
+            "step": 2,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "detect stale documentation",
+            "step": 2,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "find outdated docs",
+            "step": 2,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "locate stale docs",
+            "step": 2,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "detect documentation drift",
+            "step": 2,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          }
+        ]
+      },
+      {
+        "exact_retrieval_accuracy": 0.2,
+        "fast_weight_scratchpad_accuracy": 0.95,
+        "step": 3,
+        "structured_memory_accuracy": 0.6,
+        "structured_memory_plus_fast_weight_accuracy": 0.95,
+        "task_count": 20,
+        "task_results": [
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "parse_toml_config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "load toml config",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "parse toml settings",
+            "step": 0,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "read toml configuration",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "parse_config_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "load toml settings file",
+            "step": 0,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "render_dependency_graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "draw dependency graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "render import graph",
+            "step": 1,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "show dependency diagram",
+            "step": 1,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "render_graph_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "draw import graph",
+            "step": 1,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "find_stale_docs",
+            "step": 2,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "detect stale documentation",
+            "step": 2,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "find outdated docs",
+            "step": 2,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "locate stale docs",
+            "step": 2,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "doc_drift_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "detect documentation drift",
+            "step": 2,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "patch_plan_api",
+            "exact_retrieval_correct": true,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "exact_symbol",
+            "query": "apply_patch_plan",
+            "step": 3,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "patch_plan_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "execute patch plan",
+            "step": 3,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "patch_plan_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "explicit_alias",
+            "query": "apply ordered edits",
+            "step": 3,
+            "structured_memory_correct": true,
+            "structured_memory_plus_fast_weight_correct": true
+          },
+          {
+            "answer": "patch_plan_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": false,
+            "kind": "heldout_paraphrase",
+            "query": "run patch steps",
+            "step": 3,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": false
+          },
+          {
+            "answer": "patch_plan_api",
+            "exact_retrieval_correct": false,
+            "fast_weight_scratchpad_correct": true,
+            "kind": "heldout_paraphrase",
+            "query": "perform ordered edit plan",
+            "step": 3,
+            "structured_memory_correct": false,
+            "structured_memory_plus_fast_weight_correct": true
+          }
+        ]
+      }
+    ],
+    "timeline_steps": 4,
+    "update_records": [
+      {
+        "alias_count": 2,
+        "heldout_query_count": 2,
+        "step": 0,
+        "symbol": "parse_toml_config",
+        "update_ms": 0.11556399840628728
+      },
+      {
+        "alias_count": 2,
+        "heldout_query_count": 2,
+        "step": 1,
+        "symbol": "render_dependency_graph",
+        "update_ms": 0.027173002308700234
+      },
+      {
+        "alias_count": 2,
+        "heldout_query_count": 2,
+        "step": 2,
+        "symbol": "find_stale_docs",
+        "update_ms": 0.023816006432753056
+      },
+      {
+        "alias_count": 2,
+        "heldout_query_count": 2,
+        "step": 3,
+        "symbol": "apply_patch_plan",
+        "update_ms": 0.023505999706685543
+      }
+    ]
+  },
+  "notes": "Synthetic fast-weight continual-learning proxy. It tests whether a parameter-like update adds held-out paraphrase value beyond updated memory.",
+  "recorded_at_unix": 1782010476.7390618,
+  "resolved_config": {
+    "experiment_id": "IF2_fast_weight_continual_probe",
+    "output": "results/IF2_fast_weight_continual_probe.json",
+    "seed": 123
+  },
+  "seed": 123,
+  "status": "completed"
+}
