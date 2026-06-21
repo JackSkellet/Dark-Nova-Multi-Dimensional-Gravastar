@@ -3068,6 +3068,36 @@
     },
     {
       "evidence": {
+        "file_count": 32,
+        "repository_count": 32,
+        "sampling_order": "repository_first_file_second_task_third",
+        "task_count": 320,
+        "task_kinds": [
+          "completion",
+          "infilling",
+          "syntax",
+          "unit_tests",
+          "bug_repair",
+          "api_reuse",
+          "relevant_file_selection",
+          "source_grounded_documentation",
+          "stale_document_detection",
+          "hallucinated_symbols"
+        ]
+      },
+      "experiment_id": "D5_repository_balanced_task_sample",
+      "hypothesis": "repository_first_file_second_task_third_sampling_for_coding_eval",
+      "limitations": [
+        "no_model_quality_measured",
+        "no_executable_runtime_scoring_yet",
+        "task_constructors_are_metadata_only"
+      ],
+      "outcome": "benchmark_scaffold",
+      "primary_reason": "repository_first_task_index_created_without_model_scoring",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -3332,6 +3362,7 @@
     "documentation_drift_detection"
   ],
   "outcome_counts": {
+    "benchmark_scaffold": 1,
     "bpe_equal_compute_positive_equal_raw_negative": 1,
     "codegen_proxy_positive": 3,
     "corpus_prepared_insufficient_tokens": 2,
@@ -3369,5 +3400,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 160
+  "record_count": 161
 }
