@@ -1,0 +1,264 @@
+{
+  "command": "uv run python scripts/evaluate_dense_js_executable.py --checkpoint artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt --corpus-jsonl data/hf_mirror/exploratory_d3/corpus.jsonl --split test --device rocm --seed 424242 --tasks 64 --prefix-chars 16 --target-tokens 48 --node-binary node --output results/T11c_dense528_adamw_fp32_50m_final_test_js_executable.json --experiment-id T11c_dense528_adamw_fp32_50m_final_test_js_executable",
+  "experiment_id": "T11c_dense528_adamw_fp32_50m_final_test_js_executable",
+  "git_commit": "c49a34cd7046885d2fd0a80cee3cb1cd7ce413b8",
+  "git_dirty": false,
+  "git_status_short": "",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "heldout_d4_javascript_executable_syntax_checkpoint_evaluation",
+  "metrics": {
+    "benchmark_label": "d4_dense_js_executable_checkpoint_evaluation",
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+    "corpus": {
+      "document_count_used": 50,
+      "jsonl_path": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "source": "hf_jsonl_mirror",
+      "split": "test",
+      "split_texts_loaded_separately": true
+    },
+    "device": "cuda",
+    "document_count_used": 50,
+    "elapsed_s": 10.774388439000177,
+    "limitations": [
+      "javascript_syntax_check_only_not_full_unit_tests",
+      "line_completion_context_only_not_full_file_context",
+      "greedy_byte_generation",
+      "oracle_lines_filtered_by_node_check",
+      "no_repair_or_api_reuse_task_yet"
+    ],
+    "model": {
+      "adapter_dim": 0,
+      "architecture_variant": "dense",
+      "attention_mask_mode": "finite_causal",
+      "block_impl": "explicit_causal",
+      "heads": 8,
+      "hidden_dim": 528,
+      "layers": 3,
+      "seq_len": 128
+    },
+    "node": {
+      "available": true,
+      "binary": "node",
+      "probe": {
+        "available": true,
+        "passed": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "version": "v20.20.1"
+    },
+    "resolved_config": {
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+      "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+      "device": "rocm",
+      "experiment_id": "T11c_dense528_adamw_fp32_50m_final_test_js_executable",
+      "node_binary": "node",
+      "output": "results/T11c_dense528_adamw_fp32_50m_final_test_js_executable.json",
+      "prefix_chars": 16,
+      "seed": 424242,
+      "split": "test",
+      "target_tokens": 48,
+      "tasks": 64
+    },
+    "seed": 424242,
+    "split": "test",
+    "tasks": {
+      "line_completion_syntax": {
+        "candidate_count": 1024,
+        "completed_tasks": 64,
+        "edit_similarity_mean": 0.39953814128603926,
+        "exact_match_rate": 0.140625,
+        "examples": [
+          {
+            "edit_similarity": 0.0,
+            "exact_match": false,
+            "generated_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "generated_preview": "pply",
+            "generated_sha256": "a46d84c9e1186cba2aa20a34819fea3064a7c55e66f07498385469d1d290b04c",
+            "generated_source_sha256": "988b1a927a3bd97e7c85288ad76cba80c729215893c7223dfdd522b5547d61ed",
+            "generated_tokens": 4,
+            "line_index": 2150,
+            "line_sha256": "f829b99c5f360ca27614c0b1428e49e63d06ffcce8a37e2cf4bdc3205e1ed5a5",
+            "oracle_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "oracle_source_sha256": "544a1ece5103a003829022d79f8aa3100188263df4c2843c1716ff2e9170a783",
+            "prefix_preview": "opts = content.a",
+            "prefix_sha256": "5b6bb40f748c2bfb63eaa5d5d6b4e77cef00f8f60120af68b802821c6c0fdf22",
+            "row_index": 29,
+            "target_preview": "jax;",
+            "target_sha256": "272a739ee9c9be57ad22637b666681ad67f1187af79b736873fbe8e66d55a1e8",
+            "target_tokens": 4,
+            "token_accuracy": 0.0
+          },
+          {
+            "edit_similarity": 1.0,
+            "exact_match": true,
+            "generated_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "generated_preview": "f('.');",
+            "generated_sha256": "571d5e1b6ecbb4286f633b9fe8116b62413eed168a29179bb6e2bb15289262ae",
+            "generated_source_sha256": "17107c1ae48a9795fc0e1c1c62587009c451984ae9cacf362898b56299d1c202",
+            "generated_tokens": 7,
+            "line_index": 5,
+            "line_sha256": "69afeef8b9be9b0b43b48328da3dc94dbaddcc758dadec500088f8426b8c18b1",
+            "oracle_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "oracle_source_sha256": "17107c1ae48a9795fc0e1c1c62587009c451984ae9cacf362898b56299d1c202",
+            "prefix_preview": "var i = n.indexO",
+            "prefix_sha256": "fa44fcc95f69dbf6b15348dd97a5f50377e579dfa1d8e8bf01c3a595d2ba8213",
+            "row_index": 9,
+            "target_preview": "f('.');",
+            "target_sha256": "571d5e1b6ecbb4286f633b9fe8116b62413eed168a29179bb6e2bb15289262ae",
+            "target_tokens": 7,
+            "token_accuracy": 1.0
+          },
+          {
+            "edit_similarity": 0.25,
+            "exact_match": false,
+            "generated_node_check": {
+              "available": true,
+              "passed": false,
+              "returncode": 1,
+              "stderr": "/tmp/tmp3issa56n.js:3\n}\n^\n\nSyntaxError: Unexpected token '}'\n    at wrapSafe (node:internal/modules/cjs/loader:1464:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v20.20.1\n",
+              "stdout": ""
+            },
+            "generated_preview": "es[i",
+            "generated_sha256": "34d2fba5d6c6314f4e5705758587847bde816b7fbb89e4ecbe8c26b68b664704",
+            "generated_source_sha256": "3ff2f7e298a23cda45986116078f62d693a96cc3573e116999f72661ff4fdd73",
+            "generated_tokens": 4,
+            "line_index": 146,
+            "line_sha256": "3f4afcdd31b4f1bedfdd4c9ce48d82ed4d379a525e79371e4b91be9f7d80a617",
+            "oracle_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "oracle_source_sha256": "45073c32cb2b206746794b10683958a9db8526d6b11ae34ab1b2866cc4146c4a",
+            "prefix_preview": "this.changedStyl",
+            "prefix_sha256": "e9214686203b2134c2368d0ec4a2b819b0ca21d966c3ac3d0aa683a8a6b6c389",
+            "row_index": 25,
+            "target_preview": "e();",
+            "target_sha256": "bdc4aa368e51ca067c40f605501ebe2e73ac762f864d5567bd69e0d548ef1087",
+            "target_tokens": 4,
+            "token_accuracy": 0.25
+          },
+          {
+            "edit_similarity": 0.4,
+            "exact_match": false,
+            "generated_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "generated_preview": "guments;\n ",
+            "generated_sha256": "abe2b68a5513893292968e5ef30f7c211571f6cc17182724dda001e965e32bef",
+            "generated_source_sha256": "1c7b03751ae395ea93f4ec5b4a8f5a469f3f32cd88e88e480350a231187972ba",
+            "generated_tokens": 10,
+            "line_index": 97,
+            "line_sha256": "6cbe22b595ca8f61a002b4d247141929796f0e0f239354a2e3bf85b0b4a4591e",
+            "oracle_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "oracle_source_sha256": "b1e0989316275f3bfcf21966b9035ec7c01869b43fc0411733c25e1d7bd83575",
+            "prefix_preview": "this.layers = ar",
+            "prefix_sha256": "2b7c569c942ff90b2c415c079d20e724d92db385083aad63823384de6a4ec4b3",
+            "row_index": 26,
+            "target_preview": "gs.layers;",
+            "target_sha256": "b4de2879600a0962378f68a2fa5b940a7a4f1dfaa873f50b8daa5b6b66ffeaee",
+            "target_tokens": 10,
+            "token_accuracy": 0.1
+          },
+          {
+            "edit_similarity": 0.3333333333333333,
+            "exact_match": false,
+            "generated_node_check": {
+              "available": true,
+              "passed": false,
+              "returncode": 1,
+              "stderr": "/tmp/tmp8zpjmm5x.js:3\n}\n^\n\nSyntaxError: Unexpected token '}'\n    at wrapSafe (node:internal/modules/cjs/loader:1464:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v20.20.1\n",
+              "stdout": ""
+            },
+            "generated_preview": ", 'jquery', ",
+            "generated_sha256": "8b9fa60e5c2dc51b178c1e18e1e75c338ecd10cdf6083047deb1cb0000572204",
+            "generated_source_sha256": "6c49037d6c9dc0a2e219537f23ea1bb1eac9733c13ef56bdb8f57b806cee8bff",
+            "generated_tokens": 12,
+            "line_index": 20,
+            "line_sha256": "a2e64ff1adc5532b27f0325e8938587c34db3858b60262957682131a9596b403",
+            "oracle_node_check": {
+              "available": true,
+              "passed": true,
+              "returncode": 0,
+              "stderr": "",
+              "stdout": ""
+            },
+            "oracle_source_sha256": "e7588b966f78953daad15c3c2526e27012bd2e204271b3fb3962caf651f2a4e0",
+            "prefix_preview": "define(['jquery'",
+            "prefix_sha256": "1b3cf4b89e470c55627568f82a2fa1e64423cf3966682bb5e274f3d475080387",
+            "row_index": 29,
+            "target_preview": "], factory);",
+            "target_sha256": "fc6b263c43218bae03b71db6cbd059e491d81920cbbad516f22a1f5d9a357639",
+            "target_tokens": 12,
+            "token_accuracy": 0.0
+          }
+        ],
+        "generated_node_syntax_pass_rate": 0.5625,
+        "oracle_node_syntax_pass_rate": 1.0,
+        "requested_tasks": 64,
+        "token_accuracy_mean": 0.29024482572258886
+      }
+    },
+    "texts_sha256": "cba513aca907777c780209b74d83a12e33457f4a32ecd919a45d475a4254b1cc"
+  },
+  "notes": "Evaluation-only held-out D4 JavaScript line-completion syntax probe. Generated completions are checked with node --check; this is not a full unit-test, repair, or API-reuse benchmark.",
+  "recorded_at_unix": 1782012115.490437,
+  "resolved_config": {
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+    "corpus_jsonl": "data/hf_mirror/exploratory_d3/corpus.jsonl",
+    "device": "rocm",
+    "experiment_id": "T11c_dense528_adamw_fp32_50m_final_test_js_executable",
+    "node_binary": "node",
+    "output": "results/T11c_dense528_adamw_fp32_50m_final_test_js_executable.json",
+    "prefix_chars": 16,
+    "seed": 424242,
+    "split": "test",
+    "target_tokens": 48,
+    "tasks": 64
+  },
+  "seed": 424242,
+  "status": "completed"
+}

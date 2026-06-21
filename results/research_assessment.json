@@ -3003,6 +3003,33 @@
     },
     {
       "evidence": {
+        "candidate_count": 1024,
+        "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_last_model_only.pt",
+        "completed_tasks": 64,
+        "edit_similarity_mean": 0.39953814128603926,
+        "exact_match_rate": 0.140625,
+        "generated_node_syntax_pass_rate": 0.5625,
+        "node_available": true,
+        "node_version": "v20.20.1",
+        "oracle_node_syntax_pass_rate": 1.0,
+        "split": "test",
+        "token_accuracy_mean": 0.29024482572258886
+      },
+      "experiment_id": "T11c_dense528_adamw_fp32_50m_final_test_js_executable",
+      "hypothesis": "heldout_d4_javascript_executable_syntax_checkpoint_evaluation",
+      "limitations": [
+        "syntax_only_not_unit_tests",
+        "line_completion_context_only",
+        "not_repair_or_api_reuse",
+        "not_multilingual",
+        "not_architecture_comparison"
+      ],
+      "outcome": "executable_js_syntax_probe_recorded",
+      "primary_reason": "heldout_generated_javascript_checked_with_node_syntax",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -3173,6 +3200,7 @@
     "dense_step_debug_positive": 8,
     "doc_drift_positive_control": 1,
     "docgen_proxy_positive": 1,
+    "executable_js_syntax_probe_recorded": 1,
     "exploration_positive": 1,
     "hf_corpus_manifest_positive": 1,
     "hf_corpus_materialized": 2,
@@ -3201,5 +3229,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 156
+  "record_count": 157
 }
