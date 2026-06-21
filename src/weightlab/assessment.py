@@ -79,6 +79,8 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_idea_foundry_graph_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if2_fast_weight_continual_probe":
         return _assess_if2_fast_weight_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if4_fast_repo_adaptation_probe":
+        return _assess_if4_fast_repo_adaptation_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_checkpoint_probe":
         return _assess_if3_block_codebook_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_validation_probe":
@@ -1721,6 +1723,62 @@ def _assess_if2_fast_weight_probe(record: dict[str, Any]) -> Assessment:
                 "storage_bytes"
             ],
             "parameter_evolution_adds_value_beyond_updated_memory": adds_value,
+        },
+    }
+
+
+def _assess_if4_fast_repo_adaptation_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    repo = metrics["repo"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "repository_adaptation_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "fast_repository_adaptation_controls_measured_on_real_git_history",
+        "limitations": [
+            "changed_file_retrieval_proxy",
+            "not_language_model_training",
+            "replay_adapter_is_sparse_proxy",
+            "feature_hash_fast_weight_proxy",
+            "paraphrase_transfer_is_query_rewrite_proxy",
+            "no_security_or_poisoning_gate",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "repository": repo["path_name"],
+            "commit_count_used": repo["commit_count_used"],
+            "top_k": repo["top_k"],
+            "step_count": len(metrics["steps"]),
+            "future_leakage_blocked": all(
+                step["future_commit_not_in_memory"] for step in metrics["steps"]
+            ),
+            "updated_retrieval_future_topk_accuracy": final[
+                "updated_retrieval_future_topk_accuracy"
+            ],
+            "structured_symbol_graph_memory_future_topk_accuracy": final[
+                "structured_symbol_graph_memory_future_topk_accuracy"
+            ],
+            "replay_adapter_proxy_future_topk_accuracy": final[
+                "replay_adapter_proxy_future_topk_accuracy"
+            ],
+            "fast_temporary_weights_future_topk_accuracy": final[
+                "fast_temporary_weights_future_topk_accuracy"
+            ],
+            "fast_weights_plus_retrieval_future_topk_accuracy": final[
+                "fast_weights_plus_retrieval_future_topk_accuracy"
+            ],
+            "periodic_consolidation_future_topk_accuracy": final[
+                "periodic_consolidation_future_topk_accuracy"
+            ],
+            "fast_weights_plus_retrieval_paraphrase_topk_accuracy": final[
+                "fast_weights_plus_retrieval_paraphrase_topk_accuracy"
+            ],
+            "prior_task_retention_accuracy": final["prior_task_retention_accuracy"],
+            "mean_update_ms": final["mean_update_ms"],
+            "rollback_supported": final["rollback_supported"],
+            "total_storage_bytes": final["total_storage_bytes"],
         },
     }
 

@@ -139,6 +139,44 @@ def test_assessment_classifies_hf_corpus_materialization():
     assert "not_training_run" in assessment["limitations"]
 
 
+def test_assessment_marks_if4_fast_repo_adaptation_as_proxy_probe():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF4_fast_repo_adaptation_markupsafe",
+            "hypothesis": "if4_fast_temporary_weights",
+            "metrics": {
+                "benchmark_label": "if4_fast_repo_adaptation_probe",
+                "candidate_id": "IF4",
+                "repo": {
+                    "path_name": "markupsafe",
+                    "commit_count_used": 8,
+                    "top_k": 5,
+                },
+                "steps": [{"future_commit_not_in_memory": True}],
+                "final": {
+                    "updated_retrieval_future_topk_accuracy": 0.25,
+                    "structured_symbol_graph_memory_future_topk_accuracy": 0.5,
+                    "replay_adapter_proxy_future_topk_accuracy": 0.5,
+                    "fast_temporary_weights_future_topk_accuracy": 0.25,
+                    "fast_weights_plus_retrieval_future_topk_accuracy": 0.75,
+                    "periodic_consolidation_future_topk_accuracy": 0.5,
+                    "fast_weights_plus_retrieval_paraphrase_topk_accuracy": 0.5,
+                    "prior_task_retention_accuracy": 1.0,
+                    "mean_update_ms": 0.2,
+                    "rollback_supported": True,
+                    "total_storage_bytes": 2048,
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "repository_adaptation_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "not_language_model_training" in assessment["limitations"]
+    assert assessment["evidence"]["candidate_id"] == "IF4"
+    assert assessment["evidence"]["rollback_supported"] is True
+
+
 def test_assessment_marks_dense_training_smoke_outcomes_without_overclaiming():
     rocm = assess_record(_record("T1_dense_decoder_training_smoke"))
     cpu = assess_record(_record("T1b_cpu_dense_decoder_training_smoke"))
