@@ -4,9 +4,12 @@ Date: 2026-07-01
 
 User-supplied source: <https://z.ai/blog/glm-5.2>
 
+Expanded track: `research/59_glm_5_2_external_baseline_teacher_track.md`
+
 Primary accessible sources:
 
 - Z.ai / Hugging Face blog mirror, "GLM-5.2: Built for Long-Horizon Tasks", accessed 2026-07-01: <https://huggingface.co/blog/zai-org/glm-52-blog>
+- Z.ai developer documentation, accessed 2026-07-01: <https://docs.z.ai/guides/llm/glm-5.2>
 - Z.ai GLM-5.2 Hugging Face model card, accessed 2026-07-01: <https://huggingface.co/zai-org/GLM-5.2>
 - Z.ai GLM-5 GitHub repository, accessed 2026-07-01: <https://github.com/zai-org/GLM-5>
 - GLM-5 technical report, arXiv:2602.15763v2, accessed 2026-07-01: <https://arxiv.org/abs/2602.15763v2>
@@ -43,4 +46,3 @@ Added to `results/combination_matrix.json`:
 - `mtp_rejection_speculative_decoding`
 
 These are active external ideas, not local wins. Their next falsifying tests are tiny local prototypes or surrogates with pinned repository-completion or executable-repair gates.
-

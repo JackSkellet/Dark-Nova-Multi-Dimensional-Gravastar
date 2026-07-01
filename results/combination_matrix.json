@@ -1,4 +1,26 @@
 {
+  "baseline_categories": [
+    {
+      "description": "Dense-528 and successors on the same local hardware, token budget, dataset, and evaluation harness.",
+      "id": "local_same_budget_baseline",
+      "status": "active"
+    },
+    {
+      "description": "Best model that runs comfortably on one workstation, quantized when useful, with quality plus tokens/sec, VRAM, RAM, and size measured.",
+      "id": "local_practical_baseline",
+      "status": "active"
+    },
+    {
+      "description": "API or separately served GLM-5.2 used as external frontier reference, target, teacher, and oracle; never treated as same-budget unless run under identical local constraints.",
+      "id": "external_glm_5_2_baseline",
+      "status": "planned"
+    },
+    {
+      "description": "Official or third-party GLM-5.2 benchmark numbers, marked as not reproduced unless the same harness is run in this repository.",
+      "id": "published_glm_5_2_reference",
+      "status": "active"
+    }
+  ],
   "contenders": [
     {
       "components": [
@@ -61,6 +83,21 @@
       ]
     }
   ],
+  "glm_5_2_track_policy": {
+    "local_deployment_policy": "Estimate download size, disk, RAM, VRAM, runtime, engine support, ROCm compatibility, and multi-GPU/NVIDIA requirements before downloading large GLM-5.2 weights; require explicit approval before hundreds of GB downloads.",
+    "private_data_policy": "Never send confidential company code, private prompts, private repository content, secrets, credentials, customer data, or restricted documents to any remote GLM-5.2 service.",
+    "published_reference_policy": "Published GLM-5.2 numbers are external references until the same benchmark, split, scoring method, tool access, generation budget, and harness are reproduced here.",
+    "success_criteria": [
+      "Published coding benchmark numbers recorded from primary sources.",
+      "Reproducible GLM-5.2 evaluation harness for public tasks.",
+      "At least one local model compared against GLM-5.2 on the same public tasks.",
+      "Teacher data tested against a no-teacher control.",
+      "At least three GLM-inspired local-scale experiments recorded.",
+      "No private data sent to a remote model.",
+      "Final report separates same-budget local results from external frontier reference results."
+    ],
+    "teacher_data_policy": "All GLM-5.2 teacher samples must be labeled synthetic and trace source task, prompt, model, settings, generation date, validation result, test status, and filter/reject status."
+  },
   "ideas": [
     {
       "compatible_ideas": [
@@ -368,8 +405,8 @@
       ],
       "current_evidence": [
         "T11c ranks 4/4 passing deterministic edits first in the six-candidate pool.",
-        "Bounded top-k execution over the four-program syntax pool repairs 4/4 tasks at top-8 and beats seeded random order.",
-        "On the 12-program slice, dense likelihood repairs 3/12 by top-8, tied with repair-aware and seeded random on program rate but below deterministic pool order on candidate efficiency."
+        "Four-program bounded top-k syntax-pool execution repairs 4/4 at top-8.",
+        "After the counter-zero mutation, the 12-program slice repairs 4/12 by top-8 under dense likelihood, tied with repair-aware and seeded random on program rate."
       ],
       "id": "dense_ranked_repair_selection",
       "intended_benefit": "Use model signal for repair selection even when free-form generation fails.",
@@ -383,13 +420,13 @@
         "Model likelihood ranking correlates with repair correctness on broader candidate pools.",
         "Candidate generation can become less hand-constrained while preserving syntax."
       ],
-      "smallest_falsifying_test": "Add learned or failure-localized ranking and require it to beat deterministic, repair-aware, and multiple random same-pool controls on a larger QuixBugs slice before scaling dense repair selection.",
+      "smallest_falsifying_test": "Add learned or failure-localized ranking and require it to beat repair-aware and multiple random controls on the 12-program slice after candidate coverage improves beyond 4/12.",
       "source": "hybrid",
       "status": "revise",
       "strongest_opposing_evidence": [
         "Free-form dense generation still repairs 0/4 selected QuixBugs tasks.",
-        "Four-program controls show repair-aware static order at 4/4 top-1 and deterministic order at 4/4 top-4 while dense needs top-8.",
-        "The 12-program control does not show dense likelihood beating same-pool deterministic, repair-aware, or random controls."
+        "Four-program controls beat dense on candidate budget.",
+        "The 12-program counter-zero run does not show dense likelihood beating repair-aware or random same-pool controls on program repair rate."
       ]
     },
     {
@@ -399,8 +436,9 @@
         "repository_api_reuse_objective"
       ],
       "current_evidence": [
-        "Four-program smoke builds 63 syntax-valid candidates and contains passing candidates for all four selected tasks.",
-        "The 12-program slice builds 189 syntax-valid candidates and contains passing candidates for 3/12 programs under bounded top-k evaluation."
+        "Four-program smoke builds 63 syntax-valid candidates and contains passing candidates for all four tasks.",
+        "The first 12-program slice builds 189 syntax-valid candidates and contains passing selected candidates for 3/12 programs.",
+        "Adding final-counter-zero mutation builds 190 candidates and improves selected passing coverage to 4/12 programs."
       ],
       "id": "syntax_preserving_mutation_pool",
       "intended_benefit": "Move repair candidates away from the narrow deterministic baseline while avoiding invalid Python.",
@@ -414,12 +452,12 @@
         "Generic syntax mutations contain enough useful repairs without too many plausible distractors.",
         "Model ranking can choose passing candidates from the wider pool."
       ],
-      "smallest_falsifying_test": "Expand mutation families or add failure-localized generation and require passing candidates for substantially more than 3/12 QuixBugs programs without oracle sources.",
+      "smallest_falsifying_test": "Add another non-oracle mutation family and require the 12-program QuixBugs gate to move beyond 4/12 passing coverage without worsening same-pool controls.",
       "source": "hybrid",
       "status": "revise",
       "strongest_opposing_evidence": [
-        "The pool is hand-designed AST mutation scaffolding and only repairs a narrow subset of Python QuixBugs tasks.",
-        "On the 12-program slice, 9/12 programs have no passing candidate in the selected top-8 union, so candidate generation coverage is now the main bottleneck."
+        "The pool is still hand-designed AST mutation scaffolding and only repairs a narrow subset of Python QuixBugs tasks.",
+        "After the counter-zero mutation, 8/12 programs still have no passing selected candidate, so candidate generation coverage remains the main bottleneck."
       ]
     },
     {
@@ -431,7 +469,7 @@
       ],
       "current_evidence": [
         "On the four-task smoke, repair-aware static ordering repairs 4/4 programs at top-1 and beats deterministic order, dense likelihood, and seeded random order.",
-        "On the 12-program slice, repair-aware ordering repairs 2/12 at top-1 and 3/12 by top-8, tying dense/random on program rate but losing to deterministic order on candidate efficiency."
+        "On the 12-program counter-zero run, repair-aware ordering repairs 3/12 at top-1 and 4/12 by top-8, showing useful early placement for the new counter-zero candidate."
       ],
       "id": "repair_aware_static_ordering",
       "intended_benefit": "Lower executable validation budget by placing likely repair candidates before broad syntax distractors.",
@@ -447,12 +485,12 @@
         "The selector can be expanded from hand-coded patterns to failure-localized or learned repair-aware ordering without oracle source access.",
         "Candidate provenance and execution results remain recorded for every promoted run."
       ],
-      "smallest_falsifying_test": "Replace static pattern ordering with failure-localized or learned repair-aware features and require a win over deterministic, dense-likelihood, and multiple random controls on at least the 12-program slice.",
+      "smallest_falsifying_test": "Add failure-localized or learned repair-aware features and require top-1/top-4 gains over deterministic, dense-likelihood, and multiple random controls on the 12-program slice.",
       "source": "original invention",
       "status": "revise",
       "strongest_opposing_evidence": [
-        "The 12-program result falsifies the four-task top-1 advantage as a general selector claim.",
-        "Hand-engineered pattern ordering appears overfit to the small original Python subset and does not solve candidate coverage."
+        "The 12-program result still falsifies the four-task top-1 selector claim as a general result.",
+        "Dense likelihood, repair-aware ordering, and seeded random tie at 4/12 by top-8 after the counter-zero mutation, so static repair-aware ordering is not a robust selector win."
       ]
     },
     {
@@ -882,6 +920,67 @@
         "External results are not reproduced in Dark Nova and use larger model/training infrastructure.",
         "Speculative decoding improves runtime only if candidate acceptance is high enough and implementation overhead does not dominate on ROCm."
       ]
+    },
+    {
+      "compatible_ideas": [
+        "repobench_repository_completion_gate",
+        "agentless_localization_repair_validation",
+        "repository_api_reuse_objective",
+        "indexshare_sparse_attention_long_context",
+        "mtp_rejection_speculative_decoding",
+        "execution_feedback_self_refinement"
+      ],
+      "current_evidence": [
+        "Primary Z.ai/Hugging Face sources report GLM-5.2 long-context and coding benchmark results, including Terminal-Bench 2.1, SWE-bench Pro, FrontierSWE, PostTrainBench, SWE-Marathon, NL2Repo, DeepSWE, and ProgramBench.",
+        "Z.ai developer docs expose API-facing capabilities relevant to local comparison: 1M context, 128K max output, thinking mode, function calling, context caching, structured output, and project-level engineering use cases.",
+        "GLM5_2_public_eval_harness creates an offline public/synthetic/approved-data harness with privacy gates, saved-output scoring, required prompt/context/output/cost/latency/token metadata checks, and a three-task synthetic smoke pack.",
+        "T11c_dense528_glm_public_smoke compares the current same-budget local dense checkpoint on the harness and scores 0/3 under greedy ROCm decoding with complete metadata.",
+        "Dark Nova currently has no reproduced GLM-5.2 scored output, no GLM-5.2 teacher-data experiment, and no local GLM-5.2 deployment feasibility record."
+      ],
+      "id": "glm_5_2_external_baseline_teacher_track",
+      "intended_benefit": "Quantify the gap between Dark Nova local models and a frontier open-weight coding model, and test whether GLM-5.2 outputs or mechanisms improve local practical coding ability.",
+      "known_incompatibilities": [
+        "GLM-5.2 is far outside the current same-budget local training setup and cannot be used as evidence that Dark Nova has frontier capability.",
+        "Remote API evaluation is incompatible with private code, credentials, customer data, or restricted documents.",
+        "Large local GLM-5.2 downloads require explicit approval after storage/RAM/VRAM/runtime feasibility estimates."
+      ],
+      "mechanism": "Use GLM-5.2 as a separated external benchmark reference, black-box public-task evaluator, synthetic teacher, and architecture inspiration source while preserving local same-budget baselines.",
+      "name": "GLM-5.2 external baseline and teacher track",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "GLM-5.2: Built for Long-Horizon Tasks",
+          "url": "https://z.ai/blog/glm-5.2"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "GLM-5.2 developer documentation",
+          "url": "https://docs.z.ai/guides/llm/glm-5.2"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "zai-org/GLM-5.2 model card",
+          "url": "https://huggingface.co/zai-org/GLM-5.2"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "GLM-5.2 Hugging Face blog mirror",
+          "url": "https://huggingface.co/blog/zai-org/glm-52-blog"
+        }
+      ],
+      "required_assumptions": [
+        "GLM-5.2 access is available through published reports, API, or approved local serving without exposing private data.",
+        "Public evaluation tasks are sufficient to compare behavior without leaking private repositories.",
+        "Teacher-generated data can be filtered by executable tests, static checks, or source-grounded validation instead of blind imitation."
+      ],
+      "smallest_falsifying_test": "Score saved GLM-5.2 outputs on the public harness under explicit prompt, budget, tool, cost, latency, token, and judge metadata; then test one GLM-5.2 teacher-data slice against a no-teacher control.",
+      "source": "web claim",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "Published numbers are external and may use different harnesses, tool access, generation budgets, and scoring methods than Dark Nova.",
+        "A 744B-A40B class model is not a same-budget local baseline for the current workstation path.",
+        "Teacher data can improve style imitation without improving held-out executable coding ability unless controlled against no-teacher baselines."
+      ]
     }
   ],
   "pairwise_test_queue": [
@@ -904,16 +1003,16 @@
         "dense_ranked_repair_selection",
         "syntax_preserving_mutation_pool"
       ],
-      "result": "QuixBugs_T11c_dense528_repair_aware_syntax_controls_12prog: 12-program slice builds 189 candidates; deterministic order is best by candidate efficiency at 3/12 repairs by top-4; dense likelihood, repair-aware static order, and seeded random each reach 3/12 by top-8. Dense ranking remains revise and candidate generation coverage is the bottleneck.",
-      "test": "Top-k ranked syntax-pool QuixBugs repair versus repair-aware, deterministic, and random same-pool baselines on 12 programs."
+      "result": "QuixBugs_T11c_dense528_counter_zero_syntax_controls_12prog: final-counter-zero mutation increases the 12-program selected repair coverage from 3/12 to 4/12; dense likelihood reaches 4/12 by top-8, tied with repair-aware static order and seeded random on program rate.",
+      "test": "Keep expanding non-oracle syntax-pool candidate generation, then retest dense ranking against repair-aware and random same-pool controls."
     },
     {
       "ideas": [
         "repair_aware_static_ordering",
         "syntax_preserving_mutation_pool"
       ],
-      "result": "The 12-program slice falsifies the four-task top-1 selector claim: repair-aware order repairs 2/12 at top-1 and 3/12 by top-8, losing to deterministic order on candidate efficiency.",
-      "test": "Failure-localized or learned repair-aware ordering versus deterministic, dense, and multiple random controls on the 12-program slice."
+      "result": "Counter-zero mutation gives repair-aware order 3/12 repairs at top-1 and 4/12 by top-8, an early-placement improvement but not a robust selector win because dense/random also reach 4/12 by top-8.",
+      "test": "Add failure-localized repair-aware features and require top-1/top-4 gains on the 12-program slice."
     },
     {
       "ideas": [
@@ -942,8 +1041,8 @@
         "execution_feedback_self_refinement",
         "syntax_preserving_mutation_pool"
       ],
-      "result": "Static repair-aware ordering no longer wins on the 12-program slice. A feedback loop should first improve candidate coverage or localization, not merely rerank the same weak pool.",
-      "test": "Bounded feedback loop versus deterministic order, repair-aware static order, dense top-k execution, and random controls on a larger slice."
+      "result": "Candidate coverage moved from 3/12 to 4/12 with a generic mutation. A feedback loop should improve uncovered failure modes before ranking the same weak pool harder.",
+      "test": "Bounded feedback loop or failure-localized generator versus deterministic, repair-aware, dense, and random controls on the 12-program slice."
     },
     {
       "ideas": [
@@ -974,13 +1073,29 @@
       ],
       "result": "New external MTP/rejection-sampling source triaged only; no local implementation yet.",
       "test": "Measure local speculative/draft generation speedup on repair-loop prompts without reducing executable pass rate."
+    },
+    {
+      "ideas": [
+        "glm_5_2_external_baseline_teacher_track",
+        "repobench_repository_completion_gate"
+      ],
+      "result": "GLM5_2_public_eval_harness records an offline public/synthetic/approved-data harness and three-task smoke pack. T11c_dense528_glm_public_smoke scores the local same-budget dense checkpoint at 0/3 with complete metadata. No saved GLM-5.2 outputs have been scored yet.",
+      "test": "Score saved GLM-5.2 outputs through the harness, then compare directly against the 0/3 T11c local baseline on the same tasks."
+    },
+    {
+      "ideas": [
+        "glm_5_2_external_baseline_teacher_track",
+        "repository_api_reuse_objective"
+      ],
+      "result": "Goal addition recorded; no GLM-5.2 teacher-data experiment yet.",
+      "test": "Generate public API-reuse or repair teacher samples, filter by tests/source-grounding, and train/evaluate against a no-teacher control."
     }
   ],
   "purpose": "Living portfolio for Dark Nova local coding-model ideas, combinations, contender stacks, and staged ablation planning.",
   "schema_version": 1,
   "stages": {
     "current_stage": "stage_2_pairwise_combinations",
-    "next_stage": "stage_2_repair_pool_expansion_and_glm_long_context_triage",
+    "next_stage": "stage_2_failure_localized_mutation_expansion_glm_baseline_track_and_glm_long_context_triage",
     "policy": "Reject or revise ideas that fail their intended mechanism before scaling; promote pairwise combinations only when same-pool controls show measurable value at bounded scale and larger-slice follow-ups preserve the gain."
   },
   "strength_weakness_dimensions": [

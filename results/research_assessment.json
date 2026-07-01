@@ -3921,6 +3921,110 @@
     },
     {
       "evidence": {
+        "best_ordering": "dense_likelihood",
+        "best_program_repair_rate": 0.3333333333333333,
+        "candidate_pool_count": 190,
+        "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+        "checkpoint_step": 195000,
+        "control_names": [
+          "dense_likelihood",
+          "deterministic_pool_order",
+          "repair_aware_static_order",
+          "random_seeded_order"
+        ],
+        "dense_beats_all_controls": false,
+        "dense_best_program_repair_rate": 0.3333333333333333,
+        "dense_best_top_k": 8,
+        "dense_top1_program_repair_rate": 0.08333333333333333,
+        "deterministic_best_program_repair_rate": 0.25,
+        "deterministic_best_top_k": 4,
+        "hidden_dim": 528,
+        "layers": 3,
+        "max_top_k_profiled": 8,
+        "program_count": 12,
+        "random_best_program_repair_rate": 0.3333333333333333,
+        "random_best_top_k": 8,
+        "repair_aware_best_program_repair_rate": 0.3333333333333333,
+        "repair_aware_best_top_k": 8,
+        "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+        "repo_url": "https://github.com/jkoppel/QuixBugs",
+        "selected_candidate_count": 144,
+        "top_k_values": [
+          1,
+          2,
+          4,
+          8
+        ]
+      },
+      "experiment_id": "QuixBugs_T11c_dense528_counter_zero_syntax_controls_12prog",
+      "hypothesis": "repair_aware_ordering_should_beat_dense_and_same_pool_non_model_controls",
+      "limitations": [
+        "local_model_ranked_candidate",
+        "syntax_preserving_candidate_pool",
+        "broader_than_deterministic_edit_baseline",
+        "top_k_execution_profile",
+        "same_pool_ordering_controls",
+        "not_free_form_generation",
+        "replacement_source_only",
+        "python_subset_only",
+        "not_public_leaderboard_comparison"
+      ],
+      "outcome": "syntax_pool_ordering_control_probe",
+      "primary_reason": "dense_ranking_compared_with_same_pool_non_model_controls",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "baseline_category": "external_glm_5_2_baseline",
+        "evaluated_prediction_count": 0,
+        "glm_run_status": "not_run_no_predictions",
+        "metadata_complete_records": 0,
+        "pass_count": 0,
+        "pass_rate": NaN,
+        "privacy_gate_passed": true,
+        "records_with_missing_fields": 0,
+        "task_count": 3
+      },
+      "experiment_id": "GLM5_2_public_eval_harness",
+      "hypothesis": "glm_5_2_external_public_task_eval_harness",
+      "limitations": [
+        "external_reference_not_local_model",
+        "not_same_budget_local_baseline",
+        "public_synthetic_or_approved_data_only",
+        "offline_harness_does_not_call_remote_model",
+        "limited_judges"
+      ],
+      "outcome": "external_baseline_harness_ready",
+      "primary_reason": "glm_public_eval_harness_has_no_model_outputs_yet",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
+        "baseline_category": "local_same_budget_baseline",
+        "evaluated_prediction_count": 3,
+        "glm_run_status": "evaluated_saved_predictions",
+        "metadata_complete_records": 3,
+        "pass_count": 0,
+        "pass_rate": 0.0,
+        "privacy_gate_passed": true,
+        "records_with_missing_fields": 0,
+        "task_count": 3
+      },
+      "experiment_id": "T11c_dense528_glm_public_smoke",
+      "hypothesis": "glm_5_2_external_public_task_eval_harness",
+      "limitations": [
+        "not_glm_5_2_result",
+        "same_budget_local_baseline_smoke",
+        "public_synthetic_or_approved_data_only",
+        "offline_harness_does_not_call_remote_model",
+        "limited_judges"
+      ],
+      "outcome": "local_baseline_predictions_scored",
+      "primary_reason": "local_baseline_scored_on_glm_public_tasks",
+      "supports_pareto_improvement": false
+    },
+    {
+      "evidence": {
         "adapter_experiment_id": "T11b_adapter528_adamw_fp32_50m",
         "adapter_final_test_loss": 1.0450384634314105,
         "adapter_final_validation_loss": 1.0387521978118457,
@@ -4201,11 +4305,13 @@
     "executable_js_syntax_probe_recorded": 1,
     "executable_repair_benchmark_probe": 1,
     "exploration_positive": 1,
+    "external_baseline_harness_ready": 1,
     "hf_corpus_manifest_positive": 1,
     "hf_corpus_materialized": 2,
     "idea_lane_opened": 1,
     "lexical_baseline_not_beaten": 1,
     "limited_positive": 1,
+    "local_baseline_predictions_scored": 1,
     "measurement_positive": 1,
     "mechanism_signal_present": 1,
     "mixed": 1,
@@ -4225,7 +4331,7 @@
     "repository_adaptation_probe": 1,
     "runtime_positive": 1,
     "smoke_pass": 1,
-    "syntax_pool_ordering_control_probe": 3,
+    "syntax_pool_ordering_control_probe": 4,
     "synthetic_fast_weight_positive": 1,
     "t11_adapter_frontier_expansion": 1,
     "t11_dense528_width_control_frontier_expansion": 1,
@@ -4240,5 +4346,5 @@
   },
   "pareto_dominance_found": false,
   "pareto_improvement_found": true,
-  "record_count": 184
+  "record_count": 187
 }

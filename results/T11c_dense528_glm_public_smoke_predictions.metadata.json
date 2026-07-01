@@ -1,0 +1,33 @@
+{
+  "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+  "device": "rocm",
+  "max_new_tokens": 64,
+  "max_tasks": 16,
+  "model_label": "T11c_dense528_adamw_fp32_50m",
+  "model_metadata": {
+    "accelerator_backend": "rocm",
+    "checkpoint_step": 195000,
+    "checkpoint_type": "model_only",
+    "config": {
+      "adapter_dim": 0,
+      "architecture_variant": "dense",
+      "attention_mask_mode": "finite_causal",
+      "block_impl": "explicit_causal",
+      "heads": 8,
+      "hidden_dim": 528,
+      "layers": 3,
+      "seq_len": 128
+    },
+    "device": "cuda",
+    "tokenizer": {
+      "eos_id": 256,
+      "name": "byte_level",
+      "type": "byte_level",
+      "vocab_size": 257
+    }
+  },
+  "output": "results/T11c_dense528_glm_public_smoke_predictions.jsonl",
+  "prediction_count": 3,
+  "seed": 123,
+  "tasks_jsonl": "data/glm_public_eval_tasks/glm5_2_public_smoke_tasks.jsonl"
+}

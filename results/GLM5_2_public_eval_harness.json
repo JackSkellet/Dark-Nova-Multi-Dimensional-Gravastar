@@ -1,0 +1,104 @@
+{
+  "command": "uv run python scripts/evaluate_glm_public_tasks.py --tasks-jsonl data/glm_public_eval_tasks/glm5_2_public_smoke_tasks.jsonl --seed 123 --max-tasks 16 --output results/GLM5_2_public_eval_harness.json --experiment-id GLM5_2_public_eval_harness",
+  "experiment_id": "GLM5_2_public_eval_harness",
+  "git_commit": "4bfbb64901c6cfe2a4b65c0cd87dba2111ac49b1",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/56_glm_5_2_source_review.md\n M research/STATUS.md\n M research/combination_matrix.md\n M results/combination_matrix.json\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? data/glm_public_eval_tasks/\n?? research/58_quixbugs_counter_zero_syntax_controls_12prog.md\n?? research/59_glm_5_2_external_baseline_teacher_track.md\n?? results/QuixBugs_T11c_dense528_counter_zero_syntax_controls_12prog.json\n?? scripts/evaluate_glm_public_tasks.py\n?? src/weightlab/glm_public_eval.py\n?? tests/test_glm_public_eval.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "glm_5_2_external_public_task_eval_harness",
+  "metrics": {
+    "baseline_category": "external_glm_5_2_baseline",
+    "benchmark_label": "glm_5_2_public_eval_harness",
+    "evaluated_prediction_count": 0,
+    "glm_run_status": "not_run_no_predictions",
+    "limitations": [
+      "offline_harness_only",
+      "saved_predictions_required_for_model_scoring",
+      "contains_all_and_exact_match_judges_only",
+      "not_same_budget_local_baseline"
+    ],
+    "metadata_completeness": {
+      "complete_records": 0,
+      "records_with_missing_fields": 0,
+      "required_fields": [
+        "model",
+        "prompt",
+        "output",
+        "context_length",
+        "output_length",
+        "thinking_effort",
+        "tool_access",
+        "temperature",
+        "sampling",
+        "latency_ms",
+        "tokens_in",
+        "tokens_out",
+        "cost_usd"
+      ]
+    },
+    "pass_count": 0,
+    "pass_rate": NaN,
+    "predictions": [],
+    "predictions_jsonl": null,
+    "privacy_gate_passed": true,
+    "published_reference_category": "published_glm_5_2_reference",
+    "remote_data_policy": "public_synthetic_or_explicitly_approved_only; this harness does not call a remote model",
+    "resolved_config": {
+      "experiment_id": "GLM5_2_public_eval_harness",
+      "max_tasks": 16,
+      "output": "results/GLM5_2_public_eval_harness.json",
+      "predictions_jsonl": null,
+      "seed": 123,
+      "tasks_jsonl": "data/glm_public_eval_tasks/glm5_2_public_smoke_tasks.jsonl"
+    },
+    "seed": 123,
+    "task_count": 3,
+    "tasks": [
+      {
+        "expected_substring_count": 1,
+        "judge_type": "contains_all",
+        "prompt_chars": 176,
+        "prompt_sha256": "df485defbad7497c949584c2e2fb08df8e6cbf831cd925f925a925648c2ffe98",
+        "source_policy": "synthetic",
+        "task_family": "api_reuse",
+        "task_id": "synthetic_api_reuse_normalize_user_001"
+      },
+      {
+        "expected_substring_count": 1,
+        "judge_type": "contains_all",
+        "prompt_chars": 188,
+        "prompt_sha256": "82d7d05814cc4c8029553f4cd3f7da492e80c7589adea4991bf2b5b6e7cb372c",
+        "source_policy": "synthetic",
+        "task_family": "bug_repair",
+        "task_id": "synthetic_bug_repair_clamp_001"
+      },
+      {
+        "expected_substring_count": 2,
+        "judge_type": "contains_all",
+        "prompt_chars": 213,
+        "prompt_sha256": "71149db7fe3a96ed1f57442d191d70b4df7572d9bf1858671786c28a03be043a",
+        "source_policy": "synthetic",
+        "task_family": "documentation_accuracy",
+        "task_id": "synthetic_doc_updated_at_001"
+      }
+    ],
+    "tasks_jsonl": "data/glm_public_eval_tasks/glm5_2_public_smoke_tasks.jsonl"
+  },
+  "notes": "Offline harness for saved GLM-5.2/API/local-serving outputs on public, synthetic, or explicitly approved tasks only. The script does not call a remote model.",
+  "recorded_at_unix": 1782933151.1638658,
+  "resolved_config": {
+    "experiment_id": "GLM5_2_public_eval_harness",
+    "max_tasks": 16,
+    "output": "results/GLM5_2_public_eval_harness.json",
+    "predictions_jsonl": null,
+    "seed": 123,
+    "tasks_jsonl": "data/glm_public_eval_tasks/glm5_2_public_smoke_tasks.jsonl"
+  },
+  "seed": 123,
+  "status": "completed"
+}

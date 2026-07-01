@@ -219,6 +219,64 @@ def test_assessment_marks_if7_sparse_hebbian_as_real_corpus_signal():
     ]
 
 
+def test_assessment_marks_glm_public_harness_as_external_baseline_scaffold():
+    assessment = assess_record(
+        {
+            "experiment_id": "GLM5_2_public_eval_harness",
+            "hypothesis": "glm_5_2_external_public_task_eval_harness",
+            "metrics": {
+                "benchmark_label": "glm_5_2_public_eval_harness",
+                "baseline_category": "external_glm_5_2_baseline",
+                "glm_run_status": "not_run_no_predictions",
+                "privacy_gate_passed": True,
+                "task_count": 3,
+                "evaluated_prediction_count": 0,
+                "pass_count": 0,
+                "metadata_completeness": {
+                    "complete_records": 0,
+                    "records_with_missing_fields": 0,
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "external_baseline_harness_ready"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == "glm_public_eval_harness_has_no_model_outputs_yet"
+    assert "not_same_budget_local_baseline" in assessment["limitations"]
+    assert assessment["evidence"]["task_count"] == 3
+    assert assessment["evidence"]["privacy_gate_passed"] is True
+
+
+def test_assessment_marks_local_glm_public_smoke_as_scored_local_baseline():
+    assessment = assess_record(
+        {
+            "experiment_id": "T11c_dense528_glm_public_smoke",
+            "hypothesis": "glm_5_2_external_public_task_eval_harness",
+            "metrics": {
+                "benchmark_label": "glm_5_2_public_eval_harness",
+                "baseline_category": "local_same_budget_baseline",
+                "glm_run_status": "evaluated_saved_predictions",
+                "privacy_gate_passed": True,
+                "task_count": 3,
+                "evaluated_prediction_count": 3,
+                "pass_count": 0,
+                "pass_rate": 0.0,
+                "metadata_completeness": {
+                    "complete_records": 3,
+                    "records_with_missing_fields": 0,
+                },
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "local_baseline_predictions_scored"
+    assert assessment["primary_reason"] == "local_baseline_scored_on_glm_public_tasks"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "not_glm_5_2_result" in assessment["limitations"]
+    assert assessment["evidence"]["pass_rate"] == 0.0
+
+
 def test_assessment_marks_if7_trained_conditioning_when_cue_only_wins():
     assessment = assess_record(
         {

@@ -110,6 +110,11 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_repository_api_reuse_probe(record)
     if (
         record.get("metrics", {}).get("benchmark_label")
+        == "glm_5_2_public_eval_harness"
+    ):
+        return _assess_glm_public_eval_harness(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
         == "repository_context_pairwise_probe"
     ):
         return _assess_repository_context_pairwise_probe(record)
@@ -1717,6 +1722,66 @@ def _assess_repository_api_reuse_probe(record: dict[str, Any]) -> Assessment:
             "best_hit_at_k": best["hit_at_k"],
             "best_mrr": best["mrr"],
             "method_names": sorted(metrics["methods"]),
+        },
+    }
+
+
+def _assess_glm_public_eval_harness(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    evaluated_count = int(metrics.get("evaluated_prediction_count", 0))
+    has_predictions = evaluated_count > 0
+    baseline_category = str(metrics.get("baseline_category", ""))
+    is_local_baseline = baseline_category.startswith("local_")
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "local_baseline_predictions_scored"
+            if has_predictions and is_local_baseline
+            else "external_baseline_predictions_scored"
+            if has_predictions
+            else "external_baseline_harness_ready"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "local_baseline_scored_on_glm_public_tasks"
+            if has_predictions and is_local_baseline
+            else "glm_public_eval_harness_scored_saved_model_outputs"
+            if has_predictions
+            else "glm_public_eval_harness_has_no_model_outputs_yet"
+        ),
+        "limitations": [
+            (
+                "not_glm_5_2_result"
+                if is_local_baseline
+                else "external_reference_not_local_model"
+            ),
+            (
+                "same_budget_local_baseline_smoke"
+                if is_local_baseline
+                else "not_same_budget_local_baseline"
+            ),
+            "public_synthetic_or_approved_data_only",
+            "offline_harness_does_not_call_remote_model",
+            "limited_judges",
+        ],
+        "evidence": {
+            "baseline_category": metrics.get("baseline_category"),
+            "glm_run_status": metrics.get("glm_run_status"),
+            "privacy_gate_passed": bool(metrics.get("privacy_gate_passed")),
+            "task_count": int(metrics.get("task_count", 0)),
+            "evaluated_prediction_count": evaluated_count,
+            "pass_count": int(metrics.get("pass_count", 0)),
+            "pass_rate": metrics.get("pass_rate"),
+            "metadata_complete_records": int(
+                metrics.get("metadata_completeness", {}).get("complete_records", 0)
+            ),
+            "records_with_missing_fields": int(
+                metrics.get("metadata_completeness", {}).get(
+                    "records_with_missing_fields",
+                    0,
+                )
+            ),
         },
     }
 
