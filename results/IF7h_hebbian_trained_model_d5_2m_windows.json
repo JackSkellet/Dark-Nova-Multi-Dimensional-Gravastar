@@ -1,0 +1,151 @@
+{
+  "command": "uv run python scripts/train_if7_hebbian_model.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --split train --validation-split validation --node-count 2048 --max-active-nodes 48 --max-train-rows 26000 --max-validation-rows 804 --max-train-patterns 2000000 --max-validation-patterns 100000 --text-window-bytes 256 --text-window-stride-bytes 64 --epochs 1 --batch-size 512 --learning-rate 0.01 --recall-at-k 32 --device rocm --output results/IF7h_hebbian_trained_model_d5_2m_windows.json --experiment-id IF7h_hebbian_trained_model_d5_2m_windows --seed 123",
+  "experiment_id": "IF7h_hebbian_trained_model_d5_2m_windows",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? tests/test_if7_sparse_hebbian.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if7_hebbian_conditioning_improves_trained_real_corpus_model",
+  "metrics": {
+    "benchmark_label": "if7_hebbian_conditioned_trained_model",
+    "candidate_id": "IF7",
+    "candidate_name": "Sparse Hebbian Assembly Memory",
+    "corpus": {
+      "path": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "train_repositories": 9621,
+      "train_rows_loaded": 26000,
+      "train_rows_scanned": 26173,
+      "train_split": "train",
+      "usable_train_patterns": 1977521,
+      "usable_validation_patterns": 96855,
+      "validation_repositories": 619,
+      "validation_rows_loaded": 804,
+      "validation_rows_scanned": 804,
+      "validation_split": "validation"
+    },
+    "hebbian_conditioning_improves_trained_model": false,
+    "hebbian_memory": {
+      "label_index_bytes": 36043901,
+      "max_active_nodes": 48,
+      "mean_train_active_nodes": 41.096798972046315,
+      "node_count": 2048,
+      "storage_bytes": 52837501,
+      "update_count": 1977521
+    },
+    "limitations": [
+      "trained_linear_multilabel_probe_not_decoder_language_model",
+      "predicts_hashed_identifier_import_nodes_not_tokens",
+      "not_executable_code_generation_or_repair",
+      "dense_torch_linear_layers_not_sparse_rocm_kernel",
+      "no_security_or_authorization_update_gate"
+    ],
+    "models": {
+      "cue_only": {
+        "description": "Trained linear multilabel predictor from cue nodes only.",
+        "loss_history": [
+          0.05378480457577749
+        ],
+        "parameter_bytes": 16785408,
+        "parameter_count": 4196352
+      },
+      "cue_plus_hebbian": {
+        "description": "Trained linear multilabel predictor from cue nodes plus Hebbian completion scores.",
+        "loss_history": [
+          0.0549852608725766
+        ],
+        "parameter_bytes": 33562624,
+        "parameter_count": 8390656
+      }
+    },
+    "null_hypothesis_outcome": "trained_cue_only_model_not_beaten",
+    "resolved_config": {
+      "batch_size": 512,
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "device": "rocm",
+      "epochs": 1,
+      "experiment_id": "IF7h_hebbian_trained_model_d5_2m_windows",
+      "learning_rate": 0.01,
+      "max_active_nodes": 48,
+      "max_train_patterns": 2000000,
+      "max_train_rows": 26000,
+      "max_validation_patterns": 100000,
+      "max_validation_rows": 804,
+      "node_count": 2048,
+      "output": "results/IF7h_hebbian_trained_model_d5_2m_windows.json",
+      "recall_at_k": 32,
+      "seed": 123,
+      "split": "train",
+      "text_window_bytes": 256,
+      "text_window_stride_bytes": 64,
+      "validation_split": "validation"
+    },
+    "runtime_ms": 323996.36661801196,
+    "training": {
+      "accelerator_backend": "rocm",
+      "batch_size": 512,
+      "device": "cuda",
+      "epochs": 1,
+      "learning_rate": 0.01,
+      "requested_device": "rocm",
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "supervised_train_patterns": 1977521,
+      "supervised_train_rows": 1977521,
+      "validation_patterns": 96855,
+      "validation_rows": 96855,
+      "weight_decay": 0.0
+    },
+    "validation": {
+      "cue_only": {
+        "coverage_at_k": 0.12477288063742185,
+        "hit_at_k": 0.848206081255485,
+        "loss": 0.07049910973538846,
+        "mrr": 0.35581504451642326,
+        "task_count": 96855.0
+      },
+      "cue_plus_hebbian": {
+        "coverage_at_k": 0.11418557581726607,
+        "hit_at_k": 0.8378916937690362,
+        "loss": 0.07394220776824022,
+        "mrr": 0.31415555873313583,
+        "task_count": 96855.0
+      },
+      "raw_hebbian_memory": {
+        "coverage_at_k": 0.10161364719498588,
+        "hit_at_k": 0.8150121315368334,
+        "mrr": 0.19123699619246215,
+        "task_count": 96855.0
+      }
+    }
+  },
+  "notes": "Trained IF7 supervised multilabel model on real corpus rows. Compares a cue-only trained model against a cue-plus-Hebbian-conditioned trained model.",
+  "recorded_at_unix": 1782860577.7231047,
+  "resolved_config": {
+    "batch_size": 512,
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "device": "rocm",
+    "epochs": 1,
+    "experiment_id": "IF7h_hebbian_trained_model_d5_2m_windows",
+    "learning_rate": 0.01,
+    "max_active_nodes": 48,
+    "max_train_patterns": 2000000,
+    "max_train_rows": 26000,
+    "max_validation_patterns": 100000,
+    "max_validation_rows": 804,
+    "node_count": 2048,
+    "output": "results/IF7h_hebbian_trained_model_d5_2m_windows.json",
+    "recall_at_k": 32,
+    "seed": 123,
+    "split": "train",
+    "text_window_bytes": 256,
+    "text_window_stride_bytes": 64,
+    "validation_split": "validation"
+  },
+  "seed": 123,
+  "status": "completed"
+}

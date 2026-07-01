@@ -1,0 +1,226 @@
+{
+  "command": "uv run python scripts/evaluate_quixbugs_candidate_repairs.py --repo-path data/raw/public/quixbugs --program gcd --program flatten --program possible_change --program sqrt --include-buggy-identity --include-oracle-correct --timeout-seconds 15 --seed 123 --output results/QuixBugs_python_candidate_repair_smoke.json --experiment-id QuixBugs_python_candidate_repair_smoke",
+  "experiment_id": "QuixBugs_python_candidate_repair_smoke",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? docs/superpowers/plans/2026-07-01-dark-nova-goal-bootstrap.md\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? research/44_current_coding_benchmark_audit.md\n?? research/45_quixbugs_python_repair_smoke.md\n?? research/coding_model_idea_foundry.md\n?? results/D5_repository_api_reuse_validation.json\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? results/QuixBugs_python_repair_smoke.json\n?? scripts/evaluate_quixbugs_candidate_repairs.py\n?? scripts/evaluate_quixbugs_repair.py\n?? scripts/evaluate_repository_api_reuse.py\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? src/weightlab/quixbugs_repair.py\n?? src/weightlab/repository_api_reuse.py\n?? tests/test_if7_sparse_hebbian.py\n?? tests/test_quixbugs_repair.py\n?? tests/test_repository_api_reuse.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "quixbugs_python_candidate_repair_source_replacement_probe",
+  "metrics": {
+    "benchmark_label": "quixbugs_python_candidate_repair_probe",
+    "candidate_count": 8,
+    "candidates": [
+      {
+        "candidate_id": "gcd:buggy_identity",
+        "generator_label": "buggy_identity_baseline",
+        "passed": false,
+        "program": "gcd",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_gcd.py",
+          "output_tail": "^^^^^^^^^^^^\nE   RecursionError: maximum recursion depth exceeded\n!!! Recursion detected (same locals & position)\n_________________________ test_gcd[input_data4-18913] __________________________\n\ninput_data = [624129, 2061517], expected = 18913\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_gcd(input_data, expected):\n>       assert gcd(*input_data) == expected\n               ^^^^^^^^^^^^^^^^\n\npython_testcases/test_gcd.py:15: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npython_programs/gcd.py:5: in gcd\n    return gcd(a % b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a % b, b)\n           ^^^^^^^^^^^^^\nE   RecursionError: maximum recursion depth exceeded\n!!! Recursion detected (same locals & position)\n___________________________ test_gcd[input_data5-3] ____________________________\n\ninput_data = [3, 12], expected = 3\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_gcd(input_data, expected):\n>       assert gcd(*input_data) == expected\n               ^^^^^^^^^^^^^^^^\n\npython_testcases/test_gcd.py:15: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npython_programs/gcd.py:5: in gcd\n    return gcd(a % b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a % b, b)\n           ^^^^^^^^^^^^^\nE   RecursionError: maximum recursion depth exceeded\n!!! Recursion detected (same locals & position)\n=========================== short test summary info ============================\nFAILED python_testcases/test_gcd.py::test_gcd[input_data1-13] - RecursionErro...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data2-1] - RecursionError...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data3-20] - RecursionErro...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data4-18913] - RecursionE...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data5-3] - RecursionError...\n5 failed, 1 passed in 0.02s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 137.68825499573722
+        },
+        "source_sha256": "d68e155c2af40d787f617f03c596005edabee3d9e33626b9185d83650895636f"
+      },
+      {
+        "candidate_id": "gcd:oracle_correct",
+        "generator_label": "oracle_correct_upper_bound",
+        "passed": true,
+        "program": "gcd",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_gcd.py",
+          "output_tail": "......                                                                   [100%]\n6 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 112.75309600750916
+        },
+        "source_sha256": "68ed345fa14c13fa0d3b70ebfd3ab3e30ca937a52fd4a7f139630177ca005d9b"
+      },
+      {
+        "candidate_id": "flatten:buggy_identity",
+        "generator_label": "buggy_identity_baseline",
+        "passed": false,
+        "program": "flatten",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_flatten.py",
+          "output_tail": "ected\nE       assert [<generator o...7f667bda2ce0>] == [1, 4, 6]\nE         \nE         At index 0 diff: <generator object flatten at 0x7f667bda2b20> != 1\nE         Use -v to get more diff\n\npython_testcases/test_flatten.py:15: AssertionError\n_____________________ test_flatten[input_data5-expected5] ______________________\n\ninput_data = [['moe', 'curly', 'larry']], expected = ['moe', 'curly', 'larry']\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_flatten(input_data, expected):\n>       assert list(flatten(*input_data)) == expected\nE       AssertionError: assert [<generator o...7f667bda3680>] == ['moe', 'curly', 'larry']\nE         \nE         At index 0 diff: <generator object flatten at 0x7f667bda34c0> != 'moe'\nE         Use -v to get more diff\n\npython_testcases/test_flatten.py:15: AssertionError\n_____________________ test_flatten[input_data6-expected6] ______________________\n\ninput_data = [['a', 'b', ['c'], ['d'], [['e']]]]\nexpected = ['a', 'b', 'c', 'd', 'e']\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_flatten(input_data, expected):\n>       assert list(flatten(*input_data)) == expected\nE       AssertionError: assert [<generator o...7f667bddc4a0>] == ['a', 'b', 'c', 'd', 'e']\nE         \nE         At index 0 diff: <generator object flatten at 0x7f667bda3e60> != 'a'\nE         Use -v to get more diff\n\npython_testcases/test_flatten.py:15: AssertionError\n=========================== short test summary info ============================\nFAILED python_testcases/test_flatten.py::test_flatten[input_data0-expected0]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data2-expected2]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data3-expected3]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data4-expected4]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data5-expected5]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data6-expected6]\n6 failed, 1 passed in 0.01s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 115.97844201605767
+        },
+        "source_sha256": "5023275fe603f1ebade0027073c3d116274d405069ea350076f220f10ff451e2"
+      },
+      {
+        "candidate_id": "flatten:oracle_correct",
+        "generator_label": "oracle_correct_upper_bound",
+        "passed": true,
+        "program": "flatten",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_flatten.py",
+          "output_tail": ".......                                                                  [100%]\n7 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 116.15145701216534
+        },
+        "source_sha256": "9a81d65b8147aa84be75b3345b1ce25d2577335d955e963e10bbef19f986618d"
+      },
+      {
+        "candidate_id": "possible_change:buggy_identity",
+        "generator_label": "buggy_identity_baseline",
+        "passed": false,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_programs/possible_change.py:9: in possible_change\n    return possible_change(coins, total - first) + possible_change(rest, total)\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_programs/possible_change.py:9: in possible_change\n    return possible_change(coins, total - first) + possible_change(rest, total)\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_programs/possible_change.py:9: in possible_change\n    return possible_change(coins, total - first) + possible_change(rest, total)\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncoins = [], total = 2\n\n    def possible_change(coins, total):\n        if total == 0:\n            return 1\n        if total < 0:\n            return 0\n    \n>       first, *rest = coins\n        ^^^^^^^^^^^^\nE       ValueError: not enough values to unpack (expected at least 1, got 0)\n\npython_programs/possible_change.py:8: ValueError\n=========================== short test summary info ============================\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data1-4]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data2-121]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data3-18]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data4-16]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data5-568]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data6-786]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data7-817]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data8-981]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data9-20]\n9 failed, 1 passed in 0.09s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 197.53014799789526
+        },
+        "source_sha256": "e21854dbb1a8f299bab639e71797a14989ab6bd6b700665a2056c48a70154917"
+      },
+      {
+        "candidate_id": "possible_change:oracle_correct",
+        "generator_label": "oracle_correct_upper_bound",
+        "passed": true,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "..........                                                               [100%]\n10 passed in 0.04s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 136.84244800242595
+        },
+        "source_sha256": "195f5cdc05e838b4c14553090b95e297c75401a6ce778b2738e7e9f47ec18cd0"
+      },
+      {
+        "candidate_id": "sqrt:buggy_identity",
+        "generator_label": "buggy_identity_baseline",
+        "passed": false,
+        "program": "sqrt",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_sqrt.py",
+          "output_tail": "\nTIMEOUT",
+          "passed": false,
+          "returncode": null,
+          "runtime_ms": 15015.530259988736
+        },
+        "source_sha256": "e3623a160e6ada452b36ce0bd2370fc031943e2c1ae93aae5f0c82865e083ebf"
+      },
+      {
+        "candidate_id": "sqrt:oracle_correct",
+        "generator_label": "oracle_correct_upper_bound",
+        "passed": true,
+        "program": "sqrt",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_sqrt.py",
+          "output_tail": ".......                                                                  [100%]\n7 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 106.24436399666592
+        },
+        "source_sha256": "8abad14937a9cd1cfe0e1c7f20f92861a0a86c6305e473f184ae813b6120375e"
+      }
+    ],
+    "final": {
+      "candidate_pass_rate": 0.5,
+      "candidate_passed": 4,
+      "program_repair_rate": 1.0,
+      "programs_with_passing_candidate": 4,
+      "runtime_ms": 15998.45805298537
+    },
+    "limitations": [
+      "not_model_generated_unless_candidate_file_is_model_output",
+      "replacement_source_only",
+      "python_subset_only",
+      "pytest_result_depends_on_local_environment"
+    ],
+    "program_count": 4,
+    "programs": {
+      "flatten": {
+        "best_candidate_id": "flatten:oracle_correct",
+        "candidate_count": 2,
+        "generator_labels": [
+          "buggy_identity_baseline",
+          "oracle_correct_upper_bound"
+        ],
+        "passed_count": 1
+      },
+      "gcd": {
+        "best_candidate_id": "gcd:oracle_correct",
+        "candidate_count": 2,
+        "generator_labels": [
+          "buggy_identity_baseline",
+          "oracle_correct_upper_bound"
+        ],
+        "passed_count": 1
+      },
+      "possible_change": {
+        "best_candidate_id": "possible_change:oracle_correct",
+        "candidate_count": 2,
+        "generator_labels": [
+          "buggy_identity_baseline",
+          "oracle_correct_upper_bound"
+        ],
+        "passed_count": 1
+      },
+      "sqrt": {
+        "best_candidate_id": "sqrt:oracle_correct",
+        "candidate_count": 2,
+        "generator_labels": [
+          "buggy_identity_baseline",
+          "oracle_correct_upper_bound"
+        ],
+        "passed_count": 1
+      }
+    },
+    "resolved_config": {
+      "candidates_jsonl": null,
+      "experiment_id": "QuixBugs_python_candidate_repair_smoke",
+      "include_buggy_identity": true,
+      "include_oracle_correct": true,
+      "output": "results/QuixBugs_python_candidate_repair_smoke.json",
+      "programs": [
+        "gcd",
+        "flatten",
+        "possible_change",
+        "sqrt"
+      ],
+      "repo_path": "data/raw/public/quixbugs",
+      "seed": 123,
+      "timeout_seconds": 15
+    },
+    "seed": 123,
+    "source": {
+      "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+      "repo_path": "data/raw/public/quixbugs",
+      "repo_url": "https://github.com/jkoppel/QuixBugs"
+    }
+  },
+  "notes": "Runs QuixBugs Python pytest tests against candidate replacement sources in isolated temporary checkouts. Candidate provenance comes from the input JSONL; this is not model-generated unless that file contains model outputs.",
+  "recorded_at_unix": 1782922394.8047495,
+  "resolved_config": {
+    "candidates_jsonl": null,
+    "experiment_id": "QuixBugs_python_candidate_repair_smoke",
+    "include_buggy_identity": true,
+    "include_oracle_correct": true,
+    "output": "results/QuixBugs_python_candidate_repair_smoke.json",
+    "programs": [
+      "gcd",
+      "flatten",
+      "possible_change",
+      "sqrt"
+    ],
+    "repo_path": "data/raw/public/quixbugs",
+    "seed": 123,
+    "timeout_seconds": 15
+  },
+  "seed": 123,
+  "status": "completed"
+}

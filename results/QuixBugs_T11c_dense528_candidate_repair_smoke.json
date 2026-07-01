@@ -1,0 +1,244 @@
+{
+  "command": "uv run python scripts/evaluate_quixbugs_dense_candidates.py --checkpoint artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt --repo-path data/raw/public/quixbugs --program gcd --program flatten --program possible_change --program sqrt --device cpu --seed 123 --max-new-tokens 192 --timeout-seconds 15 --output results/QuixBugs_T11c_dense528_candidate_repair_smoke.json --experiment-id QuixBugs_T11c_dense528_candidate_repair_smoke",
+  "experiment_id": "QuixBugs_T11c_dense528_candidate_repair_smoke",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? docs/superpowers/plans/2026-07-01-dark-nova-goal-bootstrap.md\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? research/44_current_coding_benchmark_audit.md\n?? research/45_quixbugs_python_repair_smoke.md\n?? research/46_quixbugs_candidate_repair_smoke.md\n?? research/coding_model_idea_foundry.md\n?? results/D5_repository_api_reuse_validation.json\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? results/QuixBugs_python_candidate_repair_smoke.json\n?? results/QuixBugs_python_repair_smoke.json\n?? scripts/evaluate_quixbugs_candidate_repairs.py\n?? scripts/evaluate_quixbugs_dense_candidates.py\n?? scripts/evaluate_quixbugs_repair.py\n?? scripts/evaluate_repository_api_reuse.py\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? src/weightlab/quixbugs_model_candidates.py\n?? src/weightlab/quixbugs_repair.py\n?? src/weightlab/repository_api_reuse.py\n?? tests/test_if7_sparse_hebbian.py\n?? tests/test_quixbugs_model_candidates.py\n?? tests/test_quixbugs_repair.py\n?? tests/test_repository_api_reuse.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_checkpoint_generates_quixbugs_repair_candidates",
+  "metrics": {
+    "benchmark_label": "quixbugs_python_dense_model_candidate_probe",
+    "candidate_count": 4,
+    "candidates": [
+      {
+        "candidate_id": "gcd:dense_greedy",
+        "generator_label": "dense_checkpoint_greedy",
+        "passed": false,
+        "program": "gcd",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_gcd.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n________________ ERROR collecting python_testcases/test_gcd.py _________________\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\npython_testcases/test_gcd.py:7: in <module>\n    from python_programs.gcd import gcd\nE     File \"/tmp/quixbugs-candidate-uwd9dfat/repo/python_programs/gcd.py\", line 1\nE       * @param {Number} config The config to the event object.\nE         ^\nE   SyntaxError: invalid syntax\n=========================== short test summary info ============================\nERROR python_testcases/test_gcd.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.05s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 148.66827600053512
+        },
+        "source_sha256": "eef323f00329bb94bf455f202e00246650a0167386757abcab5e1e302fd2d0d8"
+      },
+      {
+        "candidate_id": "flatten:dense_greedy",
+        "generator_label": "dense_checkpoint_greedy",
+        "passed": false,
+        "program": "flatten",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_flatten.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n______________ ERROR collecting python_testcases/test_flatten.py _______________\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\npython_testcases/test_flatten.py:7: in <module>\n    from python_programs.flatten import flatten\nE     File \"/tmp/quixbugs-candidate-wdvziv3a/repo/python_programs/flatten.py\", line 1\nE       * @param {Number} [options.source, options.source, options.source, options.source, options.source, options.source, options.source, options.source, options.source, options.source, options.\nE         ^\nE   SyntaxError: invalid syntax\n=========================== short test summary info ============================\nERROR python_testcases/test_flatten.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.05s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 150.78682400053367
+        },
+        "source_sha256": "a877b8d52761e0011c1135bb96c9432f359f8f87d03bf1b8c82ba0d12233a01e"
+      },
+      {
+        "candidate_id": "possible_change:dense_greedy",
+        "generator_label": "dense_checkpoint_greedy",
+        "passed": false,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n__________ ERROR collecting python_testcases/test_possible_change.py ___________\nImportError while importing test module '/tmp/quixbugs-candidate-40u0sx5k/repo/python_testcases/test_possible_change.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_testcases/test_possible_change.py:7: in <module>\n    from python_programs.possible_change import possible_change\nE   ImportError: cannot import name 'possible_change' from 'python_programs.possible_change' (/tmp/quixbugs-candidate-40u0sx5k/repo/python_programs/possible_change.py)\n=========================== short test summary info ============================\nERROR python_testcases/test_possible_change.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.04s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 144.87691997783259
+        },
+        "source_sha256": "22d743614c7078572e0df8b4815530a6ba68b6bee74d464e63dc2c1ca1f5f38b"
+      },
+      {
+        "candidate_id": "sqrt:dense_greedy",
+        "generator_label": "dense_checkpoint_greedy",
+        "passed": false,
+        "program": "sqrt",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_sqrt.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n________________ ERROR collecting python_testcases/test_sqrt.py ________________\nImportError while importing test module '/tmp/quixbugs-candidate-vccybf0b/repo/python_testcases/test_sqrt.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_testcases/test_sqrt.py:7: in <module>\n    from python_programs.sqrt import sqrt\nE   ImportError: cannot import name 'sqrt' from 'python_programs.sqrt' (/tmp/quixbugs-candidate-vccybf0b/repo/python_programs/sqrt.py)\n=========================== short test summary info ============================\nERROR python_testcases/test_sqrt.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.04s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 140.2438759978395
+        },
+        "source_sha256": "22d743614c7078572e0df8b4815530a6ba68b6bee74d464e63dc2c1ca1f5f38b"
+      }
+    ],
+    "final": {
+      "candidate_pass_rate": 0.0,
+      "candidate_passed": 0,
+      "end_to_end_runtime_ms": 4309.742974990513,
+      "program_repair_rate": 0.0,
+      "programs_with_passing_candidate": 0,
+      "runtime_ms": 613.6495140090119
+    },
+    "generated_candidates": [
+      {
+        "candidate_id": "gcd:dense_greedy",
+        "generated_bytes": 192,
+        "generated_preview": "     * @param {Number} config The config to the event object.\n     * @return {Number} config to the config the event object.\n     */\n    Config.extend = functio",
+        "generated_sha256": "4f17f0d65707b48ceb9a34001bc76f84773208727e0fa4783962e850decc1272",
+        "program": "gcd",
+        "prompt_bytes": 428,
+        "prompt_sha256": "217ea5f23009dcaabb4906bc7b6507da8bb0e58da2bba9207ddd0082f1b13e14",
+        "source_bytes": 188,
+        "source_sha256": "eef323f00329bb94bf455f202e00246650a0167386757abcab5e1e302fd2d0d8"
+      },
+      {
+        "candidate_id": "flatten:dense_greedy",
+        "generated_bytes": 192,
+        "generated_preview": "     * @param {Number} [options.source, options.source, options.source, options.source, options.source, options.source, options.source, options.source, options.",
+        "generated_sha256": "3a9154295cf117543cac22718fa730fdbb7be0c9b9d229a5d361afad5f1cb5fc",
+        "program": "flatten",
+        "prompt_bytes": 562,
+        "prompt_sha256": "086340116881884d962fbaa9b14a65dfdd207edb2d2721a3a7db37c7e4825999",
+        "source_bytes": 188,
+        "source_sha256": "a877b8d52761e0011c1135bb96c9432f359f8f87d03bf1b8c82ba0d12233a01e"
+      },
+      {
+        "candidate_id": "possible_change:dense_greedy",
+        "generated_bytes": 192,
+        "generated_preview": "                                                                                                                                                                ",
+        "generated_sha256": "1d3659ada1bf4b80ae974a7b544090591793cb954ac3f9ad13d3af3f09c21967",
+        "program": "possible_change",
+        "prompt_bytes": 914,
+        "prompt_sha256": "8cd34099a3f2f1ecff61af321bd67a80343a1bc83f504c9e3490f5438476022c",
+        "source_bytes": 36,
+        "source_sha256": "22d743614c7078572e0df8b4815530a6ba68b6bee74d464e63dc2c1ca1f5f38b"
+      },
+      {
+        "candidate_id": "sqrt:dense_greedy",
+        "generated_bytes": 192,
+        "generated_preview": "                                                                                                                                                                ",
+        "generated_sha256": "1d3659ada1bf4b80ae974a7b544090591793cb954ac3f9ad13d3af3f09c21967",
+        "program": "sqrt",
+        "prompt_bytes": 509,
+        "prompt_sha256": "1e9b1e586643f7ff865b11d84e6e837ae263f13e25047644f3693bbe60b2e786",
+        "source_bytes": 36,
+        "source_sha256": "22d743614c7078572e0df8b4815530a6ba68b6bee74d464e63dc2c1ca1f5f38b"
+      }
+    ],
+    "generation": {
+      "max_new_tokens": 192,
+      "method": "greedy_byte_generation",
+      "prompt_style": "buggy_source_then_fixed_source_marker",
+      "seed": 123
+    },
+    "limitations": [
+      "local_model_generated_candidate",
+      "greedy_byte_generation",
+      "prompted_source_replacement_from_general_lm",
+      "replacement_source_only",
+      "python_subset_only",
+      "pytest_result_depends_on_local_environment"
+    ],
+    "model": {
+      "accelerator_backend": "cpu",
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "checkpoint_step": 195000,
+      "checkpoint_type": "model_only",
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "finite_causal",
+        "block_impl": "explicit_causal",
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "seq_len": 128
+      },
+      "device": "cpu",
+      "tokenizer": {
+        "eos_id": 256,
+        "name": "byte_level",
+        "type": "byte_level",
+        "vocab_size": 257
+      }
+    },
+    "program_count": 4,
+    "programs": {
+      "flatten": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_greedy"
+        ],
+        "passed_count": 0
+      },
+      "gcd": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_greedy"
+        ],
+        "passed_count": 0
+      },
+      "possible_change": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_greedy"
+        ],
+        "passed_count": 0
+      },
+      "sqrt": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_greedy"
+        ],
+        "passed_count": 0
+      }
+    },
+    "resolved_config": {
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "device": "cpu",
+      "experiment_id": "QuixBugs_T11c_dense528_candidate_repair_smoke",
+      "max_new_tokens": 192,
+      "output": "results/QuixBugs_T11c_dense528_candidate_repair_smoke.json",
+      "programs": [
+        "gcd",
+        "flatten",
+        "possible_change",
+        "sqrt"
+      ],
+      "repo_path": "data/raw/public/quixbugs",
+      "seed": 123,
+      "timeout_seconds": 15
+    },
+    "seed": 123,
+    "source": {
+      "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+      "repo_path": "data/raw/public/quixbugs",
+      "repo_url": "https://github.com/jkoppel/QuixBugs"
+    }
+  },
+  "notes": "Evaluation-only QuixBugs repair candidate probe. A local dense decoder checkpoint greedily generates replacement source candidates, which are then scored with the QuixBugs pytest harness.",
+  "recorded_at_unix": 1782922984.9746566,
+  "resolved_config": {
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+    "device": "cpu",
+    "experiment_id": "QuixBugs_T11c_dense528_candidate_repair_smoke",
+    "max_new_tokens": 192,
+    "output": "results/QuixBugs_T11c_dense528_candidate_repair_smoke.json",
+    "programs": [
+      "gcd",
+      "flatten",
+      "possible_change",
+      "sqrt"
+    ],
+    "repo_path": "data/raw/public/quixbugs",
+    "seed": 123,
+    "timeout_seconds": 15
+  },
+  "seed": 123,
+  "status": "completed"
+}

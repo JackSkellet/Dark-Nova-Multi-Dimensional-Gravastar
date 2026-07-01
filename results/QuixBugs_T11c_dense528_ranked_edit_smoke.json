@@ -1,0 +1,258 @@
+{
+  "command": "uv run python scripts/evaluate_quixbugs_dense_ranked_edits.py --checkpoint artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt --repo-path data/raw/public/quixbugs --program gcd --program flatten --program possible_change --program sqrt --device rocm --seed 123 --timeout-seconds 15 --max-candidates-per-program 8 --top-candidates-per-program 1 --output results/QuixBugs_T11c_dense528_ranked_edit_smoke.json --experiment-id QuixBugs_T11c_dense528_ranked_edit_smoke",
+  "experiment_id": "QuixBugs_T11c_dense528_ranked_edit_smoke",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? docs/superpowers/plans/2026-07-01-dark-nova-goal-bootstrap.md\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? research/44_current_coding_benchmark_audit.md\n?? research/45_quixbugs_python_repair_smoke.md\n?? research/46_quixbugs_candidate_repair_smoke.md\n?? research/47_quixbugs_dense528_model_candidate_smoke.md\n?? research/48_quixbugs_dense528_sampled_candidate_smoke.md\n?? research/49_quixbugs_edit_baseline_smoke.md\n?? research/coding_model_idea_foundry.md\n?? results/D5_repository_api_reuse_validation.json\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? results/QuixBugs_T11c_dense528_candidate_repair_smoke.json\n?? results/QuixBugs_T11c_dense528_sampled_candidate_repair_smoke.json\n?? results/QuixBugs_edit_baseline_repair_smoke.json\n?? results/QuixBugs_python_candidate_repair_smoke.json\n?? results/QuixBugs_python_repair_smoke.json\n?? scripts/evaluate_quixbugs_candidate_repairs.py\n?? scripts/evaluate_quixbugs_dense_candidates.py\n?? scripts/evaluate_quixbugs_dense_ranked_edits.py\n?? scripts/evaluate_quixbugs_edit_baseline.py\n?? scripts/evaluate_quixbugs_repair.py\n?? scripts/evaluate_repository_api_reuse.py\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? src/weightlab/quixbugs_edit_baseline.py\n?? src/weightlab/quixbugs_model_candidates.py\n?? src/weightlab/quixbugs_model_ranked_edits.py\n?? src/weightlab/quixbugs_repair.py\n?? src/weightlab/repository_api_reuse.py\n?? tests/test_if7_sparse_hebbian.py\n?? tests/test_quixbugs_edit_baseline.py\n?? tests/test_quixbugs_model_candidates.py\n?? tests/test_quixbugs_model_ranked_edits.py\n?? tests/test_quixbugs_repair.py\n?? tests/test_repository_api_reuse.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_checkpoint_can_rank_deterministic_quixbugs_edit_candidates",
+  "metrics": {
+    "benchmark_label": "quixbugs_python_dense_ranked_edit_probe",
+    "candidate_count": 4,
+    "candidate_pool": {
+      "generated_candidate_count": 6,
+      "max_candidates_per_program": 8,
+      "selected_candidate_count": 4,
+      "source": "deterministic_ast_edit_baseline",
+      "top_candidates_per_program": 1
+    },
+    "candidates": [
+      {
+        "candidate_id": "flatten:edit_01",
+        "generator_label": "dense_ranked_ast_edit",
+        "passed": true,
+        "program": "flatten",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_flatten.py",
+          "output_tail": ".......                                                                  [100%]\n7 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 107.04190100659616
+        },
+        "source_sha256": "e02166dbc0a75475bc350efb55ab3a4b12b01db44f113381e23d89c5cc8494f4"
+      },
+      {
+        "candidate_id": "gcd:edit_01",
+        "generator_label": "dense_ranked_ast_edit",
+        "passed": true,
+        "program": "gcd",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_gcd.py",
+          "output_tail": "......                                                                   [100%]\n6 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 106.61094897659495
+        },
+        "source_sha256": "ee197498e41629a4c63f900c2d879b1d50fc83066ee13f0ff144eba3f5d582fb"
+      },
+      {
+        "candidate_id": "possible_change:edit_03",
+        "generator_label": "dense_ranked_ast_edit",
+        "passed": true,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "..........                                                               [100%]\n10 passed in 0.04s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 142.80705602141097
+        },
+        "source_sha256": "54f7b31d8f85e416e1b84e70f63c264d02bba4df7561accc8afaf8c83092525e"
+      },
+      {
+        "candidate_id": "sqrt:edit_01",
+        "generator_label": "dense_ranked_ast_edit",
+        "passed": true,
+        "program": "sqrt",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_sqrt.py",
+          "output_tail": ".......                                                                  [100%]\n7 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 108.90665597980842
+        },
+        "source_sha256": "97e0236608be7c6bbdbea1f2159186198878114d9e1cc022974c83578a19684a"
+      }
+    ],
+    "final": {
+      "candidate_pass_rate": 1.0,
+      "candidate_passed": 4,
+      "end_to_end_runtime_ms": 9101.814110996202,
+      "program_repair_rate": 1.0,
+      "programs_with_passing_candidate": 4,
+      "runtime_ms": 492.23971099127084
+    },
+    "limitations": [
+      "local_model_ranked_candidate",
+      "deterministic_candidate_pool",
+      "not_free_form_generation",
+      "replacement_source_only",
+      "python_subset_only",
+      "pytest_result_depends_on_local_environment",
+      "ranking_uses_teacher_forced_candidate_likelihood"
+    ],
+    "model": {
+      "accelerator_backend": "rocm",
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "checkpoint_step": 195000,
+      "checkpoint_type": "model_only",
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "finite_causal",
+        "block_impl": "explicit_causal",
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "seq_len": 128
+      },
+      "device": "cuda",
+      "tokenizer": {
+        "eos_id": 256,
+        "name": "byte_level",
+        "type": "byte_level",
+        "vocab_size": 257
+      }
+    },
+    "program_count": 4,
+    "programs": {
+      "flatten": {
+        "best_candidate_id": "flatten:edit_01",
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_ast_edit"
+        ],
+        "passed_count": 1
+      },
+      "gcd": {
+        "best_candidate_id": "gcd:edit_01",
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_ast_edit"
+        ],
+        "passed_count": 1
+      },
+      "possible_change": {
+        "best_candidate_id": "possible_change:edit_03",
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_ast_edit"
+        ],
+        "passed_count": 1
+      },
+      "sqrt": {
+        "best_candidate_id": "sqrt:edit_01",
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_ast_edit"
+        ],
+        "passed_count": 1
+      }
+    },
+    "ranking": [
+      {
+        "candidate_id": "flatten:edit_01",
+        "generator_label": "dense_ranked_ast_edit",
+        "mean_nll": 1.684246094820438,
+        "program": "flatten",
+        "source_sha256": "e02166dbc0a75475bc350efb55ab3a4b12b01db44f113381e23d89c5cc8494f4",
+        "token_count": 473,
+        "total_nll": 796.6484028500672
+      },
+      {
+        "candidate_id": "gcd:edit_01",
+        "generator_label": "dense_ranked_ast_edit",
+        "mean_nll": 1.994399127579525,
+        "program": "gcd",
+        "source_sha256": "ee197498e41629a4c63f900c2d879b1d50fc83066ee13f0ff144eba3f5d582fb",
+        "token_count": 353,
+        "total_nll": 704.0228920355723
+      },
+      {
+        "candidate_id": "possible_change:edit_03",
+        "generator_label": "dense_ranked_ast_edit",
+        "mean_nll": 1.4932869075510455,
+        "program": "possible_change",
+        "source_sha256": "54f7b31d8f85e416e1b84e70f63c264d02bba4df7561accc8afaf8c83092525e",
+        "token_count": 851,
+        "total_nll": 1270.7871583259398
+      },
+      {
+        "candidate_id": "possible_change:edit_01",
+        "generator_label": "dense_ranked_ast_edit",
+        "mean_nll": 1.5028592064587365,
+        "program": "possible_change",
+        "source_sha256": "40b82c822443f633850d336ac6707c2247d792b0543fe21e9b293f99d265a5f7",
+        "token_count": 816,
+        "total_nll": 1226.333112470329
+      },
+      {
+        "candidate_id": "possible_change:edit_02",
+        "generator_label": "dense_ranked_ast_edit",
+        "mean_nll": 1.5043291754152595,
+        "program": "possible_change",
+        "source_sha256": "0f555f7fb339de3e958a0e0a13b00105aa590e6e1e3379e6678191b9f62d6bd9",
+        "token_count": 816,
+        "total_nll": 1227.5326071388517
+      },
+      {
+        "candidate_id": "sqrt:edit_01",
+        "generator_label": "dense_ranked_ast_edit",
+        "mean_nll": 1.705327625967778,
+        "program": "sqrt",
+        "source_sha256": "97e0236608be7c6bbdbea1f2159186198878114d9e1cc022974c83578a19684a",
+        "token_count": 443,
+        "total_nll": 755.4601383037257
+      }
+    ],
+    "resolved_config": {
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "device": "rocm",
+      "experiment_id": "QuixBugs_T11c_dense528_ranked_edit_smoke",
+      "max_candidates_per_program": 8,
+      "output": "results/QuixBugs_T11c_dense528_ranked_edit_smoke.json",
+      "programs": [
+        "gcd",
+        "flatten",
+        "possible_change",
+        "sqrt"
+      ],
+      "repo_path": "data/raw/public/quixbugs",
+      "seed": 123,
+      "timeout_seconds": 15,
+      "top_candidates_per_program": 1
+    },
+    "seed": 123,
+    "source": {
+      "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+      "repo_path": "data/raw/public/quixbugs",
+      "repo_url": "https://github.com/jkoppel/QuixBugs"
+    }
+  },
+  "notes": "Evaluation-only QuixBugs repair probe. A local dense decoder checkpoint scores deterministic AST-edit candidate repairs by teacher-forced candidate likelihood; the selected candidates are then evaluated with the QuixBugs pytest harness. This is model ranking, not free-form repair generation.",
+  "recorded_at_unix": 1782924724.3790493,
+  "resolved_config": {
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+    "device": "rocm",
+    "experiment_id": "QuixBugs_T11c_dense528_ranked_edit_smoke",
+    "max_candidates_per_program": 8,
+    "output": "results/QuixBugs_T11c_dense528_ranked_edit_smoke.json",
+    "programs": [
+      "gcd",
+      "flatten",
+      "possible_change",
+      "sqrt"
+    ],
+    "repo_path": "data/raw/public/quixbugs",
+    "seed": 123,
+    "timeout_seconds": 15,
+    "top_candidates_per_program": 1
+  },
+  "seed": 123,
+  "status": "completed"
+}

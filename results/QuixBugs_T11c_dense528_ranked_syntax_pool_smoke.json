@@ -1,0 +1,772 @@
+{
+  "command": "uv run python scripts/evaluate_quixbugs_dense_ranked_syntax_pool.py --checkpoint artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt --repo-path data/raw/public/quixbugs --program gcd --program flatten --program possible_change --program sqrt --device rocm --seed 123 --timeout-seconds 15 --max-candidates-per-program 32 --top-candidates-per-program 1 --output results/QuixBugs_T11c_dense528_ranked_syntax_pool_smoke.json --experiment-id QuixBugs_T11c_dense528_ranked_syntax_pool_smoke",
+  "experiment_id": "QuixBugs_T11c_dense528_ranked_syntax_pool_smoke",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? docs/superpowers/plans/2026-07-01-dark-nova-goal-bootstrap.md\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? research/44_current_coding_benchmark_audit.md\n?? research/45_quixbugs_python_repair_smoke.md\n?? research/46_quixbugs_candidate_repair_smoke.md\n?? research/47_quixbugs_dense528_model_candidate_smoke.md\n?? research/48_quixbugs_dense528_sampled_candidate_smoke.md\n?? research/49_quixbugs_edit_baseline_smoke.md\n?? research/50_quixbugs_dense528_ranked_edit_smoke.md\n?? research/coding_model_idea_foundry.md\n?? results/D5_repository_api_reuse_validation.json\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? results/QuixBugs_T11c_dense528_candidate_repair_smoke.json\n?? results/QuixBugs_T11c_dense528_ranked_edit_smoke.json\n?? results/QuixBugs_T11c_dense528_sampled_candidate_repair_smoke.json\n?? results/QuixBugs_edit_baseline_repair_smoke.json\n?? results/QuixBugs_python_candidate_repair_smoke.json\n?? results/QuixBugs_python_repair_smoke.json\n?? scripts/evaluate_quixbugs_candidate_repairs.py\n?? scripts/evaluate_quixbugs_dense_candidates.py\n?? scripts/evaluate_quixbugs_dense_ranked_edits.py\n?? scripts/evaluate_quixbugs_dense_ranked_syntax_pool.py\n?? scripts/evaluate_quixbugs_edit_baseline.py\n?? scripts/evaluate_quixbugs_repair.py\n?? scripts/evaluate_repository_api_reuse.py\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? src/weightlab/quixbugs_edit_baseline.py\n?? src/weightlab/quixbugs_model_candidates.py\n?? src/weightlab/quixbugs_model_ranked_edits.py\n?? src/weightlab/quixbugs_repair.py\n?? src/weightlab/quixbugs_syntax_mutations.py\n?? src/weightlab/repository_api_reuse.py\n?? tests/test_if7_sparse_hebbian.py\n?? tests/test_quixbugs_edit_baseline.py\n?? tests/test_quixbugs_model_candidates.py\n?? tests/test_quixbugs_model_ranked_edits.py\n?? tests/test_quixbugs_repair.py\n?? tests/test_quixbugs_syntax_mutation_pool.py\n?? tests/test_repository_api_reuse.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_checkpoint_can_rank_broader_syntax_preserving_repair_pool",
+  "metrics": {
+    "benchmark_label": "quixbugs_python_dense_ranked_syntax_pool_probe",
+    "candidate_count": 4,
+    "candidate_pool": {
+      "generated_candidate_count": 63,
+      "max_candidates_per_program": 32,
+      "selected_candidate_count": 4,
+      "source": "syntax_preserving_ast_mutation_pool",
+      "top_candidates_per_program": 1
+    },
+    "candidates": [
+      {
+        "candidate_id": "flatten:syntax_pool_002",
+        "generator_label": "dense_ranked_syntax_pool",
+        "passed": false,
+        "program": "flatten",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_flatten.py",
+          "output_tail": "ark.parametrize(\"input_data,expected\", testdata)\n    def test_flatten(input_data, expected):\n>       assert list(flatten(*input_data)) == expected\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\npython_testcases/test_flatten.py:15: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\narr = ['moe', 'curly', 'larry']\n\n    def flatten(arr):\n        for x in arr:\n>           if isinstance(list, x):\n               ^^^^^^^^^^^^^^^^^^^\nE           TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union\n\npython_programs/flatten.py:3: TypeError\n_____________________ test_flatten[input_data6-expected6] ______________________\n\ninput_data = [['a', 'b', ['c'], ['d'], [['e']]]]\nexpected = ['a', 'b', 'c', 'd', 'e']\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_flatten(input_data, expected):\n>       assert list(flatten(*input_data)) == expected\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\npython_testcases/test_flatten.py:15: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\narr = ['a', 'b', ['c'], ['d'], [['e']]]\n\n    def flatten(arr):\n        for x in arr:\n>           if isinstance(list, x):\n               ^^^^^^^^^^^^^^^^^^^\nE           TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union\n\npython_programs/flatten.py:3: TypeError\n=========================== short test summary info ============================\nFAILED python_testcases/test_flatten.py::test_flatten[input_data0-expected0]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data1-expected1]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data2-expected2]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data3-expected3]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data4-expected4]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data5-expected5]\nFAILED python_testcases/test_flatten.py::test_flatten[input_data6-expected6]\n7 failed in 0.02s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 116.02577398298308
+        },
+        "source_sha256": "ede29663fa5fd7f0fc35f27214221018c8e4999a3b8b093d92ea5ec0ff4dae82"
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_002",
+        "generator_label": "dense_ranked_syntax_pool",
+        "passed": false,
+        "program": "gcd",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_gcd.py",
+          "output_tail": ".py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\npython_programs/gcd.py:5: in gcd\n    return gcd(a + b, b)\n           ^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\na = 11595, b = 12\n\n    def gcd(a, b):\n        if b == 0:\n            return a\n        else:\n>           return gcd(a + b, b)\n                   ^^^^^^^^^^^^^\nE           RecursionError: maximum recursion depth exceeded\n\npython_programs/gcd.py:5: RecursionError\n=========================== short test summary info ============================\nFAILED python_testcases/test_gcd.py::test_gcd[input_data1-13] - RecursionErro...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data2-1] - RecursionError...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data3-20] - RecursionErro...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data4-18913] - RecursionE...\nFAILED python_testcases/test_gcd.py::test_gcd[input_data5-3] - RecursionError...\n5 failed, 1 passed in 0.41s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 516.9476409791969
+        },
+        "source_sha256": "70e9e06dcec2c2649e8519b07f6c52bbb27410483e8b6c92964d86fa87169611"
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_024",
+        "generator_label": "dense_ranked_syntax_pool",
+        "passed": false,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "hange(*input_data) == expected\nE       assert 27812 == 817\nE        +  where 27812 = possible_change(*[[1, 5, 10, 25, 50, 100], 140])\n\npython_testcases/test_possible_change.py:15: AssertionError\n____________________ test_possible_change[input_data8-981] _____________________\n\ninput_data = [[1, 3, 7, 42, 78], 140], expected = 981\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_possible_change(input_data, expected):\n>       assert possible_change(*input_data) == expected\nE       assert 38165 == 981\nE        +  where 38165 = possible_change(*[[1, 3, 7, 42, 78], 140])\n\npython_testcases/test_possible_change.py:15: AssertionError\n_____________________ test_possible_change[input_data9-20] _____________________\n\ninput_data = [[3, 7, 42, 78], 140], expected = 20\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_possible_change(input_data, expected):\n>       assert possible_change(*input_data) == expected\nE       assert 981 == 20\nE        +  where 981 = possible_change(*[[3, 7, 42, 78], 140])\n\npython_testcases/test_possible_change.py:15: AssertionError\n=========================== short test summary info ============================\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data1-4]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data2-121]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data3-18]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data4-16]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data5-568]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data6-786]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data7-817]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data8-981]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data9-20]\n9 failed, 1 passed in 0.05s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 152.22784399520606
+        },
+        "source_sha256": "1f5f5ebded4d48cea3192511a4a08ab2fe6522cc4d2824eac84ea6daf8fcfd28"
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_001",
+        "generator_label": "dense_ranked_syntax_pool",
+        "passed": true,
+        "program": "sqrt",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_sqrt.py",
+          "output_tail": ".......                                                                  [100%]\n7 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 110.8172910171561
+        },
+        "source_sha256": "97e0236608be7c6bbdbea1f2159186198878114d9e1cc022974c83578a19684a"
+      }
+    ],
+    "final": {
+      "candidate_pass_rate": 0.25,
+      "candidate_passed": 1,
+      "end_to_end_runtime_ms": 80497.04686997575,
+      "program_repair_rate": 0.25,
+      "programs_with_passing_candidate": 1,
+      "runtime_ms": 923.9559800189454
+    },
+    "limitations": [
+      "local_model_ranked_candidate",
+      "syntax_preserving_candidate_pool",
+      "broader_than_deterministic_edit_baseline",
+      "not_free_form_generation",
+      "replacement_source_only",
+      "python_subset_only",
+      "pytest_result_depends_on_local_environment",
+      "ranking_uses_teacher_forced_candidate_likelihood"
+    ],
+    "model": {
+      "accelerator_backend": "rocm",
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "checkpoint_step": 195000,
+      "checkpoint_type": "model_only",
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "finite_causal",
+        "block_impl": "explicit_causal",
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "seq_len": 128
+      },
+      "device": "cuda",
+      "tokenizer": {
+        "eos_id": 256,
+        "name": "byte_level",
+        "type": "byte_level",
+        "vocab_size": 257
+      }
+    },
+    "program_count": 4,
+    "programs": {
+      "flatten": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_syntax_pool"
+        ],
+        "passed_count": 0
+      },
+      "gcd": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_syntax_pool"
+        ],
+        "passed_count": 0
+      },
+      "possible_change": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_syntax_pool"
+        ],
+        "passed_count": 0
+      },
+      "sqrt": {
+        "best_candidate_id": "sqrt:syntax_pool_001",
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_ranked_syntax_pool"
+        ],
+        "passed_count": 1
+      }
+    },
+    "ranking": [
+      {
+        "candidate_id": "flatten:syntax_pool_002",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.6547714864990746,
+        "program": "flatten",
+        "source_sha256": "ede29663fa5fd7f0fc35f27214221018c8e4999a3b8b093d92ea5ec0ff4dae82",
+        "token_count": 482,
+        "total_nll": 797.599856492554
+      },
+      {
+        "candidate_id": "flatten:syntax_pool_001",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.684246094820438,
+        "program": "flatten",
+        "source_sha256": "e02166dbc0a75475bc350efb55ab3a4b12b01db44f113381e23d89c5cc8494f4",
+        "token_count": 473,
+        "total_nll": 796.6484028500672
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_002",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9772883424651913,
+        "program": "gcd",
+        "source_sha256": "70e9e06dcec2c2649e8519b07f6c52bbb27410483e8b6c92964d86fa87169611",
+        "token_count": 353,
+        "total_nll": 697.9827848902125
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_003",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9838996837238168,
+        "program": "gcd",
+        "source_sha256": "3a463309b345c65fec1ea77f96337a7704876e69f1760d0f2d7a4534aaf54ddb",
+        "token_count": 353,
+        "total_nll": 700.3165883545073
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_004",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9842186637648216,
+        "program": "gcd",
+        "source_sha256": "4edf86ea0f2595c3f9da3b3b0070e4804bebd4040660a386eac2217b299d3704",
+        "token_count": 353,
+        "total_nll": 700.429188308982
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_010",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9857508703615747,
+        "program": "gcd",
+        "source_sha256": "6d2c0fd587180ffbb0d729a015f0d24e522b1ce4d517aadada99a8ec2032f55c",
+        "token_count": 353,
+        "total_nll": 700.9700572376358
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_007",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9862516925694538,
+        "program": "gcd",
+        "source_sha256": "47a4e7e126c0f51f3479af9b302f187f8641c24c4072a60978850c16ae8d157c",
+        "token_count": 352,
+        "total_nll": 699.1605957844478
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_009",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9883674597244236,
+        "program": "gcd",
+        "source_sha256": "4f3aa0f25c48f6a1669d445a0233c6c821cc0ad72084e5085fcf1c99492669f8",
+        "token_count": 352,
+        "total_nll": 699.9053458229971
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_006",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9889275486497449,
+        "program": "gcd",
+        "source_sha256": "ae49f1d807e84463dc64e6f9d329a77de9b037739b6ec312515310d8964d71cc",
+        "token_count": 353,
+        "total_nll": 702.0914246733599
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_001",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.994399127579525,
+        "program": "gcd",
+        "source_sha256": "ee197498e41629a4c63f900c2d879b1d50fc83066ee13f0ff144eba3f5d582fb",
+        "token_count": 353,
+        "total_nll": 704.0228920355723
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_008",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.9978098535450683,
+        "program": "gcd",
+        "source_sha256": "0a2b0926e407d3a0de9c01b76e6e30c61cd4cb085f7edc8d902cda544cb28072",
+        "token_count": 353,
+        "total_nll": 705.2268783014091
+      },
+      {
+        "candidate_id": "gcd:syntax_pool_005",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 2.00141288561221,
+        "program": "gcd",
+        "source_sha256": "fabce3fed6972d045a4421acb1fe3ed4adf4da712f1e0e9b2f064364e098e57b",
+        "token_count": 354,
+        "total_nll": 708.5001615067224
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_024",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.4913757390862392,
+        "program": "possible_change",
+        "source_sha256": "1f5f5ebded4d48cea3192511a4a08ab2fe6522cc4d2824eac84ea6daf8fcfd28",
+        "token_count": 851,
+        "total_nll": 1269.1607539623897
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_003",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.4932869075510455,
+        "program": "possible_change",
+        "source_sha256": "54f7b31d8f85e416e1b84e70f63c264d02bba4df7561accc8afaf8c83092525e",
+        "token_count": 851,
+        "total_nll": 1270.7871583259398
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_022",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.498665703985906,
+        "program": "possible_change",
+        "source_sha256": "018106d8301196ba29d5ec251a20a9d377bb63a67b37e277238042055b381643",
+        "token_count": 816,
+        "total_nll": 1222.9112144524993
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_016",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.4997359126879943,
+        "program": "possible_change",
+        "source_sha256": "55be4364dfb947b5f4eeb81bf2ae5697aa21071944655fdbd4f4583520cb537e",
+        "token_count": 817,
+        "total_nll": 1225.2842406660914
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_015",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5020288530910773,
+        "program": "possible_change",
+        "source_sha256": "2392f86ba547a9019ea80e1be3710bdc31efdba87cc433f30bed5cf10c63dd79",
+        "token_count": 816,
+        "total_nll": 1225.655544122319
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_004",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5021168501937778,
+        "program": "possible_change",
+        "source_sha256": "fde26efc543dc55736d9110a9e9787d59bcbff49cbe53c691d4f141ca7a010ea",
+        "token_count": 816,
+        "total_nll": 1225.7273497581227
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_019",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5021550284946907,
+        "program": "possible_change",
+        "source_sha256": "e37fa5db87c679f89fe05f96bd86afea73820cec27b764ef0251b1a7e09a7a66",
+        "token_count": 816,
+        "total_nll": 1225.7585032516677
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_023",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5026479214715767,
+        "program": "possible_change",
+        "source_sha256": "3166c747d49cd1baa902a6c4d56178dc1164c9d86f7d6258be14eca192f3a337",
+        "token_count": 816,
+        "total_nll": 1226.1607039208066
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_014",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5027847547850686,
+        "program": "possible_change",
+        "source_sha256": "a8e675c84830f06bed364ab41ad1769613c9fe256e74369554693f223c598c7a",
+        "token_count": 815,
+        "total_nll": 1224.7695751498309
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_001",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5028592064587365,
+        "program": "possible_change",
+        "source_sha256": "40b82c822443f633850d336ac6707c2247d792b0543fe21e9b293f99d265a5f7",
+        "token_count": 816,
+        "total_nll": 1226.333112470329
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_005",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.502979328546479,
+        "program": "possible_change",
+        "source_sha256": "bf78a46eeeff8d605e6590e3c361cf857c00afcb7df55f2cbf0111b447113b00",
+        "token_count": 816,
+        "total_nll": 1226.4311320939269
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_008",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5034566508410954,
+        "program": "possible_change",
+        "source_sha256": "ace9276052f4645f4ba125b9f671d0efe767a88b7c64afea4c06a7d92688e697",
+        "token_count": 816,
+        "total_nll": 1226.8206270863338
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_012",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5035416389975909,
+        "program": "possible_change",
+        "source_sha256": "7e79543df51206991071e7fe167cfafdbef45214bfc45df869ae67942cf462f7",
+        "token_count": 815,
+        "total_nll": 1225.3864357830366
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_021",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.503812708780601,
+        "program": "possible_change",
+        "source_sha256": "7daf18dd6161dbb96b04b270e72ff70fe70e77a54e3e585936ab70a1f651262b",
+        "token_count": 816,
+        "total_nll": 1227.1111703649703
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_002",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5043291754152595,
+        "program": "possible_change",
+        "source_sha256": "0f555f7fb339de3e958a0e0a13b00105aa590e6e1e3379e6678191b9f62d6bd9",
+        "token_count": 816,
+        "total_nll": 1227.5326071388517
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_018",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.504602708035714,
+        "program": "possible_change",
+        "source_sha256": "c6f55a55e1149272f5d56ec7fc903890b3422d671bc57494291123b94f16623a",
+        "token_count": 817,
+        "total_nll": 1229.2604124651784
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_017",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5047926627839965,
+        "program": "possible_change",
+        "source_sha256": "1ff1bf8ec7adf2effe1f465f6523eda2fbb8fabe7bff38097bb28716be892dc2",
+        "token_count": 817,
+        "total_nll": 1229.4156054945252
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_020",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5057727554361942,
+        "program": "possible_change",
+        "source_sha256": "dbbba9d175abccc29b9f74642420ef93652cd891346f28a577d1380b58f803d1",
+        "token_count": 817,
+        "total_nll": 1230.2163411913707
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_009",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5058396888108496,
+        "program": "possible_change",
+        "source_sha256": "b85978001f7365596b4f747df78fe3c5b41dee576d9502a73baf571c153e80e5",
+        "token_count": 816,
+        "total_nll": 1228.7651860696533
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_011",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5064630174708749,
+        "program": "possible_change",
+        "source_sha256": "8c04876f63e4af5dc93f48a574cfff69acc6781afa6ecbf7e93223379f7e6ffb",
+        "token_count": 816,
+        "total_nll": 1229.2738222562339
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_010",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.507156093662772,
+        "program": "possible_change",
+        "source_sha256": "cc9c01d9cd781db799021a31aeb1e83b3b12cb678436cb450366ee0bb2368efa",
+        "token_count": 817,
+        "total_nll": 1231.3465285224847
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_013",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5074007652511743,
+        "program": "possible_change",
+        "source_sha256": "7b754739881d29a03608a1f8bac4dfe8ed1dfb75e0025083a02e295292647cc4",
+        "token_count": 816,
+        "total_nll": 1230.0390244449582
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_006",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5075250320211153,
+        "program": "possible_change",
+        "source_sha256": "ff335c2f9b19df320f7b6abb6b25c6df8b55a05afa441aa5fcb1ccbdc907ed2f",
+        "token_count": 816,
+        "total_nll": 1230.14042612923
+      },
+      {
+        "candidate_id": "possible_change:syntax_pool_007",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.5106956546475943,
+        "program": "possible_change",
+        "source_sha256": "951e2f93674eed1dd1cb2a71e5fb198535b064bd6a3781f40f8f462a49670312",
+        "token_count": 817,
+        "total_nll": 1234.2383498470845
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_001",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.705327625967778,
+        "program": "sqrt",
+        "source_sha256": "97e0236608be7c6bbdbea1f2159186198878114d9e1cc022974c83578a19684a",
+        "token_count": 443,
+        "total_nll": 755.4601383037257
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_026",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7232482972061174,
+        "program": "sqrt",
+        "source_sha256": "9da7034e2aa6d9e4ef4b9f3874a9922b511a056eec7532c7000493175ab9d486",
+        "token_count": 435,
+        "total_nll": 749.6130092846611
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_023",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7255440622940479,
+        "program": "sqrt",
+        "source_sha256": "9aeef0fb6d308abe5d94eacc278ba6080865b42980dbe0fb5b2a3a5d86e1b838",
+        "token_count": 435,
+        "total_nll": 750.6116670979109
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_027",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7255478104681667,
+        "program": "sqrt",
+        "source_sha256": "a780d754a5991495ef2bbc6b6dc3ccd05cf8c65d3d6c23bdc6a80e075bde4f17",
+        "token_count": 435,
+        "total_nll": 750.6132975536525
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_025",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7261216564314679,
+        "program": "sqrt",
+        "source_sha256": "23f21106495b03838098ed35e8b6db621d1e1622d933bd64f16b2ba35fa5c88e",
+        "token_count": 434,
+        "total_nll": 749.1367988912571
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_002",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.726945178744512,
+        "program": "sqrt",
+        "source_sha256": "9a30ad89376278c07a840245c0a09d8d7ab7fb6605f315cea715ec449fb8dbcf",
+        "token_count": 434,
+        "total_nll": 749.4942075751183
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_024",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.727011785465307,
+        "program": "sqrt",
+        "source_sha256": "baa9ecc5ccdcfa4f84a587116a4e79aad1b1a9858bc4537a632d21aaa99da319",
+        "token_count": 435,
+        "total_nll": 751.2501266774086
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_015",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7270933012370633,
+        "program": "sqrt",
+        "source_sha256": "dfc0d4f573058a3c4d2eba2e6a66da43926fee10c2b8a40ef0f9a64f247510e8",
+        "token_count": 434,
+        "total_nll": 749.5584927368855
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_011",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.72870569454569,
+        "program": "sqrt",
+        "source_sha256": "a1232458df584e3ff3e4e4a82b5537db88a4928e9235792d6e53ad263b9a1fe9",
+        "token_count": 436,
+        "total_nll": 753.7156828219208
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_008",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7294572562399226,
+        "program": "sqrt",
+        "source_sha256": "c0d8c0aa6b990df1daa1f2e8a4119235a1c25c5e58f5a1ea453ef016cbf9949f",
+        "token_count": 434,
+        "total_nll": 750.5844492081264
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_016",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7318787686241255,
+        "program": "sqrt",
+        "source_sha256": "c7cf5ce484c5b6662340033c5e215e68464eef81a5dd58c210b6670d04c4afe4",
+        "token_count": 436,
+        "total_nll": 755.0991431201187
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_012",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.732190148379723,
+        "program": "sqrt",
+        "source_sha256": "45b6a3139f2c85f9fa2be490c8970719c8a3260740161a83db395b09924c77b8",
+        "token_count": 434,
+        "total_nll": 751.7705243967998
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_020",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7330932337074627,
+        "program": "sqrt",
+        "source_sha256": "1675313d0f3c7967075fdbbd54b7e92ba951b7657cb800f52772e3d5c6f4c267",
+        "token_count": 434,
+        "total_nll": 752.1624634290388
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_004",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7346294585665223,
+        "program": "sqrt",
+        "source_sha256": "155e177426e32b4da6464c52b76db431cb89d943154a189094ad815627954fb5",
+        "token_count": 434,
+        "total_nll": 752.8291850178707
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_007",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.735324958798862,
+        "program": "sqrt",
+        "source_sha256": "42922a5ba76d055448f9c214e09901b793b67eb93db21b2ee47c4a5c6f3f2f56",
+        "token_count": 434,
+        "total_nll": 753.1310321187061
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_019",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.735364645842789,
+        "program": "sqrt",
+        "source_sha256": "07265d8a9ce2afad631000fb0d8fdf4848502e932390e1a66abd8d531b45edb0",
+        "token_count": 434,
+        "total_nll": 753.1482562957704
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_003",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7356254858421805,
+        "program": "sqrt",
+        "source_sha256": "3f62df9ed71d7942b850919abbbbf0485eee21e1f650ca57c3fa588a77999723",
+        "token_count": 434,
+        "total_nll": 753.2614608555064
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_010",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.736286845756077,
+        "program": "sqrt",
+        "source_sha256": "60833709d22b58d9ca13adcd612a18074a2936c23876498a0ce239bf0d65d51c",
+        "token_count": 435,
+        "total_nll": 755.2847779038934
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_005",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.737028670060853,
+        "program": "sqrt",
+        "source_sha256": "0abd6393c2b29ad79a968ec9af7c2fce0961caf290a9adc182e68cda70f1193d",
+        "token_count": 434,
+        "total_nll": 753.8704428064102
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_013",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7386784301028422,
+        "program": "sqrt",
+        "source_sha256": "c6ac7d90da6402a9028841946e1a748911a3285b486cca835fb7d66c0250dedd",
+        "token_count": 434,
+        "total_nll": 754.5864386646335
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_006",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7394011387698392,
+        "program": "sqrt",
+        "source_sha256": "72310ea79efed91db2246a26bd30a5251550c1d2f83710b42fed7fb0213a37af",
+        "token_count": 435,
+        "total_nll": 756.6394953648801
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_009",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7394396089970465,
+        "program": "sqrt",
+        "source_sha256": "a3f71b29e42e609a2d47c1ea9a8baed2753813ee2a46b6cbb3a9686613602e06",
+        "token_count": 434,
+        "total_nll": 754.9167903047182
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_017",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7415091619155565,
+        "program": "sqrt",
+        "source_sha256": "053f6d2182525b3c5298c8793fb74ac665021d450d9af1a3565f1e5e8150efb2",
+        "token_count": 436,
+        "total_nll": 759.2979945951827
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_014",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7439117003433773,
+        "program": "sqrt",
+        "source_sha256": "ec62c48bf4abc0d20b4330e827a08cbf7db275a2fd7ba369fdd0c5f8d7a49239",
+        "token_count": 435,
+        "total_nll": 758.6015896493691
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_021",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.745779650427873,
+        "program": "sqrt",
+        "source_sha256": "d898ae622cf224cb1ec1f9547e4ee75465c6e50ef5beff5925663fce8c3afd39",
+        "token_count": 434,
+        "total_nll": 757.6683682856969
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_022",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7493316147420495,
+        "program": "sqrt",
+        "source_sha256": "afb3e1ae82c397f9d28b1b58307b756f3f9a7562aa054ca7ecd3087f50dece38",
+        "token_count": 435,
+        "total_nll": 760.9592524127916
+      },
+      {
+        "candidate_id": "sqrt:syntax_pool_018",
+        "generator_label": "dense_ranked_syntax_pool",
+        "mean_nll": 1.7561274496536896,
+        "program": "sqrt",
+        "source_sha256": "019d39ad1747db15a2e4f3174dcbb6b866e3a34c698b001862fe0f9ee103e2cf",
+        "token_count": 437,
+        "total_nll": 767.4276954986624
+      }
+    ],
+    "resolved_config": {
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "device": "rocm",
+      "experiment_id": "QuixBugs_T11c_dense528_ranked_syntax_pool_smoke",
+      "max_candidates_per_program": 32,
+      "output": "results/QuixBugs_T11c_dense528_ranked_syntax_pool_smoke.json",
+      "programs": [
+        "gcd",
+        "flatten",
+        "possible_change",
+        "sqrt"
+      ],
+      "repo_path": "data/raw/public/quixbugs",
+      "seed": 123,
+      "timeout_seconds": 15,
+      "top_candidates_per_program": 1
+    },
+    "seed": 123,
+    "source": {
+      "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+      "repo_path": "data/raw/public/quixbugs",
+      "repo_url": "https://github.com/jkoppel/QuixBugs"
+    }
+  },
+  "notes": "Evaluation-only QuixBugs repair probe. A local dense decoder checkpoint scores a syntax-preserving AST mutation pool by teacher-forced candidate likelihood; selected candidates are evaluated with the QuixBugs pytest harness. This broadens the deterministic edit baseline but is still not free-form repair generation.",
+  "recorded_at_unix": 1782925400.1789415,
+  "resolved_config": {
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+    "device": "rocm",
+    "experiment_id": "QuixBugs_T11c_dense528_ranked_syntax_pool_smoke",
+    "max_candidates_per_program": 32,
+    "output": "results/QuixBugs_T11c_dense528_ranked_syntax_pool_smoke.json",
+    "programs": [
+      "gcd",
+      "flatten",
+      "possible_change",
+      "sqrt"
+    ],
+    "repo_path": "data/raw/public/quixbugs",
+    "seed": 123,
+    "timeout_seconds": 15,
+    "top_candidates_per_program": 1
+  },
+  "seed": 123,
+  "status": "completed"
+}

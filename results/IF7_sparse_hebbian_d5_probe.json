@@ -1,0 +1,250 @@
+{
+  "command": "uv run python scripts/run_if7_sparse_hebbian_probe.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --split train --node-count 4096 --max-active-nodes 48 --max-train-rows 8192 --max-eval-rows 512 --recall-at-k 32 --output results/IF7_sparse_hebbian_d5_probe.json --experiment-id IF7_sparse_hebbian_d5_probe --seed 123",
+  "experiment_id": "IF7_sparse_hebbian_d5_probe",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "?? scripts/run_if7_sparse_hebbian_probe.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? tests/test_if7_sparse_hebbian.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if7_sparse_hebbian_assemblies_add_real_corpus_associative_signal",
+  "metrics": {
+    "benchmark_label": "if7_sparse_hebbian_assembly_probe",
+    "candidate_id": "IF7",
+    "candidate_name": "Sparse Hebbian Assembly Memory",
+    "config": {
+      "cue_node_budget": 16,
+      "learning_rate": 1.0,
+      "max_active_nodes": 48,
+      "max_eval_rows": 512,
+      "max_train_rows": 8192,
+      "min_text_bytes": 80,
+      "node_count": 4096,
+      "recall_at_k": 32,
+      "seed": 123,
+      "split": "train",
+      "target_node_budget": 32
+    },
+    "corpus": {
+      "eval_patterns": 512,
+      "path": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "repositories_loaded": 7381,
+      "rows_loaded": 8192,
+      "rows_scanned": 26173,
+      "source_split": "train",
+      "usable_patterns": 8190
+    },
+    "final": {
+      "frequency_coverage_at_k": 0.10871456122872884,
+      "frequency_hit_at_k": 0.884765625,
+      "frequency_mrr": 0.2834511109954672,
+      "hebbian_coverage_at_k": 0.16677796920591573,
+      "hebbian_hit_at_k": 0.953125,
+      "hebbian_mrr": 0.47986234163805885,
+      "random_coverage_at_k": 0.007418960394822318,
+      "random_hit_at_k": 0.201171875,
+      "random_mrr": 0.027356396479057583,
+      "task_count": 512.0
+    },
+    "hebbian_adds_associative_signal": true,
+    "limitations": [
+      "associative_memory_probe_not_language_model_training",
+      "evaluates masked recall from exposed real corpus rows rather than unseen-repo generalization",
+      "hashed node space can collide labels",
+      "dense_numpy_matrix_is_not_a_packed_sparse_or_rocm_kernel",
+      "no_security_or_authorization_update_gate"
+    ],
+    "methods": {
+      "frequency_control": {
+        "description": "Ranks nodes by global firing count, without learned pair bonds.",
+        "storage_bytes": 32768
+      },
+      "hebbian_sparse_assembly": {
+        "description": "Sparse node co-activation matrix. Nodes that fire together strengthen pairwise bonds and later complete partial cue patterns.",
+        "label_index_bytes": 2258252,
+        "storage_bytes": 69399884,
+        "update_count": 8190
+      },
+      "random_sparse_control": {
+        "description": "Same update count and active-set sizes with random node assemblies.",
+        "storage_bytes": 67141632
+      }
+    },
+    "null_hypothesis_outcome": "sparse_hebbian_adds_signal_over_frequency_and_random_controls",
+    "resolved_config": {
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "experiment_id": "IF7_sparse_hebbian_d5_probe",
+      "max_active_nodes": 48,
+      "max_eval_rows": 512,
+      "max_train_rows": 8192,
+      "node_count": 4096,
+      "output": "results/IF7_sparse_hebbian_d5_probe.json",
+      "recall_at_k": 32,
+      "seed": 123,
+      "split": "train"
+    },
+    "runtime_ms": 9446.03594999353,
+    "sample_predictions": [
+      {
+        "cue_node_count": 16,
+        "hit": true,
+        "path": "app/src/js/components/Icon.js",
+        "repo": "legendary-code/chaos-studio-web",
+        "target_labels_sample": [
+          "ident:icon",
+          "ident_part:icon",
+          "ident:react",
+          "ident_part:react",
+          "ident_part:div",
+          "import:react",
+          "ident_part:name",
+          "ident:home"
+        ],
+        "target_node_count": 32,
+        "top_predicted_labels": [
+          "ident_part:get",
+          "role:docstring",
+          "ident_part:the",
+          "ident:the",
+          "ident_part:name",
+          "path:libs",
+          "repo_part:cdnjs",
+          "ident_part:def"
+        ]
+      },
+      {
+        "cue_node_count": 16,
+        "hit": true,
+        "path": "code/setupSampledLOSO_writeIndices.py",
+        "repo": "chagaz/SamSpecCoEN",
+        "target_labels_sample": [
+          "ident_part:indices",
+          "ident_part:study",
+          "ident_part:fold",
+          "ident_part:commands",
+          "ident_part:the",
+          "ident:the",
+          "ident_part:dir",
+          "ident_part:data"
+        ],
+        "target_node_count": 32,
+        "top_predicted_labels": [
+          "ident_part:def",
+          "ident_part:self",
+          "ident:self",
+          "ident:the",
+          "ident_part:the",
+          "ident:def",
+          "ident_part:get",
+          "ident_part:license"
+        ]
+      },
+      {
+        "cue_node_count": 16,
+        "hit": true,
+        "path": "first-bad-version/src/com/mgireesh/Solution.java",
+        "repo": "mgireesh05/leetcode",
+        "target_labels_sample": [
+          "ident_part:int",
+          "ident:start",
+          "ident_part:start",
+          "ident:int",
+          "ident_part:end",
+          "ident:end",
+          "dir:example",
+          "ident_part:quality"
+        ],
+        "target_node_count": 28,
+        "top_predicted_labels": [
+          "role:docstring",
+          "ident_part:public",
+          "path:main",
+          "ident:public",
+          "ident_part:the",
+          "ident:the",
+          "ident_part:get",
+          "ident_part:license"
+        ]
+      },
+      {
+        "cue_node_count": 16,
+        "hit": true,
+        "path": "v2/docs/src_animation_Animation.js.html",
+        "repo": "clark-stevenson/phaser",
+        "target_labels_sample": [
+          "ident:href",
+          "ident_part:href",
+          "ident_part:depth",
+          "ident:depth",
+          "ident_part:html",
+          "ident:html",
+          "dir:css",
+          "ident:assets"
+        ],
+        "target_node_count": 32,
+        "top_predicted_labels": [
+          "role:source",
+          "ext:.js",
+          "lang:javascript",
+          "ident:href",
+          "ident_part:href",
+          "ident_part:the",
+          "ident_part:html",
+          "ident:div"
+        ]
+      },
+      {
+        "cue_node_count": 16,
+        "hit": true,
+        "path": "ajax/libs/webshim/1.13.1/dev/shims/combos/1.js",
+        "repo": "jemmy655/cdnjs",
+        "target_labels_sample": [
+          "ident_part:elem",
+          "ident:elem",
+          "ident_part:webshims",
+          "ident:webshims",
+          "ident_part:src",
+          "ident_part:data",
+          "ident:src",
+          "ident_part:load"
+        ],
+        "target_node_count": 32,
+        "top_predicted_labels": [
+          "ident_part:get",
+          "path:0",
+          "ident_part:the",
+          "ident:the",
+          "path:3",
+          "role:docstring",
+          "path:2",
+          "ident_part:options"
+        ]
+      }
+    ],
+    "sparsity": {
+      "mean_active_fraction": 0.011248801654075092,
+      "mean_active_nodes": 46.07509157509158,
+      "mean_cue_nodes": 14.95995115995116,
+      "mean_target_nodes": 31.22026862026862
+    }
+  },
+  "notes": "Sparse Hebbian assembly memory probe on real corpus JSONL rows. It tests whether sparse co-activation bonds complete masked node patterns beyond frequency and random sparse controls.",
+  "recorded_at_unix": 1782857684.4281862,
+  "resolved_config": {
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "experiment_id": "IF7_sparse_hebbian_d5_probe",
+    "max_active_nodes": 48,
+    "max_eval_rows": 512,
+    "max_train_rows": 8192,
+    "node_count": 4096,
+    "output": "results/IF7_sparse_hebbian_d5_probe.json",
+    "recall_at_k": 32,
+    "seed": 123,
+    "split": "train"
+  },
+  "seed": 123,
+  "status": "completed"
+}

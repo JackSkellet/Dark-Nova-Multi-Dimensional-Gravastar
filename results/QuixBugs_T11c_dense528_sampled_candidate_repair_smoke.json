@@ -1,0 +1,478 @@
+{
+  "command": "uv run python scripts/evaluate_quixbugs_dense_candidates.py --checkpoint artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt --repo-path data/raw/public/quixbugs --program gcd --program flatten --program possible_change --program sqrt --device cpu --seed 456 --max-new-tokens 192 --samples-per-program 4 --temperature 0.9 --top-k 32 --timeout-seconds 15 --output results/QuixBugs_T11c_dense528_sampled_candidate_repair_smoke.json --experiment-id QuixBugs_T11c_dense528_sampled_candidate_repair_smoke --prefer-syntax-valid",
+  "experiment_id": "QuixBugs_T11c_dense528_sampled_candidate_repair_smoke",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? docs/superpowers/plans/2026-07-01-dark-nova-goal-bootstrap.md\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? research/44_current_coding_benchmark_audit.md\n?? research/45_quixbugs_python_repair_smoke.md\n?? research/46_quixbugs_candidate_repair_smoke.md\n?? research/47_quixbugs_dense528_model_candidate_smoke.md\n?? research/coding_model_idea_foundry.md\n?? results/D5_repository_api_reuse_validation.json\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? results/QuixBugs_T11c_dense528_candidate_repair_smoke.json\n?? results/QuixBugs_python_candidate_repair_smoke.json\n?? results/QuixBugs_python_repair_smoke.json\n?? scripts/evaluate_quixbugs_candidate_repairs.py\n?? scripts/evaluate_quixbugs_dense_candidates.py\n?? scripts/evaluate_quixbugs_repair.py\n?? scripts/evaluate_repository_api_reuse.py\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? src/weightlab/quixbugs_model_candidates.py\n?? src/weightlab/quixbugs_repair.py\n?? src/weightlab/repository_api_reuse.py\n?? tests/test_if7_sparse_hebbian.py\n?? tests/test_quixbugs_model_candidates.py\n?? tests/test_quixbugs_repair.py\n?? tests/test_repository_api_reuse.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "dense_checkpoint_generates_quixbugs_repair_candidates",
+  "metrics": {
+    "benchmark_label": "quixbugs_python_dense_model_candidate_probe",
+    "candidate_count": 4,
+    "candidates": [
+      {
+        "candidate_id": "flatten:dense_sampled_0",
+        "generator_label": "dense_checkpoint_sampled",
+        "passed": false,
+        "program": "flatten",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_flatten.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n______________ ERROR collecting python_testcases/test_flatten.py _______________\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\npython_testcases/test_flatten.py:7: in <module>\n    from python_programs.flatten import flatten\nE     File \"/tmp/quixbugs-candidate-ssr3akga/repo/python_programs/flatten.py\", line 1\nE       // If the browser, if listen w the browser is an `anchor` is\nE       ^^\nE   SyntaxError: invalid syntax\n=========================== short test summary info ============================\nERROR python_testcases/test_flatten.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.05s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 152.84423998673446
+        },
+        "source_sha256": "b6649c95a2999ca75e2cf0a7a38c3c05217fc5c0703eae3508739e417149729b"
+      },
+      {
+        "candidate_id": "gcd:dense_sampled_0",
+        "generator_label": "dense_checkpoint_sampled",
+        "passed": false,
+        "program": "gcd",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_gcd.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n________________ ERROR collecting python_testcases/test_gcd.py _________________\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\npython_testcases/test_gcd.py:7: in <module>\n    from python_programs.gcd import gcd\nE     File \"/tmp/quixbugs-candidate-b5vyghub/repo/python_programs/gcd.py\", line 1\nE       */\nE        ^\nE   SyntaxError: invalid syntax\n=========================== short test summary info ============================\nERROR python_testcases/test_gcd.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.05s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 148.66072600125335
+        },
+        "source_sha256": "b71c90f19b2b0ae30939993bdd2ca88eb9590d3aeb0c2701f66700bf56e5a88d"
+      },
+      {
+        "candidate_id": "possible_change:dense_sampled_0",
+        "generator_label": "dense_checkpoint_sampled",
+        "passed": false,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n__________ ERROR collecting python_testcases/test_possible_change.py ___________\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\npython_testcases/test_possible_change.py:7: in <module>\n    from python_programs.possible_change import possible_change\nE     File \"/tmp/quixbugs-candidate-o0qc8ihi/repo/python_programs/possible_change.py\", line 1\nE       there: function(node) {\nE                             ^\nE   SyntaxError: invalid syntax\n=========================== short test summary info ============================\nERROR python_testcases/test_possible_change.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.05s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 150.2881020132918
+        },
+        "source_sha256": "3dd2e38f70488fe09e3cee709026707d8205177b0dd2bdb3c51e57d284cac0fc"
+      },
+      {
+        "candidate_id": "sqrt:dense_sampled_0",
+        "generator_label": "dense_checkpoint_sampled",
+        "passed": false,
+        "program": "sqrt",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_sqrt.py",
+          "output_tail": "\n==================================== ERRORS ====================================\n________________ ERROR collecting python_testcases/test_sqrt.py ________________\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/home/jack/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n/home/jack/Documents/Dark Nova Multi Dimensional Gravastar/.venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py:188: in exec_module\n    exec(co, module.__dict__)\npython_testcases/test_sqrt.py:7: in <module>\n    from python_programs.sqrt import sqrt\nE     File \"/tmp/quixbugs-candidate-xz3z9zrn/repo/python_programs/sqrt.py\", line 1\nE       // parsers here edge, can be selected and/or example adjust\", context: \"\"};\nE                                                                               ^\nE   SyntaxError: unterminated string literal (detected at line 1)\n=========================== short test summary info ============================\nERROR python_testcases/test_sqrt.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.05s\n",
+          "passed": false,
+          "returncode": 2,
+          "runtime_ms": 155.56713100522757
+        },
+        "source_sha256": "7766f6133bc2f12127379ff89a6b98bebb1e8ba5e9c09a4eca3cc7b55929bcf4"
+      }
+    ],
+    "final": {
+      "candidate_pass_rate": 0.0,
+      "candidate_passed": 0,
+      "end_to_end_runtime_ms": 15155.156789987814,
+      "program_repair_rate": 0.0,
+      "programs_with_passing_candidate": 0,
+      "runtime_ms": 635.1691970194224
+    },
+    "generated_candidates": [
+      {
+        "candidate_id": "gcd:dense_sampled_0",
+        "generated_bytes": 192,
+        "generated_preview": "     */\n    GD.Bload = function (source) {\n      return this.EditSource.prototype.source.call(source, source.call(source, source, source), source);\n      source",
+        "generated_sha256": "e264e5717ac5155a916064b411e5354475806ce0bc96abeb4835d910ccda7991",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "gcd",
+        "prompt_bytes": 428,
+        "prompt_sha256": "217ea5f23009dcaabb4906bc7b6507da8bb0e58da2bba9207ddd0082f1b13e14",
+        "sample_index": 0,
+        "selection_reason": "fallback_no_syntax_valid_candidate",
+        "source_bytes": 188,
+        "source_sha256": "b71c90f19b2b0ae30939993bdd2ca88eb9590d3aeb0c2701f66700bf56e5a88d",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "gcd:dense_sampled_1",
+        "generated_bytes": 192,
+        "generated_preview": "     *\n     * @method initializer\n     * @constructor\n     * @description\n     * The current default one if the grandiactive is a term, or the instance. If the ",
+        "generated_sha256": "75d1cf27da93d09191933799bc99ba640a07bff1f66e23d33fdee9c6c5e96459",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "gcd",
+        "prompt_bytes": 428,
+        "prompt_sha256": "217ea5f23009dcaabb4906bc7b6507da8bb0e58da2bba9207ddd0082f1b13e14",
+        "sample_index": 1,
+        "selection_reason": "not_selected",
+        "source_bytes": 188,
+        "source_sha256": "9db34fa3e9ab92a15438f4a3b9324995769372e663566f4e4825612f0486ede0",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "gcd:dense_sampled_2",
+        "generated_bytes": 192,
+        "generated_preview": "     * - generallowed require.jquery by and failure but just true+\" \" *\"\n    */ \"\n    \"Active\" );\n   : function () {\n        var cm = this;\n        __d__esModul",
+        "generated_sha256": "d04dfcde44f3bb6a32e53b6bb7c4e8e36431f394473f35b739b5eebc710f1369",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "gcd",
+        "prompt_bytes": 428,
+        "prompt_sha256": "217ea5f23009dcaabb4906bc7b6507da8bb0e58da2bba9207ddd0082f1b13e14",
+        "sample_index": 2,
+        "selection_reason": "not_selected",
+        "source_bytes": 188,
+        "source_sha256": "ddf06dfb583dadd5c15a22ef0fd69b760df3d59854bc89036fa5509f87567ce8",
+        "syntax_error": "SyntaxError: unterminated string literal (detected at line 1)",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "gcd:dense_sampled_3",
+        "generated_bytes": 192,
+        "generated_preview": "   // simple code\n    $location.constructor = function(){\n      $('gcd').unshift( options.gleCode );\n      $('bottom unshift').hasClass( 'drag-top', $tip).filte",
+        "generated_sha256": "8b1ae7fd677ccc6d451216511108335e455bb4666f42ed66c907cb06d96dbca2",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "gcd",
+        "prompt_bytes": 428,
+        "prompt_sha256": "217ea5f23009dcaabb4906bc7b6507da8bb0e58da2bba9207ddd0082f1b13e14",
+        "sample_index": 3,
+        "selection_reason": "not_selected",
+        "source_bytes": 189,
+        "source_sha256": "c080eac673d16b51a9debe35259f96e6256a68c29b4db5e849fd12ad03a40628",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "flatten:dense_sampled_0",
+        "generated_bytes": 192,
+        "generated_preview": "    \n    // If the browser, if listen w the browser is an `anchor` is\n    if (!anchor._noChildren) {\n        this._noChildren = anchor;\n      }\n\n     /**\n     *",
+        "generated_sha256": "e8523d15f2f6f2dde3793948e3ae8413bef488e4ba5e129187aa88a9c5c759bd",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "flatten",
+        "prompt_bytes": 562,
+        "prompt_sha256": "086340116881884d962fbaa9b14a65dfdd207edb2d2721a3a7db37c7e4825999",
+        "sample_index": 0,
+        "selection_reason": "fallback_no_syntax_valid_candidate",
+        "source_bytes": 184,
+        "source_sha256": "b6649c95a2999ca75e2cf0a7a38c3c05217fc5c0703eae3508739e417149729b",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "flatten:dense_sampled_1",
+        "generated_bytes": 192,
+        "generated_preview": "    list(u, patten))\n* TODO: In proj agu to sapper to source fin working setter\n      scope.$watch(navigator, scope);\n    },\n\n    length: function(root) {\n     ",
+        "generated_sha256": "4f28f83fdc8c59c87d833faca0149efea7ecb04ee223a9d09f305437f1515edf",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "flatten",
+        "prompt_bytes": 562,
+        "prompt_sha256": "086340116881884d962fbaa9b14a65dfdd207edb2d2721a3a7db37c7e4825999",
+        "sample_index": 1,
+        "selection_reason": "not_selected",
+        "source_bytes": 189,
+        "source_sha256": "2700a95f1d8bf96dc9e74787db24b1bf6a339c2caf5d23671f5b1113aff617f4",
+        "syntax_error": "SyntaxError: unmatched ')'",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "flatten:dense_sampled_2",
+        "generated_bytes": 192,
+        "generated_preview": "    <//checkbox:\n     * @param {Boolean} [[1, 3, [2, 3, [-, 1, 3, 0, 0, 3, 9, 9, 6]\n     * @attribute checkbox\n     * @type {Boolean}\n     */\n    Y.bind(instanc",
+        "generated_sha256": "d6f6b90f4df2609052e73966116078256c6d64b0b8bc881e36bbd9858cc84917",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "flatten",
+        "prompt_bytes": 562,
+        "prompt_sha256": "086340116881884d962fbaa9b14a65dfdd207edb2d2721a3a7db37c7e4825999",
+        "sample_index": 2,
+        "selection_reason": "not_selected",
+        "source_bytes": 189,
+        "source_sha256": "0b254a40390d46e0f1db1020e9e3c3b66c0be002e4ae160d975c387506ca8467",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "flatten:dense_sampled_3",
+        "generated_bytes": 192,
+        "generated_preview": "              source: false,\n            scope: false,\n              stor: scope,\n            }\n      };\n})();\n\nY.Constructors.prototype.utbody = function (cons",
+        "generated_sha256": "9c77390588cf603660291a804bbe9299c0a4043a980afc863cc079f451658b29",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "flatten",
+        "prompt_bytes": 562,
+        "prompt_sha256": "086340116881884d962fbaa9b14a65dfdd207edb2d2721a3a7db37c7e4825999",
+        "sample_index": 3,
+        "selection_reason": "not_selected",
+        "source_bytes": 177,
+        "source_sha256": "659b20dbdc33910836258580a650f8f0e72c690b3d7f9db275d885191cfc8468",
+        "syntax_error": "SyntaxError: unmatched '}'",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "possible_change:dense_sampled_0",
+        "generated_bytes": 192,
+        "generated_preview": "\n    there: function(node) {\n        // When clear isDir all graint contents properties\n        if (root.node.toClearMutation) {\n            case 'clear':\n     ",
+        "generated_sha256": "c361540d243b5f381d65205e6424b080232204255af2118600d3929dbc4b18e0",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "possible_change",
+        "prompt_bytes": 914,
+        "prompt_sha256": "8cd34099a3f2f1ecff61af321bd67a80343a1bc83f504c9e3490f5438476022c",
+        "sample_index": 0,
+        "selection_reason": "fallback_no_syntax_valid_candidate",
+        "source_bytes": 188,
+        "source_sha256": "3dd2e38f70488fe09e3cee709026707d8205177b0dd2bdb3c51e57d284cac0fc",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "possible_change:dense_sampled_1",
+        "generated_bytes": 192,
+        "generated_preview": "      4 -> possibling.length\n    ]\n    4/Material: 0\n    5 -> possibling.length\n    4 -> possibling.length\n  // Restore the Pos;\n  // the `<span code category l",
+        "generated_sha256": "14af3935851359a80c72ae9cc77f17defd200c0080f9ccf67715d00a72cd046d",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "possible_change",
+        "prompt_bytes": 914,
+        "prompt_sha256": "8cd34099a3f2f1ecff61af321bd67a80343a1bc83f504c9e3490f5438476022c",
+        "sample_index": 1,
+        "selection_reason": "not_selected",
+        "source_bytes": 186,
+        "source_sha256": "da50a6808d103f542cf42751bf03a36c5a59e75cc8bae8bbf93b60f75da3a275",
+        "syntax_error": "SyntaxError: unmatched ']'",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "possible_change:dense_sampled_2",
+        "generated_bytes": 192,
+        "generated_preview": "      </p*>\n    <td>\n   *  <en </td>\n     * </td>\n     * </p*</td>\n     * <td>\n     *    <td>\n     *     <td>elicenounce,\n     *     </td>\n     *    <td>\n     *",
+        "generated_sha256": "aed8305abfba35db5efbbff8af7947c880ec9a226a2888f11be77e6e0b9f4ef1",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "possible_change",
+        "prompt_bytes": 914,
+        "prompt_sha256": "8cd34099a3f2f1ecff61af321bd67a80343a1bc83f504c9e3490f5438476022c",
+        "sample_index": 2,
+        "selection_reason": "not_selected",
+        "source_bytes": 187,
+        "source_sha256": "99e9aeb9cdfdc249cdd169c419a87dfe36a4d2f54fd3007f751dcdc271a3b117",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "possible_change:dense_sampled_3",
+        "generated_bytes": 192,
+        "generated_preview": "              // If the fixed node as the result, sources, most call coords\n                if (nextIdx === resultCoordIndex) {\n                    for (i = 0, ",
+        "generated_sha256": "7e16079fb41d92cd6efd0ca9ee51b8ea41a553737ff8bdfe4911a2e0a70c5428",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "possible_change",
+        "prompt_bytes": 914,
+        "prompt_sha256": "8cd34099a3f2f1ecff61af321bd67a80343a1bc83f504c9e3490f5438476022c",
+        "sample_index": 3,
+        "selection_reason": "not_selected",
+        "source_bytes": 174,
+        "source_sha256": "f33f20eab6ad7f84cc41cad551fa97135170b9af06aa0628a4b42f58ef26581a",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "sqrt:dense_sampled_0",
+        "generated_bytes": 192,
+        "generated_preview": "  // parsers here edge, can be selected and/or example adjust\", context: \"\"};\n$.fn.adjustCandBooleanSource = [\n                        \"}\",\n                prop",
+        "generated_sha256": "6be02718349bbd71a48d321759c9d8cda0bd7014898dca4204c265808e95e93b",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "sqrt",
+        "prompt_bytes": 509,
+        "prompt_sha256": "1e9b1e586643f7ff865b11d84e6e837ae263f13e25047644f3693bbe60b2e786",
+        "sample_index": 0,
+        "selection_reason": "fallback_no_syntax_valid_candidate",
+        "source_bytes": 171,
+        "source_sha256": "7766f6133bc2f12127379ff89a6b98bebb1e8ba5e9c09a4eca3cc7b55929bcf4",
+        "syntax_error": "SyntaxError: unterminated string literal (detected at line 1)",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "sqrt:dense_sampled_1",
+        "generated_bytes": 192,
+        "generated_preview": "    // if tags this sort tag y=0\n    // fixes\n    refPagePage: function(str, index){\n      return aliases[index];\n    },\n\n    isCageDirective: function(str, str",
+        "generated_sha256": "60bef3f38a4edd112fbd5acd96930fad3f295047a351740f0b6b7e280307c4d8",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "sqrt",
+        "prompt_bytes": 509,
+        "prompt_sha256": "1e9b1e586643f7ff865b11d84e6e837ae263f13e25047644f3693bbe60b2e786",
+        "sample_index": 1,
+        "selection_reason": "not_selected",
+        "source_bytes": 189,
+        "source_sha256": "dedfbae0ac45ff1f9e368614d50559c2aff53ea16b556fc73f190501b74c99eb",
+        "syntax_error": "SyntaxError: invalid syntax",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "sqrt:dense_sampled_2",
+        "generated_bytes": 192,
+        "generated_preview": "    page = type === 'nu-line' ? Number(page) : null)\n    /**\n       * Returns true */\n    page.page = {};\n\n    // Returns the selection core and a fall once\n   ",
+        "generated_sha256": "d24566217bf11b27fd8d14f7f12e42559511bca33c48e533fd7b2d4b784b6049",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "sqrt",
+        "prompt_bytes": 509,
+        "prompt_sha256": "1e9b1e586643f7ff865b11d84e6e837ae263f13e25047644f3693bbe60b2e786",
+        "sample_index": 2,
+        "selection_reason": "not_selected",
+        "source_bytes": 189,
+        "source_sha256": "9d102851fcff961948c3fd3b6d4dd0fe12f9e13761446685486e1e15846ed641",
+        "syntax_error": "SyntaxError: unmatched ')'",
+        "syntax_valid": false
+      },
+      {
+        "candidate_id": "sqrt:dense_sampled_3",
+        "generated_bytes": 192,
+        "generated_preview": "     * target - parent / extend({ value: none } callback }, out. Target - parent of target. < 0 * same );\n     *     not -= same;\n     *    targetSelf._now - sl",
+        "generated_sha256": "01fad8be01486edfb3568ae2589d67dcba0a1ab913b794cd7078c417f47712de",
+        "generator_label": "dense_checkpoint_sampled",
+        "program": "sqrt",
+        "prompt_bytes": 509,
+        "prompt_sha256": "1e9b1e586643f7ff865b11d84e6e837ae263f13e25047644f3693bbe60b2e786",
+        "sample_index": 3,
+        "selection_reason": "not_selected",
+        "source_bytes": 187,
+        "source_sha256": "6b9148f2b45ddddccd101fd30a6e71e40ac5d3630c0654d1d1bcaebd0b3b4f58",
+        "syntax_error": "SyntaxError: closing parenthesis '}' does not match opening parenthesis '('",
+        "syntax_valid": false
+      }
+    ],
+    "generation": {
+      "evaluated_candidate_count": 4,
+      "generated_candidate_count": 16,
+      "max_new_tokens": 192,
+      "method": "sampled_byte_generation",
+      "prefer_syntax_valid": true,
+      "prompt_style": "buggy_source_then_fixed_source_marker",
+      "samples_per_program": 4,
+      "seed": 456,
+      "temperature": 0.9,
+      "top_k": 32
+    },
+    "limitations": [
+      "local_model_generated_candidate",
+      "prompted_source_replacement_from_general_lm",
+      "replacement_source_only",
+      "python_subset_only",
+      "pytest_result_depends_on_local_environment",
+      "bounded_sampling_not_pass_at_k_estimate",
+      "syntax_filter_falls_back_when_no_valid_candidate"
+    ],
+    "model": {
+      "accelerator_backend": "cpu",
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "checkpoint_step": 195000,
+      "checkpoint_type": "model_only",
+      "config": {
+        "adapter_dim": 0,
+        "architecture_variant": "dense",
+        "attention_mask_mode": "finite_causal",
+        "block_impl": "explicit_causal",
+        "heads": 8,
+        "hidden_dim": 528,
+        "layers": 3,
+        "seq_len": 128
+      },
+      "device": "cpu",
+      "tokenizer": {
+        "eos_id": 256,
+        "name": "byte_level",
+        "type": "byte_level",
+        "vocab_size": 257
+      }
+    },
+    "program_count": 4,
+    "programs": {
+      "flatten": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_sampled"
+        ],
+        "passed_count": 0
+      },
+      "gcd": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_sampled"
+        ],
+        "passed_count": 0
+      },
+      "possible_change": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_sampled"
+        ],
+        "passed_count": 0
+      },
+      "sqrt": {
+        "best_candidate_id": null,
+        "candidate_count": 1,
+        "generator_labels": [
+          "dense_checkpoint_sampled"
+        ],
+        "passed_count": 0
+      }
+    },
+    "resolved_config": {
+      "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+      "device": "cpu",
+      "experiment_id": "QuixBugs_T11c_dense528_sampled_candidate_repair_smoke",
+      "max_new_tokens": 192,
+      "output": "results/QuixBugs_T11c_dense528_sampled_candidate_repair_smoke.json",
+      "prefer_syntax_valid": true,
+      "programs": [
+        "gcd",
+        "flatten",
+        "possible_change",
+        "sqrt"
+      ],
+      "repo_path": "data/raw/public/quixbugs",
+      "samples_per_program": 4,
+      "seed": 456,
+      "temperature": 0.9,
+      "timeout_seconds": 15,
+      "top_k": 32
+    },
+    "seed": 456,
+    "source": {
+      "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+      "repo_path": "data/raw/public/quixbugs",
+      "repo_url": "https://github.com/jkoppel/QuixBugs"
+    },
+    "syntax": {
+      "generated_candidate_count": 16,
+      "program_syntax_valid_rate": 0.0,
+      "programs_with_syntax_valid_candidate": 0,
+      "syntax_valid_candidate_count": 0,
+      "syntax_valid_candidate_rate": 0.0
+    }
+  },
+  "notes": "Evaluation-only QuixBugs repair candidate probe. A local dense decoder checkpoint generates replacement source candidates, which are then scored with the QuixBugs pytest harness.",
+  "recorded_at_unix": 1782923566.1575317,
+  "resolved_config": {
+    "checkpoint": "artifacts/T11c_dense528_adamw_fp32_50m/dense_decoder_best_model_only.pt",
+    "device": "cpu",
+    "experiment_id": "QuixBugs_T11c_dense528_sampled_candidate_repair_smoke",
+    "max_new_tokens": 192,
+    "output": "results/QuixBugs_T11c_dense528_sampled_candidate_repair_smoke.json",
+    "prefer_syntax_valid": true,
+    "programs": [
+      "gcd",
+      "flatten",
+      "possible_change",
+      "sqrt"
+    ],
+    "repo_path": "data/raw/public/quixbugs",
+    "samples_per_program": 4,
+    "seed": 456,
+    "temperature": 0.9,
+    "timeout_seconds": 15,
+    "top_k": 32
+  },
+  "seed": 456,
+  "status": "completed"
+}

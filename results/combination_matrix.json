@@ -1,0 +1,1008 @@
+{
+  "contenders": [
+    {
+      "components": [
+        "dense_528_adamw_fp32",
+        "bpe_tokenizer_d5",
+        "structured_repository_memory",
+        "retrieval_augmented_repository_context",
+        "uniform_int8_quantization",
+        "repository_api_reuse_objective",
+        "repobench_repository_completion_gate"
+      ],
+      "current_status": "candidate stack definition; functional tokenizer and packed quantization evidence still missing",
+      "id": "conservative_local_coder",
+      "name": "Conservative local coder",
+      "next_ablation": "Dense-528 byte tokenizer versus D5 BPE on executable JavaScript and API-reuse tasks, then add structured memory.",
+      "target_strengths": [
+        "best overall practical system",
+        "easiest deployment",
+        "smallest acceptable model",
+        "strong evaluation"
+      ]
+    },
+    {
+      "components": [
+        "dense_528_adamw_fp32",
+        "structured_repository_memory",
+        "retrieval_augmented_repository_context",
+        "low_rank_repository_adaptation_lora",
+        "fast_weight_scratchpad",
+        "repository_api_reuse_objective",
+        "agentless_localization_repair_validation"
+      ],
+      "current_status": "partial proxy evidence; fast weights need a second real chronology target and security gates",
+      "id": "modular_repository_learner",
+      "name": "Modular repository learner",
+      "next_ablation": "Structured memory alone versus structured memory plus fast updates on executable or API-reuse chronology.",
+      "target_strengths": [
+        "best repository understanding",
+        "best continual learning",
+        "rollback support",
+        "low hallucinated API rate"
+      ]
+    },
+    {
+      "components": [
+        "graph_conditioned_decoder",
+        "if7_sparse_hebbian_memory",
+        "repository_api_reuse_objective",
+        "bpe_tokenizer_d5",
+        "execution_feedback_self_refinement"
+      ],
+      "current_status": "not ready for model training; graph extraction and Hebbian feature ablations must improve first",
+      "id": "novel_mechanism_contender",
+      "name": "Novel mechanism contender",
+      "next_ablation": "Typed-edge graph extraction and repository-local Hebbian features must beat lexical and no-Hebbian trained ranker baselines.",
+      "target_strengths": [
+        "best new architecture signal",
+        "best documentation consistency",
+        "best repository-linking quality"
+      ]
+    }
+  ],
+  "ideas": [
+    {
+      "compatible_ideas": [
+        "bpe_tokenizer_d5",
+        "structured_repository_memory",
+        "dense_ranked_repair_selection",
+        "uniform_int8_quantization"
+      ],
+      "current_evidence": [
+        "T12 selects dense-528 by mean final/best validation loss, throughput, model bytes, VRAM, and gradient stability.",
+        "T11c executable JavaScript syntax probe records syntax-valid completions but is syntax-only."
+      ],
+      "id": "dense_528_adamw_fp32",
+      "intended_benefit": "Strongest current local validation/resource/throughput baseline for later coding experiments.",
+      "known_incompatibilities": [
+        "Does not by itself provide repository memory or continual adaptation.",
+        "Free-form QuixBugs repair generation currently fails."
+      ],
+      "mechanism": "Small dense causal decoder trained on D4 code data with AdamW FP32 and finite causal transformer blocks.",
+      "name": "Dense-528 AdamW FP32 local decoder",
+      "required_assumptions": [
+        "Validation loss remains predictive enough to choose architecture before public benchmark gates.",
+        "D4/D5 functional tasks expose coding utility beyond loss."
+      ],
+      "smallest_falsifying_test": "Run D4/D5 executable JavaScript and QuixBugs-style repair gates against T11c and a matched alternative.",
+      "source": "repo result",
+      "status": "combine",
+      "strongest_opposing_evidence": [
+        "T11b residual-adapter keeps a reported-only final-test-loss edge and best causal-span token accuracy.",
+        "T11c free-form QuixBugs greedy and sampled repair candidates repair 0/4 tasks."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "structured_repository_memory",
+        "fast_weight_scratchpad",
+        "uniform_int8_quantization"
+      ],
+      "current_evidence": [
+        "T11b had a small final-test-loss edge and strong causal-span token accuracy.",
+        "Identity initialization stabilized an earlier adapter candidate."
+      ],
+      "id": "residual_adapter_528",
+      "intended_benefit": "Possible quality/resource frontier alternative to dense baselines.",
+      "known_incompatibilities": [
+        "Current implementation is not parameter-efficient in the usual frozen-base sense.",
+        "T12 validation selection favors dense-528."
+      ],
+      "mechanism": "Adapter-style residual modules inside a small decoder with all parameters trainable in current experiments.",
+      "name": "Residual-adapter-528 decoder",
+      "required_assumptions": [
+        "Adapter path gives task quality advantages that survive validation-focused selection.",
+        "Future frozen-base or partial-training variants can recover usual adapter deployment benefits."
+      ],
+      "smallest_falsifying_test": "Run matched functional coding probes against dense-528 with identical prompts and held-out tasks.",
+      "source": "repo result",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "T12 selects dense-528 on validation/resource/throughput criteria.",
+        "Earlier adapter debug runs preserved nonfinite-gradient failures before identity initialization."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_528_adamw_fp32",
+        "graph_conditioned_decoder",
+        "repository_api_reuse_objective"
+      ],
+      "current_evidence": [
+        "D5 BPE reduces train tokens by about 3.08x and validation tokens by about 2.92x.",
+        "Equal-compute pilots improve exact nats/raw byte over byte-token pilots."
+      ],
+      "id": "bpe_tokenizer_d5",
+      "intended_benefit": "Improve context coverage and train-byte throughput versus byte tokens.",
+      "known_incompatibilities": [
+        "Equal-raw-byte BPE pilot was worse than byte tokens in current loss accounting.",
+        "Functional quality remains unmeasured."
+      ],
+      "mechanism": "Train an 8192-vocab byte-level BPE tokenizer over sampled D5 code documents to reduce sequence length.",
+      "name": "D5 trained byte-level BPE tokenizer",
+      "required_assumptions": [
+        "Token reduction improves functional coding quality or cost at equal raw-byte exposure.",
+        "Tokenizer artifacts remain reproducible and license-safe."
+      ],
+      "smallest_falsifying_test": "Evaluate byte-vs-BPE checkpoints on executable JavaScript syntax/API-reuse/repair tasks with equal raw-byte exposure.",
+      "source": "repo result",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "BPE equal-raw-byte run is worse than byte tokens.",
+        "No executable functional tokenizer comparison has been recorded yet."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_528_adamw_fp32",
+        "fast_weight_scratchpad",
+        "graph_conditioned_decoder",
+        "repository_api_reuse_objective"
+      ],
+      "current_evidence": [
+        "E6 structured-memory series passes symbol, signature, call-stub, skeleton, docstring, API reference, coverage, and drift proxies.",
+        "MarkupSafe API documentation coverage QA answered 4/4 with structured docs memory while source-symbol-only answered 0/4.",
+        "D5 repository-context pairwise validation scores structured symbol memory at hit@5 0.8696 with proxy hallucinated API rate 0.0 on 23 tasks, still beating the best retrieval variant."
+      ],
+      "id": "structured_repository_memory",
+      "intended_benefit": "Improve repository understanding, documentation lookup, and safety without retraining weights.",
+      "known_incompatibilities": [
+        "Not code generation by itself.",
+        "Requires extraction/index maintenance and trust labels."
+      ],
+      "mechanism": "Store symbols, signatures, documentation directives, paths, and trusted metadata in explicit queryable structures.",
+      "name": "Structured external repository memory",
+      "required_assumptions": [
+        "Structured extraction remains accurate enough on real repositories.",
+        "Explicit memory can combine with dense models without causing stale or unauthorized answers."
+      ],
+      "smallest_falsifying_test": "Pair structured memory with dense generation on repository-local API reuse and measure hallucinated API rate.",
+      "source": "repo result",
+      "status": "combine",
+      "strongest_opposing_evidence": [
+        "Some tasks remain exact lookup proxies rather than full code generation.",
+        "Extraction quality for broad JavaScript package graphs is still weak."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "structured_repository_memory",
+        "residual_adapter_528",
+        "repository_api_reuse_objective"
+      ],
+      "current_evidence": [
+        "Synthetic IF2 fixture shows fast weights answer 7/8 paraphrase queries where retrieval and structured memory answer 0.",
+        "IF4 MarkupSafe fast weights plus retrieval match structured/replay top-5 future changed-file accuracy."
+      ],
+      "id": "fast_weight_scratchpad",
+      "intended_benefit": "Continual repository adaptation without permanent unsafe drift.",
+      "known_incompatibilities": [
+        "Fast weights alone underperformed on MarkupSafe changed-file prediction.",
+        "Security and poisoning gates are incomplete for real model updates."
+      ],
+      "mechanism": "Scoped reversible fast-weight updates from verified chronological local examples with rollback accounting.",
+      "name": "Signed fast-weight evolution scratchpad",
+      "required_assumptions": [
+        "Fast updates add value beyond retrieval and structured memory on real repository tasks.",
+        "Rollback and poisoning gates remain cheap enough for local use."
+      ],
+      "smallest_falsifying_test": "Run a second real repository chronology target with executable/API-reuse scoring and rollback-cost accounting.",
+      "source": "repo result",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "Fast weights alone underperform updated retrieval and structured memory on real MarkupSafe chronology.",
+        "Synthetic IF2 lacks poisoning/security gates."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "graph_conditioned_decoder",
+        "structured_repository_memory",
+        "repository_api_reuse_objective"
+      ],
+      "current_evidence": [
+        "IF7 sparse assembly beats frequency and random controls on real D5 masked recall.",
+        "IF7i task-aware ranker beats static lexical/raw Hebbian baselines."
+      ],
+      "id": "if7_sparse_hebbian_memory",
+      "intended_benefit": "Repository-local associative recall and candidate generation from sparse memory.",
+      "known_incompatibilities": [
+        "Dense full-score Hebbian conditioning loses to cue-only after larger D5 window runs.",
+        "Current trained repository ranker loses to its no-Hebbian ablation."
+      ],
+      "mechanism": "Sparse co-activation assemblies over repository/text patterns, optionally used for conditioning, reranking, or repository linking.",
+      "name": "Sparse Hebbian repository memory",
+      "required_assumptions": [
+        "Hebbian features must add value beyond cue-only, lexical, and no-Hebbian trained baselines.",
+        "Sparse features can be made repository-local or typed-edge enough to help decoder tasks."
+      ],
+      "smallest_falsifying_test": "Add typed-edge or repository-local Hebbian features and require a win over the no-Hebbian trained ranker.",
+      "source": "repo result",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "IF7b/c/d/h cue-only trained models beat cue-plus-Hebbian validation.",
+        "IF7i no-Hebbian trained ablation beats the Hebbian-feature ranker."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "structured_repository_memory",
+        "dense_528_adamw_fp32",
+        "bpe_tokenizer_d5",
+        "graph_conditioned_decoder"
+      ],
+      "current_evidence": [
+        "D5 repository API-reuse validation builds 23 tasks and symbol-name mention reaches hit@5 0.8696."
+      ],
+      "id": "repository_api_reuse_objective",
+      "intended_benefit": "Reduce hallucinated API rate and improve practical coding correctness.",
+      "known_incompatibilities": [
+        "Current D5 validation proxy is symbol selection, not executable generation.",
+        "Train-to-validation split produced no tasks under current repository split."
+      ],
+      "mechanism": "Score whether a system selects existing repository-local functions/symbols instead of hallucinating new APIs.",
+      "name": "Repository-local API reuse objective",
+      "required_assumptions": [
+        "Symbol extraction labels are clean enough for training/evaluation.",
+        "Selection gains transfer to generated code."
+      ],
+      "smallest_falsifying_test": "Expand labels and require model or memory-assisted method to beat symbol-name mention on held-out repositories.",
+      "source": "repo result",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "Small validation-only task set across 3 repositories.",
+        "No executable runtime scoring yet."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_528_adamw_fp32",
+        "residual_adapter_528",
+        "distillation_future"
+      ],
+      "current_evidence": [
+        "BF16-all and uniform int8 stay close to FP32 for T11 final checkpoints on D4 quantization samples."
+      ],
+      "id": "uniform_int8_quantization",
+      "intended_benefit": "Practical local deployment with smaller model size and limited quality loss.",
+      "known_incompatibilities": [
+        "Current probes reconstruct into FP32 PyTorch tensors and do not benchmark packed kernels.",
+        "Uniform int4 degrades sharply."
+      ],
+      "mechanism": "Post-training uniform int8 quantization of trained checkpoints with measured loss and storage.",
+      "name": "Uniform int8 checkpoint quantization",
+      "required_assumptions": [
+        "Loss-preserving quantization remains close on functional tasks.",
+        "Packed runtime kernels exist or can be implemented on ROCm."
+      ],
+      "smallest_falsifying_test": "Benchmark packed int8/BF16 runtime on loss-preserving policies with executable functional probes.",
+      "source": "repo result",
+      "status": "combine",
+      "strongest_opposing_evidence": [
+        "No packed int8/int4/BF16 runtime measurement yet.",
+        "Protected int4 carrier policies are not robust."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "uniform_int8_quantization",
+        "distillation_future"
+      ],
+      "current_evidence": [
+        "Learned reconstruction beats random reconstruction control on MSE and validation loss."
+      ],
+      "id": "if3_block_codebook_compression",
+      "intended_benefit": "More aggressive compression than simple quantization while preserving behavior.",
+      "known_incompatibilities": [
+        "Current reconstruction degrades validation loss badly.",
+        "FP32 runtime reconstruction erases deployment value."
+      ],
+      "mechanism": "Learn block codebooks plus residual accounting for trained checkpoint compression.",
+      "name": "Audited block-codebook weight generator",
+      "required_assumptions": [
+        "Codebook reconstruction can preserve validation loss at useful compression.",
+        "Runtime accounting can avoid FP32 reconstruction buffers."
+      ],
+      "smallest_falsifying_test": "Try less destructive low-rank plus groupwise residual compression and require held-out loss near FP32 without FP32 runtime buffers.",
+      "source": "repo result",
+      "status": "rejected",
+      "strongest_opposing_evidence": [
+        "Validation loss degrades from FP32 T11c 1.0335 to learned reconstruction 5.3102.",
+        "Encoded plus runtime bytes exceed practical deployment target."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_ranked_repair_selection",
+        "syntax_preserving_mutation_pool"
+      ],
+      "current_evidence": [
+        "Repairs 4/4 selected QuixBugs Python tasks with 6 deterministic candidates."
+      ],
+      "id": "deterministic_ast_edit_baseline",
+      "intended_benefit": "Calibrate repair harness and provide a target for model ranking/generation.",
+      "known_incompatibilities": [
+        "Not model-generated and not scalable as a product repair method."
+      ],
+      "mechanism": "Hand-engineered syntax-preserving AST edits over buggy QuixBugs Python programs.",
+      "name": "Deterministic QuixBugs AST-edit baseline",
+      "required_assumptions": [
+        "Small selected tasks remain useful as a smoke test before larger repair benchmarks.",
+        "Candidate provenance is clearly labelled as non-model."
+      ],
+      "smallest_falsifying_test": "Expand to additional QuixBugs tasks and measure candidate count explosion and repair rate.",
+      "source": "repo result",
+      "status": "archive",
+      "strongest_opposing_evidence": [
+        "Hand-engineered for the selected smoke lane.",
+        "Does not show language-model coding ability."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "deterministic_ast_edit_baseline",
+        "execution_feedback_self_refinement",
+        "repository_api_reuse_objective",
+        "syntax_preserving_mutation_pool"
+      ],
+      "current_evidence": [
+        "T11c ranks 4/4 passing deterministic edits first in the six-candidate pool.",
+        "Bounded top-k execution over the four-program syntax pool repairs 4/4 tasks at top-8 and beats seeded random order.",
+        "On the 12-program slice, dense likelihood repairs 3/12 by top-8, tied with repair-aware and seeded random on program rate but below deterministic pool order on candidate efficiency."
+      ],
+      "id": "dense_ranked_repair_selection",
+      "intended_benefit": "Use model signal for repair selection even when free-form generation fails.",
+      "known_incompatibilities": [
+        "Free-form dense generation still fails.",
+        "Likelihood ranking over too broad a pool may select plausible but wrong edits."
+      ],
+      "mechanism": "Use trained dense checkpoint teacher-forced likelihood to rank syntax-valid repair candidates before pytest evaluation.",
+      "name": "Dense checkpoint repair-candidate likelihood ranking",
+      "required_assumptions": [
+        "Model likelihood ranking correlates with repair correctness on broader candidate pools.",
+        "Candidate generation can become less hand-constrained while preserving syntax."
+      ],
+      "smallest_falsifying_test": "Add learned or failure-localized ranking and require it to beat deterministic, repair-aware, and multiple random same-pool controls on a larger QuixBugs slice before scaling dense repair selection.",
+      "source": "hybrid",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "Free-form dense generation still repairs 0/4 selected QuixBugs tasks.",
+        "Four-program controls show repair-aware static order at 4/4 top-1 and deterministic order at 4/4 top-4 while dense needs top-8.",
+        "The 12-program control does not show dense likelihood beating same-pool deterministic, repair-aware, or random controls."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_ranked_repair_selection",
+        "execution_feedback_self_refinement",
+        "repository_api_reuse_objective"
+      ],
+      "current_evidence": [
+        "Four-program smoke builds 63 syntax-valid candidates and contains passing candidates for all four selected tasks.",
+        "The 12-program slice builds 189 syntax-valid candidates and contains passing candidates for 3/12 programs under bounded top-k evaluation."
+      ],
+      "id": "syntax_preserving_mutation_pool",
+      "intended_benefit": "Move repair candidates away from the narrow deterministic baseline while avoiding invalid Python.",
+      "known_incompatibilities": [
+        "Candidate pool can include many plausible wrong edits.",
+        "Top-1 T11c ranking currently fails most selected tasks."
+      ],
+      "mechanism": "Generate syntactically valid AST alternatives using generic binary operator, comparison, return constant, call-argument, yield, guard, and residual mutations.",
+      "name": "Broader syntax-preserving AST mutation pool",
+      "required_assumptions": [
+        "Generic syntax mutations contain enough useful repairs without too many plausible distractors.",
+        "Model ranking can choose passing candidates from the wider pool."
+      ],
+      "smallest_falsifying_test": "Expand mutation families or add failure-localized generation and require passing candidates for substantially more than 3/12 QuixBugs programs without oracle sources.",
+      "source": "hybrid",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "The pool is hand-designed AST mutation scaffolding and only repairs a narrow subset of Python QuixBugs tasks.",
+        "On the 12-program slice, 9/12 programs have no passing candidate in the selected top-8 union, so candidate generation coverage is now the main bottleneck."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "syntax_preserving_mutation_pool",
+        "execution_feedback_self_refinement",
+        "agentless_localization_repair_validation",
+        "repository_api_reuse_objective"
+      ],
+      "current_evidence": [
+        "On the four-task smoke, repair-aware static ordering repairs 4/4 programs at top-1 and beats deterministic order, dense likelihood, and seeded random order.",
+        "On the 12-program slice, repair-aware ordering repairs 2/12 at top-1 and 3/12 by top-8, tying dense/random on program rate but losing to deterministic order on candidate efficiency."
+      ],
+      "id": "repair_aware_static_ordering",
+      "intended_benefit": "Lower executable validation budget by placing likely repair candidates before broad syntax distractors.",
+      "known_incompatibilities": [
+        "Hand-engineered pattern ordering is not model capability evidence.",
+        "Narrow repair patterns can overfit benchmark families or miss multi-file bugs.",
+        "Weak tests can reward patching to the harness rather than true repair."
+      ],
+      "mechanism": "Rank syntax-preserving repair candidates with non-oracle AST repair signals such as empty guards before star-unpack, value/type isinstance shape, recursive modulo progress, and squared residual checks.",
+      "name": "Repair-aware static syntax-pool ordering",
+      "required_assumptions": [
+        "Static repair-pattern signals generalize beyond the four selected QuixBugs tasks.",
+        "The selector can be expanded from hand-coded patterns to failure-localized or learned repair-aware ordering without oracle source access.",
+        "Candidate provenance and execution results remain recorded for every promoted run."
+      ],
+      "smallest_falsifying_test": "Replace static pattern ordering with failure-localized or learned repair-aware features and require a win over deterministic, dense-likelihood, and multiple random controls on at least the 12-program slice.",
+      "source": "original invention",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "The 12-program result falsifies the four-task top-1 advantage as a general selector claim.",
+        "Hand-engineered pattern ordering appears overfit to the small original Python subset and does not solve candidate coverage."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "bpe_tokenizer_d5",
+        "structured_repository_memory",
+        "repository_api_reuse_objective",
+        "if7_sparse_hebbian_memory"
+      ],
+      "current_evidence": [
+        "IF1 graph signal probe found typed edges and preserved repository-aware splits."
+      ],
+      "id": "graph_conditioned_decoder",
+      "intended_benefit": "Improve repository understanding, API reuse, and documentation consistency.",
+      "known_incompatibilities": [
+        "Current D5 graph edges are sparse and partly heuristic.",
+        "No model pilot should run before extraction improves."
+      ],
+      "mechanism": "Condition generation on typed repository graph edges such as import-local, doc-to-source, and test-to-source links.",
+      "name": "Repository graph conditioned decoder",
+      "required_assumptions": [
+        "Graph extraction becomes non-heuristic enough to support training.",
+        "Graph features add value beyond structured memory and lexical baselines."
+      ],
+      "smallest_falsifying_test": "Implement AST/package-aware JavaScript import resolution and require material edge growth without docstring/source self-links.",
+      "source": "original invention",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "Only 12 locally resolved import edges in the first improved extractor.",
+        "No trained graph-conditioned model evidence yet."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_528_adamw_fp32",
+        "structured_repository_memory",
+        "repository_api_reuse_objective",
+        "bpe_tokenizer_d5",
+        "agentless_localization_repair_validation"
+      ],
+      "current_evidence": [
+        "Primary RAG work supports combining parametric and non-parametric memory for generation.",
+        "RepoBench frames repository-level retrieval and completion as separable measurable tasks.",
+        "Project E6 structured-memory proxies already show repository-local external context can answer documentation/API questions.",
+        "D5 repository-context pairwise validation is now recorded as a reduced proxy comparison against structured symbol memory.",
+        "Symbol-aware retrieved snippets reduce proxy hallucinated API rate to 0.0, improving over raw retrieved identifiers.",
+        "Query-symbol-aware retrieval improves hit@5 to 0.7826 with proxy hallucinated API rate 0.0."
+      ],
+      "id": "retrieval_augmented_repository_context",
+      "intended_benefit": "Improve repository understanding and reduce hallucinated API use without storing all repository knowledge in model weights.",
+      "known_incompatibilities": [
+        "Can become redundant with structured_repository_memory if retrieval returns only exact symbol facts.",
+        "Stale indexes can inject obsolete APIs unless rebuild provenance is tracked."
+      ],
+      "mechanism": "Retrieve repository-local files, symbols, or snippets and condition generation or ranking on that non-parametric context.",
+      "name": "Retrieval-augmented repository context",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+          "url": "https://arxiv.org/abs/2005.11401"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "RepoBench: Benchmarking Repository-Level Code Auto-Completion Systems",
+          "url": "https://arxiv.org/abs/2306.03091"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "RepoBench official implementation",
+          "url": "https://github.com/Leolty/repobench"
+        }
+      ],
+      "required_assumptions": [
+        "Retrieved context is relevant enough to improve local coding tasks.",
+        "The retrieval index can be built explicitly without silent network calls or private-data leakage.",
+        "Context-window and latency costs remain practical for local inference."
+      ],
+      "smallest_falsifying_test": "Add structured-plus-retrieval context or repository-path-aware tie-breaking and require a gain over structured symbol memory on held-out API reuse before dense prompt integration.",
+      "source": "paper",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "Project tasks have not yet shown dense generation improves when retrieval context is appended.",
+        "Exact lookup proxies may overstate utility for executable code generation.",
+        "Raw retrieved-snippet identifier extraction scores hit@5 0.0 and proxy hallucinated API rate 0.9826 on the D5 validation API-reuse proxy.",
+        "Symbol-aware retrieved snippets score hit@5 only 0.2174, far below structured symbol memory at 0.8696.",
+        "Query-symbol-aware retrieval is a near miss but still below structured symbol memory: hit@5 0.7826 versus 0.8696."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_528_adamw_fp32",
+        "structured_repository_memory",
+        "fast_weight_scratchpad",
+        "repository_api_reuse_objective",
+        "retrieval_augmented_repository_context"
+      ],
+      "current_evidence": [
+        "Primary LoRA paper reports strong downstream adaptation with many fewer trainable parameters on larger language models.",
+        "Project residual_adapter_528 result shows adapter-like paths can train, but did not prove the frozen-base LoRA mechanism."
+      ],
+      "id": "low_rank_repository_adaptation_lora",
+      "intended_benefit": "Support modular local specialization with smaller update files, rollback, and lower training cost than full fine-tuning.",
+      "known_incompatibilities": [
+        "Current residual_adapter_528 experiments were fully trainable and are not evidence for frozen-base LoRA benefits.",
+        "Small base models may lack enough pretrained capability for low-rank adaptation to dominate full fine-tuning."
+      ],
+      "mechanism": "Freeze a base model and train low-rank update matrices for repository or task adaptation.",
+      "name": "Low-rank repository adaptation",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "microsoft/LoRA official implementation",
+          "url": "https://github.com/microsoft/LoRA"
+        }
+      ],
+      "required_assumptions": [
+        "A frozen or mostly frozen base checkpoint is strong enough to benefit from low-rank updates.",
+        "Repository-specific low-rank updates can be evaluated and rolled back independently.",
+        "The local model implementation can support LoRA modules without breaking ROCm compatibility."
+      ],
+      "smallest_falsifying_test": "Train a frozen dense-528 low-rank repository adapter on D5 API-reuse labels and require held-out improvement over prompt-only structured memory plus full fine-tune control accounting.",
+      "source": "paper",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "T12 currently selects dense-528 over the residual-adapter lane.",
+        "No Dark Nova frozen-base low-rank run has shown functional coding gains."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_ranked_repair_selection",
+        "syntax_preserving_mutation_pool",
+        "agentless_localization_repair_validation",
+        "retrieval_augmented_repository_context"
+      ],
+      "current_evidence": [
+        "Self-Refine and Reflexion primary papers support test-time iterative improvement from model or environment feedback.",
+        "Project QuixBugs harness already has executable pass/fail feedback for selected repair tasks.",
+        "Bounded pytest execution over repair-aware syntax-pool candidates can find 4/4 repairs at top-1 on the four-task smoke."
+      ],
+      "id": "execution_feedback_self_refinement",
+      "intended_benefit": "Turn executable failures into repair signals without immediately retraining model weights.",
+      "known_incompatibilities": [
+        "Unbounded loops conflict with reproducible local resource limits.",
+        "Weak test suites can reward overfitting or patch-minimality failures."
+      ],
+      "mechanism": "Use bounded test, compiler, or verifier feedback to revise generated patches or ranked candidates at inference time.",
+      "name": "Execution-feedback self-refinement loop",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+          "url": "https://arxiv.org/abs/2303.17651"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "madaan/self-refine official implementation",
+          "url": "https://github.com/madaan/self-refine"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2303.11366"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "noahshinn/reflexion official implementation",
+          "url": "https://github.com/noahshinn/reflexion"
+        }
+      ],
+      "required_assumptions": [
+        "Feedback is local, deterministic, and cheap enough to run under project resource limits.",
+        "The loop improves real executable success rather than only optimizing to weak or leaky tests.",
+        "Each iteration records seed, command, failure status, and candidate provenance."
+      ],
+      "smallest_falsifying_test": "Run a bounded two-iteration feedback loop only if it can beat repair-aware static ordering on a larger subset or reduce candidate generation assumptions.",
+      "source": "paper",
+      "status": "revise",
+      "strongest_opposing_evidence": [
+        "The current positive result is static repair-aware ordering plus validation, not an iterative model-generated revision loop.",
+        "A feedback loop must beat a strong top-1 static repair-aware baseline, not just dense top-k ranking."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "retrieval_augmented_repository_context",
+        "execution_feedback_self_refinement",
+        "repository_api_reuse_objective",
+        "structured_repository_memory",
+        "dense_ranked_repair_selection"
+      ],
+      "current_evidence": [
+        "Agentless primary work reports strong open-source SWE-bench Lite performance from a simpler localization/repair/validation pipeline.",
+        "SWE-agent primary work supports explicit agent-computer interfaces for software engineering tasks.",
+        "Project QuixBugs candidate lanes already separate candidate generation, ranking, and pytest validation."
+      ],
+      "id": "agentless_localization_repair_validation",
+      "intended_benefit": "Make local coding repair more interpretable, cheaper to ablate, and less dependent on a large autonomous agent stack.",
+      "known_incompatibilities": [
+        "Full SWE-agent-style autonomous tool use may exceed first-pass local resource and reproducibility constraints.",
+        "Pipeline quality is bottlenecked by the weakest stage."
+      ],
+      "mechanism": "Separate repository issue solving into explicit localization, patch generation, and validation stages rather than a single free-form completion.",
+      "name": "Agentless localization-repair-validation pipeline",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "Agentless: Demystifying LLM-based Software Engineering Agents",
+          "url": "https://arxiv.org/abs/2407.01489"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "openautocoder/agentless official implementation",
+          "url": "https://github.com/openautocoder/agentless"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "Agent-Computer Interfaces Enable Automated Software Engineering",
+          "url": "https://arxiv.org/abs/2405.15793"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "swe-agent/swe-agent official implementation",
+          "url": "https://github.com/swe-agent/swe-agent"
+        }
+      ],
+      "required_assumptions": [
+        "Local models can perform at least one stage well enough when paired with retrieval, structured memory, or candidate generation.",
+        "Stage boundaries expose failure causes instead of hiding them in a monolithic agent trace.",
+        "Validation can run locally with deterministic resource caps."
+      ],
+      "smallest_falsifying_test": "Build a local mini pipeline on QuixBugs or a tiny repository issue set and require a stage-level gain over direct dense completion plus deterministic AST baseline controls.",
+      "source": "paper",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "Current local dense free-form repair generation repairs 0/4 selected QuixBugs tasks.",
+        "Project has not yet implemented multi-file issue localization."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "retrieval_augmented_repository_context",
+        "structured_repository_memory",
+        "bpe_tokenizer_d5",
+        "graph_conditioned_decoder",
+        "repository_api_reuse_objective"
+      ],
+      "current_evidence": [
+        "RepoBench primary paper defines retrieval, completion, and pipeline tasks for repository-level code completion.",
+        "Project D5 API-reuse and E6 structured-memory probes already target repository-local information, but not this benchmark."
+      ],
+      "id": "repobench_repository_completion_gate",
+      "intended_benefit": "Measure repository understanding separately from single-file loss and syntax-only probes.",
+      "known_incompatibilities": [
+        "Repository completion is not the same as executable patch repair.",
+        "Public dataset use must respect the no-raw-dataset-in-Git rule."
+      ],
+      "mechanism": "Use repository-level retrieval, cross-file completion, and end-to-end pipeline tasks as a measurement gate.",
+      "name": "RepoBench-style repository completion gate",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "RepoBench: Benchmarking Repository-Level Code Auto-Completion Systems",
+          "url": "https://arxiv.org/abs/2306.03091"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "RepoBench official implementation",
+          "url": "https://github.com/Leolty/repobench"
+        }
+      ],
+      "required_assumptions": [
+        "A reduced local slice can be created without exceeding dataset and disk limits.",
+        "Metrics can be reproduced without silent network downloads.",
+        "The gate correlates with practical repository assistance."
+      ],
+      "smallest_falsifying_test": "Create a documented reduced RepoBench-compatible local slice and require at least one contender to beat lexical retrieval/completion baselines before using it as a promotion gate.",
+      "source": "benchmark report",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "No RepoBench slice has been downloaded, pinned, or evaluated in this repository.",
+        "Completion accuracy alone may miss test-passing patch behavior."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "agentless_localization_repair_validation",
+        "retrieval_augmented_repository_context",
+        "execution_feedback_self_refinement"
+      ],
+      "current_evidence": [
+        "SWE-bench Verified is a 500-instance human-filtered subset of SWE-bench.",
+        "It remains useful as historical context and for comparison with prior work."
+      ],
+      "id": "swe_bench_verified_primary_gate",
+      "intended_benefit": "Compare contender stacks on real repository issue resolution tasks.",
+      "known_incompatibilities": [
+        "Full SWE-bench-style runs are likely too expensive for first-pass local experiments.",
+        "Primary-source evidence now warns that SWE-bench Verified is contaminated and no longer a frontier measure."
+      ],
+      "mechanism": "Use the human-filtered SWE-bench Verified issue set as the main external benchmark for scaling decisions.",
+      "name": "SWE-bench Verified as primary scale-up gate",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "SWE-bench Verified overview",
+          "url": "https://www.swebench.com/verified.html"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "Why SWE-bench Verified no longer measures frontier coding capabilities",
+          "url": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/"
+        }
+      ],
+      "required_assumptions": [
+        "The benchmark remains representative of practical coding capability.",
+        "The local project can run the benchmark within resource limits.",
+        "Contamination and test-quality risks are low enough for scale-up decisions."
+      ],
+      "smallest_falsifying_test": "Do not promote it as the primary scale-up gate unless a small pinned local slice proves affordable and a newer uncontaminated benchmark is unavailable.",
+      "source": "benchmark report",
+      "status": "archive",
+      "strongest_opposing_evidence": [
+        "OpenAI's 2026 primary-source analysis says SWE-bench Verified is increasingly contaminated and recommends SWE-bench Pro instead for frontier evaluation.",
+        "It is not aligned with the current small, CPU-compatible first-pass constraint."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "graph_conditioned_decoder",
+        "structured_repository_memory",
+        "retrieval_augmented_repository_context",
+        "repobench_repository_completion_gate"
+      ],
+      "current_evidence": [
+        "Z.ai reports GLM-5.2 uses IndexShare and claims 2.9x lower per-token FLOPs at 1M context for the indexer path.",
+        "GLM-5.2 reports strong long-horizon coding benchmark scores, including Terminal-Bench 2.1, SWE-bench Pro, FrontierSWE, PostTrainBench, and SWE-Marathon."
+      ],
+      "id": "indexshare_sparse_attention_long_context",
+      "intended_benefit": "Make million-token repository and agent-trajectory contexts cheaper without relying only on retrieval truncation.",
+      "known_incompatibilities": [
+        "Current Dark Nova dense decoder uses full finite-causal attention and does not implement DSA-style sparse attention.",
+        "A 744B-A40B GLM-scale design is outside current single-local-GPU training constraints."
+      ],
+      "mechanism": "Reuse one sparse-attention indexer across groups of transformer layers so top-k sparse attention indices are computed less often at long context.",
+      "name": "IndexShare sparse attention for long-context coding",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "GLM-5.2: Built for Long-Horizon Tasks",
+          "url": "https://huggingface.co/blog/zai-org/glm-52-blog"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "zai-org/GLM-5.2 model card",
+          "url": "https://huggingface.co/zai-org/GLM-5.2"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "GLM-5: from Vibe Coding to Agentic Engineering",
+          "url": "https://arxiv.org/abs/2602.15763v2"
+        }
+      ],
+      "required_assumptions": [
+        "The local architecture uses or can be changed to a sparse attention mechanism with reusable routing indices.",
+        "Long-context coding quality is limited by attention/indexing cost rather than only by data, model size, or KV cache capacity."
+      ],
+      "smallest_falsifying_test": "Prototype a tiny shared-index sparse-attention block or retrieval-plus-shared-index surrogate and require better long-context repository completion cost/quality than structured memory plus dense baseline on a pinned local slice.",
+      "source": "paper",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "Evidence is external vendor/model-card reporting, not a Dark Nova reproduction.",
+        "Z.ai notes KV-cache capacity and long-context kernel overhead remain bottlenecks even with reduced per-token computation.",
+        "Current local experiments have not shown that million-token context is the limiting factor versus repository memory or executable repair quality."
+      ]
+    },
+    {
+      "compatible_ideas": [
+        "dense_528_adamw_fp32",
+        "bpe_tokenizer_d5",
+        "execution_feedback_self_refinement",
+        "agentless_localization_repair_validation"
+      ],
+      "current_evidence": [
+        "The MTP rejection-sampling paper reports up to 25 percent extra inference throughput and up to 1.8x async RL-training acceleration on Qwen-family models.",
+        "Z.ai reports GLM-5.2 improves MTP acceptance length by up to 20 percent for coding scenarios using IndexShare/KVShare, rejection sampling, and TV loss."
+      ],
+      "id": "mtp_rejection_speculative_decoding",
+      "intended_benefit": "Increase inference and RL-rollout throughput for local coding agents without changing the primary model quality target.",
+      "known_incompatibilities": [
+        "Current Dark Nova checkpoints do not include an MTP head or speculative decoding runtime.",
+        "The first useful local target may be inference speed, not RL training acceleration, because Dark Nova does not yet run RL post-training."
+      ],
+      "mechanism": "Train a multi-token prediction draft path with rejection sampling and end-to-end total-variation loss to raise accepted speculative tokens during code and agentic generation.",
+      "name": "MTP rejection-sampling speculative decoding",
+      "primary_sources": [
+        {
+          "access_date": "2026-07-01",
+          "title": "Breaking Entropy Bounds: Accelerating RL Training via MTP with Rejection Sampling",
+          "url": "https://arxiv.org/abs/2606.12370"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "GLM-5.2: Built for Long-Horizon Tasks",
+          "url": "https://huggingface.co/blog/zai-org/glm-52-blog"
+        },
+        {
+          "access_date": "2026-07-01",
+          "title": "zai-org/GLM-5.2 model card",
+          "url": "https://huggingface.co/zai-org/GLM-5.2"
+        }
+      ],
+      "required_assumptions": [
+        "The model has enough capacity and training budget to support an auxiliary MTP path.",
+        "Throughput, not only quality, is a limiting factor for local iterative repair and long-horizon agent loops."
+      ],
+      "smallest_falsifying_test": "Add a tiny auxiliary next-token or two-token draft path to a small local checkpoint and require measured wall-clock generation speedup on executable repair prompts with unchanged pass rate.",
+      "source": "paper",
+      "status": "active",
+      "strongest_opposing_evidence": [
+        "External results are not reproduced in Dark Nova and use larger model/training infrastructure.",
+        "Speculative decoding improves runtime only if candidate acceptance is high enough and implementation overhead does not dominate on ROCm."
+      ]
+    }
+  ],
+  "pairwise_test_queue": [
+    {
+      "ideas": [
+        "structured_repository_memory",
+        "dense_528_adamw_fp32"
+      ],
+      "test": "Repository API-reuse prompt augmentation with hallucinated API rate."
+    },
+    {
+      "ideas": [
+        "bpe_tokenizer_d5",
+        "dense_528_adamw_fp32"
+      ],
+      "test": "Executable JavaScript syntax/API-reuse comparison at equal raw-byte exposure."
+    },
+    {
+      "ideas": [
+        "dense_ranked_repair_selection",
+        "syntax_preserving_mutation_pool"
+      ],
+      "result": "QuixBugs_T11c_dense528_repair_aware_syntax_controls_12prog: 12-program slice builds 189 candidates; deterministic order is best by candidate efficiency at 3/12 repairs by top-4; dense likelihood, repair-aware static order, and seeded random each reach 3/12 by top-8. Dense ranking remains revise and candidate generation coverage is the bottleneck.",
+      "test": "Top-k ranked syntax-pool QuixBugs repair versus repair-aware, deterministic, and random same-pool baselines on 12 programs."
+    },
+    {
+      "ideas": [
+        "repair_aware_static_ordering",
+        "syntax_preserving_mutation_pool"
+      ],
+      "result": "The 12-program slice falsifies the four-task top-1 selector claim: repair-aware order repairs 2/12 at top-1 and 3/12 by top-8, losing to deterministic order on candidate efficiency.",
+      "test": "Failure-localized or learned repair-aware ordering versus deterministic, dense, and multiple random controls on the 12-program slice."
+    },
+    {
+      "ideas": [
+        "structured_repository_memory",
+        "fast_weight_scratchpad"
+      ],
+      "test": "Second repository chronology target with rollback and executable/API-reuse scoring."
+    },
+    {
+      "ideas": [
+        "graph_conditioned_decoder",
+        "repository_api_reuse_objective"
+      ],
+      "test": "AST/package-aware graph extraction followed by API-reuse scoring."
+    },
+    {
+      "ideas": [
+        "retrieval_augmented_repository_context",
+        "structured_repository_memory"
+      ],
+      "result": "D5_repository_context_pairwise_validation: structured_symbol_memory hit@5 0.8696 and proxy hallucinated_api_rate 0.0; raw retrieved_snippet_identifiers hit@5 0.0 and proxy hallucinated_api_rate 0.9826; symbol_aware_retrieved_snippets hit@5 0.2174 and proxy hallucinated_api_rate 0.0; query_symbol_aware_retrieval hit@5 0.7826 and proxy hallucinated_api_rate 0.0. Retrieval remains revise because the best retrieval variant is a near miss but does not beat structured memory.",
+      "test": "Compare retrieved snippets versus structured memory facts on repository API-reuse and hallucinated API rate."
+    },
+    {
+      "ideas": [
+        "execution_feedback_self_refinement",
+        "syntax_preserving_mutation_pool"
+      ],
+      "result": "Static repair-aware ordering no longer wins on the 12-program slice. A feedback loop should first improve candidate coverage or localization, not merely rerank the same weak pool.",
+      "test": "Bounded feedback loop versus deterministic order, repair-aware static order, dense top-k execution, and random controls on a larger slice."
+    },
+    {
+      "ideas": [
+        "low_rank_repository_adaptation_lora",
+        "fast_weight_scratchpad"
+      ],
+      "test": "Repository adaptation with rollback accounting: frozen low-rank update versus scoped fast-weight update."
+    },
+    {
+      "ideas": [
+        "agentless_localization_repair_validation",
+        "retrieval_augmented_repository_context"
+      ],
+      "test": "Local mini Agentless pipeline with retrieval-assisted localization and executable validation."
+    },
+    {
+      "ideas": [
+        "indexshare_sparse_attention_long_context",
+        "structured_repository_memory"
+      ],
+      "result": "New external GLM-5.2 source triaged only; no local implementation yet.",
+      "test": "Compare a tiny shared-index sparse-attention or long-context surrogate against structured repository memory on a pinned repository completion slice."
+    },
+    {
+      "ideas": [
+        "mtp_rejection_speculative_decoding",
+        "execution_feedback_self_refinement"
+      ],
+      "result": "New external MTP/rejection-sampling source triaged only; no local implementation yet.",
+      "test": "Measure local speculative/draft generation speedup on repair-loop prompts without reducing executable pass rate."
+    }
+  ],
+  "purpose": "Living portfolio for Dark Nova local coding-model ideas, combinations, contender stacks, and staged ablation planning.",
+  "schema_version": 1,
+  "stages": {
+    "current_stage": "stage_2_pairwise_combinations",
+    "next_stage": "stage_2_repair_pool_expansion_and_glm_long_context_triage",
+    "policy": "Reject or revise ideas that fail their intended mechanism before scaling; promote pairwise combinations only when same-pool controls show measurable value at bounded scale and larger-slice follow-ups preserve the gain."
+  },
+  "strength_weakness_dimensions": [
+    "validation_loss",
+    "coding_benchmark_performance",
+    "executable_test_success",
+    "documentation_accuracy",
+    "repository_understanding",
+    "style_matching",
+    "minimal_edit_behavior",
+    "hallucinated_api_rate",
+    "training_speed",
+    "inference_speed",
+    "vram",
+    "ram",
+    "model_size",
+    "compression_quality",
+    "continual_learning_ability",
+    "forgetting",
+    "rollback_cost",
+    "implementation_complexity",
+    "rocm_compatibility"
+  ],
+  "updated_at": "2026-07-01"
+}

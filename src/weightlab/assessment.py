@@ -14,6 +14,7 @@ NEXT_RESEARCH_OPTIONS = [
     "retrieval_first_update_gates",
     "multilingual_file_format_security_red_team",
     "activation_residual_cache",
+    "sparse_hebbian_assembly_memory",
     "ephemeral_repository_adapters",
     "structured_external_repository_memory",
     "documentation_drift_detection",
@@ -81,6 +82,19 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_if2_fast_weight_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if4_fast_repo_adaptation_probe":
         return _assess_if4_fast_repo_adaptation_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if7_sparse_hebbian_assembly_probe":
+        return _assess_if7_sparse_hebbian_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if7_hebbian_conditioned_trained_model":
+        return _assess_if7_hebbian_trained_model(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if7_sparse_hebbian_candidate_reranker":
+        return _assess_if7_sparse_hebbian_reranker(record)
+    if record.get("metrics", {}).get("benchmark_label") == "if7_hebbian_repository_linking":
+        return _assess_if7_hebbian_repository_linking(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "if7_trained_repository_linking_ranker"
+    ):
+        return _assess_if7_trained_repository_ranker(record)
     if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_checkpoint_probe":
         return _assess_if3_block_codebook_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "if3_block_codebook_validation_probe":
@@ -92,6 +106,50 @@ def assess_record(record: dict[str, Any]) -> Assessment:
         return _assess_dense_js_executable_probe(record)
     if record.get("metrics", {}).get("benchmark_label") == "repository_balanced_task_sample":
         return _assess_repository_task_sample(record)
+    if record.get("metrics", {}).get("benchmark_label") == "repository_api_reuse_probe":
+        return _assess_repository_api_reuse_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "repository_context_pairwise_probe"
+    ):
+        return _assess_repository_context_pairwise_probe(record)
+    if record.get("metrics", {}).get("benchmark_label") == "quixbugs_python_repair_probe":
+        return _assess_quixbugs_repair_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "quixbugs_python_candidate_repair_probe"
+    ):
+        return _assess_quixbugs_candidate_repair_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "quixbugs_python_dense_model_candidate_probe"
+    ):
+        return _assess_quixbugs_dense_model_candidate_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "quixbugs_python_edit_baseline_probe"
+    ):
+        return _assess_quixbugs_edit_baseline_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "quixbugs_python_dense_ranked_edit_probe"
+    ):
+        return _assess_quixbugs_dense_ranked_edit_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "quixbugs_python_dense_ranked_syntax_pool_probe"
+    ):
+        return _assess_quixbugs_dense_ranked_syntax_pool_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "quixbugs_python_dense_ranked_syntax_topk_probe"
+    ):
+        return _assess_quixbugs_dense_ranked_syntax_topk_probe(record)
+    if (
+        record.get("metrics", {}).get("benchmark_label")
+        == "quixbugs_python_syntax_pool_ordering_control_probe"
+    ):
+        return _assess_quixbugs_syntax_pool_ordering_control_probe(record)
     return {
         "experiment_id": experiment_id,
         "hypothesis": record.get("hypothesis"),
@@ -1633,6 +1691,466 @@ def _assess_repository_task_sample(record: dict[str, Any]) -> Assessment:
     }
 
 
+def _assess_repository_api_reuse_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    best = metrics["best_method"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "api_reuse_benchmark_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "repository_api_reuse_symbol_selection_scored_without_model_generation",
+        "limitations": [
+            "not_code_generation",
+            "not_executable_runtime_scoring",
+            "symbol_mentions_are_proxy_labels",
+            "baseline_scoring_only",
+        ],
+        "evidence": {
+            "source_split": metrics["source_split"],
+            "query_split": metrics["query_split"],
+            "repository_count": int(metrics["repository_count"]),
+            "symbol_count": int(metrics["symbol_count"]),
+            "task_count": int(metrics["task_count"]),
+            "top_k": int(metrics["top_k"]),
+            "best_method": best["name"],
+            "best_hit_at_k": best["hit_at_k"],
+            "best_mrr": best["mrr"],
+            "method_names": sorted(metrics["methods"]),
+        },
+    }
+
+
+def _assess_repository_context_pairwise_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    best = metrics["best_method"]
+    methods = metrics["methods"]
+    structured = methods["structured_symbol_memory"]
+    retrieved = methods["retrieved_snippet_identifiers"]
+    symbol_aware = methods.get("symbol_aware_retrieved_snippets", {})
+    query_symbol_aware = methods.get("query_symbol_aware_retrieval", {})
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "pairwise_context_proxy_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "structured_symbol_memory_beats_retrieval_variants_on_api_reuse_proxy"
+        ),
+        "limitations": [
+            "not_code_generation",
+            "not_executable_runtime_scoring",
+            "symbol_mentions_are_proxy_labels",
+            "proxy_hallucinated_api_rate",
+            "retrieval_method_is_raw_identifier_extraction",
+            "symbol_aware_retrieval_still_loses_hit_rate",
+        ],
+        "evidence": {
+            "source_split": metrics["source_split"],
+            "query_split": metrics["query_split"],
+            "repository_count": int(metrics["repository_count"]),
+            "symbol_count": int(metrics["symbol_count"]),
+            "task_count": int(metrics["task_count"]),
+            "top_k": int(metrics["top_k"]),
+            "pairwise_ideas": metrics["pairwise_ideas"],
+            "best_method": best["name"],
+            "best_hit_at_k": best["hit_at_k"],
+            "best_mrr": best["mrr"],
+            "best_hallucinated_api_rate": best["hallucinated_api_rate"],
+            "structured_hit_at_k": structured["hit_at_k"],
+            "structured_hallucinated_api_rate": structured["hallucinated_api_rate"],
+            "retrieved_hit_at_k": retrieved["hit_at_k"],
+            "retrieved_hallucinated_api_rate": retrieved["hallucinated_api_rate"],
+            "symbol_aware_hit_at_k": symbol_aware.get("hit_at_k"),
+            "symbol_aware_hallucinated_api_rate": symbol_aware.get(
+                "hallucinated_api_rate"
+            ),
+            "query_symbol_aware_hit_at_k": query_symbol_aware.get("hit_at_k"),
+            "query_symbol_aware_hallucinated_api_rate": query_symbol_aware.get(
+                "hallucinated_api_rate"
+            ),
+            "method_names": sorted(methods),
+        },
+    }
+
+
+def _assess_quixbugs_repair_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "executable_repair_benchmark_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "quixbugs_buggy_floor_and_oracle_ceiling_measured_with_pytest",
+        "limitations": [
+            "not_model_generated_repairs",
+            "oracle_correct_is_upper_bound",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "program_count": int(metrics["program_count"]),
+            "buggy_passed": int(final["buggy_passed"]),
+            "oracle_correct_passed": int(final["oracle_correct_passed"]),
+            "buggy_pass_rate": final["buggy_pass_rate"],
+            "oracle_correct_pass_rate": final["oracle_correct_pass_rate"],
+            "repair_gap": final["repair_gap"],
+        },
+    }
+
+
+def _assess_quixbugs_candidate_repair_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "executable_candidate_repair_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "quixbugs_candidate_replacement_sources_measured_with_pytest",
+        "limitations": [
+            "not_model_generated_unless_candidate_file_is_model_output",
+            "replacement_source_only",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "program_count": int(metrics["program_count"]),
+            "candidate_count": int(metrics["candidate_count"]),
+            "candidate_passed": int(final["candidate_passed"]),
+            "candidate_pass_rate": final["candidate_pass_rate"],
+            "programs_with_passing_candidate": int(
+                final["programs_with_passing_candidate"]
+            ),
+            "program_repair_rate": final["program_repair_rate"],
+        },
+    }
+
+
+def _assess_quixbugs_dense_model_candidate_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    model = metrics["model"]
+    syntax = metrics.get("syntax", {})
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "model_generated_repair_candidate_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "dense_checkpoint_generated_quixbugs_candidates_measured_with_pytest",
+        "limitations": [
+            "local_model_generated_candidate",
+            "greedy_byte_generation",
+            "prompted_source_replacement_from_general_lm",
+            "replacement_source_only",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "checkpoint": model["checkpoint"],
+            "checkpoint_step": int(model.get("checkpoint_step", 0)),
+            "hidden_dim": int(model.get("config", {}).get("hidden_dim", 0)),
+            "layers": int(model.get("config", {}).get("layers", 0)),
+            "program_count": int(metrics["program_count"]),
+            "candidate_count": int(metrics["candidate_count"]),
+            "candidate_passed": int(final["candidate_passed"]),
+            "candidate_pass_rate": final["candidate_pass_rate"],
+            "programs_with_passing_candidate": int(
+                final["programs_with_passing_candidate"]
+            ),
+            "program_repair_rate": final["program_repair_rate"],
+            "generated_candidate_count": int(
+                syntax.get("generated_candidate_count", metrics["candidate_count"])
+            ),
+            "syntax_valid_candidate_count": int(
+                syntax.get("syntax_valid_candidate_count", 0)
+            ),
+            "programs_with_syntax_valid_candidate": int(
+                syntax.get("programs_with_syntax_valid_candidate", 0)
+            ),
+        },
+    }
+
+
+def _assess_quixbugs_edit_baseline_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    generator = metrics["generator"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "deterministic_repair_baseline_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "hand_engineered_ast_edits_calibrate_quixbugs_candidate_lane",
+        "limitations": [
+            "not_model_generated",
+            "hand_engineered_deterministic_edits",
+            "does_not_read_oracle_correct_sources",
+            "replacement_source_only",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "generator_label": generator["label"],
+            "program_count": int(metrics["program_count"]),
+            "candidate_count": int(metrics["candidate_count"]),
+            "candidate_passed": int(final["candidate_passed"]),
+            "candidate_pass_rate": final["candidate_pass_rate"],
+            "programs_with_passing_candidate": int(
+                final["programs_with_passing_candidate"]
+            ),
+            "program_repair_rate": final["program_repair_rate"],
+            "max_candidates_per_program": int(generator["max_candidates_per_program"]),
+            "edit_templates": list(generator["edit_templates"]),
+        },
+    }
+
+
+def _assess_quixbugs_dense_ranked_edit_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    model = metrics["model"]
+    candidate_pool = metrics["candidate_pool"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "model_ranked_repair_candidate_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "dense_checkpoint_ranked_deterministic_ast_edits_with_pytest",
+        "limitations": [
+            "local_model_ranked_candidate",
+            "deterministic_candidate_pool",
+            "not_free_form_generation",
+            "replacement_source_only",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "checkpoint": model["checkpoint"],
+            "checkpoint_step": int(model.get("checkpoint_step", 0)),
+            "hidden_dim": int(model.get("config", {}).get("hidden_dim", 0)),
+            "layers": int(model.get("config", {}).get("layers", 0)),
+            "program_count": int(metrics["program_count"]),
+            "candidate_pool_count": int(
+                candidate_pool["generated_candidate_count"]
+            ),
+            "selected_candidate_count": int(
+                candidate_pool["selected_candidate_count"]
+            ),
+            "top_candidates_per_program": int(
+                candidate_pool["top_candidates_per_program"]
+            ),
+            "candidate_passed": int(final["candidate_passed"]),
+            "candidate_pass_rate": final["candidate_pass_rate"],
+            "programs_with_passing_candidate": int(
+                final["programs_with_passing_candidate"]
+            ),
+            "program_repair_rate": final["program_repair_rate"],
+        },
+    }
+
+
+def _assess_quixbugs_dense_ranked_syntax_pool_probe(
+    record: dict[str, Any],
+) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    model = metrics["model"]
+    candidate_pool = metrics["candidate_pool"]
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "model_ranked_broader_syntax_pool_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "dense_checkpoint_top1_ranking_drops_on_broader_syntax_pool",
+        "limitations": [
+            "local_model_ranked_candidate",
+            "syntax_preserving_candidate_pool",
+            "broader_than_deterministic_edit_baseline",
+            "not_free_form_generation",
+            "replacement_source_only",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "checkpoint": model["checkpoint"],
+            "checkpoint_step": int(model.get("checkpoint_step", 0)),
+            "hidden_dim": int(model.get("config", {}).get("hidden_dim", 0)),
+            "layers": int(model.get("config", {}).get("layers", 0)),
+            "program_count": int(metrics["program_count"]),
+            "candidate_pool_count": int(
+                candidate_pool["generated_candidate_count"]
+            ),
+            "selected_candidate_count": int(
+                candidate_pool["selected_candidate_count"]
+            ),
+            "top_candidates_per_program": int(
+                candidate_pool["top_candidates_per_program"]
+            ),
+            "candidate_passed": int(final["candidate_passed"]),
+            "candidate_pass_rate": final["candidate_pass_rate"],
+            "programs_with_passing_candidate": int(
+                final["programs_with_passing_candidate"]
+            ),
+            "program_repair_rate": final["program_repair_rate"],
+        },
+    }
+
+
+def _assess_quixbugs_dense_ranked_syntax_topk_probe(
+    record: dict[str, Any],
+) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    model = metrics["model"]
+    candidate_pool = metrics["candidate_pool"]
+    top_k_profile = metrics["top_k_profile"]
+    top1 = next(
+        row for row in top_k_profile if int(row["top_candidates_per_program"]) == 1
+    )
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "model_ranked_syntax_topk_pairwise_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": "top_k_execution_profiles_dense_ranking_plus_syntax_pool",
+        "limitations": [
+            "local_model_ranked_candidate",
+            "syntax_preserving_candidate_pool",
+            "broader_than_deterministic_edit_baseline",
+            "top_k_execution_profile",
+            "not_free_form_generation",
+            "replacement_source_only",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "checkpoint": model["checkpoint"],
+            "checkpoint_step": int(model.get("checkpoint_step", 0)),
+            "hidden_dim": int(model.get("config", {}).get("hidden_dim", 0)),
+            "layers": int(model.get("config", {}).get("layers", 0)),
+            "program_count": int(metrics["program_count"]),
+            "candidate_pool_count": int(
+                candidate_pool["generated_candidate_count"]
+            ),
+            "selected_candidate_count": int(
+                candidate_pool["selected_candidate_count"]
+            ),
+            "top_k_values": list(candidate_pool["top_k_values"]),
+            "max_top_k_profiled": int(candidate_pool["max_top_k_profiled"]),
+            "top1_candidate_pass_rate": top1["candidate_pass_rate"],
+            "top1_program_repair_rate": top1["program_repair_rate"],
+            "best_top_k": int(final["best_top_k"]),
+            "best_candidate_pass_rate": final["best_candidate_pass_rate"],
+            "best_program_repair_rate": final["best_program_repair_rate"],
+            "candidate_passed_at_max_k": int(final["candidate_passed"]),
+            "program_repair_rate_at_max_k": final["program_repair_rate"],
+        },
+    }
+
+
+def _assess_quixbugs_syntax_pool_ordering_control_probe(
+    record: dict[str, Any],
+) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    source = metrics["source"]
+    model = metrics["model"]
+    candidate_pool = metrics["candidate_pool"]
+    controls = metrics["ordering_controls"]
+    dense = controls["dense_likelihood"]
+    deterministic = controls["deterministic_pool_order"]
+    repair_aware = controls.get("repair_aware_static_order")
+    random_control = controls["random_seeded_order"]
+    dense_top1 = next(
+        row
+        for row in dense["top_k_profile"]
+        if int(row["top_candidates_per_program"]) == 1
+    )
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": "syntax_pool_ordering_control_probe",
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "dense_ranking_compared_with_same_pool_non_model_controls"
+        ),
+        "limitations": [
+            "local_model_ranked_candidate",
+            "syntax_preserving_candidate_pool",
+            "broader_than_deterministic_edit_baseline",
+            "top_k_execution_profile",
+            "same_pool_ordering_controls",
+            "not_free_form_generation",
+            "replacement_source_only",
+            "python_subset_only",
+            "not_public_leaderboard_comparison",
+        ],
+        "evidence": {
+            "repo_url": source["repo_url"],
+            "repo_commit": source["repo_commit"],
+            "checkpoint": model["checkpoint"],
+            "checkpoint_step": int(model.get("checkpoint_step", 0)),
+            "hidden_dim": int(model.get("config", {}).get("hidden_dim", 0)),
+            "layers": int(model.get("config", {}).get("layers", 0)),
+            "program_count": int(metrics["program_count"]),
+            "candidate_pool_count": int(
+                candidate_pool["generated_candidate_count"]
+            ),
+            "selected_candidate_count": int(
+                candidate_pool["selected_candidate_count"]
+            ),
+            "top_k_values": list(candidate_pool["top_k_values"]),
+            "max_top_k_profiled": int(candidate_pool["max_top_k_profiled"]),
+            "best_ordering": final["best_ordering"],
+            "best_program_repair_rate": final["best_program_repair_rate"],
+            "dense_beats_all_controls": bool(final["dense_beats_all_controls"]),
+            "dense_top1_program_repair_rate": dense_top1["program_repair_rate"],
+            "dense_best_top_k": int(dense["best_top_k"]),
+            "dense_best_program_repair_rate": dense["best_program_repair_rate"],
+            "deterministic_best_top_k": int(deterministic["best_top_k"]),
+            "deterministic_best_program_repair_rate": deterministic[
+                "best_program_repair_rate"
+            ],
+            "repair_aware_best_top_k": (
+                int(repair_aware["best_top_k"]) if repair_aware is not None else None
+            ),
+            "repair_aware_best_program_repair_rate": (
+                repair_aware["best_program_repair_rate"]
+                if repair_aware is not None
+                else None
+            ),
+            "random_best_top_k": int(random_control["best_top_k"]),
+            "random_best_program_repair_rate": random_control[
+                "best_program_repair_rate"
+            ],
+            "control_names": list(final["control_names"]),
+        },
+    }
+
+
 def _assess_idea_foundry_graph_probe(record: dict[str, Any]) -> Assessment:
     metrics = record["metrics"]
     signal_present = bool(
@@ -1779,6 +2297,287 @@ def _assess_if4_fast_repo_adaptation_probe(record: dict[str, Any]) -> Assessment
             "mean_update_ms": final["mean_update_ms"],
             "rollback_supported": final["rollback_supported"],
             "total_storage_bytes": final["total_storage_bytes"],
+        },
+    }
+
+
+def _assess_if7_sparse_hebbian_probe(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    final = metrics["final"]
+    corpus = metrics["corpus"]
+    methods = metrics["methods"]
+    adds_signal = bool(metrics["hebbian_adds_associative_signal"])
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "real_corpus_associative_signal"
+            if adds_signal
+            else "frequency_or_random_control_not_beaten"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "sparse_hebbian_completion_beats_frequency_and_random_controls_on_masked_real_rows"
+            if adds_signal
+            else "sparse_hebbian_completion_does_not_beat_controls"
+        ),
+        "limitations": [
+            "associative_memory_probe_only",
+            "not_language_model_training",
+            "masked_recall_from_exposed_rows_not_unseen_repo_generalization",
+            "hashed_node_collisions_possible",
+            "dense_numpy_matrix_not_packed_sparse_kernel",
+            "no_security_or_authorization_gate",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "rows_loaded": corpus["rows_loaded"],
+            "rows_scanned": corpus["rows_scanned"],
+            "usable_patterns": corpus["usable_patterns"],
+            "eval_patterns": corpus["eval_patterns"],
+            "repositories_loaded": corpus["repositories_loaded"],
+            "mean_active_fraction": metrics["sparsity"]["mean_active_fraction"],
+            "hebbian_hit_at_k": final["hebbian_hit_at_k"],
+            "frequency_hit_at_k": final["frequency_hit_at_k"],
+            "random_hit_at_k": final["random_hit_at_k"],
+            "hebbian_mrr": final["hebbian_mrr"],
+            "frequency_mrr": final["frequency_mrr"],
+            "random_mrr": final["random_mrr"],
+            "hebbian_storage_bytes": methods["hebbian_sparse_assembly"][
+                "storage_bytes"
+            ],
+            "random_storage_bytes": methods["random_sparse_control"][
+                "storage_bytes"
+            ],
+            "hebbian_adds_associative_signal": adds_signal,
+        },
+    }
+
+
+def _assess_if7_hebbian_trained_model(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    cue_only = metrics["validation"]["cue_only"]
+    cue_plus = metrics["validation"]["cue_plus_hebbian"]
+    raw = metrics["validation"]["raw_hebbian_memory"]
+    improves = bool(metrics["hebbian_conditioning_improves_trained_model"])
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "trained_hebbian_conditioning_positive"
+            if improves
+            else "trained_cue_only_not_beaten"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "trained_hebbian_conditioning_beats_or_matches_cue_only_validation"
+            if improves
+            else "cue_plus_hebbian_trained_model_loses_to_cue_only_on_validation"
+        ),
+        "limitations": [
+            "trained_linear_multilabel_probe_not_decoder_language_model",
+            "predicts_hashed_identifier_import_nodes_not_tokens",
+            "not_executable_code_generation_or_repair",
+            "dense_torch_linear_layers_not_sparse_rocm_kernel",
+            "no_security_or_authorization_gate",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "train_rows": metrics["training"]["supervised_train_rows"],
+            "validation_rows": metrics["training"]["validation_rows"],
+            "accelerator_backend": metrics["training"]["accelerator_backend"],
+            "node_count": metrics["hebbian_memory"]["node_count"],
+            "hebbian_memory_storage_bytes": metrics["hebbian_memory"]["storage_bytes"],
+            "cue_only_hit_at_k": cue_only["hit_at_k"],
+            "cue_plus_hebbian_hit_at_k": cue_plus["hit_at_k"],
+            "raw_hebbian_hit_at_k": raw["hit_at_k"],
+            "cue_only_mrr": cue_only["mrr"],
+            "cue_plus_hebbian_mrr": cue_plus["mrr"],
+            "raw_hebbian_mrr": raw["mrr"],
+            "cue_only_loss": cue_only["loss"],
+            "cue_plus_hebbian_loss": cue_plus["loss"],
+            "hebbian_conditioning_improves_trained_model": improves,
+        },
+    }
+
+
+def _assess_if7_sparse_hebbian_reranker(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    raw = metrics["validation"]["raw_hebbian_memory"]
+    reranker = metrics["validation"]["candidate_reranker"]
+    ceiling = metrics["validation"]["candidate_recall_ceiling"]
+    improves = bool(metrics["sparse_reranker_improves_raw_hebbian"])
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "sparse_reranker_positive"
+            if improves
+            else "raw_hebbian_not_beaten_by_sparse_reranker"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "sparse_candidate_reranker_beats_or_matches_raw_hebbian"
+            if improves
+            else "sparse_candidate_reranker_loses_to_raw_hebbian_ranking"
+        ),
+        "limitations": [
+            "candidate_reranker_not_decoder_language_model",
+            "predicts_hashed_identifier_import_nodes_not_tokens",
+            "candidate_recall_bounds_possible_quality",
+            "not_executable_code_generation_or_repair",
+            "dense_torch_linear_scorer_not_sparse_rocm_kernel",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "train_patterns": metrics["training"]["train_patterns"],
+            "validation_patterns": metrics["training"]["validation_patterns"],
+            "train_candidate_examples": metrics["training"]["train_candidate_examples"],
+            "candidate_count": metrics["training"]["candidate_count"],
+            "parameter_count": metrics["models"]["candidate_reranker"][
+                "parameter_count"
+            ],
+            "raw_hebbian_hit_at_k": raw["hit_at_k"],
+            "raw_hebbian_mrr": raw["mrr"],
+            "reranker_hit_at_k": reranker["hit_at_k"],
+            "reranker_mrr": reranker["mrr"],
+            "candidate_ceiling_hit_at_k": ceiling["hit_at_k"],
+            "candidate_ceiling_mrr": ceiling["mrr"],
+            "sparse_reranker_improves_raw_hebbian": improves,
+        },
+    }
+
+
+def _assess_if7_hebbian_repository_linking(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    corpus = metrics["corpus"]
+    tasks = metrics["tasks"]
+    methods = metrics["methods"]
+    lexical = methods["lexical_text_overlap"]
+    raw = methods["raw_hebbian_context"]
+    combined = methods["combined_lexical_hebbian"]
+    raw_beats = bool(metrics["hebbian_beats_lexical"])
+    combined_beats = bool(metrics["combined_beats_lexical"])
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": (
+            "repository_linking_hebbian_positive"
+            if raw_beats or combined_beats
+            else "lexical_baseline_not_beaten"
+        ),
+        "supports_pareto_improvement": False,
+        "primary_reason": (
+            "repository_linking_hebbian_or_combined_score_beats_lexical_text_overlap"
+            if raw_beats or combined_beats
+            else "repository_linking_hebbian_scores_lose_to_lexical_text_overlap"
+        ),
+        "limitations": [
+            "repository_linking_proxy_not_generation",
+            "positive_targets_are_same_repo_files_not_human_labeled_dependencies",
+            "distractors_sampled_from_eval_split_other_repositories",
+            "global_hebbian_memory_built_from_train_split_only",
+            "lexical_baseline_is_strong_for_same_repository_file_linking",
+            "not_executable_code_generation_or_repair",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "train_rows_loaded": corpus["train_rows_loaded"],
+            "eval_rows_loaded": corpus["eval_rows_loaded"],
+            "eval_repositories": corpus["eval_repositories"],
+            "eligible_eval_repositories": corpus["eligible_eval_repositories"],
+            "task_count": tasks["task_count"],
+            "top_k": tasks["top_k"],
+            "negatives_per_query": tasks["negatives_per_query"],
+            "candidate_count_mean": tasks["candidate_count_mean"],
+            "best_method": metrics["best_method"]["name"],
+            "lexical_hit_at_k": lexical["hit_at_k"],
+            "lexical_mrr": lexical["mrr"],
+            "lexical_coverage_at_k": lexical["coverage_at_k"],
+            "raw_hebbian_hit_at_k": raw["hit_at_k"],
+            "raw_hebbian_mrr": raw["mrr"],
+            "raw_hebbian_coverage_at_k": raw["coverage_at_k"],
+            "combined_hit_at_k": combined["hit_at_k"],
+            "combined_mrr": combined["mrr"],
+            "combined_coverage_at_k": combined["coverage_at_k"],
+            "hebbian_beats_lexical": raw_beats,
+            "combined_beats_lexical": combined_beats,
+        },
+    }
+
+
+def _assess_if7_trained_repository_ranker(record: dict[str, Any]) -> Assessment:
+    metrics = record["metrics"]
+    corpus = metrics["corpus"]
+    tasks = metrics["tasks"]
+    training = metrics["training"]
+    models = metrics["models"]
+    methods = metrics["methods"]
+    lexical = methods["lexical_text_overlap"]
+    raw = methods["raw_hebbian_context"]
+    trained = methods["trained_task_aware_ranker"]
+    no_hebbian = methods["trained_no_hebbian_ranker"]
+    feature_names = list(models["task_aware_ranker"].get("feature_names", []))
+    beats_lexical = bool(metrics["trained_ranker_beats_lexical"])
+    beats_raw = bool(metrics["trained_ranker_beats_raw_hebbian"])
+    beats_ablation = bool(metrics["trained_ranker_beats_no_hebbian"])
+    if beats_lexical and beats_raw and beats_ablation:
+        outcome = "task_ranker_hebbian_ablation_positive"
+        reason = "trained_repository_ranker_beats_static_baselines_and_no_hebbian_ablation"
+    elif beats_lexical and beats_raw:
+        outcome = "task_ranker_positive_hebbian_ablation_not_beaten"
+        reason = "trained_repository_ranker_beats_static_baselines_but_not_no_hebbian_ablation"
+    else:
+        outcome = "task_ranker_not_beating_static_baselines"
+        reason = "trained_repository_ranker_does_not_beat_required_static_baselines"
+    return {
+        "experiment_id": record["experiment_id"],
+        "hypothesis": record.get("hypothesis"),
+        "outcome": outcome,
+        "supports_pareto_improvement": False,
+        "primary_reason": reason,
+        "limitations": [
+            "repository_linking_proxy_not_generation",
+            "positive_targets_are_same_repo_files_not_human_labeled_dependencies",
+            "linear_ranker_not_decoder_language_model",
+            "hebbian_feature_requires_no_hebbian_ablation_to_claim_value",
+            "not_executable_code_generation_or_repair",
+        ],
+        "evidence": {
+            "candidate_id": metrics["candidate_id"],
+            "train_rows_loaded": corpus["train_rows_loaded"],
+            "eval_rows_loaded": corpus["eval_rows_loaded"],
+            "train_task_repositories": corpus["train_task_repositories"],
+            "eval_task_repositories": corpus["eval_task_repositories"],
+            "train_tasks": tasks["train_tasks"],
+            "eval_tasks": tasks["eval_tasks"],
+            "top_k": tasks["top_k"],
+            "negatives_per_query": tasks["negatives_per_query"],
+            "candidate_examples": training["candidate_examples"],
+            "epochs": training["epochs"],
+            "accelerator_backend": training["accelerator_backend"],
+            "trained_parameter_count": models["task_aware_ranker"]["parameter_count"],
+            "no_hebbian_parameter_count": models["no_hebbian_ranker"][
+                "parameter_count"
+            ],
+            "feature_names": feature_names,
+            "has_hebbian_pair_edge_score": "hebbian_pair_edge_score" in feature_names,
+            "best_method": metrics["best_method"]["name"],
+            "selected_ranker_uses_hebbian": metrics["best_method"]["name"]
+            == "trained_task_aware_ranker",
+            "lexical_hit_at_k": lexical["hit_at_k"],
+            "lexical_mrr": lexical["mrr"],
+            "raw_hebbian_hit_at_k": raw["hit_at_k"],
+            "raw_hebbian_mrr": raw["mrr"],
+            "trained_hit_at_k": trained["hit_at_k"],
+            "trained_mrr": trained["mrr"],
+            "trained_coverage_at_k": trained["coverage_at_k"],
+            "no_hebbian_hit_at_k": no_hebbian["hit_at_k"],
+            "no_hebbian_mrr": no_hebbian["mrr"],
+            "no_hebbian_coverage_at_k": no_hebbian["coverage_at_k"],
+            "trained_ranker_beats_lexical": beats_lexical,
+            "trained_ranker_beats_raw_hebbian": beats_raw,
+            "trained_ranker_beats_no_hebbian": beats_ablation,
         },
     }
 

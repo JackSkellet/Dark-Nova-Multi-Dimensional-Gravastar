@@ -177,6 +177,302 @@ def test_assessment_marks_if4_fast_repo_adaptation_as_proxy_probe():
     assert assessment["evidence"]["rollback_supported"] is True
 
 
+def test_assessment_marks_if7_sparse_hebbian_as_real_corpus_signal():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF7_sparse_hebbian_d5_probe",
+            "hypothesis": "if7_sparse_hebbian",
+            "metrics": {
+                "benchmark_label": "if7_sparse_hebbian_assembly_probe",
+                "candidate_id": "IF7",
+                "corpus": {
+                    "rows_loaded": 8192,
+                    "rows_scanned": 26173,
+                    "usable_patterns": 8190,
+                    "eval_patterns": 512,
+                    "repositories_loaded": 7381,
+                },
+                "sparsity": {"mean_active_fraction": 0.011},
+                "methods": {
+                    "hebbian_sparse_assembly": {"storage_bytes": 69_399_884},
+                    "random_sparse_control": {"storage_bytes": 67_141_632},
+                },
+                "final": {
+                    "hebbian_hit_at_k": 0.95,
+                    "frequency_hit_at_k": 0.88,
+                    "random_hit_at_k": 0.20,
+                    "hebbian_mrr": 0.48,
+                    "frequency_mrr": 0.28,
+                    "random_mrr": 0.03,
+                },
+                "hebbian_adds_associative_signal": True,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "real_corpus_associative_signal"
+    assert assessment["supports_pareto_improvement"] is False
+    assert "not_language_model_training" in assessment["limitations"]
+    assert assessment["evidence"]["candidate_id"] == "IF7"
+    assert assessment["evidence"]["hebbian_hit_at_k"] > assessment["evidence"][
+        "frequency_hit_at_k"
+    ]
+
+
+def test_assessment_marks_if7_trained_conditioning_when_cue_only_wins():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF7b_hebbian_trained_model_d5",
+            "hypothesis": "if7_trained_conditioning",
+            "metrics": {
+                "benchmark_label": "if7_hebbian_conditioned_trained_model",
+                "candidate_id": "IF7",
+                "training": {
+                    "supervised_train_rows": 8190,
+                    "validation_rows": 804,
+                    "accelerator_backend": "rocm",
+                },
+                "hebbian_memory": {
+                    "node_count": 2048,
+                    "storage_bytes": 19_231_715,
+                },
+                "validation": {
+                    "cue_only": {
+                        "hit_at_k": 0.9788,
+                        "mrr": 0.6916,
+                        "loss": 0.0673,
+                    },
+                    "cue_plus_hebbian": {
+                        "hit_at_k": 0.9701,
+                        "mrr": 0.6678,
+                        "loss": 0.0708,
+                    },
+                    "raw_hebbian_memory": {
+                        "hit_at_k": 0.9490,
+                        "mrr": 0.5253,
+                    },
+                },
+                "hebbian_conditioning_improves_trained_model": False,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "trained_cue_only_not_beaten"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "cue_plus_hebbian_trained_model_loses_to_cue_only_on_validation"
+    )
+    assert assessment["evidence"]["accelerator_backend"] == "rocm"
+    assert assessment["evidence"]["cue_only_hit_at_k"] > assessment["evidence"][
+        "cue_plus_hebbian_hit_at_k"
+    ]
+
+
+def test_assessment_marks_if7_sparse_reranker_when_raw_hebbian_wins():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF7f_sparse_hebbian_reranker_priors_d5_500k_windows",
+            "hypothesis": "if7_sparse_reranker",
+            "metrics": {
+                "benchmark_label": "if7_sparse_hebbian_candidate_reranker",
+                "candidate_id": "IF7",
+                "training": {
+                    "train_patterns": 494_403,
+                    "validation_patterns": 24_216,
+                    "train_candidate_examples": 500_000,
+                    "candidate_count": 64,
+                },
+                "models": {
+                    "candidate_reranker": {
+                        "parameter_count": 9,
+                    }
+                },
+                "validation": {
+                    "raw_hebbian_memory": {
+                        "hit_at_k": 0.8167,
+                        "mrr": 0.1939,
+                    },
+                    "candidate_reranker": {
+                        "hit_at_k": 0.7951,
+                        "mrr": 0.1867,
+                    },
+                    "candidate_recall_ceiling": {
+                        "hit_at_k": 0.9252,
+                        "mrr": 0.9252,
+                    },
+                },
+                "sparse_reranker_improves_raw_hebbian": False,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "raw_hebbian_not_beaten_by_sparse_reranker"
+    assert assessment["primary_reason"] == (
+        "sparse_candidate_reranker_loses_to_raw_hebbian_ranking"
+    )
+    assert assessment["evidence"]["candidate_ceiling_hit_at_k"] > assessment[
+        "evidence"
+    ]["raw_hebbian_hit_at_k"]
+    assert assessment["evidence"]["raw_hebbian_hit_at_k"] > assessment["evidence"][
+        "reranker_hit_at_k"
+    ]
+
+
+def test_assessment_marks_if7_repository_linking_when_lexical_baseline_wins():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF7g_repository_linking_d5_validation",
+            "hypothesis": "if7_repository_linking",
+            "metrics": {
+                "benchmark_label": "if7_hebbian_repository_linking",
+                "candidate_id": "IF7",
+                "corpus": {
+                    "train_rows_loaded": 26_000,
+                    "eval_rows_loaded": 804,
+                    "eval_repositories": 58,
+                    "eligible_eval_repositories": 58,
+                },
+                "tasks": {
+                    "task_count": 180,
+                    "top_k": 5,
+                    "negatives_per_query": 32,
+                    "candidate_count_mean": 36.6,
+                },
+                "methods": {
+                    "lexical_text_overlap": {
+                        "hit_at_k": 1.0,
+                        "mrr": 0.9712,
+                        "coverage_at_k": 0.8652,
+                    },
+                    "raw_hebbian_context": {
+                        "hit_at_k": 0.4388,
+                        "mrr": 0.3841,
+                        "coverage_at_k": 0.2191,
+                    },
+                    "combined_lexical_hebbian": {
+                        "hit_at_k": 0.95,
+                        "mrr": 0.8238,
+                        "coverage_at_k": 0.7765,
+                    },
+                },
+                "best_method": {
+                    "name": "lexical_text_overlap",
+                    "hit_at_k": 1.0,
+                    "mrr": 0.9712,
+                    "coverage_at_k": 0.8652,
+                },
+                "hebbian_beats_lexical": False,
+                "combined_beats_lexical": False,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "lexical_baseline_not_beaten"
+    assert assessment["primary_reason"] == (
+        "repository_linking_hebbian_scores_lose_to_lexical_text_overlap"
+    )
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["evidence"]["task_count"] == 180
+    assert assessment["evidence"]["lexical_hit_at_k"] > assessment["evidence"][
+        "raw_hebbian_hit_at_k"
+    ]
+    assert assessment["evidence"]["lexical_mrr"] > assessment["evidence"][
+        "combined_mrr"
+    ]
+
+
+def test_assessment_marks_if7_trained_repository_ranker_with_ablation():
+    assessment = assess_record(
+        {
+            "experiment_id": "IF7i_trained_repository_ranker_d5_validation",
+            "hypothesis": "if7_task_aware_ranker",
+            "metrics": {
+                "benchmark_label": "if7_trained_repository_linking_ranker",
+                "candidate_id": "IF7",
+                "corpus": {
+                    "train_rows_loaded": 26_000,
+                    "eval_rows_loaded": 804,
+                    "train_task_repositories": 512,
+                    "eval_task_repositories": 58,
+                },
+                "tasks": {
+                    "train_tasks": 1_728,
+                    "eval_tasks": 180,
+                    "top_k": 5,
+                    "negatives_per_query": 64,
+                    "eval_candidate_count_mean": 68.6,
+                },
+                "training": {
+                    "candidate_examples": 126_560,
+                    "epochs": 12,
+                    "accelerator_backend": "rocm",
+                },
+                "models": {
+                    "task_aware_ranker": {
+                        "feature_names": [
+                            "path_token_overlap_norm",
+                            "lexical_text_overlap_norm",
+                            "hebbian_candidate_context_score",
+                            "hebbian_pair_edge_score",
+                            "same_file_extension",
+                            "bias",
+                        ],
+                        "parameter_count": 7,
+                    },
+                    "no_hebbian_ranker": {
+                        "parameter_count": 7,
+                    },
+                },
+                "methods": {
+                    "lexical_text_overlap": {
+                        "hit_at_k": 0.8333,
+                        "mrr": 0.7375,
+                        "coverage_at_k": 0.6097,
+                    },
+                    "raw_hebbian_context": {
+                        "hit_at_k": 0.3944,
+                        "mrr": 0.3336,
+                        "coverage_at_k": 0.1780,
+                    },
+                    "trained_task_aware_ranker": {
+                        "hit_at_k": 0.9555,
+                        "mrr": 0.8963,
+                        "coverage_at_k": 0.8078,
+                    },
+                    "trained_no_hebbian_ranker": {
+                        "hit_at_k": 0.9555,
+                        "mrr": 0.8982,
+                        "coverage_at_k": 0.8069,
+                    },
+                },
+                "best_method": {
+                    "name": "trained_no_hebbian_ranker",
+                    "hit_at_k": 0.9555,
+                    "mrr": 0.8982,
+                    "coverage_at_k": 0.8069,
+                },
+                "trained_ranker_beats_lexical": True,
+                "trained_ranker_beats_raw_hebbian": True,
+                "trained_ranker_beats_no_hebbian": False,
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "task_ranker_positive_hebbian_ablation_not_beaten"
+    assert assessment["primary_reason"] == (
+        "trained_repository_ranker_beats_static_baselines_but_not_no_hebbian_ablation"
+    )
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["evidence"]["trained_hit_at_k"] > assessment["evidence"][
+        "lexical_hit_at_k"
+    ]
+    assert assessment["evidence"]["no_hebbian_mrr"] > assessment["evidence"][
+        "trained_mrr"
+    ]
+    assert assessment["evidence"]["has_hebbian_pair_edge_score"] is True
+    assert assessment["evidence"]["selected_ranker_uses_hebbian"] is False
+
+
 def test_assessment_marks_dense_training_smoke_outcomes_without_overclaiming():
     rocm = assess_record(_record("T1_dense_decoder_training_smoke"))
     cpu = assess_record(_record("T1b_cpu_dense_decoder_training_smoke"))
@@ -407,6 +703,597 @@ def test_assessment_marks_repository_task_sample_as_benchmark_scaffold():
     assert assessment["supports_pareto_improvement"] is False
     assert "no_model_quality_measured" in assessment["limitations"]
     assert assessment["evidence"]["task_count"] == 320
+
+
+def test_assessment_marks_repository_api_reuse_probe_without_overclaiming():
+    assessment = assess_record(
+        {
+            "experiment_id": "D5_repository_api_reuse_validation",
+            "hypothesis": "repository_api_reuse_symbol_selection_probe",
+            "metrics": {
+                "benchmark_label": "repository_api_reuse_probe",
+                "source_split": "train",
+                "query_split": "validation",
+                "task_count": 42,
+                "repository_count": 12,
+                "symbol_count": 88,
+                "top_k": 5,
+                "methods": {
+                    "symbol_name_mention": {"hit_at_k": 0.81, "mrr": 0.62},
+                    "lexical_source_overlap": {"hit_at_k": 0.74, "mrr": 0.55},
+                },
+                "best_method": {
+                    "name": "symbol_name_mention",
+                    "hit_at_k": 0.81,
+                    "mrr": 0.62,
+                },
+                "limitations": ["not_code_generation", "not_executable_runtime_scoring"],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "api_reuse_benchmark_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "repository_api_reuse_symbol_selection_scored_without_model_generation"
+    )
+    assert "not_code_generation" in assessment["limitations"]
+    assert assessment["evidence"]["task_count"] == 42
+    assert assessment["evidence"]["best_method"] == "symbol_name_mention"
+
+
+def test_assessment_marks_repository_context_pairwise_probe_without_overclaiming():
+    assessment = assess_record(
+        {
+            "experiment_id": "D5_repository_context_pairwise_validation",
+            "hypothesis": "retrieval_context_vs_structured_memory_pairwise_probe",
+            "metrics": {
+                "benchmark_label": "repository_context_pairwise_probe",
+                "source_split": "validation",
+                "query_split": "validation",
+                "task_count": 23,
+                "repository_count": 3,
+                "symbol_count": 689,
+                "top_k": 5,
+                "pairwise_ideas": [
+                    "retrieval_augmented_repository_context",
+                    "structured_repository_memory",
+                ],
+                "methods": {
+                    "structured_symbol_memory": {
+                        "hit_at_k": 0.8695652173913043,
+                        "mrr": 0.753623188405797,
+                        "hallucinated_api_rate": 0.0,
+                    },
+                    "retrieved_snippet_identifiers": {
+                        "hit_at_k": 0.0,
+                        "mrr": 0.0,
+                        "hallucinated_api_rate": 0.9826086956521739,
+                    },
+                    "symbol_aware_retrieved_snippets": {
+                        "hit_at_k": 0.21739130434782608,
+                        "mrr": 0.18478260869565216,
+                        "hallucinated_api_rate": 0.0,
+                    },
+                    "query_symbol_aware_retrieval": {
+                        "hit_at_k": 0.782608695652174,
+                        "mrr": 0.6884057971014493,
+                        "hallucinated_api_rate": 0.0,
+                    },
+                },
+                "best_method": {
+                    "name": "structured_symbol_memory",
+                    "hit_at_k": 0.8695652173913043,
+                    "mrr": 0.753623188405797,
+                    "hallucinated_api_rate": 0.0,
+                },
+                "limitations": [
+                    "not_code_generation",
+                    "not_executable_runtime_scoring",
+                    "proxy_hallucinated_api_rate",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "pairwise_context_proxy_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "structured_symbol_memory_beats_retrieval_variants_on_api_reuse_proxy"
+    )
+    assert "not_code_generation" in assessment["limitations"]
+    assert assessment["evidence"]["best_method"] == "structured_symbol_memory"
+    assert assessment["evidence"]["retrieved_hallucinated_api_rate"] > 0.9
+    assert assessment["evidence"]["symbol_aware_hallucinated_api_rate"] == 0.0
+    assert assessment["evidence"]["symbol_aware_hit_at_k"] < assessment["evidence"][
+        "structured_hit_at_k"
+    ]
+    assert assessment["evidence"]["query_symbol_aware_hit_at_k"] > assessment[
+        "evidence"
+    ]["symbol_aware_hit_at_k"]
+    assert assessment["evidence"]["query_symbol_aware_hit_at_k"] < assessment[
+        "evidence"
+    ]["structured_hit_at_k"]
+
+
+def test_assessment_marks_quixbugs_repair_probe_as_executable_repair_gate():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_python_repair_smoke",
+            "hypothesis": "quixbugs_python_repair_floor_and_oracle_ceiling",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_repair_probe",
+                "program_count": 3,
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "abc123",
+                },
+                "final": {
+                    "buggy_pass_rate": 0.0,
+                    "oracle_correct_pass_rate": 1.0,
+                    "repair_gap": 1.0,
+                    "buggy_passed": 0,
+                    "oracle_correct_passed": 3,
+                },
+                "limitations": [
+                    "not_model_generated_repairs",
+                    "oracle_correct_is_upper_bound",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "executable_repair_benchmark_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "quixbugs_buggy_floor_and_oracle_ceiling_measured_with_pytest"
+    )
+    assert assessment["evidence"]["program_count"] == 3
+    assert assessment["evidence"]["repair_gap"] == 1.0
+    assert "not_model_generated_repairs" in assessment["limitations"]
+
+
+def test_assessment_marks_quixbugs_candidate_repair_probe_without_overclaiming():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_python_candidate_repair_smoke",
+            "hypothesis": "quixbugs_python_candidate_repair_source_replacement_probe",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_candidate_repair_probe",
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+                },
+                "candidate_count": 8,
+                "program_count": 4,
+                "final": {
+                    "candidate_passed": 4,
+                    "candidate_pass_rate": 0.5,
+                    "programs_with_passing_candidate": 4,
+                    "program_repair_rate": 1.0,
+                },
+                "limitations": [
+                    "not_model_generated_unless_candidate_file_is_model_output",
+                    "replacement_source_only",
+                    "python_subset_only",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "executable_candidate_repair_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "quixbugs_candidate_replacement_sources_measured_with_pytest"
+    )
+    assert "not_model_generated_unless_candidate_file_is_model_output" in assessment[
+        "limitations"
+    ]
+    assert assessment["evidence"]["candidate_count"] == 8
+    assert assessment["evidence"]["program_repair_rate"] == 1.0
+
+
+def test_assessment_marks_quixbugs_dense_model_candidate_probe_as_model_repair_eval():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_dense528_candidate_repair_smoke",
+            "hypothesis": "dense_checkpoint_generates_quixbugs_repair_candidates",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_dense_model_candidate_probe",
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+                },
+                "model": {
+                    "checkpoint": (
+                        "artifacts/T11c_dense528_adamw_fp32_50m/"
+                        "dense_decoder_best_model_only.pt"
+                    ),
+                    "checkpoint_step": 195000,
+                    "config": {"hidden_dim": 528, "layers": 3},
+                },
+                "candidate_count": 4,
+                "program_count": 4,
+                "final": {
+                    "candidate_passed": 0,
+                    "candidate_pass_rate": 0.0,
+                    "programs_with_passing_candidate": 0,
+                    "program_repair_rate": 0.0,
+                },
+                "syntax": {
+                    "generated_candidate_count": 16,
+                    "syntax_valid_candidate_count": 2,
+                    "programs_with_syntax_valid_candidate": 1,
+                },
+                "limitations": [
+                    "local_model_generated_candidate",
+                    "greedy_byte_generation",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "model_generated_repair_candidate_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "dense_checkpoint_generated_quixbugs_candidates_measured_with_pytest"
+    )
+    assert "local_model_generated_candidate" in assessment["limitations"]
+    assert assessment["evidence"]["candidate_count"] == 4
+    assert assessment["evidence"]["program_repair_rate"] == 0.0
+    assert assessment["evidence"]["checkpoint_step"] == 195000
+    assert assessment["evidence"]["generated_candidate_count"] == 16
+    assert assessment["evidence"]["syntax_valid_candidate_count"] == 2
+
+
+def test_assessment_marks_quixbugs_edit_baseline_as_hand_engineered_calibration():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_edit_baseline_repair_smoke",
+            "hypothesis": "deterministic_ast_edits_can_calibrate_quixbugs_repair_lane",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_edit_baseline_probe",
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+                },
+                "generator": {
+                    "label": "deterministic_ast_edit_baseline",
+                    "max_candidates_per_program": 8,
+                    "edit_templates": [
+                        "swap_recursive_call_arguments",
+                        "yield_recursive_call_argument",
+                    ],
+                },
+                "candidate_count": 6,
+                "program_count": 4,
+                "final": {
+                    "candidate_passed": 4,
+                    "candidate_pass_rate": 0.6666666666666666,
+                    "programs_with_passing_candidate": 4,
+                    "program_repair_rate": 1.0,
+                },
+                "limitations": [
+                    "not_model_generated",
+                    "hand_engineered_deterministic_edits",
+                    "does_not_read_oracle_correct_sources",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "deterministic_repair_baseline_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "hand_engineered_ast_edits_calibrate_quixbugs_candidate_lane"
+    )
+    assert "not_model_generated" in assessment["limitations"]
+    assert assessment["evidence"]["candidate_count"] == 6
+    assert assessment["evidence"]["program_repair_rate"] == 1.0
+    assert assessment["evidence"]["generator_label"] == "deterministic_ast_edit_baseline"
+
+
+def test_assessment_marks_quixbugs_dense_ranked_edits_as_model_ranking_probe():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_T11c_dense528_ranked_edit_smoke",
+            "hypothesis": "dense_checkpoint_can_rank_deterministic_quixbugs_edit_candidates",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_dense_ranked_edit_probe",
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+                },
+                "model": {
+                    "checkpoint": (
+                        "artifacts/T11c_dense528_adamw_fp32_50m/"
+                        "dense_decoder_best_model_only.pt"
+                    ),
+                    "checkpoint_step": 195000,
+                    "config": {"hidden_dim": 528, "layers": 3},
+                },
+                "candidate_pool": {
+                    "generated_candidate_count": 6,
+                    "selected_candidate_count": 4,
+                    "top_candidates_per_program": 1,
+                },
+                "candidate_count": 4,
+                "program_count": 4,
+                "final": {
+                    "candidate_passed": 4,
+                    "candidate_pass_rate": 1.0,
+                    "programs_with_passing_candidate": 4,
+                    "program_repair_rate": 1.0,
+                },
+                "limitations": [
+                    "local_model_ranked_candidate",
+                    "deterministic_candidate_pool",
+                    "not_free_form_generation",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "model_ranked_repair_candidate_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "dense_checkpoint_ranked_deterministic_ast_edits_with_pytest"
+    )
+    assert "not_free_form_generation" in assessment["limitations"]
+    assert assessment["evidence"]["candidate_pool_count"] == 6
+    assert assessment["evidence"]["selected_candidate_count"] == 4
+    assert assessment["evidence"]["program_repair_rate"] == 1.0
+
+
+def test_assessment_marks_quixbugs_dense_ranked_syntax_pool_as_broader_pool_probe():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_T11c_dense528_ranked_syntax_pool_smoke",
+            "hypothesis": "dense_checkpoint_can_rank_broader_syntax_preserving_repair_pool",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_dense_ranked_syntax_pool_probe",
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+                },
+                "model": {
+                    "checkpoint": (
+                        "artifacts/T11c_dense528_adamw_fp32_50m/"
+                        "dense_decoder_best_model_only.pt"
+                    ),
+                    "checkpoint_step": 195000,
+                    "config": {"hidden_dim": 528, "layers": 3},
+                },
+                "candidate_pool": {
+                    "generated_candidate_count": 63,
+                    "selected_candidate_count": 4,
+                    "top_candidates_per_program": 1,
+                },
+                "candidate_count": 4,
+                "program_count": 4,
+                "final": {
+                    "candidate_passed": 1,
+                    "candidate_pass_rate": 0.25,
+                    "programs_with_passing_candidate": 1,
+                    "program_repair_rate": 0.25,
+                },
+                "limitations": [
+                    "local_model_ranked_candidate",
+                    "syntax_preserving_candidate_pool",
+                    "broader_than_deterministic_edit_baseline",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "model_ranked_broader_syntax_pool_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "dense_checkpoint_top1_ranking_drops_on_broader_syntax_pool"
+    )
+    assert "broader_than_deterministic_edit_baseline" in assessment["limitations"]
+    assert assessment["evidence"]["candidate_pool_count"] == 63
+    assert assessment["evidence"]["candidate_passed"] == 1
+    assert assessment["evidence"]["program_repair_rate"] == 0.25
+
+
+def test_assessment_marks_quixbugs_dense_ranked_syntax_topk_as_pairwise_probe():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_T11c_dense528_ranked_syntax_topk_smoke",
+            "hypothesis": "dense_ranked_syntax_pool_topk_execution_improves_repair_selection",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_dense_ranked_syntax_topk_probe",
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+                },
+                "model": {
+                    "checkpoint": (
+                        "artifacts/T11c_dense528_adamw_fp32_50m/"
+                        "dense_decoder_best_model_only.pt"
+                    ),
+                    "checkpoint_step": 195000,
+                    "config": {"hidden_dim": 528, "layers": 3},
+                },
+                "candidate_pool": {
+                    "generated_candidate_count": 63,
+                    "selected_candidate_count": 16,
+                    "top_k_values": [1, 2, 4],
+                    "max_top_k_profiled": 4,
+                },
+                "candidate_count": 16,
+                "program_count": 4,
+                "top_k_profile": [
+                    {
+                        "top_candidates_per_program": 1,
+                        "candidate_count": 4,
+                        "candidate_passed": 1,
+                        "candidate_pass_rate": 0.25,
+                        "programs_with_passing_candidate": 1,
+                        "program_repair_rate": 0.25,
+                    },
+                    {
+                        "top_candidates_per_program": 2,
+                        "candidate_count": 8,
+                        "candidate_passed": 2,
+                        "candidate_pass_rate": 0.25,
+                        "programs_with_passing_candidate": 2,
+                        "program_repair_rate": 0.5,
+                    },
+                    {
+                        "top_candidates_per_program": 4,
+                        "candidate_count": 16,
+                        "candidate_passed": 2,
+                        "candidate_pass_rate": 0.125,
+                        "programs_with_passing_candidate": 2,
+                        "program_repair_rate": 0.5,
+                    },
+                ],
+                "final": {
+                    "candidate_passed": 2,
+                    "candidate_pass_rate": 0.125,
+                    "programs_with_passing_candidate": 2,
+                    "program_repair_rate": 0.5,
+                    "best_top_k": 2,
+                    "best_program_repair_rate": 0.5,
+                    "best_candidate_pass_rate": 0.25,
+                },
+                "limitations": [
+                    "local_model_ranked_candidate",
+                    "syntax_preserving_candidate_pool",
+                    "top_k_execution_profile",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "model_ranked_syntax_topk_pairwise_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "top_k_execution_profiles_dense_ranking_plus_syntax_pool"
+    )
+    assert "top_k_execution_profile" in assessment["limitations"]
+    assert assessment["evidence"]["top1_program_repair_rate"] == 0.25
+    assert assessment["evidence"]["best_top_k"] == 2
+    assert assessment["evidence"]["best_program_repair_rate"] == 0.5
+
+
+def test_assessment_marks_quixbugs_syntax_pool_ordering_controls():
+    assessment = assess_record(
+        {
+            "experiment_id": "QuixBugs_T11c_dense528_syntax_pool_ordering_controls_smoke",
+            "hypothesis": "dense_ranking_should_beat_same_pool_non_model_ordering_controls",
+            "metrics": {
+                "benchmark_label": "quixbugs_python_syntax_pool_ordering_control_probe",
+                "source": {
+                    "repo_url": "https://github.com/jkoppel/QuixBugs",
+                    "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+                },
+                "model": {
+                    "checkpoint": (
+                        "artifacts/T11c_dense528_adamw_fp32_50m/"
+                        "dense_decoder_best_model_only.pt"
+                    ),
+                    "checkpoint_step": 195000,
+                    "config": {"hidden_dim": 528, "layers": 3},
+                },
+                "candidate_pool": {
+                    "generated_candidate_count": 63,
+                    "selected_candidate_count": 26,
+                    "top_k_values": [1, 2, 4, 8],
+                    "max_top_k_profiled": 8,
+                },
+                "program_count": 4,
+                "ordering_controls": {
+                    "dense_likelihood": {
+                        "best_top_k": 8,
+                        "best_program_repair_rate": 1.0,
+                        "top_k_profile": [
+                            {
+                                "top_candidates_per_program": 1,
+                                "program_repair_rate": 0.25,
+                            },
+                            {
+                                "top_candidates_per_program": 8,
+                                "program_repair_rate": 1.0,
+                            },
+                        ],
+                    },
+                    "deterministic_pool_order": {
+                        "best_top_k": 2,
+                        "best_program_repair_rate": 0.75,
+                        "top_k_profile": [
+                            {
+                                "top_candidates_per_program": 1,
+                                "program_repair_rate": 0.5,
+                            },
+                            {
+                                "top_candidates_per_program": 2,
+                                "program_repair_rate": 0.75,
+                            },
+                        ],
+                    },
+                    "repair_aware_static_order": {
+                        "best_top_k": 1,
+                        "best_program_repair_rate": 1.0,
+                        "top_k_profile": [
+                            {
+                                "top_candidates_per_program": 1,
+                                "program_repair_rate": 1.0,
+                            },
+                            {
+                                "top_candidates_per_program": 2,
+                                "program_repair_rate": 1.0,
+                            },
+                        ],
+                    },
+                    "random_seeded_order": {
+                        "best_top_k": 8,
+                        "best_program_repair_rate": 0.5,
+                        "top_k_profile": [
+                            {
+                                "top_candidates_per_program": 1,
+                                "program_repair_rate": 0.25,
+                            },
+                            {
+                                "top_candidates_per_program": 8,
+                                "program_repair_rate": 0.5,
+                            },
+                        ],
+                    },
+                },
+                "final": {
+                    "best_ordering": "dense_likelihood",
+                    "best_program_repair_rate": 1.0,
+                    "dense_beats_all_controls": True,
+                        "control_names": [
+                            "dense_likelihood",
+                            "deterministic_pool_order",
+                            "repair_aware_static_order",
+                            "random_seeded_order",
+                        ],
+                    },
+                "limitations": [
+                    "same_pool_ordering_controls",
+                    "syntax_preserving_candidate_pool",
+                ],
+            },
+        }
+    )
+
+    assert assessment["outcome"] == "syntax_pool_ordering_control_probe"
+    assert assessment["supports_pareto_improvement"] is False
+    assert assessment["primary_reason"] == (
+        "dense_ranking_compared_with_same_pool_non_model_controls"
+    )
+    assert assessment["evidence"]["best_ordering"] == "dense_likelihood"
+    assert assessment["evidence"]["dense_top1_program_repair_rate"] == 0.25
+    assert assessment["evidence"]["dense_best_program_repair_rate"] == 1.0
+    assert assessment["evidence"]["deterministic_best_program_repair_rate"] == 0.75
+    assert assessment["evidence"]["repair_aware_best_top_k"] == 1
+    assert assessment["evidence"]["repair_aware_best_program_repair_rate"] == 1.0
+    assert assessment["evidence"]["random_best_program_repair_rate"] == 0.5
 
 
 def test_assessment_marks_if1_probe_as_mechanism_signal_not_quality_win():

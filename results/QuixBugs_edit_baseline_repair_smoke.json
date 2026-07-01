@@ -1,0 +1,204 @@
+{
+  "command": "uv run python scripts/evaluate_quixbugs_edit_baseline.py --repo-path data/raw/public/quixbugs --program gcd --program flatten --program possible_change --program sqrt --timeout-seconds 15 --seed 123 --max-candidates-per-program 8 --output results/QuixBugs_edit_baseline_repair_smoke.json --experiment-id QuixBugs_edit_baseline_repair_smoke",
+  "experiment_id": "QuixBugs_edit_baseline_repair_smoke",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? docs/superpowers/plans/2026-07-01-dark-nova-goal-bootstrap.md\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? research/44_current_coding_benchmark_audit.md\n?? research/45_quixbugs_python_repair_smoke.md\n?? research/46_quixbugs_candidate_repair_smoke.md\n?? research/47_quixbugs_dense528_model_candidate_smoke.md\n?? research/48_quixbugs_dense528_sampled_candidate_smoke.md\n?? research/coding_model_idea_foundry.md\n?? results/D5_repository_api_reuse_validation.json\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? results/QuixBugs_T11c_dense528_candidate_repair_smoke.json\n?? results/QuixBugs_T11c_dense528_sampled_candidate_repair_smoke.json\n?? results/QuixBugs_python_candidate_repair_smoke.json\n?? results/QuixBugs_python_repair_smoke.json\n?? scripts/evaluate_quixbugs_candidate_repairs.py\n?? scripts/evaluate_quixbugs_dense_candidates.py\n?? scripts/evaluate_quixbugs_edit_baseline.py\n?? scripts/evaluate_quixbugs_repair.py\n?? scripts/evaluate_repository_api_reuse.py\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? src/weightlab/quixbugs_edit_baseline.py\n?? src/weightlab/quixbugs_model_candidates.py\n?? src/weightlab/quixbugs_repair.py\n?? src/weightlab/repository_api_reuse.py\n?? tests/test_if7_sparse_hebbian.py\n?? tests/test_quixbugs_edit_baseline.py\n?? tests/test_quixbugs_model_candidates.py\n?? tests/test_quixbugs_repair.py\n?? tests/test_repository_api_reuse.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "deterministic_ast_edits_can_calibrate_quixbugs_repair_lane",
+  "metrics": {
+    "benchmark_label": "quixbugs_python_edit_baseline_probe",
+    "candidate_count": 6,
+    "candidates": [
+      {
+        "candidate_id": "gcd:edit_01",
+        "generator_label": "deterministic_ast_edit_baseline",
+        "passed": true,
+        "program": "gcd",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_gcd.py",
+          "output_tail": "......                                                                   [100%]\n6 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 108.1248099799268
+        },
+        "source_sha256": "ee197498e41629a4c63f900c2d879b1d50fc83066ee13f0ff144eba3f5d582fb"
+      },
+      {
+        "candidate_id": "flatten:edit_01",
+        "generator_label": "deterministic_ast_edit_baseline",
+        "passed": true,
+        "program": "flatten",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_flatten.py",
+          "output_tail": ".......                                                                  [100%]\n7 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 105.74800200993195
+        },
+        "source_sha256": "e02166dbc0a75475bc350efb55ab3a4b12b01db44f113381e23d89c5cc8494f4"
+      },
+      {
+        "candidate_id": "possible_change:edit_01",
+        "generator_label": "deterministic_ast_edit_baseline",
+        "passed": false,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "een instances of 'list' and 'int'\n\npython_programs/possible_change.py:4: TypeError\n_____________________ test_possible_change[input_data9-20] _____________________\n\ninput_data = [[3, 7, 42, 78], 140], expected = 20\n\n    @pytest.mark.parametrize(\"input_data,expected\", testdata)\n    def test_possible_change(input_data, expected):\n>       assert possible_change(*input_data) == expected\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\npython_testcases/test_possible_change.py:15: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npython_programs/possible_change.py:7: in possible_change\n    return possible_change(total - first, coins) + possible_change(total, rest)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncoins = 137, total = [3, 7, 42, 78]\n\n    def possible_change(coins, total):\n        if total == 0:\n            return 1\n>       if total < 0:\n           ^^^^^^^^^\nE       TypeError: '<' not supported between instances of 'list' and 'int'\n\npython_programs/possible_change.py:4: TypeError\n=========================== short test summary info ============================\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data1-4]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data2-121]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data3-18]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data4-16]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data5-568]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data6-786]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data7-817]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data8-981]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data9-20]\n9 failed, 1 passed in 0.02s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 124.80299102026038
+        },
+        "source_sha256": "40b82c822443f633850d336ac6707c2247d792b0543fe21e9b293f99d265a5f7"
+      },
+      {
+        "candidate_id": "possible_change:edit_02",
+        "generator_label": "deterministic_ast_edit_baseline",
+        "passed": false,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "hange.py:7: in possible_change\n    return possible_change(coins, total - first) + possible_change(total, rest)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_programs/possible_change.py:7: in possible_change\n    return possible_change(coins, total - first) + possible_change(total, rest)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_programs/possible_change.py:7: in possible_change\n    return possible_change(coins, total - first) + possible_change(total, rest)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython_programs/possible_change.py:7: in possible_change\n    return possible_change(coins, total - first) + possible_change(total, rest)\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncoins = 2, total = [7, 42, 78]\n\n    def possible_change(coins, total):\n        if total == 0:\n            return 1\n>       if total < 0:\n           ^^^^^^^^^\nE       TypeError: '<' not supported between instances of 'list' and 'int'\n\npython_programs/possible_change.py:4: TypeError\n=========================== short test summary info ============================\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data1-4]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data2-121]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data3-18]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data4-16]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data5-568]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data6-786]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data7-817]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data8-981]\nFAILED python_testcases/test_possible_change.py::test_possible_change[input_data9-20]\n9 failed, 1 passed in 0.08s\n",
+          "passed": false,
+          "returncode": 1,
+          "runtime_ms": 179.31331600993872
+        },
+        "source_sha256": "0f555f7fb339de3e958a0e0a13b00105aa590e6e1e3379e6678191b9f62d6bd9"
+      },
+      {
+        "candidate_id": "possible_change:edit_03",
+        "generator_label": "deterministic_ast_edit_baseline",
+        "passed": true,
+        "program": "possible_change",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_possible_change.py",
+          "output_tail": "..........                                                               [100%]\n10 passed in 0.04s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 138.42280500102788
+        },
+        "source_sha256": "54f7b31d8f85e416e1b84e70f63c264d02bba4df7561accc8afaf8c83092525e"
+      },
+      {
+        "candidate_id": "sqrt:edit_01",
+        "generator_label": "deterministic_ast_edit_baseline",
+        "passed": true,
+        "program": "sqrt",
+        "pytest": {
+          "command": "python -m pytest -q python_testcases/test_sqrt.py",
+          "output_tail": ".......                                                                  [100%]\n7 passed in 0.01s\n",
+          "passed": true,
+          "returncode": 0,
+          "runtime_ms": 105.69916700478643
+        },
+        "source_sha256": "97e0236608be7c6bbdbea1f2159186198878114d9e1cc022974c83578a19684a"
+      }
+    ],
+    "final": {
+      "baseline_runtime_ms": 805.9197789989412,
+      "candidate_pass_rate": 0.6666666666666666,
+      "candidate_passed": 4,
+      "program_repair_rate": 1.0,
+      "programs_with_passing_candidate": 4,
+      "runtime_ms": 804.2788180173375
+    },
+    "generator": {
+      "candidate_count": 6,
+      "edit_templates": [
+        "swap_recursive_call_arguments",
+        "yield_recursive_call_argument",
+        "insert_empty_sequence_guard_before_star_unpack",
+        "square_root_residual_condition"
+      ],
+      "label": "deterministic_ast_edit_baseline",
+      "max_candidates_per_program": 8
+    },
+    "limitations": [
+      "not_model_generated",
+      "hand_engineered_deterministic_edits",
+      "does_not_read_oracle_correct_sources",
+      "replacement_source_only",
+      "python_subset_only",
+      "not_public_leaderboard_comparison"
+    ],
+    "program_count": 4,
+    "programs": {
+      "flatten": {
+        "best_candidate_id": "flatten:edit_01",
+        "candidate_count": 1,
+        "generator_labels": [
+          "deterministic_ast_edit_baseline"
+        ],
+        "passed_count": 1
+      },
+      "gcd": {
+        "best_candidate_id": "gcd:edit_01",
+        "candidate_count": 1,
+        "generator_labels": [
+          "deterministic_ast_edit_baseline"
+        ],
+        "passed_count": 1
+      },
+      "possible_change": {
+        "best_candidate_id": "possible_change:edit_03",
+        "candidate_count": 3,
+        "generator_labels": [
+          "deterministic_ast_edit_baseline"
+        ],
+        "passed_count": 1
+      },
+      "sqrt": {
+        "best_candidate_id": "sqrt:edit_01",
+        "candidate_count": 1,
+        "generator_labels": [
+          "deterministic_ast_edit_baseline"
+        ],
+        "passed_count": 1
+      }
+    },
+    "resolved_config": {
+      "experiment_id": "QuixBugs_edit_baseline_repair_smoke",
+      "max_candidates_per_program": 8,
+      "output": "results/QuixBugs_edit_baseline_repair_smoke.json",
+      "programs": [
+        "gcd",
+        "flatten",
+        "possible_change",
+        "sqrt"
+      ],
+      "repo_path": "data/raw/public/quixbugs",
+      "seed": 123,
+      "timeout_seconds": 15
+    },
+    "seed": 123,
+    "source": {
+      "repo_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+      "repo_path": "data/raw/public/quixbugs",
+      "repo_url": "https://github.com/jkoppel/QuixBugs"
+    }
+  },
+  "notes": "Runs hand-engineered deterministic AST edit candidates through the same QuixBugs Python pytest replacement-source harness. This is a baseline calibration and is not model-generated.",
+  "recorded_at_unix": 1782924038.3216143,
+  "resolved_config": {
+    "experiment_id": "QuixBugs_edit_baseline_repair_smoke",
+    "max_candidates_per_program": 8,
+    "output": "results/QuixBugs_edit_baseline_repair_smoke.json",
+    "programs": [
+      "gcd",
+      "flatten",
+      "possible_change",
+      "sqrt"
+    ],
+    "repo_path": "data/raw/public/quixbugs",
+    "seed": 123,
+    "timeout_seconds": 15
+  },
+  "seed": 123,
+  "status": "completed"
+}

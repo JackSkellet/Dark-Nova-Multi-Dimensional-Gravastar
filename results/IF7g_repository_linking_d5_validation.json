@@ -1,0 +1,401 @@
+{
+  "command": "uv run python scripts/run_if7_repository_linking.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --train-split train --eval-split validation --seed 123 --node-count 4096 --max-train-rows 26000 --max-eval-repositories 64 --negatives-per-query 32 --top-k 5 --min-text-bytes 80 --output results/IF7g_repository_linking_d5_validation.json --experiment-id IF7g_repository_linking_d5_validation",
+  "experiment_id": "IF7g_repository_linking_d5_validation",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? tests/test_if7_sparse_hebbian.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if7_hebbian_context_improves_repository_file_linking",
+  "metrics": {
+    "benchmark_label": "if7_hebbian_repository_linking",
+    "best_method": {
+      "coverage_at_k": 0.8652645502645503,
+      "hit_at_k": 1.0,
+      "mrr": 0.9712962962962963,
+      "name": "lexical_text_overlap",
+      "task_count": 180.0
+    },
+    "candidate_id": "IF7",
+    "combined_beats_lexical": false,
+    "corpus": {
+      "eligible_eval_repositories": 58,
+      "eval_repositories": 58,
+      "eval_rows_loaded": 804,
+      "eval_rows_scanned": 804,
+      "eval_split": "validation",
+      "path": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "train_rows_loaded": 26000,
+      "train_rows_scanned": 26173,
+      "train_split": "train"
+    },
+    "hebbian_beats_lexical": false,
+    "limitations": [
+      "repository_linking_proxy_not_generation",
+      "positive_targets_are_same_repo_files_not_human_labeled_dependencies",
+      "distractors_sampled_from_same_split_other_repositories",
+      "global_hebbian_memory_built_from_train_split_only"
+    ],
+    "methods": {
+      "combined_lexical_hebbian": {
+        "coverage_at_k": 0.7765079365079365,
+        "hit_at_k": 0.95,
+        "mrr": 0.8237985008818342,
+        "task_count": 180.0
+      },
+      "lexical_text_overlap": {
+        "coverage_at_k": 0.8652645502645503,
+        "hit_at_k": 1.0,
+        "mrr": 0.9712962962962963,
+        "task_count": 180.0
+      },
+      "path_role_overlap": {
+        "coverage_at_k": 0.8181349206349208,
+        "hit_at_k": 0.9555555555555556,
+        "mrr": 0.8856481481481481,
+        "task_count": 180.0
+      },
+      "raw_hebbian_context": {
+        "coverage_at_k": 0.21916666666666668,
+        "hit_at_k": 0.4388888888888889,
+        "mrr": 0.3841031143612402,
+        "task_count": 180.0
+      }
+    },
+    "resolved_config": {
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "eval_split": "validation",
+      "experiment_id": "IF7g_repository_linking_d5_validation",
+      "max_eval_repositories": 64,
+      "max_train_rows": 26000,
+      "min_text_bytes": 80,
+      "negatives_per_query": 32,
+      "node_count": 4096,
+      "output": "results/IF7g_repository_linking_d5_validation.json",
+      "seed": 123,
+      "top_k": 5,
+      "train_split": "train"
+    },
+    "runtime_ms": 29151.004589002696,
+    "sample_tasks": [
+      {
+        "candidate_count": 33,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.3333333333333333
+          }
+        },
+        "positive_count": 1,
+        "query_path": "ProtoSDK/MS-FSCC/Messages/FsccFsctlPipeTransceiveResponsePacket.cs",
+        "repo": "dongruiqing/WindowsProtocolTestSuites",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "ProtoSDK/Messages/messagecommon/Token.cs",
+            "android-sensors-persistence/src/test/java/com/ubikgs/androidsensors/persistence/typeconverters/LongArrayConverterTest.java",
+            "chrome/content/lib/geierlein/crypto.js",
+            "src/main/java/org/joda/time/IllegalFieldValueException.java",
+            "system/database/drivers/pdo/pdo_forge.php"
+          ],
+          "lexical_text_overlap": [
+            "ProtoSDK/Messages/messagecommon/Token.cs",
+            "src/AutoTest.TestRunner/Plugins/AutoTest.TestRunners.XUnit.Tests.TestResource/Class2.cs",
+            "android-sensors-persistence/src/test/java/com/ubikgs/androidsensors/persistence/typeconverters/LongArrayConverterTest.java",
+            "chrome/content/lib/geierlein/crypto.js",
+            "system/database/drivers/pdo/pdo_forge.php"
+          ],
+          "path_role_overlap": [
+            "ProtoSDK/Messages/messagecommon/Token.cs",
+            "src/AutoTest.TestRunner/Plugins/AutoTest.TestRunners.XUnit.Tests.TestResource/Class2.cs",
+            "src/GetAllLinks.Droid/Views/SettingsFragment.cs",
+            "Menu/Factory/MenuExtension.php",
+            "_posts/2010-03-26-what-to-do-when-ubuntu-device-mapper-seems-to-be-invincible.markdown"
+          ],
+          "raw_hebbian_context": [
+            "src/main/java/org/joda/time/IllegalFieldValueException.java",
+            "dynker/builder.py",
+            "ProtoSDK/Messages/messagecommon/Token.cs",
+            "android-sensors-persistence/src/test/java/com/ubikgs/androidsensors/persistence/typeconverters/LongArrayConverterTest.java",
+            "src/content/js/helpdesk.js"
+          ]
+        }
+      },
+      {
+        "candidate_count": 33,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.05555555555555555
+          }
+        },
+        "positive_count": 1,
+        "query_path": "ProtoSDK/Messages/messagecommon/Token.cs",
+        "repo": "dongruiqing/WindowsProtocolTestSuites",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "ProtoSDK/MS-FSCC/Messages/FsccFsctlPipeTransceiveResponsePacket.cs",
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "sharding/ShardingManager.js",
+            "test/com/facebook/buck/testrunner/TestNGLoggingIntegrationTest.java",
+            "repository/goog/editor/plugins/loremipsum.js"
+          ],
+          "lexical_text_overlap": [
+            "ProtoSDK/MS-FSCC/Messages/FsccFsctlPipeTransceiveResponsePacket.cs",
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "sharding/ShardingManager.js",
+            "test/com/facebook/buck/testrunner/TestNGLoggingIntegrationTest.java",
+            "repository/goog/editor/plugins/loremipsum.js"
+          ],
+          "path_role_overlap": [
+            "ProtoSDK/MS-FSCC/Messages/FsccFsctlPipeTransceiveResponsePacket.cs",
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "TestTabelController/elongframework/eLongFramework/eLongDBLogger/eLongDBUserDefaults.m",
+            "Week10/public/javascripts/signup.js",
+            "_posts/2021-02-19-internship-review4.md"
+          ],
+          "raw_hebbian_context": [
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "geomdl/functools_lru_cache.py",
+            "sharding/ShardingManager.js",
+            "repository/goog/editor/plugins/loremipsum.js",
+            "test/com/facebook/buck/testrunner/TestNGLoggingIntegrationTest.java"
+          ]
+        }
+      },
+      {
+        "candidate_count": 35,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 0.3333333333333333,
+            "hit_at_k": 1.0,
+            "mrr": 0.2
+          }
+        },
+        "positive_count": 3,
+        "query_path": "ajax/libs/angular-i18n/1.2.10/angular-locale_fa-af.js",
+        "repo": "tharakauka/cdnjs",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "ajax/libs/bootbox.js/2.2.0/bootbox.js",
+            "FBCS/FBCS/Scripts/Common/jquery.unobtrusive-ajax.js",
+            "ajax/libs/foundicons/2.0/stylesheets/general_foundicons_ie7.css",
+            "public/js/companies.js"
+          ],
+          "lexical_text_overlap": [
+            "ajax/libs/bootbox.js/2.2.0/bootbox.js",
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "ajax/libs/foundicons/2.0/stylesheets/general_foundicons_ie7.css",
+            "FBCS/FBCS/Scripts/Common/jquery.unobtrusive-ajax.js",
+            "gulp/tasks/info.js"
+          ],
+          "path_role_overlap": [
+            "ajax/libs/bootbox.js/2.2.0/bootbox.js",
+            "ajax/libs/foundicons/2.0/stylesheets/general_foundicons_ie7.css",
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "FBCS/FBCS/Scripts/Common/jquery.unobtrusive-ajax.js",
+            "behaviors.js"
+          ],
+          "raw_hebbian_context": [
+            "src/main/java/org/joda/time/IllegalFieldValueException.java",
+            "6.16day4/3-JSONModelDemo/3-JSONModelDemo/JSONModel/JSONModel/JSONModelClassProperty.m",
+            "UserController.php",
+            "FBCS/FBCS/Scripts/Common/jquery.unobtrusive-ajax.js",
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js"
+          ]
+        }
+      },
+      {
+        "candidate_count": 35,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 0.3333333333333333,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 0.3333333333333333,
+            "hit_at_k": 1.0,
+            "mrr": 0.3333333333333333
+          }
+        },
+        "positive_count": 3,
+        "query_path": "ajax/libs/bootbox.js/2.2.0/bootbox.js",
+        "repo": "tharakauka/cdnjs",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "pkg/commons-node/Hasher.js",
+            "src/apis/licensing/webpack.config.js",
+            "sprockets/clients/postgresql/__init__.py",
+            "src/Orleans/Runtime/Constants.cs"
+          ],
+          "lexical_text_overlap": [
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "ajax/libs/angular-i18n/1.2.10/angular-locale_fa-af.js",
+            "ajax/libs/foundicons/2.0/stylesheets/general_foundicons_ie7.css",
+            "pkg/commons-node/Hasher.js",
+            "src/main/webapp/js/wif/setup/trend/trendnewEmploymentCard.js"
+          ],
+          "path_role_overlap": [
+            "ajax/libs/angular-i18n/1.2.10/angular-locale_fa-af.js",
+            "ajax/libs/foundicons/2.0/stylesheets/general_foundicons_ie7.css",
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "client/js/data/industry.js",
+            "src/main/webapp/js/wif/setup/trend/trendnewEmploymentCard.js"
+          ],
+          "raw_hebbian_context": [
+            "src/Orleans/Runtime/Constants.cs",
+            "server/src/main/java/io/druid/metadata/storage/derby/DerbyMetadataStorage.java",
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "src/apis/licensing/webpack.config.js",
+            "src/main/java/org/domeos/framework/api/model/image/related/SourceImage.java"
+          ]
+        }
+      },
+      {
+        "candidate_count": 35,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 0.3333333333333333,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          }
+        },
+        "positive_count": 3,
+        "query_path": "ajax/libs/foundicons/2.0/stylesheets/general_foundicons_ie7.css",
+        "repo": "tharakauka/cdnjs",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "ajax/libs/bootbox.js/2.2.0/bootbox.js",
+            "ajax/libs/angular-i18n/1.2.10/angular-locale_fa-af.js",
+            "src/js/allocate_devices.js",
+            "src/main/java/org/apache/log4j/spi/LoggingEvent.java"
+          ],
+          "lexical_text_overlap": [
+            "ajax/libs/bootbox.js/2.2.0/bootbox.js",
+            "ajax/libs/angular-i18n/1.2.10/angular-locale_fa-af.js",
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "README.md",
+            "lib/Cake/TestSuite/Fixture/CakeTestFixture.php"
+          ],
+          "path_role_overlap": [
+            "ajax/libs/bootbox.js/2.2.0/bootbox.js",
+            "ajax/libs/angular-i18n/1.2.10/angular-locale_fa-af.js",
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "src/themes/theme-hugo-stackrox/scripts/greensock-js-shockingly-green 2/src/commonjs-flat/EaselPlugin.js",
+            "Godeps/_workspace/src/github.com/rackspace/gophercloud/openstack/compute/v2/flavors/requests.go"
+          ],
+          "raw_hebbian_context": [
+            "ajax/libs/yui/3.16.0/pjax-base/pjax-base-min.js",
+            "static/js/foundation/foundation.dropdown.js",
+            "geomdl/functools_lru_cache.py",
+            "src/js/allocate_devices.js",
+            "src/main/java/org/apache/log4j/spi/LoggingEvent.java"
+          ]
+        }
+      }
+    ],
+    "tasks": {
+      "candidate_count_mean": 36.611111111111114,
+      "negatives_per_query": 32,
+      "task_count": 180,
+      "top_k": 5
+    }
+  },
+  "notes": "Evaluates IF7 Hebbian context for repository file linking: query one file, rank same-repository positives against cross-repository distractors.",
+  "recorded_at_unix": 1782859902.8430395,
+  "resolved_config": {
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "eval_split": "validation",
+    "experiment_id": "IF7g_repository_linking_d5_validation",
+    "max_eval_repositories": 64,
+    "max_train_rows": 26000,
+    "min_text_bytes": 80,
+    "negatives_per_query": 32,
+    "node_count": 4096,
+    "output": "results/IF7g_repository_linking_d5_validation.json",
+    "seed": 123,
+    "top_k": 5,
+    "train_split": "train"
+  },
+  "seed": 123,
+  "status": "completed"
+}

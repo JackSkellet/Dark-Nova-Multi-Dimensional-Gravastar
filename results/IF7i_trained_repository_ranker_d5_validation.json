@@ -1,0 +1,629 @@
+{
+  "command": "uv run python scripts/train_if7_repository_ranker.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --train-split train --eval-split validation --seed 123 --node-count 4096 --max-active-nodes 48 --max-memory-rows 26000 --max-train-repositories 512 --max-eval-repositories 64 --negatives-per-query 64 --top-k 5 --min-text-bytes 80 --epochs 12 --batch-size 4096 --learning-rate 0.02 --device rocm --output results/IF7i_trained_repository_ranker_d5_validation.json --experiment-id IF7i_trained_repository_ranker_d5_validation",
+  "experiment_id": "IF7i_trained_repository_ranker_d5_validation",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? tests/test_if7_sparse_hebbian.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "if7_task_aware_ranker_uses_hebbian_context_for_repository_linking",
+  "metrics": {
+    "benchmark_label": "if7_trained_repository_linking_ranker",
+    "best_method": {
+      "coverage_at_k": 0.806005291005291,
+      "hit_at_k": 0.9555555555555556,
+      "mrr": 0.8982318215651547,
+      "name": "trained_no_hebbian_ranker",
+      "task_count": 180.0
+    },
+    "candidate_id": "IF7",
+    "candidate_name": "Sparse Hebbian Task-Aware Repository Ranker",
+    "corpus": {
+      "eval_repositories": 682,
+      "eval_rows_loaded": 804,
+      "eval_rows_scanned": 804,
+      "eval_split": "validation",
+      "eval_task_repositories": 58,
+      "path": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "train_repositories": 21570,
+      "train_rows_loaded": 26000,
+      "train_rows_scanned": 26173,
+      "train_split": "train",
+      "train_task_repositories": 512
+    },
+    "hebbian_memory": {
+      "label_index_bytes": 5833134,
+      "max_active_nodes": 48,
+      "node_count": 4096,
+      "storage_bytes": 72974766,
+      "update_count": 25997
+    },
+    "limitations": [
+      "repository_linking_proxy_not_generation",
+      "positive_targets_are_same_repo_files_not_human_labeled_dependencies",
+      "linear_ranker_not_decoder_language_model",
+      "global_hebbian_memory_built_from_train_split_only",
+      "no_executable_code_generation_or_repair"
+    ],
+    "methods": {
+      "combined_lexical_hebbian": {
+        "coverage_at_k": 0.3183862433862434,
+        "hit_at_k": 0.5666666666666667,
+        "mrr": 0.44301396738328264,
+        "task_count": 180.0
+      },
+      "lexical_text_overlap": {
+        "coverage_at_k": 0.6097486772486772,
+        "hit_at_k": 0.8333333333333334,
+        "mrr": 0.7375695787911879,
+        "task_count": 180.0
+      },
+      "path_role_overlap": {
+        "coverage_at_k": 0.7808201058201057,
+        "hit_at_k": 0.9333333333333333,
+        "mrr": 0.8584510175902719,
+        "task_count": 180.0
+      },
+      "raw_hebbian_context": {
+        "coverage_at_k": 0.17805555555555555,
+        "hit_at_k": 0.39444444444444443,
+        "mrr": 0.33369958797835003,
+        "task_count": 180.0
+      },
+      "trained_no_hebbian_ranker": {
+        "coverage_at_k": 0.806005291005291,
+        "hit_at_k": 0.9555555555555556,
+        "mrr": 0.8982318215651547,
+        "task_count": 180.0
+      },
+      "trained_task_aware_ranker": {
+        "coverage_at_k": 0.7898015873015873,
+        "hit_at_k": 0.95,
+        "mrr": 0.894178530052186,
+        "task_count": 180.0
+      }
+    },
+    "models": {
+      "no_hebbian_ranker": {
+        "description": "Ablation ranker trained on the same path and lexical features with the Hebbian context feature zeroed.",
+        "feature_names": [
+          "path_token_overlap_norm",
+          "lexical_text_overlap_norm",
+          "hebbian_candidate_context_score",
+          "hebbian_pair_edge_score",
+          "same_file_extension",
+          "bias"
+        ],
+        "loss_history": [
+          1.1111198793470332,
+          0.8938876778979971,
+          0.7862778681117274,
+          0.7264632480786513,
+          0.6848148608026854,
+          0.6505339339771102,
+          0.6212041408011947,
+          0.5953100419978878,
+          0.5726583658066471,
+          0.5528648866714931,
+          0.5356688752638555,
+          0.520435085127839
+        ],
+        "parameter_bytes": 28,
+        "parameter_count": 7
+      },
+      "task_aware_ranker": {
+        "description": "Linear repository-linking ranker over path, lexical, and Hebbian context features.",
+        "feature_names": [
+          "path_token_overlap_norm",
+          "lexical_text_overlap_norm",
+          "hebbian_candidate_context_score",
+          "hebbian_pair_edge_score",
+          "same_file_extension",
+          "bias"
+        ],
+        "loss_history": [
+          1.3142685619527863,
+          1.0680351080695536,
+          0.9205940921598982,
+          0.8292672110116286,
+          0.770304083191188,
+          0.7273531941788839,
+          0.6931038579808174,
+          0.6634166757315962,
+          0.6373039648746871,
+          0.6139516740622925,
+          0.5930815848478325,
+          0.5741648278555889
+        ],
+        "parameter_bytes": 28,
+        "parameter_count": 7
+      }
+    },
+    "resolved_config": {
+      "batch_size": 4096,
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "device": "rocm",
+      "epochs": 12,
+      "eval_split": "validation",
+      "experiment_id": "IF7i_trained_repository_ranker_d5_validation",
+      "learning_rate": 0.02,
+      "max_active_nodes": 48,
+      "max_eval_repositories": 64,
+      "max_memory_rows": 26000,
+      "max_train_repositories": 512,
+      "min_text_bytes": 80,
+      "negatives_per_query": 64,
+      "node_count": 4096,
+      "output": "results/IF7i_trained_repository_ranker_d5_validation.json",
+      "seed": 123,
+      "top_k": 5,
+      "train_split": "train"
+    },
+    "runtime_ms": 160153.04063100484,
+    "sample_tasks": [
+      {
+        "candidate_count": 65,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.3333333333333333
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0625
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.1
+          },
+          "trained_no_hebbian_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.5
+          },
+          "trained_task_aware_ranker": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.16666666666666666
+          }
+        },
+        "positive_count": 1,
+        "query_path": "python/mxnet/gluon/probability/distributions/cauchy.py",
+        "repo": "szha/mxnet",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "Godeps/_workspace/src/github.com/google/cadvisor/utils/fs/fs.go",
+            "geomdl/functools_lru_cache.py",
+            "tests/nightly/dist_async_kvstore.py",
+            "src/Brainwave/Database/DatabaseManager.php",
+            "esb/org.wso2.developerstudio.eclipse.esb/src/org/wso2/developerstudio/eclipse/esb/mediators/OAuthMediator.java"
+          ],
+          "lexical_text_overlap": [
+            "tests/nightly/dist_async_kvstore.py",
+            "wsf_c/axis2c/neethi/src/secpolicy/builder/bootstrap_policy_builder.c",
+            "esb/org.wso2.developerstudio.eclipse.esb/src/org/wso2/developerstudio/eclipse/esb/mediators/OAuthMediator.java",
+            "Godeps/_workspace/src/github.com/google/cadvisor/utils/fs/fs.go",
+            "python/paddle/fluid/tests/unittests/test_smooth_l1_loss_op.py"
+          ],
+          "path_role_overlap": [
+            "python/paddle/fluid/tests/unittests/test_smooth_l1_loss_op.py",
+            "ALE/HF_Sim_Book.py",
+            "couchpotato/core/_base/updater/main.py",
+            "donut/modules/account/routes.py",
+            "example/F3Dp/F3D_syn.py"
+          ],
+          "raw_hebbian_context": [
+            "Godeps/_workspace/src/github.com/google/cadvisor/utils/fs/fs.go",
+            "couchpotato/core/_base/updater/main.py",
+            "src/Brainwave/Database/DatabaseManager.php",
+            "geomdl/functools_lru_cache.py",
+            "recline.js"
+          ],
+          "trained_no_hebbian_ranker": [
+            "python/paddle/fluid/tests/unittests/test_smooth_l1_loss_op.py",
+            "tests/nightly/dist_async_kvstore.py",
+            "tests/test_inlinequeryresultvideo.py",
+            "tools/collect_ppa_autopkgtests_results.py",
+            "xpr_xis_connector/res_users.py"
+          ],
+          "trained_task_aware_ranker": [
+            "python/paddle/fluid/tests/unittests/test_smooth_l1_loss_op.py",
+            "vaccaleibundgut.py",
+            "tools/collect_ppa_autopkgtests_results.py",
+            "tests/test_inlinequeryresultvideo.py",
+            "xpr_xis_connector/res_users.py"
+          ]
+        }
+      },
+      {
+        "candidate_count": 65,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.125
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "trained_no_hebbian_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.5
+          },
+          "trained_task_aware_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.2
+          }
+        },
+        "positive_count": 1,
+        "query_path": "tests/nightly/dist_async_kvstore.py",
+        "repo": "szha/mxnet",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "python/mxnet/gluon/probability/distributions/cauchy.py",
+            "hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient/src/test/java/org/apache/hadoop/fs/slive/ObserveableOp.java",
+            "modules/core/src/test/java/org/apache/ignite/p2p/GridP2PJobClassLoaderSelfTest.java",
+            "nmap/nmap/zenmap/radialnet/gui/NodeNotebook.py",
+            "empower/apps/zephyr/zephyr.py"
+          ],
+          "lexical_text_overlap": [
+            "python/mxnet/gluon/probability/distributions/cauchy.py",
+            "hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-jobclient/src/test/java/org/apache/hadoop/fs/slive/ObserveableOp.java",
+            "modules/core/src/test/java/org/apache/ignite/p2p/GridP2PJobClassLoaderSelfTest.java",
+            "src/main/java/org/elasticsearch/index/fielddata/plain/PagedBytesAtomicFieldData.java",
+            "calico_containers/tests/unit/container_test.py"
+          ],
+          "path_role_overlap": [
+            "calico_containers/tests/unit/container_test.py",
+            "apps/volontulo/views/organizations.py",
+            "code/feature_blending.py",
+            "couchpotato/core/_base/updater/main.py",
+            "empower/apps/zephyr/zephyr.py"
+          ],
+          "raw_hebbian_context": [
+            "python/mxnet/gluon/probability/distributions/cauchy.py",
+            "couchpotato/core/_base/updater/main.py",
+            "nmap/nmap/zenmap/radialnet/gui/NodeNotebook.py",
+            "lib/config.js",
+            "ruby-2.1.0/lib/ruby/site_ruby/2.1.0/rubygems/request_set/lockfile.rb"
+          ],
+          "trained_no_hebbian_ranker": [
+            "calico_containers/tests/unit/container_test.py",
+            "python/mxnet/gluon/probability/distributions/cauchy.py",
+            "empower/apps/zephyr/zephyr.py",
+            "nmap/nmap/zenmap/radialnet/gui/NodeNotebook.py",
+            "sprockets/clients/postgresql/__init__.py"
+          ],
+          "trained_task_aware_ranker": [
+            "calico_containers/tests/unit/container_test.py",
+            "empower/apps/zephyr/zephyr.py",
+            "sprockets/clients/postgresql/__init__.py",
+            "src/pyjade/convert.py",
+            "python/mxnet/gluon/probability/distributions/cauchy.py"
+          ]
+        }
+      },
+      {
+        "candidate_count": 65,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.041666666666666664
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.045454545454545456
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.02702702702702703
+          },
+          "trained_no_hebbian_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "trained_task_aware_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          }
+        },
+        "positive_count": 1,
+        "query_path": "Godeps/_workspace/src/k8s.io/kubernetes/pkg/util/procfs/procfs.go",
+        "repo": "nitintutlani/origin",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "test/com/facebook/buck/testrunner/TestNGLoggingIntegrationTest.java",
+            "phoenix-core/src/main/java/org/apache/phoenix/expression/function/JavaMathTwoArgumentFunction.java",
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/rule/BeamUnnestRule.java",
+            "cluster/juju/layers/kubernetes-master/reactive/kubernetes_master.py"
+          ],
+          "lexical_text_overlap": [
+            "cluster/juju/layers/kubernetes-master/reactive/kubernetes_master.py",
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "phoenix-core/src/main/java/org/apache/phoenix/expression/function/JavaMathTwoArgumentFunction.java",
+            "python/paddle/fluid/tests/unittests/test_smooth_l1_loss_op.py",
+            "presto-main/src/main/java/io/prestosql/type/TimeWithTimeZoneOperators.java"
+          ],
+          "path_role_overlap": [
+            "pkg/generate/dockerfile/finder.go",
+            "presto-main/src/main/java/io/prestosql/type/TimeWithTimeZoneOperators.java",
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "client/src/store/getters.js",
+            "cluster/juju/layers/kubernetes-master/reactive/kubernetes_master.py"
+          ],
+          "raw_hebbian_context": [
+            "test/com/facebook/buck/testrunner/TestNGLoggingIntegrationTest.java",
+            "src/main/java/org/domeos/framework/api/model/image/related/SourceImage.java",
+            "phoenix-core/src/main/java/org/apache/phoenix/expression/function/JavaMathTwoArgumentFunction.java",
+            "var/httpd/htdocs/js/Core.Agent.TableFilters.js",
+            "client/components/angular/angular-messages.js"
+          ],
+          "trained_no_hebbian_ranker": [
+            "pkg/generate/dockerfile/finder.go",
+            "presto-main/src/main/java/io/prestosql/type/TimeWithTimeZoneOperators.java",
+            "cluster/juju/layers/kubernetes-master/reactive/kubernetes_master.py",
+            "Android/ApiDemos/app/src/main/java/com/example/android/apis/graphics/BitmapPixels.java",
+            "phoenix-core/src/main/java/org/apache/phoenix/expression/function/JavaMathTwoArgumentFunction.java"
+          ],
+          "trained_task_aware_ranker": [
+            "pkg/generate/dockerfile/finder.go",
+            "presto-main/src/main/java/io/prestosql/type/TimeWithTimeZoneOperators.java",
+            "zeppelin-web/src/app/jobmanager/jobmanager.css",
+            "sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/rule/BeamUnnestRule.java",
+            "cluster/juju/layers/kubernetes-master/reactive/kubernetes_master.py"
+          ]
+        }
+      },
+      {
+        "candidate_count": 65,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.3333333333333333
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.3333333333333333
+          },
+          "trained_no_hebbian_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.5
+          },
+          "trained_task_aware_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.5
+          }
+        },
+        "positive_count": 1,
+        "query_path": "pkg/generate/dockerfile/finder.go",
+        "repo": "nitintutlani/origin",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "Godeps/_workspace/src/k8s.io/kubernetes/pkg/util/procfs/procfs.go",
+            "pkg/chrootarchive/archive.go",
+            "src/main/java/org/domeos/framework/api/model/image/related/SourceImage.java",
+            "src/java/main/org/apache/zookeeper/server/quorum/LeaderElectionBean.java",
+            "cycle_basis.py"
+          ],
+          "lexical_text_overlap": [
+            "minion/etcd/label_test.go",
+            "pkg/chrootarchive/archive.go",
+            "Godeps/_workspace/src/k8s.io/kubernetes/pkg/util/procfs/procfs.go",
+            "NagiosAlert-App/src/redes3/proyecto/nagiosalert/InfoServiceActivity.java",
+            "src/cmd/go/internal/get/vcs_test.go"
+          ],
+          "path_role_overlap": [
+            "Godeps/_workspace/src/k8s.io/kubernetes/pkg/util/procfs/procfs.go",
+            "pkg/chrootarchive/archive.go",
+            "minion/etcd/label_test.go",
+            "src/cmd/go/internal/get/vcs_test.go",
+            "GESTbook/lib/sysplugins/smarty_internal_compile_private_print_expression.php"
+          ],
+          "raw_hebbian_context": [
+            "src/java/main/org/apache/zookeeper/server/quorum/LeaderElectionBean.java",
+            "src/Google/IO/Curl.php",
+            "Godeps/_workspace/src/k8s.io/kubernetes/pkg/util/procfs/procfs.go",
+            "java/server/test/org/openqa/selenium/remote/server/StubDriverFactory.java",
+            "src/ngram-process.js"
+          ],
+          "trained_no_hebbian_ranker": [
+            "pkg/chrootarchive/archive.go",
+            "Godeps/_workspace/src/k8s.io/kubernetes/pkg/util/procfs/procfs.go",
+            "minion/etcd/label_test.go",
+            "src/cmd/go/internal/get/vcs_test.go",
+            "NagiosAlert-App/src/redes3/proyecto/nagiosalert/InfoServiceActivity.java"
+          ],
+          "trained_task_aware_ranker": [
+            "pkg/chrootarchive/archive.go",
+            "Godeps/_workspace/src/k8s.io/kubernetes/pkg/util/procfs/procfs.go",
+            "minion/etcd/label_test.go",
+            "src/cmd/go/internal/get/vcs_test.go",
+            "NagiosAlert-App/src/redes3/proyecto/nagiosalert/InfoServiceActivity.java"
+          ]
+        }
+      },
+      {
+        "candidate_count": 67,
+        "method_results": {
+          "combined_lexical_hebbian": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.16666666666666666
+          },
+          "lexical_text_overlap": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          },
+          "path_role_overlap": {
+            "coverage_at_k": 0.6666666666666666,
+            "hit_at_k": 1.0,
+            "mrr": 0.5
+          },
+          "raw_hebbian_context": {
+            "coverage_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.1
+          },
+          "trained_no_hebbian_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 0.5
+          },
+          "trained_task_aware_ranker": {
+            "coverage_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0
+          }
+        },
+        "positive_count": 3,
+        "query_path": "pkg/kubelet/network/dns/dns.go",
+        "repo": "pmorie/kubernetes",
+        "top_paths": {
+          "combined_lexical_hebbian": [
+            "zeppelin-zengine/src/test/java/org/apache/zeppelin/interpreter/remote/mock/MockInterpreterOutputStream.java",
+            "library/src/main/java/com/github/obsessive/library/adapter/ListViewDataAdapter.java",
+            "java/server/test/org/openqa/selenium/remote/server/StubDriverFactory.java",
+            "src/Symfony/Component/Templating/TemplateReferenceInterface.php",
+            "wp-includes/SimplePie/Caption.php"
+          ],
+          "lexical_text_overlap": [
+            "test/e2e/framework/metrics/kubelet_metrics.go",
+            "plugin/pkg/admission/exec/admission_test.go",
+            "pkg/scheduler/framework/plugins/nodeports/node_ports_test.go",
+            "staging/src/k8s.io/apimachinery/pkg/api/meta/multirestmapper.go",
+            "library/src/main/java/com/github/obsessive/library/adapter/ListViewDataAdapter.java"
+          ],
+          "path_role_overlap": [
+            "pkg/chrootarchive/archive.go",
+            "pkg/scheduler/framework/plugins/nodeports/node_ports_test.go",
+            "plugin/pkg/admission/exec/admission_test.go",
+            "staging/src/k8s.io/apimachinery/pkg/api/meta/multirestmapper.go",
+            "application/filesystem_config_store.go"
+          ],
+          "raw_hebbian_context": [
+            "zeppelin-zengine/src/test/java/org/apache/zeppelin/interpreter/remote/mock/MockInterpreterOutputStream.java",
+            "library/src/main/java/com/github/obsessive/library/adapter/ListViewDataAdapter.java",
+            "java/server/test/org/openqa/selenium/remote/server/StubDriverFactory.java",
+            "src/Symfony/Component/Templating/TemplateReferenceInterface.php",
+            "ajax/libs/yui/3.10.1/escape/escape-coverage.js"
+          ],
+          "trained_no_hebbian_ranker": [
+            "plugin/pkg/admission/exec/admission_test.go",
+            "pkg/scheduler/framework/plugins/nodeports/node_ports_test.go",
+            "staging/src/k8s.io/apimachinery/pkg/api/meta/multirestmapper.go",
+            "pkg/chrootarchive/archive.go",
+            "test/e2e/framework/metrics/kubelet_metrics.go"
+          ],
+          "trained_task_aware_ranker": [
+            "pkg/scheduler/framework/plugins/nodeports/node_ports_test.go",
+            "plugin/pkg/admission/exec/admission_test.go",
+            "staging/src/k8s.io/apimachinery/pkg/api/meta/multirestmapper.go",
+            "pkg/chrootarchive/archive.go",
+            "test/e2e/framework/metrics/kubelet_metrics.go"
+          ]
+        }
+      }
+    ],
+    "tasks": {
+      "eval_candidate_count_mean": 68.61111111111111,
+      "eval_tasks": 180,
+      "negatives_per_query": 64,
+      "top_k": 5,
+      "train_tasks": 1728
+    },
+    "trained_ranker_beats_lexical": true,
+    "trained_ranker_beats_no_hebbian": false,
+    "trained_ranker_beats_raw_hebbian": true,
+    "training": {
+      "accelerator_backend": "rocm",
+      "batch_size": 4096,
+      "candidate_examples": 126560,
+      "device": "cuda",
+      "epochs": 12,
+      "eval_patterns": 804,
+      "learning_rate": 0.02,
+      "no_hebbian_candidate_examples": 126560,
+      "requested_device": "rocm",
+      "rocm_available": true,
+      "rocm_runtime_version": "7.2.53211",
+      "train_patterns": 25997,
+      "train_tasks": 1728
+    }
+  },
+  "notes": "Trains a task-aware IF7 repository-linking ranker over path, lexical, and Hebbian context features.",
+  "recorded_at_unix": 1782861804.9170525,
+  "resolved_config": {
+    "batch_size": 4096,
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "device": "rocm",
+    "epochs": 12,
+    "eval_split": "validation",
+    "experiment_id": "IF7i_trained_repository_ranker_d5_validation",
+    "learning_rate": 0.02,
+    "max_active_nodes": 48,
+    "max_eval_repositories": 64,
+    "max_memory_rows": 26000,
+    "max_train_repositories": 512,
+    "min_text_bytes": 80,
+    "negatives_per_query": 64,
+    "node_count": 4096,
+    "output": "results/IF7i_trained_repository_ranker_d5_validation.json",
+    "seed": 123,
+    "top_k": 5,
+    "train_split": "train"
+  },
+  "seed": 123,
+  "status": "completed"
+}

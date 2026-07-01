@@ -1,0 +1,599 @@
+{
+  "command": "uv run python scripts/evaluate_repository_context_pairwise.py --corpus-jsonl data/hf_mirror/exploratory_d5_balanced/corpus.jsonl --source-split validation --query-split validation --seed 123 --top-k 5 --max-tasks 256 --max-source-rows 10000 --max-query-rows 10000 --min-text-bytes 80 --output results/D5_repository_context_pairwise_validation.json --experiment-id D5_repository_context_pairwise_validation",
+  "experiment_id": "D5_repository_context_pairwise_validation",
+  "git_commit": "1a32048fb32b1fa32dbf5c2ce4610adb217fafd5",
+  "git_dirty": true,
+  "git_status_short": "M README.md\n M research/STATUS.md\n M results/manifest.json\n M results/research_assessment.json\n M src/weightlab/assessment.py\n M tests/test_assessment.py\n?? docs/superpowers/plans/2026-07-01-dark-nova-goal-bootstrap.md\n?? research/36_if7_sparse_hebbian_assembly.md\n?? research/37_if7_hebbian_trained_model.md\n?? research/38_if7_hebbian_trained_model_fulltrain.md\n?? research/39_if7_hebbian_trained_model_500k_windows.md\n?? research/40_if7_sparse_hebbian_reranker.md\n?? research/41_if7_repository_linking.md\n?? research/42_if7_hebbian_trained_model_2m_windows.md\n?? research/43_if7_trained_repository_ranker.md\n?? research/44_current_coding_benchmark_audit.md\n?? research/45_quixbugs_python_repair_smoke.md\n?? research/46_quixbugs_candidate_repair_smoke.md\n?? research/47_quixbugs_dense528_model_candidate_smoke.md\n?? research/48_quixbugs_dense528_sampled_candidate_smoke.md\n?? research/49_quixbugs_edit_baseline_smoke.md\n?? research/50_quixbugs_dense528_ranked_edit_smoke.md\n?? research/51_quixbugs_dense528_ranked_syntax_pool_smoke.md\n?? research/52_d5_repository_context_pairwise.md\n?? research/coding_model_idea_foundry.md\n?? research/combination_matrix.md\n?? results/D5_repository_api_reuse_validation.json\n?? results/D5_repository_context_pairwise_validation.json\n?? results/IF7_sparse_hebbian_d5_probe.json\n?? results/IF7b_hebbian_trained_model_d5.json\n?? results/IF7c_hebbian_trained_model_d5_fulltrain.json\n?? results/IF7d_hebbian_trained_model_d5_500k_windows.json\n?? results/IF7e_sparse_hebbian_reranker_d5_500k_windows.json\n?? results/IF7f_sparse_hebbian_reranker_priors_d5_500k_windows.json\n?? results/IF7g_repository_linking_d5_validation.json\n?? results/IF7h_hebbian_trained_model_d5_2m_windows.json\n?? results/IF7i_trained_repository_ranker_d5_validation.json\n?? results/QuixBugs_T11c_dense528_candidate_repair_smoke.json\n?? results/QuixBugs_T11c_dense528_ranked_edit_smoke.json\n?? results/QuixBugs_T11c_dense528_ranked_syntax_pool_smoke.json\n?? results/QuixBugs_T11c_dense528_sampled_candidate_repair_smoke.json\n?? results/QuixBugs_edit_baseline_repair_smoke.json\n?? results/QuixBugs_python_candidate_repair_smoke.json\n?? results/QuixBugs_python_repair_smoke.json\n?? results/combination_matrix.json\n?? scripts/evaluate_quixbugs_candidate_repairs.py\n?? scripts/evaluate_quixbugs_dense_candidates.py\n?? scripts/evaluate_quixbugs_dense_ranked_edits.py\n?? scripts/evaluate_quixbugs_dense_ranked_syntax_pool.py\n?? scripts/evaluate_quixbugs_edit_baseline.py\n?? scripts/evaluate_quixbugs_repair.py\n?? scripts/evaluate_repository_api_reuse.py\n?? scripts/evaluate_repository_context_pairwise.py\n?? scripts/run_if7_repository_linking.py\n?? scripts/run_if7_sparse_hebbian_probe.py\n?? scripts/train_if7_hebbian_model.py\n?? scripts/train_if7_repository_ranker.py\n?? scripts/train_if7_sparse_reranker.py\n?? src/weightlab/if7_sparse_hebbian.py\n?? src/weightlab/quixbugs_edit_baseline.py\n?? src/weightlab/quixbugs_model_candidates.py\n?? src/weightlab/quixbugs_model_ranked_edits.py\n?? src/weightlab/quixbugs_repair.py\n?? src/weightlab/quixbugs_syntax_mutations.py\n?? src/weightlab/repository_api_reuse.py\n?? tests/test_combination_matrix.py\n?? tests/test_if7_sparse_hebbian.py\n?? tests/test_quixbugs_edit_baseline.py\n?? tests/test_quixbugs_model_candidates.py\n?? tests/test_quixbugs_model_ranked_edits.py\n?? tests/test_quixbugs_repair.py\n?? tests/test_quixbugs_syntax_mutation_pool.py\n?? tests/test_repository_api_reuse.py",
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "python": "3.12.13",
+    "system": "Linux"
+  },
+  "hypothesis": "retrieval_context_vs_structured_memory_pairwise_probe",
+  "metrics": {
+    "benchmark_label": "repository_context_pairwise_probe",
+    "best_method": {
+      "coverage_at_k": 0.699839291143639,
+      "hallucinated_api_rate": 0.0,
+      "hit_at_k": 0.8695652173913043,
+      "mrr": 0.753623188405797,
+      "name": "structured_symbol_memory",
+      "prediction_count": 106,
+      "task_count": 23
+    },
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "limitations": [
+      "not_code_generation",
+      "not_executable_runtime_scoring",
+      "symbol_mentions_are_proxy_labels",
+      "javascript_style_symbol_extraction_only",
+      "proxy_hallucinated_api_rate"
+    ],
+    "methods": {
+      "query_symbol_aware_retrieval": {
+        "coverage_at_k": 0.6715784215784215,
+        "hallucinated_api_rate": 0.0,
+        "hit_at_k": 0.782608695652174,
+        "mrr": 0.6884057971014493,
+        "prediction_count": 106,
+        "task_count": 23
+      },
+      "retrieved_snippet_identifiers": {
+        "coverage_at_k": 0.0,
+        "hallucinated_api_rate": 0.9826086956521739,
+        "hit_at_k": 0.0,
+        "mrr": 0.0,
+        "prediction_count": 115,
+        "task_count": 23
+      },
+      "structured_symbol_memory": {
+        "coverage_at_k": 0.699839291143639,
+        "hallucinated_api_rate": 0.0,
+        "hit_at_k": 0.8695652173913043,
+        "mrr": 0.753623188405797,
+        "prediction_count": 106,
+        "task_count": 23
+      },
+      "symbol_aware_retrieved_snippets": {
+        "coverage_at_k": 0.18478260869565216,
+        "hallucinated_api_rate": 0.0,
+        "hit_at_k": 0.21739130434782608,
+        "mrr": 0.18478260869565216,
+        "prediction_count": 107,
+        "task_count": 23
+      }
+    },
+    "pairwise_ideas": [
+      "retrieval_augmented_repository_context",
+      "structured_repository_memory"
+    ],
+    "query_rows_loaded": 804,
+    "query_rows_scanned": 815,
+    "query_split": "validation",
+    "repository_count": 3,
+    "resolved_config": {
+      "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+      "experiment_id": "D5_repository_context_pairwise_validation",
+      "max_query_rows": 10000,
+      "max_source_rows": 10000,
+      "max_tasks": 256,
+      "min_text_bytes": 80,
+      "output": "results/D5_repository_context_pairwise_validation.json",
+      "query_split": "validation",
+      "seed": 123,
+      "source_split": "validation",
+      "top_k": 5
+    },
+    "seed": 123,
+    "source_rows_loaded": 804,
+    "source_rows_scanned": 815,
+    "source_split": "validation",
+    "symbol_count": 689,
+    "task_count": 23,
+    "tasks": [
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/angular.js/1.5.6/i18n/angular-locale_ebu-ke.js",
+        "positive_symbols": [
+          "getDecimals",
+          "getVF"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "84ac35bf4fe51a889f6e3e972818fff3e13ace4ee5a0519f2a81d949574e18ea",
+        "query_text_sha256": "66f724877b6ddf3f38904c4ede25639895a33aa3b97c66ba926ac691290b4c46",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "0d9bcdd8d793cfffc79db5353695f889a67bafc3c8e3fdd0bfd96764928959a1",
+        "task_id": "repo-api-reuse-0d9bcdd8d793cfff"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/ag-grid/5.0.0-alpha.5/lib/gridApi.js",
+        "positive_symbols": [
+          "cancel",
+          "clear",
+          "destroy",
+          "filter",
+          "init",
+          "object",
+          "refresh"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "docstring",
+          "source"
+        ],
+        "query_row_sha256": "434b2a2b3b8ce2d6df346a0d4cbdf18edc82e969f8b3402344e1707706d49b44",
+        "query_text_sha256": "1a4fc6cebbc4497b837bbdf4bc80bd21963f19c55fc210e2a39c1d5fb73bd0a8",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "140f1001d4fe8de0ab4c449cb3b870c2c3af96fff60ae5451b9475f1cabe6bae",
+        "task_id": "repo-api-reuse-140f1001d4fe8de0"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/mathjax/2.6.1/jax/input/MathML/entities/m.js",
+        "positive_symbols": [
+          "map"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "510109a1e2e4da2d96c76897ace3b3d82bdb6b9b78433d165ed675111d6a4b0e",
+        "query_text_sha256": "1f18775fa4a66ee75ee7385fd571231eeb431202c378562fdbeda15f1ee4a2fd",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "39aa0e62e6fd1513cb9e5d83be18ae785be8bf52e824a6aa752ea110e217467b",
+        "task_id": "repo-api-reuse-39aa0e62e6fd1513"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/ace/1.2.6/worker-json.js",
+        "positive_symbols": [
+          "cancel",
+          "delay",
+          "empty",
+          "every",
+          "filter",
+          "init",
+          "isArray",
+          "isEmpty",
+          "last",
+          "line",
+          "map",
+          "object",
+          "off"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "f1b0c06628e0ef347c7aadf9a3c59ae7d67ccae35317807f9cdb2a4397bd8831",
+        "query_text_sha256": "79c8e4394dc30d5499402726ffa457dab73d50fa4224268ab0a6c40454ba4475",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "4eee999cb9c793cc83c669d49c033e9a722804da12effc7b07d69b973848f999",
+        "task_id": "repo-api-reuse-4eee999cb9c793cc"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/yui/3.0.0b1/queue/queue-run.js",
+        "positive_symbols": [
+          "async",
+          "cancel",
+          "clear",
+          "delay",
+          "empty",
+          "isFunction",
+          "isObject",
+          "last",
+          "object",
+          "property",
+          "wrapper"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "docstring",
+          "source"
+        ],
+        "query_row_sha256": "913851f24b47b07ffee6b16870e398075b221f4dba4b5aa801e3ad7e6ec51871",
+        "query_text_sha256": "f0e8640708afc9efcbbd40fe0706cdb4cf6670921589f14a856949da48d0dc32",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "5006cb734cc1a09d3bc85ed3ed341ba0658ab5a8777769b7a1c394649fe41b5a",
+        "task_id": "repo-api-reuse-5006cb734cc1a09d"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/mvw-injection/0.2.5/dependency-injection.js",
+        "positive_symbols": [
+          "filter"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "c73905536717755bade8862261e899c0483462501cc7cf5685e5069e96d81c19",
+        "query_text_sha256": "c0d6f50ba27b33c0cf9dd9605b2aff6eacb50b52f884e359b70e86c1c4b225b3",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "5832d68eb0d6348e2b93d10a24cd1aa928026089d1cb09d75e9272a788f2d93b",
+        "task_id": "repo-api-reuse-5832d68eb0d6348e"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/qtip2/3.0.3/basic/jquery.qtip.js",
+        "positive_symbols": [
+          "blur",
+          "clear",
+          "close",
+          "destroy",
+          "empty",
+          "exec",
+          "filter",
+          "focus",
+          "initialize",
+          "isArray",
+          "isFunction",
+          "isPlainObject",
+          "isString",
+          "object",
+          "off",
+          "render",
+          "render",
+          "select",
+          "toArray",
+          "trigger",
+          "trigger",
+          "update"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "872b8fe38e8270a59b7848cfbdafc2abe07190c1042d201d1d14737c1f395068",
+        "query_text_sha256": "348b96df3724b362f8b5f2bf145669a463a334dc4b2b2aeb3fba86f37ba05097",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "5d6879a4f9dbc344d8b6b62c141e15a3a7fbdb1dd9f2e48665b3786a36391e53",
+        "task_id": "repo-api-reuse-5d6879a4f9dbc344"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/gumby/2.6.0/js/libs/ui/gumby.tabs.js",
+        "positive_symbols": [
+          "init",
+          "initialize",
+          "trigger",
+          "trigger"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "docstring",
+          "source"
+        ],
+        "query_row_sha256": "40b9314787b913b869871b97bf43f634da7e2c69152edfe4651688aca3fc26ba",
+        "query_text_sha256": "208bd407db30f4138df15328314912024df10bdc8e27779cbc22aa88cb152ce9",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "601ba4d1a9503907e7a04de63dc553875fd2b84157d578eff1e8b690b0300b94",
+        "task_id": "repo-api-reuse-601ba4d1a9503907"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/angular.js/1.3.13/i18n/angular-locale_mg.js",
+        "positive_symbols": [
+          "getDecimals",
+          "getVF"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "c206878a539b50347f46928e2821edf254081ffa6db89b05d63e0f9fba2f703c",
+        "query_text_sha256": "dc03616fc60987a0748dec44d2a3745564264627b4a072ac5241ac7b077ae58c",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "6270b1668d7d496f460ef62b2de0279518252b5f7711543d04c0a22dc29e166e",
+        "task_id": "repo-api-reuse-6270b1668d7d496f"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/jquery.colorbox/1.4.31/example1/colorbox.css",
+        "positive_symbols": [
+          "clear",
+          "filter",
+          "focus"
+        ],
+        "query_language": "CSS",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "0d0c38756b47c92d85630c2ac6ce09fafc62b5a14116cfd073161dbccba7845f",
+        "query_text_sha256": "3bd4ab4231ec50ea851e062399a065b8c98eab2a8569ffa9a3904412fd0d5039",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "6cd12ebdc96732b5057d5d9a8fea0b65eb0e814a1eee901431de117aa95fbfb1",
+        "task_id": "repo-api-reuse-6cd12ebdc96732b5"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/jointjs/0.9.7/geometry.js",
+        "positive_symbols": [
+          "Input",
+          "object",
+          "open",
+          "update"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "b3cf81ad32c7e08f08e79ca517ef5240a40af812c040a2bdbde5499f69cf76ac",
+        "query_text_sha256": "eb5d0929d28576d6d5d2d1d75ffb2520dbf1b88cc551dff525df25755b90b30d",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "90597df184459ef32ece13c02715ddc8062d6d467381eeb172ce5abc09897b16",
+        "task_id": "repo-api-reuse-90597df184459ef3"
+      },
+      {
+        "candidate_count": 44,
+        "path": "ajax/libs/knockout/3.0.0/knockout-min.js",
+        "positive_symbols": [
+          "later",
+          "nodeName",
+          "split"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "d8f26e98ae3f12c468f180d5826e94ea8ff3e9171876cf8d1de67dca05245ddf",
+        "query_text_sha256": "54a59166433930480f469e7cdbf30be5d96c5534ffea2ac5e50a9069d8eb46a4",
+        "repo": "bragma/cdnjs",
+        "sample_sha256": "9f195ef4e2df9f0f1caaa663da76a51d8db331c474b5ace0ca7df17600a9c78b",
+        "task_id": "repo-api-reuse-9f195ef4e2df9f0f"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/yui/3.6.0pr4/editor-bidi/editor-bidi-debug.js",
+        "positive_symbols": [
+          "last",
+          "process",
+          "property",
+          "select"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "docstring",
+          "source"
+        ],
+        "query_row_sha256": "a73a67410b8fa8e2c81863667fa595cc4e2c7b0caea360dd1ab329b73d45e13b",
+        "query_text_sha256": "5d4a9064563b1e8747053fdd88427f4062acfce348ff094a7c9d46d3ad342761",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "a26ae764817f612e3a32440b8b7677a01914829cd2195a2622cae876b92e889c",
+        "task_id": "repo-api-reuse-a26ae764817f612e"
+      },
+      {
+        "candidate_count": 44,
+        "path": "ajax/libs/webshim/1.15.1/minified/shims/combos/31.js",
+        "positive_symbols": [
+          "nodeName",
+          "split"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "58251f23d47479a3cc868e9da1283441e18667ac4e81fc218b7477dbf15bee65",
+        "query_text_sha256": "ade53575c41447033a5d78097c5afc35a180a31091648eb6d67dfa132b134e43",
+        "repo": "bragma/cdnjs",
+        "sample_sha256": "b761115efaa93d5e95f37d415cd458cef8f31c4011251075d9645b5d142fd4a0",
+        "task_id": "repo-api-reuse-b761115efaa93d5e"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/dojo/1.7.7/aspect.js.uncompressed.js",
+        "positive_symbols": [
+          "cancel",
+          "delegate",
+          "last",
+          "object"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "0c3a126653eea7e00ccb470830226d5f30eb18e54942022a7362a88305946f6e",
+        "query_text_sha256": "4bd51e01a672b596b3dd220d2ca603ae6994a5cf14ebbd93b3f428898db3c95c",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "c698e2890c2352ea176cd4ab7e08f51c599ff1989b792d449aae3128f45672b8",
+        "task_id": "repo-api-reuse-c698e2890c2352ea"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/uikit/2.16.0/js/core/core.js",
+        "positive_symbols": [
+          "filter",
+          "init",
+          "isPlainObject",
+          "off",
+          "scroll",
+          "template",
+          "trigger",
+          "trigger"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "09d71c39dc83ba12937754c2b2735e74530c6c65fd0bd5fb313fd586d9fc2d00",
+        "query_text_sha256": "dc8fdadd4ffa49f5f60be1c1b533fc5223be65fd39dc9fc7463abe8af200ccc6",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "ea9327e5802b73f46036aec4cab2bc9c6c6fd4af84ec26503b5b3b31156e01b0",
+        "task_id": "repo-api-reuse-ea9327e5802b73f4"
+      },
+      {
+        "candidate_count": 5,
+        "path": "ajax/libs/angular.js/1.4.0-rc.0/i18n/angular-locale_ff-mr.js",
+        "positive_symbols": [
+          "getDecimals",
+          "getVF"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "76379aaf530cca7024e0f68d85a9d07a3ee113cf179dc06cb19a2e5cfb875042",
+        "query_text_sha256": "eb000e900df005922ac6f854a9a854f0a6eeebc677b23f63d49dc3fcb058dde4",
+        "repo": "mgoldsborough/cdnjs",
+        "sample_sha256": "eb6036278b479d4c08d6977801c416ad45e6d63adc3f9a61a06b6b9f582a79e9",
+        "task_id": "repo-api-reuse-eb6036278b479d4c"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/videogular-themes-default/0.6.2/videogular.min.css",
+        "positive_symbols": [
+          "filter",
+          "focus",
+          "line",
+          "select"
+        ],
+        "query_language": "CSS",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "0ab7146fbea5b334fe50c304d313c905aa42e47e307eeb60dbcc72f609651de4",
+        "query_text_sha256": "1ea73423e4ea1520c0c1bebb4e7e9115fae0572a9148314b3cfac53eedb0182c",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "ee7f4964e88e4a85cc0bfea8ee125830a5b9f6e22b2eb416ff5b1e3e5ae7ec92",
+        "task_id": "repo-api-reuse-ee7f4964e88e4a85"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/inferno/0.7.14/inferno-router.js",
+        "positive_symbols": [
+          "focus",
+          "map",
+          "object",
+          "open",
+          "render",
+          "trigger",
+          "update"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "docstring",
+          "source"
+        ],
+        "query_row_sha256": "4f536dbfec7c65cfd86eb905191dc9b17a554937815c6c91e18f1e3115cdbc6a",
+        "query_text_sha256": "1a12db721608a1262774336088ba4479ce5c00907f4da0c62dbaa3a875ddbe9f",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "f03a4f02f9c989bff65eca2c629f0bb79ed997455cfabbbcb2d4dccfb42bec38",
+        "task_id": "repo-api-reuse-f03a4f02f9c989bf"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/autocomplete.js/0.3.0/autocomplete.angular.js",
+        "positive_symbols": [
+          "async",
+          "delay",
+          "escape",
+          "exec",
+          "init",
+          "isArray",
+          "isNull",
+          "isUndefined",
+          "line",
+          "process",
+          "reject",
+          "render",
+          "setTag",
+          "toArray",
+          "trigger"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "docstring",
+          "source"
+        ],
+        "query_row_sha256": "08309bf0d86c5a3ac82e51e2f092c8fd5c3c8e75ee9c275b7e85ae26c1a1cd82",
+        "query_text_sha256": "57a78f7c7a40736dd54488e2219a9054a616ad91dce49f3a03d4b7c0657f00fe",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "f53755a05d835ab2c97419956c5986fdac8e317ec83e3cf25a998ef1a70734ff",
+        "task_id": "repo-api-reuse-f53755a05d835ab2"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/highcharts/4.1.6/modules/funnel.src.js",
+        "positive_symbols": [
+          "noop",
+          "object",
+          "point",
+          "select"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "docstring",
+          "source"
+        ],
+        "query_row_sha256": "5cd1e8a314bcbbdf46db741409f27dc398371593cba62f0097326675fce66d1d",
+        "query_text_sha256": "1405fb7cf9ec762ce57db69409caa61aa7f88df94d221d379f4798768f5a837f",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "fc192d1fb73b6d41b0f6381605a17d95d32df007107c3e76fb3d95746bbc2586",
+        "task_id": "repo-api-reuse-fc192d1fb73b6d41"
+      },
+      {
+        "candidate_count": 5,
+        "path": "ajax/libs/angular-i18n/1.3.0-rc.5/angular-locale_aa-er.js",
+        "positive_symbols": [
+          "getDecimals",
+          "getVF"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "670448ebb32a3a566131456ea84b03a3264148185c5b04e08803ca375de5869f",
+        "query_text_sha256": "33f07597d3cdc2ae208452b7236740feee4fc1a55628e7570ced0d3b5c4ad9b5",
+        "repo": "mgoldsborough/cdnjs",
+        "sample_sha256": "fee87c79f6b720a8696bc413b23dfb8c62430f2922a4653a8d691a1048c68185",
+        "task_id": "repo-api-reuse-fee87c79f6b720a8"
+      },
+      {
+        "candidate_count": 285,
+        "path": "ajax/libs/yui/3.10.0pr1/dom-base/dom-base-coverage.js",
+        "positive_symbols": [
+          "clear",
+          "empty",
+          "exec",
+          "filter",
+          "line",
+          "select",
+          "strip"
+        ],
+        "query_language": "JavaScript",
+        "query_roles": [
+          "source"
+        ],
+        "query_row_sha256": "295193fb4a34f3e66a3d60ac6762d7d2d45b135d842825064fa8e49f8d083c60",
+        "query_text_sha256": "dc0f228476bf3a31d5625951ede8435e8ef315a6c53b4307d2c2702fce418a31",
+        "repo": "dlueth/cdnjs",
+        "sample_sha256": "ff52085297d618eb279f8f7c821e9935c1c9688147f11f5aaa066f08629f7bdf",
+        "task_id": "repo-api-reuse-ff52085297d618eb"
+      }
+    ],
+    "top_k": 5
+  },
+  "notes": "Compares structured repository-symbol memory against identifiers drawn from retrieved source snippets on repository API-reuse tasks. This is a proxy for hallucinated API rate, not code generation or executable scoring.",
+  "recorded_at_unix": 1782927470.5141933,
+  "resolved_config": {
+    "corpus_jsonl": "data/hf_mirror/exploratory_d5_balanced/corpus.jsonl",
+    "experiment_id": "D5_repository_context_pairwise_validation",
+    "max_query_rows": 10000,
+    "max_source_rows": 10000,
+    "max_tasks": 256,
+    "min_text_bytes": 80,
+    "output": "results/D5_repository_context_pairwise_validation.json",
+    "query_split": "validation",
+    "seed": 123,
+    "source_split": "validation",
+    "top_k": 5
+  },
+  "seed": 123,
+  "status": "completed"
+}
